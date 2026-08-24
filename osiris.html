@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OSIRIS — Game Modding Software</title>
+<link rel="icon" type="image/png" href="assets/osiris.png">
+<meta name="description" content="OSIRIS — game modding software. Home of PHAROAH (Paladins) and HORUS (Smite).">
+<style>
+  :root{
+    --bg:#241633; --bg2:#2f1d44; --bg3:#3c2657; --bg4:#4d316f;
+    --hi:#b98ee0; --hi2:#8b5fb5; --sec:#c3aad6; --paper:#f0e6f8;
+    --line:rgba(185,142,224,.3);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scrollbar-color:var(--hi) var(--bg3);scrollbar-width:auto}
+  body{font-family:"Trebuchet MS","Segoe UI",sans-serif;background:var(--bg);
+    color:var(--sec);line-height:1.62;padding-top:58px}
+  ::-webkit-scrollbar{width:17px}
+  ::-webkit-scrollbar-track{background:var(--bg3);border-left:1px solid var(--line)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--hi),var(--hi2));
+    border:2px solid var(--bg3);border-radius:12px}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:58px;background:var(--bg2);
+    border-bottom:2px solid var(--hi2);display:flex;align-items:center;gap:12px;padding:0 16px;
+    box-shadow:0 2px 12px rgba(0,0,0,.5)}
+  .topbar .who{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .topbar .who img{width:38px;height:38px;object-fit:contain}
+  .topbar .who span{font-size:.95rem;color:var(--hi);font-weight:700;white-space:nowrap}
+  .topbar .back{color:var(--hi);font-size:1.1rem;font-weight:900}
+  .topbar .spacer{flex:1}
+  .charity{font-size:.7rem;color:var(--sec);text-align:right;line-height:1.3;
+    border-right:1px solid var(--line);padding-right:12px}
+  .charity b{color:var(--hi)}
+  .langwrap{display:inline-flex;border:1px solid var(--hi2);border-radius:5px;overflow:hidden}
+  .lang{background:var(--bg3);border:0;cursor:pointer;padding:7px 12px;font-size:.72rem;
+    font-weight:700;color:var(--sec)}
+  .lang.on{background:var(--hi);color:var(--bg)}
+
+  .wrap{max-width:1000px;margin:0 auto;padding:0 22px}
+  header{text-align:center;padding:34px 0 24px}
+  .logo{width:170px;height:170px;object-fit:contain;display:block;margin:0 auto 12px}
+  h1{font-size:clamp(2.4rem,8vw,4.2rem);letter-spacing:.2em;font-weight:900;color:var(--hi)}
+  .tag{margin-top:5px;color:var(--paper);letter-spacing:.24em;font-size:.78rem;text-transform:uppercase}
+  .draftpill{display:inline-block;margin-top:12px;background:var(--bg4);border:1px solid var(--hi2);
+    border-radius:18px;padding:5px 17px;font-size:.72rem;font-weight:700;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--hi)}
+
+  section{margin-bottom:32px}
+  h2{color:var(--hi);font-size:.93rem;letter-spacing:.19em;text-transform:uppercase;
+    padding-bottom:7px;margin-bottom:14px;border-bottom:2px solid var(--hi2)}
+  p.body{color:var(--paper);margin-bottom:12px}
+  p.body b{color:var(--hi)}
+
+  .sharednote{background:var(--bg2);border:1px solid var(--hi);border-left:4px solid var(--hi);
+    border-radius:6px;padding:14px 17px;margin-bottom:16px;text-align:center}
+  .sharednote p{color:var(--paper);font-size:.88rem;margin:0;letter-spacing:.02em}
+  .sharednote b{color:var(--hi)}
+
+  .projects{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.projects{grid-template-columns:1fr}}
+  .proj{background:var(--bg2);border:2px solid var(--line);border-radius:9px;
+    padding:20px;text-align:center;text-decoration:none;display:block;transition:border-color .15s,transform .15s}
+  .proj:hover{border-color:var(--hi);transform:translateY(-3px)}
+  .proj img{width:96px;height:96px;object-fit:contain;margin-bottom:10px}
+  .proj .nm{color:var(--hi);font-weight:900;font-size:1.35rem;letter-spacing:.14em}
+  .proj .gm{color:var(--sec);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+  .proj p{color:var(--paper);font-size:.86rem;margin-top:9px}
+  .st{display:inline-block;margin-top:11px;font-size:.66rem;padding:3px 12px;border-radius:12px;
+    font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+  .st.live{background:#3f7a3f;color:#eaffea}
+  .st.soon{background:var(--hi2);color:#fff8e2}
+
+  .toolgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:13px}
+  .tool{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--hi);
+    border-radius:6px;padding:15px 16px}
+  .tool h3{color:var(--hi);font-size:.88rem;letter-spacing:.06em;margin-bottom:5px}
+  .tool p{color:var(--paper);font-size:.84rem;margin:0}
+  footer{text-align:center;padding:24px 0 38px;border-top:1px solid var(--line);
+    font-size:.77rem;color:var(--sec);margin-top:14px}
+
+/* ============================================================
+   THE WORDMARK - why this is plain letters and not the fancy ones
+   ============================================================
+   It used to be written with Mathematical Bold Sans-Serif capitals
+   (U+1D5E3...) and modifier letters (U+1D2C...). Those are real Unicode,
+   but almost no font actually contains them - so most browsers drew
+   empty boxes instead of letters. That is the block symbol.
+
+   Now it is ordinary A-Z, made bold and superscripted with CSS, which
+   every font on earth can render. Looks the same, cannot break. */
+.pmark{ font-weight:800; letter-spacing:.06em; }
+.pmark sup{ font-size:.62em; font-weight:800; letter-spacing:.04em;
+            vertical-align:super; margin-left:.06em; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="who" href="omni.html">
+    <span class="back">&larr;</span>
+    <img src="assets/angelcorp.png" alt="">
+    <span><span style="color:#fff">ANGEL</span><span style="color:#e0554f">CORP</span><br><span style="font-size:.64rem;color:#e0554f;letter-spacing:.06em">parent company</span></span>
+  </a>
+  <div class="spacer"></div>
+  <div class="charity" data-i18n="charitybar"></div>
+  <div class="langwrap">
+    <button class="lang on" data-lang="en">EN</button>
+    <button class="lang" data-lang="es">ES</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <img class="logo" src="assets/osiris.png" alt="OSIRIS">
+    <h1>OSIRIS</h1>
+    <div class="tag" data-i18n="tag">Game Modding Software</div>
+    <div class="draftpill" data-i18n="draft">Draft &mdash; in development</div>
+  </header>
+
+  <section>
+    <h2 data-i18n="h_what">What OSIRIS is</h2>
+    <p class="body" data-i18n="p_what1"></p>
+    <p class="body" data-i18n="p_what2"></p>
+  </section>
+
+  <section>
+    <h2 data-i18n="h_proj">Projects</h2>
+    <div class="sharednote"><p data-i18n="sharednote"></p></div>
+    <div class="projects">
+      <a class="proj" href="index.html">
+        <img src="assets/pharoah.png" alt="">
+        <div class="nm">PHAROAH</div>
+        <div class="gm">Paladins</div>
+        <p data-i18n="p_ph"></p>
+        <span class="st live" data-i18n="st_live">Available</span>
+      </a>
+      <a class="proj" href="horus.html">
+        <img src="assets/horus.png" alt="">
+        <div class="nm">HORUS</div>
+        <div class="gm">Smite</div>
+        <p data-i18n="p_ho"></p>
+        <span class="st soon" data-i18n="st_soon">Coming soon</span>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-i18n="h_tools">Planned Toolset</h2>
+    <div class="toolgrid">
+      <div class="tool"><h3 data-i18n="t1h">Injector</h3><p data-i18n="t1p"></p></div>
+      <div class="tool"><h3 data-i18n="t2h">AI Assistant</h3><p data-i18n="t2p"></p></div>
+      <div class="tool"><h3 data-i18n="t3h">MCP Bridge</h3><p data-i18n="t3p"></p></div>
+      <div class="tool"><h3 data-i18n="t4h">Reverse Engineering</h3><p data-i18n="t4p"></p></div>
+      <div class="tool"><h3 data-i18n="t5h">Memory Editor</h3><p data-i18n="t5p"></p></div>
+      <div class="tool"><h3 data-i18n="t6h">SDK Browser</h3><p data-i18n="t6p"></p></div>
+    </div>
+  </section>
+
+  <footer><div style="margin-bottom:7px;opacity:.75">by <span class="pmark">PRIMAL<sup>APE</sup></span></div><span data-i18n="footer"></span></footer>
+</div>
+
+<script>
+const I18N={
+en:{
+ charitybar:'<b>20%</b> of all income goes to charity',
+ tag:'Game Modding Software', draft:'Draft &mdash; in development',
+ h_what:'What OSIRIS is', h_proj:'Projects', h_tools:'Planned Toolset',
+ p_what1:'<b>OSIRIS</b> is the home for my modding work. The idea is one piece of software that handles the whole job &mdash; injecting, inspecting, editing and understanding a game &mdash; instead of five separate tools and a folder of scripts.',
+ p_what2:'It is an early draft. The individual mods below exist and work; OSIRIS is the shell that will eventually hold them, along with the tooling I keep rebuilding by hand for every project.',
+ sharednote:'<b>SMITE AND PALADINS SHARE SERVERS.</b> An exploit that works on one will often apply to the other &mdash; and skins can work across both.',
+ p_ph:'Hidden fire modes, enemy visibility, prediction aiming, cosmetics and more.',
+ p_ho:'Skin changer for Smite, built on the same foundation as PHAROAH.',
+ st_live:'Available', st_soon:'Coming soon',
+ t1h:'Injector', t1p:'One-click DLL injection with process detection and version checks.',
+ t2h:'AI Assistant', t2p:'Ask questions about a game&rsquo;s SDK and get answers grounded in the actual dump.',
+ t3h:'MCP Bridge', t3p:'Expose the loaded game to an AI tool so it can read structures directly.',
+ t4h:'Reverse Engineering', t4p:'Class browser, offset finder and function search over a dumped SDK.',
+ t5h:'Memory Editor', t5p:'Scan, watch and edit values live, with named fields instead of raw addresses.',
+ t6h:'SDK Browser', t6p:'Navigate classes, fields and flags without grepping header dumps by hand.',
+ footer:'OSIRIS &mdash; a draft. Nothing here is final.'
+},
+es:{
+ charitybar:'El <b>20%</b> de todos los ingresos va a caridad',
+ tag:'Software de Modding', draft:'Borrador &mdash; en desarrollo',
+ h_what:'Qu&eacute; es OSIRIS', h_proj:'Proyectos', h_tools:'Herramientas Planeadas',
+ p_what1:'<b>OSIRIS</b> es el hogar de mi trabajo de modding. La idea es un solo software que cubra todo el proceso &mdash; inyectar, inspeccionar, editar y entender un juego &mdash; en vez de cinco herramientas sueltas y una carpeta de scripts.',
+ p_what2:'Es un borrador temprano. Los mods de abajo existen y funcionan; OSIRIS es el envoltorio que los reunir&aacute;, junto con las herramientas que reconstruyo a mano en cada proyecto.',
+ sharednote:'<b>SMITE Y PALADINS COMPARTEN SERVIDORES.</b> Un exploit que funciona en uno suele aplicarse al otro &mdash; y los aspectos pueden funcionar en ambos.',
+ p_ph:'Modos de disparo ocultos, visibilidad de enemigos, predicci&oacute;n, cosm&eacute;ticos y m&aacute;s.',
+ p_ho:'Cambiador de aspectos para Smite, sobre la misma base que PHAROAH.',
+ st_live:'Disponible', st_soon:'Pr&oacute;ximamente',
+ t1h:'Inyector', t1p:'Inyecci&oacute;n de DLL en un clic, con detecci&oacute;n de proceso y comprobaci&oacute;n de versi&oacute;n.',
+ t2h:'Asistente IA', t2p:'Pregunta sobre el SDK de un juego y recibe respuestas basadas en el volcado real.',
+ t3h:'Puente MCP', t3p:'Expone el juego cargado a una herramienta de IA para que lea estructuras directamente.',
+ t4h:'Ingenier&iacute;a Inversa', t4p:'Navegador de clases, buscador de offsets y b&uacute;squeda de funciones sobre el SDK.',
+ t5h:'Editor de Memoria', t5p:'Escanea, observa y edita valores en vivo, con campos con nombre en vez de direcciones.',
+ t6h:'Explorador de SDK', t6p:'Navega clases, campos y flags sin buscar a mano en los headers.',
+ footer:'OSIRIS &mdash; un borrador. Nada aqu&iacute; es definitivo.'
+}};
+let lang='en';
+function render(){
+  const L=I18N[lang];document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    const k=el.dataset.i18n;if(L[k])el.innerHTML=L[k];});
+  document.querySelectorAll('.lang').forEach(function(b){b.classList.toggle('on',b.dataset.lang===lang);});
+}
+document.querySelectorAll('.lang').forEach(function(b){
+  b.addEventListener('click',function(){lang=b.dataset.lang;render();});});
+render();
+</script>
+</body>
+</html>

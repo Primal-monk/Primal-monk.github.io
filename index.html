@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PHAROAH — Paladins Mod Tool</title>
+<link rel="icon" type="image/png" href="assets/pharoah.png">
+<meta name="description" content="PHAROAH — a free, easy-to-use mod tool for Paladins. Aim, ESP, prediction, fire modes, skins and more.">
+<style>
+  /* ---------------------------------------------------------------
+     Palette from the app's ApplyPharoahSandTheme().
+     Light sand surfaces, dark brown text. Blue kept to a minimum —
+     active states use deep bronze/gold instead.
+     --------------------------------------------------------------- */
+  :root{
+    --sand-deep:#c9a86e;      /* page background — deeper, not near-white */
+    --sand:#c2a169;
+    --sand-mid:#d0af74;
+    --sand-light:#dcbd88;
+    --sand-pale:#e8d5ab;
+    --parchment:#f0e2c0;
+    --ink:#2e2011;
+    --ink-mid:#4a3620;
+    --ink-soft:#634c2b;
+    --logo-brown:#6b4d24;     /* the PHAROAH wordmark — lighter than --ink */
+    --gold:#d9ae38;
+    --gold-deep:#a8801d;
+    --bronze:#8a6520;         /* active tab / accent, replaces the bright blue */
+    --bronze-dark:#6d4f18;
+    --line:#a8875a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scrollbar-color:var(--gold) var(--sand-pale);scrollbar-width:thin}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",sans-serif;
+    background:var(--sand-deep);
+    color:var(--ink);
+    line-height:1.62;
+    padding-top:52px;              /* room for the fixed bar */
+  }
+  /* bigger, rounder, more visible scrollbar */
+  ::-webkit-scrollbar{width:17px}
+  ::-webkit-scrollbar-track{background:var(--sand-pale);border-left:1px solid var(--line)}
+  ::-webkit-scrollbar-thumb{
+    background:linear-gradient(180deg,var(--gold),var(--gold-deep));
+    border:2px solid var(--sand-pale);border-radius:12px;
+  }
+  ::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+
+  /* ---------- 4th talent video link ---------- */
+  .vidbox{margin:10px 0 4px}
+  .vidbox a{display:inline-block;background:var(--bronze);color:#fff5dd;text-decoration:none;
+    padding:9px 18px;border-radius:5px;font-size:.82rem;font-weight:700;letter-spacing:.05em}
+  .vidbox a:hover{background:var(--bronze-dark)}
+
+  /* ---------- charity ---------- */
+  .charitybox{background:var(--sand-pale);border:2px solid var(--gold-deep);border-radius:8px;padding:20px}
+  .cmonth{color:var(--ink-soft);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
+  .cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:14px}
+  .cgrid div{background:var(--sand-mid);border:1px solid var(--line);border-radius:5px;padding:12px;text-align:center}
+  .cgrid .n{color:var(--ink);font-size:1.5rem;font-weight:900}
+  .cgrid .l{color:var(--ink-soft);font-size:.68rem;letter-spacing:.11em;text-transform:uppercase;margin-top:2px}
+  .cbar{height:11px;background:var(--sand-mid);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .cbar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-deep))}
+  .charitybox p{color:var(--ink-soft);font-size:.85rem;margin-top:11px}
+  .proBox{background:var(--sand-mid);border:1px solid var(--gold-deep);border-radius:6px;
+    padding:17px;margin-top:16px;text-align:center}
+  .proTitle{color:var(--ink);font-weight:900;font-size:1.08rem;letter-spacing:.06em}
+  .proBox p{color:var(--ink-mid);font-size:.86rem;margin:5px 0 10px}
+  .proList{list-style:none;display:inline-block;text-align:left;margin-bottom:12px}
+  .proList li{color:var(--ink);font-size:.84rem;padding:3px 0 3px 20px;position:relative}
+  .proList li::before{content:"\2713";position:absolute;left:0;color:var(--bronze);font-weight:900}
+  .proBtn{display:inline-block;background:var(--gold);border:1px solid var(--gold-deep);
+    color:#3a2a08;padding:12px 30px;border-radius:5px;font-weight:900;font-size:.86rem;
+    letter-spacing:.08em;text-transform:uppercase;text-decoration:none}
+  .proSoon{color:var(--ink-soft);font-size:.74rem;margin-top:9px;font-style:italic}
+
+  /* ---------- game switch (Paladins / Smite) ---------- */
+  .gameswitch{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px}
+  @media(max-width:640px){.gameswitch{grid-template-columns:1fr}}
+  .gs{display:block;text-decoration:none;background:var(--sand-pale);border:2px solid var(--line);border-radius:8px;
+    padding:16px;text-align:center;position:relative}
+  .gs.active{border-color:var(--bronze);background:var(--sand-light)}
+  .gs img{width:64px;height:64px;object-fit:contain;margin-bottom:7px}
+  .gs span{display:block;color:var(--ink-soft);font-size:.66rem;letter-spacing:.18em}
+  .gs b{display:block;color:var(--ink);font-size:1.15rem;letter-spacing:.13em;font-weight:900}
+  .gs em{display:inline-block;margin-top:6px;background:var(--bronze);color:#fff5dd;
+    font-size:.62rem;padding:2px 10px;border-radius:10px;font-style:normal;
+    font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+  .sharednote{background:var(--sand-pale);border-left:4px solid var(--bronze);
+    border-radius:5px;padding:12px 16px;font-size:.84rem;color:var(--ink);text-align:center}
+
+  /* ---------- "I also make games" callout ---------- */
+  .mecard{
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;text-decoration:none;
+    background:var(--sand-pale);border:2px solid var(--bronze);border-radius:8px;
+    padding:16px 20px;margin-bottom:26px;transition:background .13s;
+  }
+  .mecard:hover{background:var(--sand-light)}
+  .mecard img{
+    width:60px;height:60px;border-radius:12px;object-fit:cover;
+    border:2px solid var(--gold-deep);flex:none;
+  }
+  .mecard .t{flex:1;min-width:200px}
+  .mecard .nm{color:var(--ink);font-weight:900;font-size:1.02rem;letter-spacing:.06em}
+  .mecard p{color:var(--ink-soft);font-size:.86rem;margin:3px 0 0}
+  .mecard .go{
+    background:var(--bronze);color:#fff5dd;padding:10px 20px;border-radius:5px;
+    font-weight:900;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+    white-space:nowrap;
+  }
+
+  /* ---------- full-width sticky top bar ---------- */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;z-index:60;height:52px;
+    background:var(--sand-pale);
+    border-bottom:2px solid var(--gold-deep);
+    box-shadow:0 2px 10px rgba(60,40,15,.22);
+    display:flex;align-items:center;gap:14px;
+    padding:0 18px;
+  }
+  /* clickable credit — this is the way back to the portfolio home page */
+  .topbar .who{
+    display:flex;align-items:center;gap:10px;min-width:0;text-decoration:none;
+    background:var(--sand-mid);border:1px solid var(--gold-deep);border-radius:8px;
+    padding:5px 14px 5px 10px;transition:background .13s;
+  }
+  .topbar .who:hover{background:var(--gold)}
+  .topbar .who img{width:36px;height:36px;object-fit:contain;flex:none}
+  .topbar .who span{font-size:.92rem;color:var(--ink-mid);white-space:nowrap}
+  .topbar .who b{color:var(--ink);font-weight:700}
+  .topbar .who .backarrow{font-size:1.15rem;color:var(--bronze);font-weight:900;margin-right:2px}
+  .topbar .spacer{flex:1}
+
+  .tbtn{
+    background:var(--sand-mid);border:1px solid var(--gold-deep);border-radius:5px;
+    color:var(--ink);font-size:.76rem;font-weight:700;letter-spacing:.06em;
+    padding:7px 13px;cursor:pointer;white-space:nowrap;
+    transition:background .12s;
+  }
+  .tbtn:hover{background:var(--sand-light)}
+  .gswitch{display:inline-flex;border:1px solid var(--gold-deep);border-radius:5px;overflow:hidden}
+  .gswitch a{background:var(--sand-mid);padding:7px 13px;font-size:.72rem;font-weight:900;color:var(--ink);text-decoration:none;letter-spacing:.06em;transition:background .12s}
+  .gswitch a:hover{background:var(--sand-light)}
+  .gswitch a.on{background:var(--bronze);color:#fff5dd}
+  .tbtn.dc{display:inline-flex;align-items:center;gap:7px;text-decoration:none;background:#5865F2;border-color:#4450d8;color:#fff}
+  .tbtn.dc img{width:17px;height:17px;object-fit:contain}
+  .tbtn.dc:hover{background:#4450d8}
+  .tbtn.share{background:var(--gold);border-color:var(--gold-deep)}
+  .tbtn.share:hover{background:var(--gold-deep);color:#fff8e2}
+
+  /* page switcher — dark aqua, centred under the header */
+  .pageswitch{display:inline-flex;border:2px solid #0f4a55;border-radius:6px;overflow:hidden;margin-top:14px}
+  .pageswitch a{background:#17636f;padding:9px 26px;font-size:.8rem;font-weight:900;color:#cdeef4;
+    text-decoration:none;letter-spacing:.1em;transition:background .12s}
+  .pageswitch a:hover{background:#1e7d8c}
+  .pageswitch a.on{background:#0f4a55;color:#fff}
+
+  /* language switch — sits under the free/open-source line, fully spelled out */
+  .langwrap{
+    display:inline-flex;border:1px solid var(--gold-deep);border-radius:6px;
+    overflow:hidden;margin-top:12px;
+  }
+  .lang{
+    background:var(--sand-mid);border:0;cursor:pointer;
+    padding:8px 20px;font-size:.78rem;font-weight:700;color:var(--ink-soft);
+    letter-spacing:.07em;transition:background .12s;
+  }
+  .lang:hover{background:var(--sand-light)}
+  .lang.on{background:var(--bronze);color:#fff5dd}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+
+  /* ---------- header ---------- */
+  header{text-align:center;padding:28px 0 18px}
+  .logo{
+    width:172px;height:172px;display:block;margin:0 auto 12px;
+    object-fit:cover;                       /* fills the frame, no inner gap */
+    background:var(--parchment);
+    border:3px solid var(--gold-deep);
+    border-radius:26px;                     /* smoothed square */
+    box-shadow:0 5px 16px rgba(60,40,15,.3);
+  }
+  h1{
+    font-size:clamp(2.7rem,9vw,4.8rem);
+    letter-spacing:.2em;font-weight:900;
+    color:var(--logo-brown);
+    text-shadow:1px 1px 0 var(--gold);
+    margin-left:.2em;
+  }
+  .tagline{
+    margin-top:4px;color:var(--ink-soft);
+    letter-spacing:.26em;font-size:.78rem;text-transform:uppercase;
+  }
+  .freeline{
+    margin-top:9px;display:inline-block;
+    background:var(--gold);border:1px solid var(--gold-deep);border-radius:20px;
+    padding:4px 16px;font-size:.74rem;font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;color:#3a2a08;
+  }
+
+  /* ---------- split: menu + release ---------- */
+  .split{display:grid;grid-template-columns:1.62fr 1fr;gap:22px;align-items:start;margin-bottom:36px}
+  @media(max-width:860px){.split{grid-template-columns:1fr}}
+  .demo-label{
+    color:var(--ink-soft);font-size:.72rem;letter-spacing:.18em;
+    text-transform:uppercase;margin-bottom:8px;
+  }
+
+  .menu{
+    background:var(--sand);border:1px solid var(--gold-deep);border-radius:5px;
+    box-shadow:0 6px 18px rgba(60,40,15,.3);overflow:hidden;
+  }
+  .menu-title{
+    background:var(--bronze);padding:7px 12px;
+    font-size:.82rem;font-weight:700;color:#fff5dd;letter-spacing:.14em;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .menu-title .keyhint{font-size:.66rem;font-weight:400;opacity:.9;letter-spacing:.05em}
+  .menu-body{padding:11px}
+
+  .tabs{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:11px}
+  .tab{
+    flex:1 1 auto;min-width:92px;padding:7px 5px;text-align:center;
+    background:var(--sand-mid);border:1px solid var(--gold-deep);border-radius:3px;
+    color:var(--ink);font-size:.74rem;font-weight:700;
+    cursor:pointer;user-select:none;transition:background .12s,color .12s;
+  }
+  .tab:hover{background:var(--sand-light)}
+  .tab.active{background:var(--bronze);border-color:var(--bronze-dark);color:#fff5dd}
+
+  .panel{
+    background:var(--sand-pale);border:1px solid var(--line);border-radius:3px;
+    padding:13px;min-height:288px;
+  }
+  .panel h3{
+    color:var(--ink);font-size:.9rem;letter-spacing:.08em;text-transform:uppercase;
+    margin-bottom:7px;border-bottom:1px solid var(--line);padding-bottom:6px;
+  }
+  .panel p{color:var(--ink);font-size:.86rem;margin-bottom:9px}
+  .panel ul{list-style:none;margin:0 0 4px}
+  .panel li{font-size:.84rem;color:var(--ink);padding:3px 0 3px 16px;position:relative}
+  .panel li::before{content:"\25AA";position:absolute;left:0;color:var(--gold-deep)}
+  .panel li b{color:var(--ink-mid)}
+  .panel .foot{
+    margin-top:10px;padding-top:9px;border-top:1px solid var(--line);
+    font-size:.76rem;color:var(--ink-soft);font-style:italic;
+  }
+  .panel img.shot{
+    width:100%;max-height:190px;object-fit:cover;object-position:center;
+    border:1px solid var(--gold-deep);border-radius:4px;margin:4px 0 10px;
+  }
+  .badge{
+    display:inline-block;font-size:.62rem;letter-spacing:.11em;text-transform:uppercase;
+    padding:2px 8px;border-radius:10px;margin-left:6px;vertical-align:2px;
+  }
+  .badge.ok{background:#3f7a3f;color:#eaffea}
+  .badge.wip{background:var(--gold-deep);color:#fff8e2}
+  .badge.plan{background:#7a6a55;color:#f2ece0}
+
+  /* ---------- release ---------- */
+  .release{
+    background:var(--sand-pale);border:2px solid var(--bronze);
+    border-radius:6px;padding:22px 20px;text-align:center;
+  }
+  .release .eyebrow{
+    color:var(--bronze-dark);letter-spacing:.22em;font-size:.68rem;
+    text-transform:uppercase;font-weight:700;
+  }
+  .release .date{
+    font-size:clamp(1.5rem,4vw,2.05rem);font-weight:900;color:var(--ink);
+    letter-spacing:.04em;margin:6px 0 2px;line-height:1.15;
+  }
+  .release .yr{font-size:.9rem;color:var(--ink-soft);letter-spacing:.18em}
+  .release .btn{
+    display:block;margin:15px 0 0;padding:12px 10px;border-radius:4px;
+    background:var(--sand-mid);color:var(--ink-soft);font-weight:900;font-size:.84rem;
+    letter-spacing:.1em;text-transform:uppercase;text-decoration:none;
+    border:1px solid var(--line);
+    /* cursor:not-allowed REMOVED. It was here for the old disabled
+       "Not out yet" button. The download is live now, and a blocked
+       cursor on a working link tells people it is broken. */
+    cursor:pointer;
+  }
+  .dlrow{display:flex;align-items:center;gap:12px;margin-top:15px}
+  /* Full strength - it was faded and desaturated, which read as disabled. */
+  .appico{width:52px;height:52px;object-fit:contain;flex:none;opacity:1;filter:none}
+  .dlrow .btn{flex:1;margin:0}
+  .release .small{margin-top:10px;font-size:.78rem;color:var(--ink-soft)}
+  .release .sharebig{
+    display:block;width:100%;margin-top:10px;padding:11px 10px;border-radius:4px;
+    background:var(--gold);border:1px solid var(--gold-deep);
+    color:#3a2a08;font-weight:900;font-size:.82rem;letter-spacing:.1em;
+    text-transform:uppercase;cursor:pointer;transition:background .12s;
+  }
+  .release .sharebig:hover{background:var(--gold-deep);color:#fff8e2}
+
+  /* ---------- reading ---------- */
+  section{margin-bottom:30px}
+  h2{
+    color:var(--ink);font-size:.92rem;letter-spacing:.18em;text-transform:uppercase;
+    padding-bottom:7px;margin-bottom:13px;border-bottom:2px solid var(--gold);
+  }
+  p.body{color:var(--ink);margin-bottom:11px}
+  ol.steps{list-style:none;counter-reset:s}
+  ol.steps li{
+    counter-increment:s;position:relative;padding:8px 0 8px 42px;
+    color:var(--ink);border-bottom:1px solid var(--sand);font-size:.92rem;
+  }
+  ol.steps li:last-child{border-bottom:0}
+  ol.steps li::before{
+    content:counter(s);position:absolute;left:0;top:7px;
+    width:27px;height:27px;border-radius:4px;background:var(--bronze);color:#fff5dd;
+    display:grid;place-items:center;font-weight:900;font-size:.8rem;
+  }
+  .notice{
+    background:#e9cfb4;border:1px solid #b08a5e;
+    border-left:4px solid var(--bronze);border-radius:4px;padding:14px 16px;
+  }
+  .notice p{color:#4a3218;margin:0;font-size:.9rem}
+  .notice strong{color:#7a4a18}
+
+  .toast{
+    position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
+    background:var(--bronze);color:#fff5dd;padding:11px 22px;border-radius:6px;
+    font-size:.85rem;font-weight:700;letter-spacing:.05em;
+    border:1px solid var(--bronze-dark);box-shadow:0 4px 16px rgba(0,0,0,.3);
+    opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:80;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  footer{
+    text-align:center;padding:22px 0 34px;
+    border-top:1px solid var(--sand);font-size:.76rem;color:var(--ink-soft);
+  }
+/* demo banner CSS removed - DEMO lives in the release box now */
+/* THE DOWNLOAD BUTTON.
+   It is the point of the page, so it has to look pressable - the plain link
+   styling read as decoration. PHAROAH blue: the dark green-blue from the logo,
+   white text. */
+.dlbtn{
+  background:linear-gradient(180deg,#1d6b78,#12525d) !important;
+  border:2px solid #2f97a6 !important;
+  color:#ffffff !important;
+  font-weight:800; letter-spacing:.06em;
+  text-shadow:0 1px 2px rgba(0,0,0,.45);
+  box-shadow:0 3px 0 #0a3a42, 0 6px 14px rgba(0,0,0,.35);
+  cursor:pointer !important;
+}
+.dlbtn:hover{
+  background:linear-gradient(180deg,#248593,#166470) !important;
+  border-color:#45b3c4 !important;
+}
+.dlbtn:active{ transform:translateY(2px); box-shadow:0 1px 0 #0a3a42; }
+
+/* DEMO wordmark inside the release box */
+/* Dark brown-black. The orange was far too bright against the sand panel. */
+.demoword{ color:#1a1109 !important; font-weight:900; letter-spacing:.08em;
+           font-size:clamp(.95rem,2.6vw,1.25rem); line-height:1.25; }
+.demonote{ margin-top:7px; font-size:.74rem; color:#2b1d10; letter-spacing:.06em;
+            font-weight:700; }
+
+/* ============================================================
+   THE WORDMARK - why this is plain letters and not the fancy ones
+   ============================================================
+   It used to be written with Mathematical Bold Sans-Serif capitals
+   (U+1D5E3...) and modifier letters (U+1D2C...). Those are real Unicode,
+   but almost no font actually contains them - so most browsers drew
+   empty boxes instead of letters. That is the block symbol.
+
+   Now it is ordinary A-Z, made bold and superscripted with CSS, which
+   every font on earth can render. Looks the same, cannot break. */
+.pmark{ font-weight:800; letter-spacing:.06em; }
+.pmark sup{ font-size:.62em; font-weight:800; letter-spacing:.04em;
+            vertical-align:super; margin-left:.06em; }
+</style>
+</head>
+<body>
+
+<!-- ================= sticky top bar ================= -->
+<div class="topbar">
+  <a class="who" href="osiris.html" title="OSIRIS - modding software">
+    <span class="backarrow">&larr;</span>
+    <img src="assets/osiris.png" alt="">
+    <span>OSIRIS</span>
+  </a>
+  <div class="spacer"></div>
+  
+  <span class="gswitch"><a href="index.html" class="on">PALADINS</a><a href="horus.html">SMITE</a></span>
+  <a class="tbtn dc" href="https://discord.gg/WNtne3YauG" target="_blank" rel="noopener"><img src="assets/ic-discord.png" alt="">DISCORD</a>
+  <button class="tbtn share" id="shareBtn" data-i18n="share">COPY SHARE LINK</button>
+</div>
+
+<div class="wrap">
+
+  <header>
+    <img class="logo" src="assets/pharoah.png" alt="PHAROAH">
+    <h1>PHAROAH</h1>
+    <div class="tagline" data-i18n="tagline">Paladins Mod Tool</div>
+    <div class="freeline" data-i18n="free">100% free &bull; open source &bull; easy to use</div>
+
+    <div class="pageswitch"><a href="index.html" class="on">BASE</a><a href="talents.html">4TH TALENTS</a></div>
+    <div>
+      <div class="langwrap">
+        <button class="lang on" data-lang="en">ENGLISH</button>
+        <button class="lang" data-lang="es">ESPA&Ntilde;OL</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="split">
+    <div>
+      <div class="demo-label" data-i18n="demolabel">the menu, tab by tab &mdash; click to read</div>
+      <div class="menu">
+        <div class="menu-title">
+          <span>PHAROAH</span>
+          <span class="keyhint" data-i18n="keyhint">INSERT = show / hide</span>
+        </div>
+        <div class="menu-body">
+          <div class="tabs" id="tabs"></div>
+          <div class="panel" id="panel"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="release">
+      <!-- "DEMO / AUGUST 23RD / 2026 / Perfect version coming August 28th" was
+           four stacked lines of date, which said nothing about what you get.
+           One heading and one line about what is next. -->
+      <div class="eyebrow demoword" data-i18n="demohead">DOWNLOAD DEMO PHAROAH</div>
+      <div class="demonote" data-i18n="demonote">UPDATED VERSION COMING AUGUST 28TH</div>
+      <div class="dlrow">
+        <img class="appico" src="assets/pharoah-app.png" alt="">
+        <!-- LIVE DOWNLOAD. PHAROAH.zip sits next to index.html on the host. -->
+        <a class="btn dlbtn" href="PHAROAH.zip" download data-i18n="dlnow">DOWNLOAD PHAROAH</a>
+      </div>
+      <p class="small" data-i18n="nofuss">No installer and nothing to configure.
+        Unzip it, run it, press <strong>INSERT</strong>.</p>
+      <button class="sharebig" id="shareBtn2" data-i18n="sharebig">SHARE THIS PAGE</button>
+    </div>
+  </div>
+
+  <section>
+    <h2 data-i18n="h_what">What PHAROAH is</h2>
+    <p class="body" data-i18n="p_what1"></p>
+    <p class="body" data-i18n="p_what2"></p>
+  </section>
+
+  <section>
+    <h2 data-i18n="h_how">How to use it</h2>
+    <ol class="steps" id="steps"></ol>
+  </section>
+
+  <section>
+    <h2 data-i18n="h_where">Where this is meant to be used</h2>
+    <div class="notice"><p data-i18n="p_where"></p></div>
+  </section>
+
+  <!-- ===== charity ===== -->
+  <section>
+    <h2 data-i18n="h_charity">Our Donations</h2>
+    <div class="charitybox">
+      <div class="cmonth" data-i18n="c_month">August 2026</div>
+      <div class="cgrid">
+        <div><div class="n">0</div><div class="l" data-i18n="c_unlocks">Unlocks</div></div>
+        <div><div class="n">$0</div><div class="l" data-i18n="c_donated">Donated</div></div>
+        <div><div class="n">$200</div><div class="l" data-i18n="c_goal">First goal</div></div>
+      </div>
+      <div class="cbar"><i style="width:0%"></i></div>
+      <p data-i18n="c_note"></p>
+      <div class="proBox">
+        <div class="proTitle" data-i18n="pro_t">Unlock Pro &mdash; $5</div>
+        <p data-i18n="pro_p"></p>
+        <ul class="proList">
+          <li data-i18n="pro_1">Unlock Pro features</li>
+          <li data-i18n="pro_2">$5 charitable contribution</li>
+          <li data-i18n="pro_3">Donation receipt</li>
+        </ul>
+        <a class="proBtn" href="#" onclick="return false;" data-i18n="pro_btn">Unlock &amp; Donate $5</a>
+        <div class="proSoon" data-i18n="pro_soon">Not live yet &mdash; nothing has been collected or donated.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HORUS / Smite ===== -->
+  <section id="horus">
+    <h2 data-i18n="h_more">More From OSIRIS</h2>
+    <div class="gameswitch">
+      <div class="gs active"><img src="assets/pharoah.png" alt=""><span>PALADINS</span><b>PHAROAH</b></div>
+      <a class="gs" href="horus.html"><img src="assets/horus.png" alt=""><span>SMITE</span><b>HORUS</b>
+        <em data-i18n="soon">Coming soon</em></a>
+    </div>
+    <p class="sharednote" data-i18n="shared"></p>
+  </section>
+
+  <!-- drive traffic to the games / portfolio -->
+  <a class="mecard" href="primal.html">
+    <img src="assets/picodev.png" alt="">
+    <div class="t">
+      <div class="nm" data-i18n="me_nm">I also make games</div>
+      <p data-i18n="me_p"></p>
+    </div>
+    <span class="go" data-i18n="me_go">See my projects &rarr;</span>
+  </a>
+
+  <footer><div style="margin-bottom:7px;opacity:.75">by <span class="pmark">PRIMAL<sup>APE</sup></span></div><span data-i18n="footer">
+    PHAROAH &mdash; a Paladins mod tool. Not affiliated with Hi-Rez Studios or Evil Mojo Games.
+  </span></footer>
+
+</div>
+
+<div class="toast" id="toast">Link copied</div>
+
+<script>
+/* =====================================================================
+   All copy lives here, in both languages. The tab panels are plain
+   descriptions of what each part of the tool covers — nothing on this
+   page pretends to be functional.
+   ===================================================================== */
+const I18N = {
+  en:{
+    madeby:'made by <span class="pmark">PRIMAL<sup>APE</sup></span>',
+    share:'COPY SHARE LINK', sharebig:'SHARE THIS PAGE',
+    tagline:'Paladins Mod Tool',
+    free:'100% free &bull; open source &bull; easy to use',
+    me_nm:'PICODEV &mdash; my game studio',
+    me_p:'PHAROAH is my first ever mod — my main work is six games being built in Godot, including a topdown hero shooter that is nearly finished.',
+    me_go:'Visit PICODEV &rarr;',
+    h_charity:'Our Donations', c_month:'August 2026', c_unlocks:'Unlocks',
+    c_donated:'Donated', c_goal:'First goal',
+    c_note:'PHAROAH is free and always will be. Optional Pro unlocks exist purely so the tool can raise money for humanitarian aid &mdash; every figure above is real, and stays at zero until it isn&rsquo;t.',
+    pro_t:'Unlock Pro &mdash; $5', pro_p:'Your $5 supports humanitarian aid.',
+    pro_1:'Unlock Pro features', pro_2:'$5 charitable contribution', pro_3:'Donation receipt',
+    pro_btn:'Unlock &amp; Donate $5',
+    pro_soon:'Not live yet &mdash; nothing has been collected or donated.',
+    h_more:'More From OSIRIS', soon:'Coming soon',
+    shared:'<b>SMITE AND PALADINS SHARE SERVERS.</b> An exploit that works on one will often apply to the other &mdash; and skins can work across both.',
+    demolabel:'the menu, tab by tab — click to read',
+    keyhint:'INSERT = show / hide',
+    fullrelease:'Demo Release', date:'AUGUST 23RD', notout:'Not out yet',
+    dlnow:'DOWNLOAD PHAROAH',
+    demohead:'DOWNLOAD DEMO PHAROAH',
+    demonote:'UPDATED VERSION COMING AUGUST 28TH',
+    nofuss:'No installer and nothing to configure. Unzip it, run it, press <strong>INSERT</strong>.',
+    h_what:'What PHAROAH is',
+    p_what1:'PHAROAH is a <strong>free mod tool</strong> for Paladins, built around one rule: it has to be easy to use. Unzip it, run it, press INSERT. No setup, no config files, no dependencies to hunt down.',
+    p_what2:'It began as a way to recover hidden firing modes and grew into a full toolkit — aim assistance, enemy visibility, prediction, cosmetics and quality-of-life features. The SDK and full source are published so anyone can read it, edit it, or build on it.',
+    h_how:'How to use it',
+    steps:['Download the archive and unzip it anywhere.',
+           'Start Paladins and get to the main menu.',
+           'Run the PHAROAH launcher from that folder.',
+           'Press <strong>INSERT</strong> in game to open and close the menu.',
+           'Pick a tab. Everything is labelled in plain English.'],
+    h_where:'Where this is meant to be used',
+    p_where:'<strong>Private, vetted lobbies.</strong> This is built for the community\'s invite-only servers, where everyone present has agreed to it — many of those servers allow mods openly, and some run walls-only rulesets that play more like a MOBA, with everyone visible and a longer time-to-kill. Those lobbies are locked, linked and moderated, so uninvited players are not a factor. Please keep it to them, and don\'t take it into public matchmaking.',
+    footer:'PHAROAH — a Paladins mod tool. Not affiliated with Hi-Rez Studios or Evil Mojo Games.'
+  },
+  es:{
+    madeby:'hecho por <span class="pmark">PRIMAL<sup>APE</sup></span>',
+    share:'COPIAR ENLACE', sharebig:'COMPARTIR ESTA PÁGINA',
+    tagline:'Herramienta de Mods para Paladins',
+    free:'100% gratis &bull; código abierto &bull; fácil de usar',
+    me_nm:'PICODEV &mdash; mi estudio de juegos',
+    me_p:'PHAROAH es mi primer mod — mi trabajo principal son seis juegos hechos en Godot, incluido un hero shooter cenital casi terminado.',
+    me_go:'Visitar PICODEV &rarr;',
+    h_charity:'Nuestras Donaciones', c_month:'Agosto 2026', c_unlocks:'Desbloqueos',
+    c_donated:'Donado', c_goal:'Primera meta',
+    c_note:'PHAROAH es gratis y siempre lo ser&aacute;. Los desbloqueos Pro opcionales existen solo para que la herramienta pueda recaudar para ayuda humanitaria &mdash; todas las cifras son reales y se quedan en cero hasta que dejen de estarlo.',
+    pro_t:'Desbloquear Pro &mdash; $5', pro_p:'Tus $5 apoyan la ayuda humanitaria.',
+    pro_1:'Desbloquea funciones Pro', pro_2:'$5 de contribuci&oacute;n ben&eacute;fica', pro_3:'Recibo de donaci&oacute;n',
+    pro_btn:'Desbloquear y Donar $5',
+    pro_soon:'A&uacute;n no est&aacute; activo &mdash; no se ha recaudado ni donado nada.',
+    h_more:'M&aacute;s de OSIRIS', soon:'Pr&oacute;ximamente',
+    shared:'<b>SMITE Y PALADINS COMPARTEN SERVIDORES.</b> Un exploit que funciona en uno suele aplicarse al otro &mdash; y los aspectos pueden funcionar en ambos.',
+    demolabel:'el menú, pestaña por pestaña — haz clic para leer',
+    keyhint:'INSERT = mostrar / ocultar',
+    fullrelease:'Lanzamiento Completo', date:'23 DE AGOSTO', notout:'Aún no disponible',
+    dlnow:'DESCARGAR PHAROAH',
+    demohead:'DESCARGAR DEMO DE PHAROAH',
+    demonote:'VERSI&Oacute;N ACTUALIZADA EL 28 DE AGOSTO',
+    nofuss:'Sin instalador y nada que configurar. Descomprime, ejecuta y pulsa <strong>INSERT</strong>.',
+    h_what:'Qué es PHAROAH',
+    p_what1:'PHAROAH es una <strong>herramienta de mods gratuita</strong> para Paladins, creada con una regla: tiene que ser fácil de usar. Descomprime, ejecuta, pulsa INSERT. Sin instalación, sin archivos de configuración, sin dependencias que buscar.',
+    p_what2:'Empezó como una forma de recuperar modos de disparo ocultos y creció hasta ser un kit completo — asistencia de puntería, visibilidad de enemigos, predicción, cosméticos y mejoras de calidad de vida. El SDK y el código fuente están publicados para que cualquiera pueda leerlo, editarlo o ampliarlo.',
+    h_how:'Cómo usarlo',
+    steps:['Descarga el archivo y descomprímelo donde quieras.',
+           'Inicia Paladins y llega al menú principal.',
+           'Ejecuta el lanzador de PHAROAH desde esa carpeta.',
+           'Pulsa <strong>INSERT</strong> en el juego para abrir y cerrar el menú.',
+           'Elige una pestaña. Todo está explicado con claridad.'],
+    h_where:'Dónde está pensado usarse',
+    p_where:'<strong>Salas privadas y verificadas.</strong> Está hecho para los servidores por invitación de la comunidad, donde todos los presentes lo han aceptado — muchos de esos servidores permiten mods abiertamente, y algunos usan reglas de solo-paredes que se juegan más como un MOBA, con todos visibles y un tiempo de muerte más largo. Esas salas están cerradas, vinculadas y moderadas, así que los jugadores no invitados no son un problema. Por favor úsalo solo ahí, y no lo lleves a partidas públicas.',
+    footer:'PHAROAH — una herramienta de mods para Paladins. Sin afiliación con Hi-Rez Studios ni Evil Mojo Games.'
+  }
+};
+
+const TABS = [
+  {k:'aim',  en:'Aim',        es:'Puntería'},
+  {k:'heal', en:'Auto-Heal',  es:'Auto-Cura'},
+  {k:'esp',  en:'Enemy ESP',  es:'ESP'},
+  {k:'octavia', en:'Octavia', es:'Octavia'},
+  {k:'fire', en:'Fire Modes', es:'Modos'},
+  {k:'talent',en:'4th Talents',es:'4&ordm; Talento'},
+  {k:'skins',en:'Skins',      es:'Aspectos'},
+  {k:'vis',  en:'Visuals',    es:'Visuales'}
+];
+
+const PANELS = {
+en:{
+  aim:`<h3>Aim &amp; Combat <span class="badge ok">Working</span></h3>
+    <p>Aim help built on the game's own input, plus a prediction system for
+    projectile champions.</p>
+    <ul>
+      <li><b>Triggerbot</b> — fires the moment a target crosses your crosshair</li>
+      <li><b>Aimbot</b> using standard mouse signals, so movement stays natural</li>
+      <li><b>Prediction</b> that accounts for enemy velocity <i>and</i> projectile speed</li>
+      <li>Draws a <b>white predicted box</b> offset from the real hitbox, so you can
+        see where it is leading before you commit</li>
+      <li>Aims and fires toward the predicted position automatically</li>
+      <li><b>Hit-scan vs projectile reference</b> for every champion, with measured
+        projectile speeds rather than guesses</li>
+    </ul>
+    <div class="foot">Prediction uses a measured speed table, not estimates.</div>`,
+
+  heal:`<h3>Healer Auto-Heal <span class="badge ok">Working</span></h3>
+    <p>A triggerbot for support champions. Pass your cursor over a hurt ally and the
+    heal goes out — but only when it will actually do something.</p>
+    <ul>
+      <li>Heals an ally the moment your cursor passes over them</li>
+      <li>Only fires when that ally is <b>below full health</b></li>
+      <li><b>Detects cauterize</b> and holds the heal while it is active</li>
+      <li>As soon as cauterize drops, the held heal is applied</li>
+      <li>Covers every healer in the roster</li>
+    </ul>
+    <div class="foot">Cauterize awareness is the part that makes it worth using —
+    it stops you wasting healing into a 90% reduction.</div>`,
+
+  esp:`<h3>Enemy ESP <span class="badge ok">Working</span></h3>
+    <p>See where everyone is and what they are about to do. Every element toggles
+    independently.</p>
+    <ul>
+      <li>Boxes through walls</li>
+      <li><b>Rainbow outline</b> when an enemy has their ultimate up</li>
+      <li>Champion name above each box</li>
+      <li>Enemy health bars</li>
+      <li>Skeletons with per-limb groups, and a distinct head marker</li>
+      <li>Adjustable colour, thickness and maximum distance</li>
+    </ul>
+    <div class="foot">Names are resolved from the game's internal codenames — it
+    calls Maeve "Blades".</div>`,
+
+  octavia:`<h3>Infinite Octavia Shield <span class="badge ok">Working</span></h3>
+    <img class="shot" src="assets/octavia.png" alt="Octavia shield">
+    <p>A macro that keeps Octavia's shield up continuously by re-issuing it on a
+    timing the server accepts, instead of waiting out the normal window.</p>
+    <ul>
+      <li>Holds the shield up indefinitely while enabled</li>
+      <li>Runs on a tuned interval — no manual spamming</li>
+      <li>Toggle on and off freely mid-match</li>
+    </ul>
+    <div class="foot">The clearest demonstration of what a well-timed request can do
+    without touching anything the server owns.</div>`,
+
+  fire:`<h3>Fire Modes &amp; Talents <span class="badge ok">Working</span></h3>
+    <p>Weapons and abilities carry more firing modes than the game ever lets you
+    select. This lists them all and lets you switch.</p>
+    <ul>
+      <li>Scans every equipped device and reports its real mode count</li>
+      <li>Switch to unused modes — including ones built, shipped and never enabled</li>
+      <li>Works on abilities, not only the primary weapon</li>
+      <li><b>Talent switching</b>, including entries not normally offered</li>
+      <li><b>Instant respawn</b> with no waiting period</li>
+    </ul>
+    <div class="foot">The oldest part of the tool and the reason it exists.</div>`,
+
+  talent:`<h3>4th Talents <span class="badge ok">Working</span></h3>
+    <p>Every champion has talents that were built and then never made selectable &mdash;
+    a hidden fourth, fifth, sometimes sixth option sitting in the game files. PHAROAH
+    documents all of them, and there is a step-by-step guide for reaching them.</p>
+    <ul>
+      <li><b>309 talent IDs</b> catalogued across the whole roster</li>
+      <li>Marked clearly as <b>in-game</b> or <b>hidden</b>, with descriptions</li>
+      <li>Notes on which ones <b>work in real matches</b> and which are range-only</li>
+      <li>Warnings on the few that crash &mdash; so you do not find out the hard way</li>
+      <li>Full written guide plus a <b>video walkthrough</b></li>
+    </ul>
+    <div class="vidbox">
+      <a href="talents.html">&#9654;&nbsp; Open the full talent list & guide</a>
+    </div>
+    <div class="foot">Some finds are original research &mdash; Mal&rsquo;Damba&rsquo;s Wekono&rsquo;s
+    Curse (27798) was found here first.</div>`,
+
+  skins:`<h3>Skins <span class="badge wip">In progress</span></h3>
+    <p>Cosmetics the game already contains, loaded and shown locally. A champion is
+    three separate pieces — body, first-person arms, and weapon — so each is handled
+    on its own.</p>
+    <ul>
+      <li>Scans which cosmetics are actually loaded in memory</li>
+      <li>Matches each mesh to its own textures automatically</li>
+      <li>Separate lists for <b>body</b>, <b>arms</b> and <b>weapon</b> textures</li>
+      <li>Refuses any mesh whose skeleton does not fit, instead of crashing</li>
+      <li>Re-applies your choice after you die</li>
+    </ul>
+    <div class="foot">Fully working in the shooting range. Card maxing and full skin
+    unlocks are still open problems — the research is published either way.</div>`,
+
+  vis:`<h3>Visuals <span class="badge ok">Working</span></h3>
+    <p>Readability options the client never exposed.</p>
+    <ul>
+      <li>Greyscale recolour of the whole scene</li>
+      <li>Custom enemy health-bar colours</li>
+      <li>Custom ally health-bar colours</li>
+      <li>Colour-blind modes and low-health feedback</li>
+      <li>Wireframe rendering</li>
+    </ul>
+    <div class="foot">Useful well beyond cosmetics if standard Paladins contrast is
+    hard for you to read.</div>`
+},
+es:{
+  aim:`<h3>Puntería y Combate <span class="badge ok">Funciona</span></h3>
+    <p>Ayuda de puntería basada en la entrada del propio juego, más un sistema de
+    predicción para campeones de proyectil.</p>
+    <ul>
+      <li><b>Triggerbot</b> — dispara en el momento en que un objetivo cruza tu mira</li>
+      <li><b>Aimbot</b> con señales de ratón estándar, el movimiento se mantiene natural</li>
+      <li><b>Predicción</b> que considera la velocidad del enemigo <i>y</i> del proyectil</li>
+      <li>Dibuja una <b>caja blanca predicha</b> separada de la real, para ver hacia
+        dónde apunta antes de disparar</li>
+      <li>Apunta y dispara hacia la posición predicha automáticamente</li>
+      <li><b>Referencia hit-scan vs proyectil</b> para cada campeón, con velocidades medidas</li>
+    </ul>
+    <div class="foot">La predicción usa una tabla de velocidades medida, no estimaciones.</div>`,
+
+  heal:`<h3>Auto-Cura para Sanadores <span class="badge ok">Funciona</span></h3>
+    <p>Un triggerbot para sanadores. Pasa el cursor sobre un aliado herido y la cura
+    sale — pero solo cuando va a servir de algo.</p>
+    <ul>
+      <li>Cura a un aliado en cuanto tu cursor pasa por encima</li>
+      <li>Solo actúa si ese aliado está <b>por debajo de la vida máxima</b></li>
+      <li><b>Detecta cauterizar</b> y retiene la cura mientras está activo</li>
+      <li>En cuanto cauterizar desaparece, la cura retenida se aplica</li>
+      <li>Compatible con todos los sanadores</li>
+    </ul>
+    <div class="foot">La detección de cauterizar es lo que lo hace útil — evita
+    desperdiciar curación contra una reducción del 90%.</div>`,
+
+  esp:`<h3>ESP de Enemigos <span class="badge ok">Funciona</span></h3>
+    <p>Mira dónde está todo el mundo y qué va a hacer. Cada elemento se activa por
+    separado.</p>
+    <ul>
+      <li>Cajas a través de paredes</li>
+      <li><b>Contorno arcoíris</b> cuando un enemigo tiene su definitiva lista</li>
+      <li>Nombre del campeón sobre cada caja</li>
+      <li>Barras de vida enemigas</li>
+      <li>Esqueletos con grupos por extremidad y marcador de cabeza</li>
+      <li>Color, grosor y distancia máxima ajustables</li>
+    </ul>
+    <div class="foot">Los nombres se resuelven desde los nombres internos del juego
+    — a Maeve la llama "Blades".</div>`,
+
+  octavia:`<h3>Escudo Infinito de Octavia <span class="badge ok">Funciona</span></h3>
+    <img class="shot" src="assets/octavia.png" alt="Escudo de Octavia">
+    <p>Un macro que mantiene el escudo de Octavia activo de forma continua,
+    reemitiéndolo en un tiempo que el servidor acepta.</p>
+    <ul>
+      <li>Mantiene el escudo indefinidamente mientras esté activado</li>
+      <li>Funciona en un intervalo ajustado — sin pulsar repetidamente</li>
+      <li>Se activa y desactiva libremente en partida</li>
+    </ul>
+    <div class="foot">La mejor demostración de lo que logra una petición bien
+    cronometrada sin tocar nada que controle el servidor.</div>`,
+
+  fire:`<h3>Modos de Disparo y Talentos <span class="badge ok">Funciona</span></h3>
+    <p>Las armas y habilidades tienen más modos de disparo de los que el juego te
+    deja elegir. Aquí se listan todos.</p>
+    <ul>
+      <li>Escanea cada dispositivo equipado y muestra su número real de modos</li>
+      <li>Cambia a modos sin usar — incluidos algunos que nunca se activaron</li>
+      <li>Funciona en habilidades, no solo en el arma principal</li>
+      <li><b>Cambio de talentos</b>, incluyendo entradas no ofrecidas normalmente</li>
+      <li><b>Reaparición instantánea</b> sin espera</li>
+    </ul>
+    <div class="foot">La parte más antigua de la herramienta y la razón de su existencia.</div>`,
+
+  talent:`<h3>4&ordm; Talento <span class="badge ok">Funciona</span></h3>
+    <p>Cada campe&oacute;n tiene talentos que se crearon y nunca se hicieron seleccionables
+    &mdash; un cuarto, quinto y a veces sexto talento oculto en los archivos del juego.
+    PHAROAH los documenta todos, con una gu&iacute;a paso a paso para alcanzarlos.</p>
+    <ul>
+      <li><b>309 IDs de talento</b> catalogados en todo el roster</li>
+      <li>Marcados como <b>en el juego</b> u <b>ocultos</b>, con descripciones</li>
+      <li>Notas sobre cu&aacute;les <b>funcionan en partidas reales</b> y cu&aacute;les solo en el campo de tiro</li>
+      <li>Avisos sobre los pocos que crashean &mdash; para que no lo descubras a la mala</li>
+      <li>Gu&iacute;a escrita completa y <b>v&iacute;deo tutorial</b></li>
+    </ul>
+    <div class="vidbox">
+      <a href="talents.html">&#9654;&nbsp; Abrir la lista completa y la gu&iacute;a</a>
+    </div>
+    <div class="foot">Algunos hallazgos son investigaci&oacute;n propia &mdash; la Maldici&oacute;n de
+    Wekono de Mal&rsquo;Damba (27798) se encontr&oacute; aqu&iacute; primero.</div>`,
+
+  skins:`<h3>Aspectos <span class="badge wip">En progreso</span></h3>
+    <p>Cosméticos que el juego ya contiene, cargados y mostrados localmente. Un
+    campeón son tres piezas — cuerpo, brazos en primera persona y arma — y cada una
+    se gestiona por separado.</p>
+    <ul>
+      <li>Escanea qué cosméticos están realmente cargados en memoria</li>
+      <li>Empareja cada malla con sus propias texturas automáticamente</li>
+      <li>Listas separadas para <b>cuerpo</b>, <b>brazos</b> y <b>arma</b></li>
+      <li>Rechaza mallas cuyo esqueleto no encaja, en vez de fallar</li>
+      <li>Vuelve a aplicar tu elección después de morir</li>
+    </ul>
+    <div class="foot">Funciona por completo en el campo de tiro. El maximizado de
+    cartas y el desbloqueo total de aspectos siguen sin resolverse.</div>`,
+
+  vis:`<h3>Visuales <span class="badge ok">Funciona</span></h3>
+    <p>Opciones de legibilidad que el cliente nunca ofreció.</p>
+    <ul>
+      <li>Escala de grises en toda la escena</li>
+      <li>Colores personalizados para barras de vida enemigas</li>
+      <li>Colores personalizados para barras de vida aliadas</li>
+      <li>Modos para daltonismo y aviso de vida baja</li>
+      <li>Renderizado en malla de alambre</li>
+    </ul>
+    <div class="foot">Útil más allá de lo estético si el contraste normal de Paladins
+    te cuesta leer.</div>`
+}
+};
+
+let lang = 'en', active = 'aim';
+
+function buildTabs(){
+  const box = document.getElementById('tabs');
+  box.innerHTML = '';
+  TABS.forEach(t=>{
+    const d = document.createElement('div');
+    d.className = 'tab' + (t.k===active?' active':'');
+    d.textContent = t[lang];
+    d.addEventListener('click',()=>{active=t.k;render();});
+    box.appendChild(d);
+  });
+}
+function render(){
+  const L = I18N[lang];
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k = el.dataset.i18n;
+    if(L[k]) el.innerHTML = L[k];
+  });
+  const steps = document.getElementById('steps');
+  steps.innerHTML = '';
+  L.steps.forEach(s=>{ const li=document.createElement('li'); li.innerHTML=s; steps.appendChild(li); });
+  buildTabs();
+  document.getElementById('panel').innerHTML = PANELS[lang][active];
+  document.querySelectorAll('.lang').forEach(b=>b.classList.toggle('on', b.dataset.lang===lang));
+}
+document.querySelectorAll('.lang').forEach(b=>{
+  b.addEventListener('click',()=>{ lang=b.dataset.lang; render(); });
+});
+
+/* ---- share: copy the URL ---- */
+function share(){
+  const url = window.location.href.split('#')[0];
+  const done = ()=>{
+    const t = document.getElementById('toast');
+    t.textContent = (lang==='es') ? '¡Enlace copiado!' : 'Link copied!';
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), 1900);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(done).catch(()=>fallback(url,done));
+  } else fallback(url,done);
+}
+function fallback(url,done){
+  const ta=document.createElement('textarea');
+  ta.value=url; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{document.execCommand('copy');done();}catch(e){prompt('Copy this link:',url);}
+  document.body.removeChild(ta);
+}
+document.getElementById('shareBtn').addEventListener('click',share);
+document.getElementById('shareBtn2').addEventListener('click',share);
+
+render();
+</script>
+
+</body>
+</html>

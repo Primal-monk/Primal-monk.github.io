@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PICODEV — Game Studio</title>
+<link rel="icon" type="image/png" href="assets/picodev.png">
+<meta name="description" content="PICODEV — game studio by PRIMALAPE. Six games in Godot, plus mod tools.">
+<style>
+  :root{
+    --bg:#0F0A37; --bg2:#171041; --bg3:#1f1652; --bg4:#2a1e6b;
+    --hi:#FBC962; --hi2:#d9a63c; --sec:#C6685C; --sec2:#dd8b80;
+    --paper:#efe6d0; --line:rgba(251,201,98,.28);
+  }
+  body[data-theme="blue"]{--bg:#180F3A;--bg2:#20144a;--bg3:#2a1a5e;--bg4:#382576;
+    --hi:#FF8A3D;--hi2:#d96b22;--sec:#4FD8FF;--sec2:#7ee4ff;--line:rgba(255,138,61,.3)}
+  body[data-theme="green"]{--bg:#0B2418;--bg2:#0f3020;--bg3:#154029;--bg4:#1d5636;
+    --hi:#7BE06A;--hi2:#4faa40;--sec:#C6A05C;--sec2:#dcbb7c;--line:rgba(123,224,106,.3)}
+  body[data-theme="aqua"]{--bg:#0A2436;--bg2:#0e3049;--bg3:#134060;--bg4:#1a5680;
+    --hi:#5FE3D0;--hi2:#34b5a2;--sec:#8FB8D6;--sec2:#b3d3e8;--line:rgba(95,227,208,.3)}
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scrollbar-color:var(--hi) var(--bg3);scrollbar-width:auto}
+  body{font-family:"Trebuchet MS","Segoe UI",sans-serif;background:var(--bg);
+    color:var(--sec2);line-height:1.62;padding-top:60px;overflow-x:hidden}
+  ::-webkit-scrollbar{width:17px}
+  ::-webkit-scrollbar-track{background:var(--bg3);border-left:1px solid var(--line)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--hi),var(--hi2));
+    border:2px solid var(--bg3);border-radius:12px}
+
+  .gactions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:18px 0 6px;
+    padding-top:14px;border-top:1px solid var(--line)}
+  .gbtn{background:rgba(255,255,255,.05);border:2px dashed rgba(255,255,255,.26);
+    border-radius:6px;color:rgba(255,255,255,.46);font-size:.74rem;font-weight:900;
+    letter-spacing:.09em;text-transform:uppercase;padding:9px 18px;cursor:not-allowed;
+    font-family:inherit;text-align:center;line-height:1.25}
+  .gbtn .soon{display:block;font-size:.58rem;letter-spacing:.14em;opacity:.7;font-weight:700;margin-top:3px}
+  .eta{margin-left:auto;font-size:.66rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--hi);border:1px solid var(--hi2);border-radius:20px;padding:6px 14px;white-space:nowrap}
+  @media(max-width:620px){.eta{margin-left:0}}
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:60px;background:var(--bg2);
+    border-bottom:2px solid var(--hi2);box-shadow:0 2px 12px rgba(0,0,0,.5);
+    display:flex;align-items:center;gap:12px;padding:0 16px}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+  .brand .upar{color:var(--hi);font-size:1.15rem;font-weight:900}
+  .brand .logoswap{position:relative;width:44px;height:44px;flex:none}
+  .brand .logoswap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+    transition:opacity .18s}
+  .brand .logoswap .b{opacity:0}
+  .brand .logoswap:hover .a{opacity:0}
+  .brand .logoswap:hover .b{opacity:1}
+  .brand .nm{font-size:1.05rem;color:var(--hi);font-weight:900;letter-spacing:.1em;line-height:1.1}
+  .brand .by{font-size:.66rem;color:var(--sec2);letter-spacing:.06em}
+  .topbar .spacer{flex:1}
+  .langwrap{display:inline-flex;border:1px solid var(--hi2);border-radius:5px;overflow:hidden}
+  .lang{background:var(--bg3);border:0;cursor:pointer;padding:7px 12px;font-size:.72rem;
+    font-weight:700;color:var(--sec2);transition:background .12s}
+  .lang.on{background:var(--hi);color:var(--bg)}
+  .themebox{display:grid;grid-template-columns:1fr 1fr;gap:2px;width:32px;height:32px;
+    border:1px solid var(--hi2);border-radius:6px;overflow:hidden;padding:2px;background:var(--bg4)}
+  .themebox i{cursor:pointer;border-radius:2px}
+  .sw-yellow{background:#FBC962}.sw-blue{background:#FF8A3D}
+  .sw-green{background:#7BE06A}.sw-aqua{background:#5FE3D0}
+
+  /* right-hand social rail */
+  .rail{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:55;
+    display:flex;flex-direction:column;gap:8px}
+  .rail a{width:60px;height:60px;background:transparent;border:0;display:grid;place-items:center;transition:background .13s,transform .13s}
+  .rail a:hover{transform:translateX(-3px) scale(1.08)}
+  .rail img{width:50px;height:50px;object-fit:contain}
+  @media(max-width:900px){.rail{position:static;transform:none;flex-direction:row;
+    justify-content:center;margin:14px 0}}
+
+  .hero{position:relative;text-align:center;padding:0 0 26px;margin-bottom:26px}
+  .heroimg{position:relative;width:100%;height:340px;overflow:hidden}
+  .heroimg img{width:100%;height:100%;object-fit:cover;object-position:center 35%}
+  .heroimg::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,transparent 0%,transparent 62%,var(--bg) 100%)}
+  .heroinner{position:relative;margin-top:-108px;z-index:3}
+  .heroswap{position:relative;display:block;width:224px;height:224px;margin:0 auto 10px}
+  .heroswap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .2s}
+  .heroswap .b{opacity:0}
+  .heroswap:hover .a{opacity:0}
+  .heroswap:hover .b{opacity:1}
+  .authorcard{display:inline-flex;align-items:center;gap:11px;margin-top:12px;
+    background:var(--bg2);border:1px solid var(--hi2);border-radius:30px;padding:7px 20px 7px 8px;
+    text-decoration:none;transition:background .13s}
+  .authorcard:hover{background:var(--bg3)}
+  .authorcard img{width:40px;height:40px;border-radius:50%;border:2px solid #fff;object-fit:cover}
+  .authorcard .l{font-size:.64rem;color:var(--sec2);letter-spacing:.16em;text-transform:uppercase;display:block}
+  .authorcard .n{font-size:.98rem;color:var(--hi);font-weight:900;letter-spacing:.04em}
+  h1{font-size:clamp(2.4rem,8vw,4.2rem);letter-spacing:.13em;font-weight:900;color:var(--hi);
+    text-shadow:0 3px 10px rgba(0,0,0,.7)}
+  .roles{margin-top:4px;color:var(--paper);letter-spacing:.2em;font-size:.82rem;text-transform:uppercase}
+  .byline{margin-top:8px;color:var(--sec2);font-size:.86rem}
+  .byline b{color:var(--hi)}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
+  section{margin-bottom:34px}
+  .h2row{display:flex;align-items:center;gap:14px;border-bottom:2px solid var(--hi2);
+    padding-bottom:7px;margin-bottom:15px;flex-wrap:wrap}
+  h2{color:var(--hi);font-size:.95rem;letter-spacing:.19em;text-transform:uppercase;flex:1}
+  .godotline{display:inline-flex;align-items:center;gap:7px;background:var(--bg3);
+    border:1px solid var(--hi2);border-radius:16px;padding:4px 13px;font-size:.7rem;
+    font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--hi)}
+  .godotline img{width:16px;height:16px;object-fit:contain}
+  p.body{color:var(--paper);margin-bottom:12px}
+  p.body b{color:var(--hi)}
+  .aside{background:var(--bg2);border-left:3px solid var(--hi);border-radius:5px;
+    padding:13px 16px;font-size:.88rem;color:var(--paper);margin-top:12px}
+
+  .games{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+  @media(max-width:760px){.games{grid-template-columns:1fr}}
+  .game{background:var(--bg2);border:2px solid var(--line);border-radius:9px;overflow:hidden;
+    transition:border-color .15s,transform .15s}
+  .game:hover{border-color:var(--hi);transform:translateY(-2px)}
+  .game.flag{grid-column:1/-1;border:3px solid #fff}
+  .game.open{grid-column:1/-1;border-color:var(--hi)}
+  .ghead{display:flex;align-items:center;gap:13px;padding:15px 17px;cursor:pointer;user-select:none}
+  .ghead img.ico{width:52px;height:52px;object-fit:contain;flex:none;border-radius:8px}
+  .ghead .t{flex:1;min-width:0}
+  .ghead .nm{color:var(--hi);font-weight:900;font-size:1.04rem;letter-spacing:.08em}
+  .ghead .gn{color:var(--sec);font-size:.76rem}
+  .chev{color:var(--hi);font-size:1.2rem;font-weight:900}
+  /* progress pill + bar */
+  .pwrap{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none}
+  .pwrap.pcenter{align-items:center;margin-top:8px}
+  .pct{font-size:.68rem;color:#141018;padding:2px 10px;border-radius:11px;font-weight:900;letter-spacing:.05em}
+  /* progress colour tiers: low = warm red, mid = amber, high = neon green */
+  .pct.p-low{background:#e8564a}
+  .pct.p-mid{background:#f0b429}
+  .pct.p-high{background:#4fe08a}
+  .pbar i.p-low{background:linear-gradient(90deg,#a83228,#e8564a)}
+  .pbar i.p-mid{background:linear-gradient(90deg,#c08610,#f0b429)}
+  .pbar i.p-high{background:linear-gradient(90deg,#27a862,#4fe08a)}
+  .pbar{width:74px;height:6px;background:var(--bg4);border-radius:4px;overflow:hidden}
+  .pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--hi2),var(--hi))}
+
+  .flaghead{display:flex;align-items:center;justify-content:center;gap:20px;
+    padding:20px 17px;cursor:pointer;user-select:none;flex-wrap:wrap}
+  .flaghead img.boss{width:64px;height:64px;object-fit:contain;image-rendering:pixelated}
+  .flaghead .mid{text-align:center}
+  .flaghead img.ico{width:88px;height:88px;object-fit:contain;image-rendering:pixelated;
+    display:block;margin:0 auto 6px;cursor:pointer}
+  .flaghead .nm{color:var(--hi);font-weight:900;font-size:1.5rem;letter-spacing:.13em}
+  .flaghead .gn{color:var(--sec);font-size:.82rem;margin-top:2px}
+  .swaphint{font-size:.62rem;color:var(--sec);letter-spacing:.08em;margin-top:3px}
+
+  .gbody{display:none;padding:0 18px 18px}
+  .game.open .gbody{display:block}
+  .gbody .center{text-align:center;margin-bottom:14px}
+  .gbody .center img{width:96px;height:96px;object-fit:contain;image-rendering:pixelated;margin-bottom:6px}
+  .gbody .center .nm{color:var(--hi);font-weight:900;font-size:1.3rem;letter-spacing:.12em}
+  .gbody .center .gn{color:var(--sec);font-size:.8rem}
+  .gbody p{color:var(--paper);font-size:.9rem;margin-bottom:11px}
+  .gbody ul{list-style:none;margin-bottom:12px}
+  .gbody li{color:var(--paper);font-size:.87rem;padding:4px 0 4px 17px;position:relative}
+  .gbody li::before{content:"\25B8";position:absolute;left:0;color:var(--hi)}
+  .gbody li b{color:var(--hi)}
+  .shots{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 14px}
+  @media(max-width:600px){.shots{grid-template-columns:1fr}}
+  .shots img{width:100%;height:200px;object-fit:cover;border:1px solid var(--hi2);
+    border-radius:6px;cursor:zoom-in;transition:transform .13s,border-color .13s}
+  .shots img:hover{transform:scale(1.02);border-color:var(--hi)}
+  .closebtn{background:var(--bg4);border:1px solid var(--hi2);border-radius:5px;color:var(--hi);
+    font-size:.74rem;font-weight:700;letter-spacing:.09em;padding:7px 15px;cursor:pointer;text-transform:uppercase}
+  .closebtn:hover{background:var(--hi);color:var(--bg)}
+
+  /* lightbox */
+  .lb{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:200;display:none;
+    align-items:center;justify-content:center;padding:30px;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%;border:2px solid var(--hi);border-radius:6px}
+  .lb .x{position:absolute;top:18px;right:24px;color:#fff;font-size:2.2rem;font-weight:900;
+    cursor:pointer;line-height:1}
+
+  .cardrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px}
+  .mcard{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--bg3),var(--bg2));
+    border:2px solid var(--hi);border-radius:9px;padding:16px 18px;text-decoration:none}
+  .mcard:hover{background:var(--bg4)}
+  .mcard img{width:64px;height:64px;object-fit:contain;flex:none;border-radius:12px}
+  .mcard .t{flex:1;min-width:0}
+  .mcard .nm{color:var(--hi);font-weight:900;font-size:1.1rem;letter-spacing:.11em}
+  .mcard p{color:var(--paper);font-size:.82rem;margin:4px 0 0}
+  .soonpill{display:inline-block;margin-top:5px;background:var(--sec);color:#fff;
+    font-size:.6rem;padding:2px 9px;border-radius:9px;font-weight:900;letter-spacing:.1em}
+
+  .advice{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:19px}
+  .advice ol{list-style:none;counter-reset:a}
+  .advice li{counter-increment:a;position:relative;padding:9px 0 9px 42px;color:var(--paper);
+    font-size:.92rem;border-bottom:1px solid rgba(255,255,255,.06)}
+  .advice li:last-child{border-bottom:0}
+  .advice li::before{content:counter(a);position:absolute;left:0;top:8px;width:27px;height:27px;
+    border-radius:5px;background:var(--hi);color:var(--bg);display:grid;place-items:center;
+    font-weight:900;font-size:.82rem}
+  .advice li b{color:var(--hi)}
+  .future{background:var(--bg2);border:1px dashed var(--hi2);border-radius:8px;padding:16px 19px}
+  .future p{color:var(--paper);font-size:.88rem;margin:0}
+  .future b{color:var(--hi)}
+
+  .bottomart{width:100%;margin-top:20px;display:block;opacity:.9;
+    -webkit-mask-image:linear-gradient(180deg,transparent,#000 45%);
+    mask-image:linear-gradient(180deg,transparent,#000 45%)}
+  footer{text-align:center;padding:18px 0 30px;font-size:.78rem;color:var(--sec)}
+
+/* ============================================================
+   THE WORDMARK - why this is plain letters and not the fancy ones
+   ============================================================
+   It used to be written with Mathematical Bold Sans-Serif capitals
+   (U+1D5E3...) and modifier letters (U+1D2C...). Those are real Unicode,
+   but almost no font actually contains them - so most browsers drew
+   empty boxes instead of letters. That is the block symbol.
+
+   Now it is ordinary A-Z, made bold and superscripted with CSS, which
+   every font on earth can render. Looks the same, cannot break. */
+.pmark{ font-weight:800; letter-spacing:.06em; }
+.pmark sup{ font-size:.62em; font-weight:800; letter-spacing:.04em;
+            vertical-align:super; margin-left:.06em; }
+</style>
+</head>
+<body data-theme="yellow">
+
+<div class="topbar">
+  <a class="brand" href="omni.html" title="ANGELCORP - parent company">
+    <span class="upar">&larr;</span>
+    <span class="logoswap">
+      <img class="a" src="assets/angelcorp.png" alt="">
+      <img class="b" src="assets/angelcorp.png" alt="">
+    </span>
+    <span>
+      <span class="nm"><span style="color:#fff">ANGEL</span><span style="color:#e0554f">CORP</span></span><br>
+      <span class="by" style="color:#e0554f">parent company</span>
+    </span>
+  </a>
+  <div class="spacer"></div>
+  <div class="themebox" title="Theme">
+    <i class="sw-yellow" data-theme="yellow"></i><i class="sw-blue" data-theme="blue"></i>
+    <i class="sw-green" data-theme="green"></i><i class="sw-aqua" data-theme="aqua"></i>
+  </div>
+  <div class="langwrap">
+    <button class="lang on" data-lang="en">EN</button>
+    <button class="lang" data-lang="es">ES</button>
+  </div>
+</div>
+
+<div class="rail">
+  <a href="https://primalmonkey.itch.io" target="_blank" rel="noopener" title="itch.io"><img src="assets/ic-itch.png" alt="itch.io"></a>
+  <a href="https://github.com/Primal-monk" target="_blank" rel="noopener" title="GitHub"><img src="assets/ic-github.png" alt="GitHub"></a>
+  <a href="https://x.com/art_pixelate" target="_blank" rel="noopener" title="Twitter"><img src="assets/ic-twitter.png" alt="Twitter"></a>
+  <a href="https://www.youtube.com/@Primal_Monke" target="_blank" rel="noopener" title="YouTube"><img src="assets/ic-youtube.png" alt="YouTube"></a>
+  <a href="https://discord.gg/WNtne3YauG" target="_blank" rel="noopener" title="Discord"><img src="assets/ic-discord.png" alt="Discord"></a>
+</div>
+
+<div class="hero">
+  <div class="heroimg"><img src="assets/banner.png" alt=""></div>
+  <div class="heroinner">
+    <span class="heroswap"><img class="a" src="assets/picodev.png" alt="PICODEV"><img class="b" src="assets/picodev-crt.png" alt=""></span>
+    <h1>PICODEV</h1>
+    <div class="roles" data-i18n="roles"></div>
+    <a class="authorcard" href="https://x.com/art_pixelate" target="_blank" rel="noopener">
+      <img src="assets/primal.png" alt="">
+      <span><span class="l" data-i18n="byline">Founded and made by</span>
+      <span class="n"><span class="pmark">PRIMAL<sup>APE</sup></span></span></span></a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section>
+    <div class="h2row"><h2 data-i18n="h_about">About</h2></div>
+    <p class="body" data-i18n="p_about"></p>
+    <div class="aside" data-i18n="p_assets"></div>
+  </section>
+
+  <section>
+    <div class="h2row">
+      <h2 data-i18n="h_games">Games in Development</h2>
+      <div class="godotline"><img src="assets/godot.png" alt=""><span data-i18n="madewith">All made with Godot</span></div>
+    </div>
+    <div class="games" id="games"></div>
+  </section>
+
+  <section>
+    <div class="h2row"><h2 data-i18n="h_mods">Mod Tools</h2></div>
+    <div class="cardrow">
+      <a class="mcard" href="index.html">
+        <img src="assets/pharoah.png" alt="">
+        <div class="t"><div class="nm">PHAROAH</div><p data-i18n="p_pharoah"></p></div>
+      </a>
+      <a class="mcard" href="horus.html">
+        <img src="assets/horus.png" alt="">
+        <div class="t"><div class="nm">HORUS</div><p data-i18n="p_horus"></p>
+          <span class="soonpill" data-i18n="soon">Coming soon</span></div>
+      </a>
+      <a class="mcard" href="osiris.html">
+        <img src="assets/osiris.png" alt="">
+        <div class="t"><div class="nm">OSIRIS</div><p data-i18n="p_osiris"></p></div>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <div class="h2row"><h2 data-i18n="h_advice">How I Think You Should Make Games</h2></div>
+    <div class="advice"><ol id="advice"></ol></div>
+  </section>
+
+  <section>
+    <div class="h2row"><h2 data-i18n="h_future">On the Whiteboard</h2></div>
+    <div class="future"><p data-i18n="p_future"></p></div>
+  </section>
+
+  <section>
+    <div class="h2row"><h2 data-i18n="h_corp">Parent Company</h2></div>
+    <a class="mcard" href="omni.html" style="border-color:#b03a3a">
+      <img src="assets/angelcorp.png" alt="">
+      <div class="t"><div class="nm" style="color:#e0554f">ANGEL<span style="color:#fff">CORP</span></div>
+      <p data-i18n="p_corp"></p></div>
+    </a>
+  </section>
+
+</div>
+
+<img class="bottomart" src="assets/bottom.png" alt="">
+<footer data-i18n="footer"></footer>
+
+<div class="lb" id="lb"><span class="x">&times;</span><img src="" alt=""></div>
+
+<script>
+const I18N={
+en:{
+ roles:'Game Studio &bull; Godot',
+ byline:'Founded and made by',
+ h_about:'About', h_games:'Games in Development', h_mods:'Mod Tools',
+ h_advice:'How I Think You Should Make Games', h_future:'On the Whiteboard',
+ h_corp:'Parent Company', madewith:'All made with Godot', soon:'Coming soon',
+ p_about:'<b>PICODEV</b> is my game studio. I make games in <b>Godot</b> &mdash; six in development, released as each one is finished. Most are built as <b>.io-style games</b>: quick to join, easy to play with friends, no tutorial needed. I also build mod tools.',
+ p_assets:'I try to keep assets human-made, and only use AI for highly technical backend work where I struggle &mdash; my expertise is GDScript. Everything is made with real effort and a purpose, aimed at being a <b>good product</b> above all else. Games still in development may use asset packs or placeholder art; those get replaced before release.',
+ p_pharoah:'Mod tool for Paladins.',
+ p_horus:'Skin changer for Smite.',
+ p_osiris:'Game modding software.',
+ advice:['<b>Spend no time on looks at first.</b> Pull from asset packs. Nobody quits a fun game because the sprites were borrowed.',
+   '<b>Put everything into whether it is fun.</b> Gameplay and code first, always.',
+   '<b>It has to fit a genre you can say in four words.</b> "Topdown 2D hero shooter." If you cannot say it that fast, the idea is not sharp yet.',
+   '<b>Get to a playable draft as fast as possible.</b> A rough thing you can play beats a beautiful thing you cannot.',
+   '<b>Everything else comes later.</b> Polish is a finishing step, not a starting one.'],
+ p_future:'Not started yet: a <b>survival crafting game with mechs</b> &mdash; blocky, buildable, somewhere between Palworld and a mech garage.',
+ p_corp:'The umbrella everything sits under. 20% of gross income goes to charity.',
+ footer:'PICODEV &mdash; built with Godot by <span class="pmark">PRIMAL<sup>APE</sup></span>.'
+},
+es:{
+ roles:'Estudio de Juegos &bull; Godot',
+ byline:'Fundado y hecho por',
+ h_about:'Sobre m&iacute;', h_games:'Juegos en Desarrollo', h_mods:'Herramientas de Mods',
+ h_advice:'C&oacute;mo Creo Que Se Deben Hacer Juegos', h_future:'En la Pizarra',
+ h_corp:'Empresa Matriz', madewith:'Todo hecho con Godot', soon:'Pr&oacute;ximamente',
+ p_about:'<b>PICODEV</b> es mi estudio de juegos. Hago juegos en <b>Godot</b> &mdash; seis en desarrollo, publicados seg&uacute;n los termino. La mayor&iacute;a son <b>juegos tipo .io</b>: f&aacute;ciles de empezar, f&aacute;ciles de jugar con amigos, sin tutorial. Tambi&eacute;n hago herramientas de mods.',
+ p_assets:'Intento que los assets sean hechos a mano, y solo uso IA para trabajo t&eacute;cnico de backend donde me cuesta &mdash; mi especialidad es GDScript. Todo est&aacute; hecho con esfuerzo real y con un prop&oacute;sito: que sea un <b>buen producto</b> por encima de todo. Los juegos en desarrollo pueden usar packs de assets o arte provisional; se reemplazan antes del lanzamiento.',
+ p_pharoah:'Herramienta de mods para Paladins.',
+ p_horus:'Cambiador de aspectos para Smite.',
+ p_osiris:'Software de modding de juegos.',
+ advice:['<b>Al principio no pierdas tiempo en el aspecto.</b> Usa packs de assets. Nadie abandona un juego divertido porque los sprites sean prestados.',
+   '<b>Pon todo en si es divertido.</b> Jugabilidad y c&oacute;digo primero, siempre.',
+   '<b>Debe encajar en un g&eacute;nero que puedas decir en cuatro palabras.</b> "Hero shooter 2D cenital." Si no lo puedes decir as&iacute; de r&aacute;pido, la idea a&uacute;n no est&aacute; clara.',
+   '<b>Llega a un borrador jugable lo antes posible.</b> Algo tosco que puedas jugar vale m&aacute;s que algo bonito que no.',
+   '<b>Todo lo dem&aacute;s va despu&eacute;s.</b> El pulido es el final, no el principio.'],
+ p_future:'A&uacute;n sin empezar: un <b>juego de supervivencia y construcci&oacute;n con mechs</b> &mdash; estilo bloques, entre Palworld y un taller de mechs.',
+ p_corp:'El paraguas donde va todo. El 20% de los ingresos brutos va a caridad.',
+ footer:'PICODEV &mdash; hecho con Godot por <span class="pmark">PRIMAL<sup>APE</sup></span>.'
+}};
+
+const GAMES=[
+{k:'neon',eta:true,flag:true,ico:'assets/g-neon.png',pct:85,
+ shots:['assets/shot-neon-1.jpg','assets/shot-neon-2.jpg','assets/shot-neon-3.jpg','assets/shot-neon-4.jpg'],
+ en:{nm:'NEON ARSENAL',gn:'Topdown 2D Hero Shooter',
+  p:'My main project, and the closest to done. A topdown hero shooter in the spirit of Paladins and Overwatch, flattened into 2D so every fight reads instantly.',
+  li:['<b>Five classes</b>: Flank, Damage, Support, Tank and Boss',
+      '<b>5v5 standard</b>, plus a <b>1v5 Boss mode</b> where one huge character faces a full team',
+      '<b>Universal item shop</b> shared across every character, so builds matter as much as picks',
+      'Full <b>offline mode</b> &mdash; playable with no server and no other people',
+      'Fast rounds, no tutorial, readable at a glance']},
+ es:{nm:'NEON ARSENAL',gn:'Hero Shooter 2D Cenital',
+  p:'Mi proyecto principal y el m&aacute;s avanzado. Un hero shooter cenital con el esp&iacute;ritu de Paladins y Overwatch, aplanado en 2D para que cada combate se lea al instante.',
+  li:['<b>Cinco clases</b>: Flanco, Da&ntilde;o, Soporte, Tanque y Jefe',
+      '<b>5v5 est&aacute;ndar</b>, m&aacute;s un <b>modo Jefe 1v5</b> donde un personaje enorme enfrenta a un equipo entero',
+      '<b>Tienda universal</b> compartida entre personajes',
+      '<b>Modo offline</b> completo &mdash; sin servidor ni otras personas',
+      'Rondas r&aacute;pidas, sin tutorial, legible de un vistazo']}},
+
+{k:'dread',eta:true,ico:'assets/g-dread.png',pct:50,
+ shots:['assets/shot-dread-1.jpg','assets/shot-dread-2.jpg','assets/shot-dread-3.jpg'],
+ en:{nm:'DREADWARD',gn:'Topdown 2D Asymmetric Horror',
+  p:'One hunter, four survivors, seen from above. The chase tension of Dead by Daylight crossed with the grim, unfair edge of Fear &amp; Hunger.',
+  li:['<b>1v4 asymmetric</b> &mdash; one hunter must capture everyone else',
+      '<b>Salt circles</b> are true safe ground: inside them the hunter cannot touch you, but you cannot stay forever',
+      '<b>Lockpick chests</b> under pressure for tools and escape routes',
+      'The topdown view changes everything &mdash; sightlines matter more than sprinting',
+      'Grim on purpose, built on dread rather than jumpscares']},
+ es:{nm:'DREADWARD',gn:'Terror Asim&eacute;trico 2D Cenital',
+  p:'Un cazador, cuatro supervivientes, vista desde arriba. La tensi&oacute;n de Dead by Daylight con el filo cruel de Fear &amp; Hunger.',
+  li:['<b>1v4 asim&eacute;trico</b> &mdash; un cazador debe capturar a todos',
+      '<b>C&iacute;rculos de sal</b> como refugio real: dentro no te pueden tocar, pero no puedes quedarte para siempre',
+      '<b>Forzar cofres</b> bajo presi&oacute;n para conseguir herramientas y escapes',
+      'La vista cenital lo cambia todo &mdash; las l&iacute;neas de visi&oacute;n importan m&aacute;s que correr',
+      'Sombr&iacute;o a prop&oacute;sito, basado en el temor y no en sustos']}},
+
+{k:'draw',eta:true,ico:'assets/g-draw.png',pct:50,shots:[],
+ en:{nm:'DRAWBERRY',gn:'Multiplayer Pixel-Art Guessing',
+  p:'Skribbl.io, but you draw in pixels instead of lines. The grid is the whole joke &mdash; you have to get an idea across in a handful of blocks.',
+  li:['<b>Pixel canvas</b> instead of freehand &mdash; every mark counts',
+      'Round-based drawing and guessing with live chat',
+      'The constraint makes bad art funnier, not worse',
+      'Instant to join, nothing to learn',
+      'Browser-first .io game']},
+ es:{nm:'DRAWBERRY',gn:'Adivinanzas con Pixel Art',
+  p:'Skribbl.io, pero dibujas en p&iacute;xeles en vez de l&iacute;neas. La cuadr&iacute;cula es el chiste &mdash; hay que transmitir una idea con unos pocos bloques.',
+  li:['<b>Lienzo de p&iacute;xeles</b> en vez de trazo libre',
+      'Rondas de dibujar y adivinar con chat en vivo',
+      'La limitaci&oacute;n hace el arte malo m&aacute;s divertido',
+      'Entras al instante, nada que aprender',
+      'Juego .io para navegador']}},
+
+{k:'blade',ico:'assets/g-blade.png',pct:20,shots:[],
+ en:{nm:'BLADE-PARADERS',gn:'4-Player Party Brawler',
+  p:'A party brawler for four, closest in spirit to Stick Fight &mdash; short, chaotic rounds where the level is as dangerous as the other players.',
+  li:['<b>Four players</b>, sidescrolling arenas, very short rounds',
+      'Weapons drop in and change fights immediately',
+      'Physics-driven chaos &mdash; most deaths are nobody&rsquo;s fault',
+      'Made to be shouted at, best played in one room',
+      'Easy to drop in and out of']},
+ es:{nm:'BLADE-PARADERS',gn:'Brawler de Fiesta para 4',
+  p:'Un brawler de fiesta para cuatro, cercano a Stick Fight &mdash; rondas cortas y ca&oacute;ticas donde el escenario es tan peligroso como los rivales.',
+  li:['<b>Cuatro jugadores</b>, arenas laterales, rondas muy cortas',
+      'Las armas caen y cambian el combate al instante',
+      'Caos basado en f&iacute;sica &mdash; casi ninguna muerte es culpa de nadie',
+      'Hecho para gritar, mejor en la misma habitaci&oacute;n',
+      'F&aacute;cil de entrar y salir']}},
+
+{k:'over',ico:'assets/g-overdrive.jpg',pct:20,shots:[],
+ en:{nm:'NEON-OVERDRIVE',gn:'Combat Racing',
+  p:'A racing game where you also shoot &mdash; but your aim is bound to your car. Face forward and forward is all you can cover, so positioning becomes the aiming.',
+  li:['<b>Aim locked to movement</b> &mdash; the crosshair moves inside a box in front of the car',
+      'You cannot look backwards, so overtaking is a real decision',
+      'Large roster of <b>cars and weapons</b> to mix',
+      'Full <b>offline mode</b> against AI',
+      'The one project not designed as an .io game']},
+ es:{nm:'NEON-OVERDRIVE',gn:'Carreras de Combate',
+  p:'Un juego de carreras donde tambi&eacute;n disparas &mdash; pero tu punter&iacute;a est&aacute; atada al coche. Si miras al frente, solo cubres el frente: la posici&oacute;n se convierte en la punter&iacute;a.',
+  li:['<b>Punter&iacute;a ligada al movimiento</b> &mdash; la mira se mueve en una caja frente al coche',
+      'No puedes mirar atr&aacute;s, as&iacute; que adelantar es una decisi&oacute;n real',
+      'Amplia selecci&oacute;n de <b>coches y armas</b>',
+      '<b>Modo offline</b> completo contra IA',
+      'El &uacute;nico proyecto que no es un juego .io']}},
+
+{k:'kill',ico:'assets/g-killshift.jpg',pct:20,shots:[],
+ en:{nm:'KILLSHIFT',gn:'Singleplayer 3D Hero Shooter',
+  p:'The pace of Ultrakill, but everyone can see through walls &mdash; including you. A singleplayer hero shooter, and essentially Neon Arsenal in 3D.',
+  li:['<b>Everyone has wallhacks</b>, by design &mdash; the game is about what you do with that',
+      'Fast, aggressive, movement-led combat',
+      'Hero abilities rather than plain weapon loadouts',
+      'Singleplayer focused, no server needed',
+      'Shares its roster and world with Neon Arsenal']},
+ es:{nm:'KILLSHIFT',gn:'Hero Shooter 3D para un Jugador',
+  p:'El ritmo de Ultrakill, pero todos ven a trav&eacute;s de las paredes &mdash; t&uacute; incluido. Un hero shooter para un jugador, b&aacute;sicamente Neon Arsenal en 3D.',
+  li:['<b>Todos tienen wallhacks</b>, a prop&oacute;sito',
+      'Combate r&aacute;pido, agresivo y guiado por el movimiento',
+      'Habilidades de h&eacute;roe en vez de loadouts simples',
+      'Enfocado a un jugador, sin servidor',
+      'Comparte personajes y mundo con Neon Arsenal']}}
+];
+
+/* Neon Arsenal has alternate logos to cycle through on click/hover. */
+const NEON_ALTS=['assets/g-neon.png'];
+for(let i=1;i<=10;i++) NEON_ALTS.push('assets/neon-alt-'+i+'.png');
+let neonIdx=0;
+
+let lang='en',openKey=null;
+
+function buildGames(){
+  const box=document.getElementById('games');box.innerHTML='';
+  GAMES.forEach(function(g){
+    const L=g[lang],open=openKey===g.k;
+    const card=document.createElement('div');
+    card.className='game'+(g.flag?' flag':'')+(open?' open':'');
+    // Colour tier by completion: low = warm red, mid = amber, high = neon green.
+    const tier = g.pct>=70 ? 'p-high' : (g.pct>=40 ? 'p-mid' : 'p-low');
+    const prog='<div class="pwrap'+(g.flag?' pcenter':'')+'">'
+      +'<span class="pct '+tier+'">'+g.pct+'%</span>'
+      +'<span class="pbar"><i class="'+tier+'" style="width:'+g.pct+'%"></i></span></div>';
+    const head=g.flag
+      ? '<div class="flaghead">'
+        +'<img class="boss" src="assets/g-neon-blue.png" alt="">'
+        +'<div class="mid"><img class="ico neonlogo" src="'+NEON_ALTS[neonIdx]+'" alt="" title="click to change">'
+        +'<div class="nm">'+L.nm+'</div><div class="gn">'+L.gn+'</div>'
+        +'<div class="swaphint">click the logo to cycle versions</div>'
+        +prog+'</div>'
+        +'<img class="boss" src="assets/g-neon-red.png" alt=""></div>'
+      : '<div class="ghead"><img class="ico" src="'+g.ico+'" alt="">'
+        +'<div class="t"><div class="nm">'+L.nm+'</div><div class="gn">'+L.gn+'</div></div>'
+        +prog+'<span class="chev">'+(open?'&minus;':'+')+'</span></div>';
+    const shots=g.shots.length
+      ? '<div class="shots">'+g.shots.map(function(s){return '<img src="'+s+'" alt="">';}).join('')+'</div>'
+      : '';
+    // The flagship head is already centred and shows its logo + name, so the
+    // body would repeat it. Only the smaller cards need the centred block.
+    const centre = g.flag ? ''
+      : '<div class="center"><img src="'+g.ico+'" alt="">'
+        +'<div class="nm">'+L.nm+'</div><div class="gn">'+L.gn+'</div></div>';
+    // Both actions are placeholders on purpose - the dedicated pages and the
+    // builds do not exist yet, so the buttons are inert and say so.
+    const soon = lang==='es' ? 'PR&Oacute;XIMAMENTE' : 'COMING SOON';
+    const actions = '<div class="gactions">'
+      +'<button class="gbtn" disabled>'+(lang==='es'?'P&Aacute;GINA DEDICADA':'DEDICATED PAGE')
+        +'<span class="soon">'+soon+'</span></button>'
+      +'<button class="gbtn" disabled>'+(lang==='es'?'DESCARGAR':'DOWNLOAD')
+        +'<span class="soon">'+soon+'</span></button>'
+      +(g.eta?'<span class="eta">'+(lang==='es'?'SE PUBLICAR&Aacute; ANTES DE 2027':'WILL BE RELEASED BEFORE 2027')+'</span>':'')
+      +'</div>';
+    card.innerHTML=head+'<div class="gbody">'
+      +centre
+      +shots+'<p>'+L.p+'</p><ul>'+L.li.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>'
+      +actions
+      +'<button class="closebtn">'+(lang==='es'?'CERRAR':'CLOSE')+'</button></div>';
+
+    card.querySelector(g.flag?'.flaghead':'.ghead').addEventListener('click',function(){
+      openKey=open?null:g.k;buildGames();});
+    card.querySelector('.closebtn').addEventListener('click',function(e){
+      e.stopPropagation();openKey=null;buildGames();});
+    // logo cycling on the flagship
+    const nl=card.querySelector('.neonlogo');
+    if(nl){
+      nl.addEventListener('click',function(e){
+        e.stopPropagation();
+        neonIdx=(neonIdx+1)%NEON_ALTS.length;
+        buildGames();
+      });
+    }
+    // lightbox on screenshots
+    card.querySelectorAll('.shots img').forEach(function(im){
+      im.addEventListener('click',function(e){
+        e.stopPropagation();
+        const lb=document.getElementById('lb');
+        lb.querySelector('img').src=im.src;
+        lb.classList.add('on');
+      });
+    });
+    box.appendChild(card);
+  });
+}
+function render(){
+  const L=I18N[lang];document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    const k=el.dataset.i18n;if(L[k])el.innerHTML=L[k];});
+  const ad=document.getElementById('advice');ad.innerHTML='';
+  L.advice.forEach(function(s){const li=document.createElement('li');li.innerHTML=s;ad.appendChild(li);});
+  document.querySelectorAll('.lang').forEach(function(b){b.classList.toggle('on',b.dataset.lang===lang);});
+  buildGames();
+}
+document.querySelectorAll('.lang').forEach(function(b){
+  b.addEventListener('click',function(){lang=b.dataset.lang;render();});});
+document.querySelectorAll('.themebox i').forEach(function(i){
+  i.addEventListener('click',function(){document.body.dataset.theme=i.dataset.theme;});});
+document.getElementById('lb').addEventListener('click',function(){this.classList.remove('on');});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape')document.getElementById('lb').classList.remove('on');});
+render();
+</script>
+</body>
+</html>

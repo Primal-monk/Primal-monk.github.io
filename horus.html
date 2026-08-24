@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HORUS — Smite Skin Changer</title>
+<link rel="icon" type="image/png" href="assets/horus.png">
+<meta name="description" content="HORUS — a skin changer for Smite. Coming soon.">
+<style>
+  /* Lava palette, taken from the HORUS logo: deep maroon ground,
+     ember orange, gold. Kept warm but not overwhelming. */
+  :root{
+    --bg:#4a1410; --bg2:#5c1a14; --bg3:#6e211a; --bg4:#832a20;
+    --ember:#e8622a; --ember2:#f5843f; --gold:#f2b229; --gold2:#ffcc55;
+    --paper:#ffe8d2; --soft:#d9a48c; --line:rgba(242,178,41,.3);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scrollbar-color:var(--gold) var(--bg3);scrollbar-width:auto}
+  body{font-family:"Trebuchet MS","Segoe UI",sans-serif;
+    background:linear-gradient(180deg,#3a0f0c 0%,var(--bg) 40%,#3a0f0c 100%);
+    color:var(--soft);line-height:1.62;padding-top:54px}
+  ::-webkit-scrollbar{width:17px}
+  ::-webkit-scrollbar-track{background:var(--bg3);border-left:1px solid var(--line)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--gold),var(--ember));
+    border:2px solid var(--bg3);border-radius:12px}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:54px;background:var(--bg2);
+    border-bottom:2px solid var(--ember);display:flex;align-items:center;gap:12px;padding:0 16px;
+    box-shadow:0 2px 12px rgba(0,0,0,.5)}
+  .topbar .who{display:flex;align-items:center;gap:9px;text-decoration:none}
+  .topbar .who img{width:34px;height:34px;object-fit:contain}
+  .topbar .who span{font-size:.88rem;color:var(--gold);font-weight:700;white-space:nowrap}
+  .topbar .back{color:var(--ember2);font-size:1.1rem;font-weight:900}
+  .topbar .spacer{flex:1}
+  .gswitch{display:inline-flex;border:1px solid var(--gold);border-radius:5px;overflow:hidden}
+  .gswitch a{background:var(--bg3);padding:7px 14px;font-size:.72rem;font-weight:900;
+    color:var(--paper);text-decoration:none;letter-spacing:.08em;transition:background .12s}
+  .gswitch a:hover{background:var(--bg4)}
+  .gswitch a.on{background:var(--gold);color:#4a1410}
+  .langwrap{display:inline-flex;border:1px solid var(--gold);border-radius:5px;overflow:hidden}
+  .lang{background:var(--bg3);border:0;cursor:pointer;padding:7px 12px;font-size:.72rem;
+    font-weight:700;color:var(--soft)}
+  .lang.on{background:var(--gold);color:#4a1410}
+
+  .wrap{max-width:1000px;margin:0 auto;padding:0 22px}
+  header{text-align:center;padding:38px 0 26px}
+  .logo{width:180px;height:180px;object-fit:contain;display:block;margin:0 auto 14px;
+    filter:drop-shadow(0 6px 20px rgba(0,0,0,.6))}
+  h1{font-size:clamp(2.5rem,8vw,4.4rem);letter-spacing:.22em;font-weight:900;color:var(--gold2);
+    text-shadow:0 3px 0 #8a4a10, 0 0 40px rgba(232,98,42,.4);margin-left:.22em}
+  .tag{margin-top:6px;color:var(--paper);letter-spacing:.26em;font-size:.78rem;text-transform:uppercase}
+  .soonpill{display:inline-block;margin-top:14px;background:var(--ember);border:1px solid var(--gold);
+    border-radius:20px;padding:6px 22px;font-size:.76rem;font-weight:900;letter-spacing:.18em;
+    text-transform:uppercase;color:#fff}
+
+  section{margin-bottom:32px}
+  h2{color:var(--gold);font-size:.93rem;letter-spacing:.19em;text-transform:uppercase;
+    padding-bottom:7px;margin-bottom:14px;border-bottom:2px solid var(--ember)}
+  p.body{color:var(--paper);margin-bottom:12px}
+  p.body b{color:var(--gold2)}
+
+  .sharednote{background:var(--bg2);border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:6px;padding:15px 18px;text-align:center;margin-bottom:18px}
+  .sharednote p{color:var(--paper);font-size:.88rem;margin:0}
+  .sharednote b{color:var(--gold2)}
+
+  .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:13px}
+  .f{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--ember);
+    border-radius:6px;padding:16px}
+  .f h3{color:var(--gold2);font-size:.9rem;letter-spacing:.05em;margin-bottom:6px}
+  .f p{color:var(--paper);font-size:.85rem;margin:0}
+  .f .st{display:inline-block;margin-top:9px;font-size:.62rem;background:var(--bg4);
+    color:var(--gold);padding:2px 9px;border-radius:9px;font-weight:900;letter-spacing:.09em;
+    text-transform:uppercase}
+
+  .relbox{background:var(--bg2);border:2px solid var(--gold);border-radius:8px;
+    padding:26px;text-align:center}
+  .relbox .d{font-size:clamp(1.4rem,4vw,2rem);font-weight:900;color:var(--paper);letter-spacing:.06em}
+  .relbox .btn{display:inline-block;margin-top:15px;padding:13px 38px;border-radius:5px;
+    background:var(--bg4);color:var(--soft);font-weight:900;font-size:.86rem;
+    letter-spacing:.11em;text-transform:uppercase;text-decoration:none;
+    border:1px solid var(--line);cursor:not-allowed}
+  .relbox p{color:var(--soft);font-size:.82rem;margin-top:11px}
+
+  footer{text-align:center;padding:24px 0 38px;border-top:1px solid var(--line);
+    font-size:.77rem;color:var(--soft);margin-top:14px}
+
+/* ============================================================
+   THE WORDMARK - why this is plain letters and not the fancy ones
+   ============================================================
+   It used to be written with Mathematical Bold Sans-Serif capitals
+   (U+1D5E3...) and modifier letters (U+1D2C...). Those are real Unicode,
+   but almost no font actually contains them - so most browsers drew
+   empty boxes instead of letters. That is the block symbol.
+
+   Now it is ordinary A-Z, made bold and superscripted with CSS, which
+   every font on earth can render. Looks the same, cannot break. */
+.pmark{ font-weight:800; letter-spacing:.06em; }
+.pmark sup{ font-size:.62em; font-weight:800; letter-spacing:.04em;
+            vertical-align:super; margin-left:.06em; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="who" href="osiris.html">
+    <span class="back">&larr;</span>
+    <img src="assets/osiris.png" alt="">
+    <span>OSIRIS</span>
+  </a>
+  <div class="spacer"></div>
+  <div class="gswitch">
+    <a href="index.html">PALADINS</a>
+    <a href="horus.html" class="on">SMITE</a>
+  </div>
+  <div class="langwrap">
+    <button class="lang on" data-lang="en">EN</button>
+    <button class="lang" data-lang="es">ES</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <img class="logo" src="assets/horus.png" alt="HORUS">
+    <h1>HORUS</h1>
+    <div class="tag" data-i18n="tag">Smite Skin Changer</div>
+    <div class="soonpill" data-i18n="soon">Coming Soon</div>
+  </header>
+
+  <section>
+    <h2 data-i18n="h_what">What HORUS is</h2>
+    <p class="body" data-i18n="p_what1"></p>
+    <div class="sharednote"><p data-i18n="shared"></p></div>
+    <p class="body" data-i18n="p_what2"></p>
+  </section>
+
+  <section>
+    <h2 data-i18n="h_plan">Planned Features</h2>
+    <div class="feat">
+      <div class="f"><h3 data-i18n="f1h">Skin Changer</h3><p data-i18n="f1p"></p>
+        <span class="st" data-i18n="st_plan">Planned</span></div>
+      <div class="f"><h3 data-i18n="f2h">Weapon Cosmetics</h3><p data-i18n="f2p"></p>
+        <span class="st" data-i18n="st_plan">Planned</span></div>
+      <div class="f"><h3 data-i18n="f3h">Shared Research</h3><p data-i18n="f3p"></p>
+        <span class="st" data-i18n="st_prog">In progress</span></div>
+      <div class="f"><h3 data-i18n="f4h">Same Easy Setup</h3><p data-i18n="f4p"></p>
+        <span class="st" data-i18n="st_plan">Planned</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-i18n="h_rel">Release</h2>
+    <div class="relbox">
+      <div class="d" data-i18n="tbd">To be announced</div>
+      <a class="btn" href="#" onclick="return false;" data-i18n="notout">Not out yet</a>
+      <p data-i18n="relnote"></p>
+    </div>
+  </section>
+
+  <footer><div style="margin-bottom:7px;opacity:.75">by <span class="pmark">PRIMAL<sup>APE</sup></span></div><span data-i18n="footer"></span></footer>
+</div>
+
+<script>
+const I18N={
+en:{
+ tag:'Smite Skin Changer', soon:'Coming Soon',
+ h_what:'What HORUS is', h_plan:'Planned Features', h_rel:'Release',
+ st_plan:'Planned', st_prog:'In progress', tbd:'To be announced', notout:'Not out yet',
+ p_what1:'<b>HORUS</b> is a skin changer for Smite, built on the same foundation as PHAROAH. Same idea, same priority: it has to be easy enough that anyone can run it.',
+ shared:'<b>SMITE AND PALADINS SHARE SERVERS.</b> An exploit that works on one will often apply to the other &mdash; and skins can work across both.',
+ p_what2:'That shared backend is the whole reason this project exists. Every hour spent understanding how Paladins loads a skin is an hour that carries straight over to Smite, so HORUS starts from a long head start rather than from nothing.',
+ f1h:'Skin Changer', f1p:'Wear cosmetics the client already contains, locally and visible only to you.',
+ f2h:'Weapon Cosmetics', f2p:'The weapon handled separately from the body, the same split PHAROAH uses.',
+ f3h:'Shared Research', f3p:'Findings move both ways between the two games, since the backend is the same.',
+ f4h:'Same Easy Setup', f4p:'Unzip, run, press a key. No installer and nothing to configure.',
+ relnote:'No date yet. PHAROAH comes first &mdash; HORUS follows once the skin work there is finished.',
+ footer:'HORUS &mdash; part of OSIRIS. Not affiliated with Hi-Rez Studios.'
+},
+es:{
+ tag:'Cambiador de Aspectos para Smite', soon:'Pr&oacute;ximamente',
+ h_what:'Qu&eacute; es HORUS', h_plan:'Funciones Planeadas', h_rel:'Lanzamiento',
+ st_plan:'Planeado', st_prog:'En progreso', tbd:'Por anunciar', notout:'A&uacute;n no disponible',
+ p_what1:'<b>HORUS</b> es un cambiador de aspectos para Smite, sobre la misma base que PHAROAH. La misma idea y la misma prioridad: tiene que ser lo bastante f&aacute;cil como para que cualquiera pueda usarlo.',
+ shared:'<b>SMITE Y PALADINS COMPARTEN SERVIDORES.</b> Un exploit que funciona en uno suele aplicarse al otro &mdash; y los aspectos pueden funcionar en ambos.',
+ p_what2:'Ese backend compartido es la raz&oacute;n de ser de este proyecto. Cada hora dedicada a entender c&oacute;mo Paladins carga un aspecto se traslada directamente a Smite, as&iacute; que HORUS parte con mucho terreno ganado.',
+ f1h:'Cambiador de Aspectos', f1p:'Usa cosm&eacute;ticos que el cliente ya contiene, localmente y visibles solo para ti.',
+ f2h:'Cosm&eacute;ticos de Arma', f2p:'El arma se gestiona aparte del cuerpo, igual que en PHAROAH.',
+ f3h:'Investigaci&oacute;n Compartida', f3p:'Los hallazgos van en ambas direcciones, porque el backend es el mismo.',
+ f4h:'Misma Facilidad', f4p:'Descomprime, ejecuta, pulsa una tecla. Sin instalador ni configuraci&oacute;n.',
+ relnote:'A&uacute;n sin fecha. PHAROAH va primero &mdash; HORUS llega cuando el trabajo de aspectos est&eacute; terminado.',
+ footer:'HORUS &mdash; parte de OSIRIS. Sin afiliaci&oacute;n con Hi-Rez Studios.'
+}};
+let lang='en';
+function render(){
+  const L=I18N[lang];document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    const k=el.dataset.i18n;if(L[k])el.innerHTML=L[k];});
+  document.querySelectorAll('.lang').forEach(function(b){b.classList.toggle('on',b.dataset.lang===lang);});
+}
+document.querySelectorAll('.lang').forEach(function(b){
+  b.addEventListener('click',function(){lang=b.dataset.lang;render();});});
+render();
+</script>
+</body>
+</html>

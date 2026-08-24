@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ANGELCORP</title>
+<link rel="icon" type="image/png" href="assets/angelcorp.png">
+<meta name="description" content="ANGELCORP — parent organisation. 20% of all gross income goes to charity.">
+<style>
+  :root{
+    --bg:#111418; --bg2:#181d23; --bg3:#212832; --bg4:#2c3540;
+    --red:#c4342e; --red2:#e0554f; --steel:#8fa0b0; --paper:#e6ecf2;
+    --line:rgba(196,52,46,.35);
+  }
+  body[data-mode="light"]{
+    --bg:#eef1f5; --bg2:#ffffff; --bg3:#e2e7ee; --bg4:#d3dae3;
+    --steel:#4a5763; --paper:#161b21; --line:rgba(196,52,46,.3);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scrollbar-color:var(--red) var(--bg3);scrollbar-width:auto}
+  body{font-family:"Segoe UI","Trebuchet MS",sans-serif;background:var(--bg);
+    color:var(--steel);line-height:1.6;padding-top:56px}
+  ::-webkit-scrollbar{width:15px}
+  ::-webkit-scrollbar-track{background:var(--bg3)}
+  ::-webkit-scrollbar-thumb{background:var(--red);border:2px solid var(--bg3);border-radius:10px}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:56px;background:var(--bg2);
+    border-bottom:2px solid var(--red);display:flex;align-items:center;gap:12px;padding:0 16px}
+  .topbar .who{display:flex;align-items:center;gap:9px;text-decoration:none}
+  .topbar .who img{width:34px;height:34px;object-fit:contain}
+  .topbar .who span{font-size:.9rem;font-weight:700}
+  .topbar .spacer{flex:1}
+  .charity{font-size:.68rem;color:var(--steel);text-align:right;line-height:1.3;
+    border-right:1px solid var(--line);padding-right:11px}
+  .charity b{color:var(--red2)}
+  .modebtn{background:var(--bg4);border:1px solid var(--red);border-radius:4px;color:var(--paper);
+    font-size:.7rem;font-weight:700;padding:7px 12px;cursor:pointer;letter-spacing:.06em}
+  select.langsel{background:var(--bg4);border:1px solid var(--red);border-radius:4px;
+    color:var(--paper);font-size:.72rem;font-weight:700;padding:7px 9px;cursor:pointer}
+
+  .wrap{max-width:1000px;margin:0 auto;padding:0 22px}
+  header{text-align:center;padding:44px 0 30px}
+  .logo{width:150px;height:150px;object-fit:contain;display:block;margin:0 auto 14px}
+  h1{font-size:clamp(2.4rem,8vw,4.4rem);letter-spacing:.26em;font-weight:200;color:var(--paper);
+    margin-left:.26em}
+  h1 b{font-weight:900;color:var(--red2)}
+  .tag{margin-top:8px;color:var(--steel);letter-spacing:.32em;font-size:.72rem;text-transform:uppercase}
+  .warnbar{background:var(--red);color:#fff;text-align:center;padding:10px 14px;
+    font-size:.72rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;margin-bottom:30px}
+
+  section{margin-bottom:34px}
+  h2{color:var(--paper);font-size:.86rem;letter-spacing:.24em;text-transform:uppercase;
+    padding-bottom:8px;margin-bottom:16px;border-bottom:1px solid var(--line);font-weight:600}
+  h2::before{content:"";display:inline-block;width:9px;height:9px;background:var(--red);
+    margin-right:11px;transform:rotate(45deg)}
+  p.body{color:var(--paper);margin-bottom:12px;font-size:.94rem}
+  p.body b{color:var(--red2)}
+
+  .divs{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+  @media(max-width:760px){.divs{grid-template-columns:1fr}}
+  .div{background:var(--bg2);border:1px solid var(--line);border-top:3px solid var(--red);
+    padding:19px;text-decoration:none;display:block;transition:transform .14s,border-color .14s}
+  .div:hover{transform:translateY(-3px);border-color:var(--red2)}
+  .div img{width:58px;height:58px;object-fit:contain;margin-bottom:10px}
+  .div .nm{color:var(--paper);font-weight:900;font-size:1.06rem;letter-spacing:.13em}
+  .div .sub{color:var(--red2);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;margin-top:2px}
+  .div p{color:var(--steel);font-size:.85rem;margin-top:9px}
+
+  .stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:13px;margin-top:6px}
+  .stat div{background:var(--bg2);border:1px solid var(--line);padding:15px;text-align:center}
+  .stat .n{color:var(--red2);font-size:1.5rem;font-weight:900}
+  .stat .l{color:var(--steel);font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;margin-top:3px}
+
+  .recbox{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--red);
+    padding:24px;text-align:center}
+  .recn{color:var(--red2);font-size:2.6rem;font-weight:900;line-height:1}
+  .recl{color:var(--steel);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;margin-top:5px}
+  .recbox p{color:var(--steel);font-size:.85rem;margin-top:13px}
+
+  footer{text-align:center;padding:26px 0 40px;border-top:1px solid var(--line);
+    font-size:.75rem;color:var(--steel)}
+
+/* ============================================================
+   THE WORDMARK - why this is plain letters and not the fancy ones
+   ============================================================
+   It used to be written with Mathematical Bold Sans-Serif capitals
+   (U+1D5E3...) and modifier letters (U+1D2C...). Those are real Unicode,
+   but almost no font actually contains them - so most browsers drew
+   empty boxes instead of letters. That is the block symbol.
+
+   Now it is ordinary A-Z, made bold and superscripted with CSS, which
+   every font on earth can render. Looks the same, cannot break. */
+.pmark{ font-weight:800; letter-spacing:.06em; }
+.pmark sup{ font-size:.62em; font-weight:800; letter-spacing:.04em;
+            vertical-align:super; margin-left:.06em; }
+</style>
+</head>
+<body data-mode="dark">
+
+<div class="topbar">
+  <a class="who" href="omni.html">
+    <img src="assets/angelcorp.png" alt="">
+    <span><span style="color:#fff">ANGEL</span><span style="color:#e0554f">CORP</span></span>
+  </a>
+  <div class="spacer"></div>
+  <div class="charity" data-i18n="charitybar"></div>
+  <button class="modebtn" id="mode">LIGHT / DARK</button>
+  <select class="langsel" id="langsel">
+    <option value="en">English</option>
+    <option value="es">Espa&ntilde;ol</option>
+    <option value="ar">&#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;</option>
+    <option value="ru">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</option>
+    <option value="tr">T&uuml;rk&ccedil;e</option>
+  </select>
+</div>
+
+<div class="wrap">
+  <header>
+    <img class="logo" src="assets/angelcorp.png" alt="ANGELCORP">
+    <h1>ANGEL<b>CORP</b></h1>
+    <div class="tag" data-i18n="tag">Parent Organisation</div>
+  </header>
+</div>
+
+<div class="warnbar" data-i18n="warn"></div>
+
+<div class="wrap">
+  <section>
+    <h2 data-i18n="h_about">Overview</h2>
+    <p class="body" data-i18n="p_about1"></p>
+    <p class="body" data-i18n="p_about2"></p>
+    <p class="body" data-i18n="p_about3"></p>
+  </section>
+
+  <section>
+    <h2 data-i18n="h_div">Divisions</h2>
+    <div class="divs">
+      <a class="div" href="primal.html">
+        <img src="assets/picodev.png" alt="">
+        <div class="nm">PICODEV</div>
+        <div class="sub" data-i18n="s_games">Games</div>
+        <p data-i18n="p_pico"></p>
+      </a>
+      <a class="div" href="osiris.html">
+        <img src="assets/osiris.png" alt="">
+        <div class="nm">OSIRIS</div>
+        <div class="sub" data-i18n="s_mod">Modding Software</div>
+        <p data-i18n="p_osiris"></p>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-i18n="h_giving">Giving</h2>
+    <p class="body" data-i18n="p_giving"></p>
+    <div class="stat">
+      <div><div class="n">20%</div><div class="l" data-i18n="l_pledge">Of all income</div></div>
+      <div><div class="n">$0</div><div class="l" data-i18n="l_raised">Raised to date</div></div>
+      <div><div class="n">$200</div><div class="l" data-i18n="l_goal">First goal</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-i18n="h_rec">Receipts</h2>
+    <div class="recbox">
+      <div class="recn">$0</div>
+      <div class="recl" data-i18n="rec_l">Raised so far by ANGELCORP</div>
+      <p data-i18n="rec_p"></p>
+    </div>
+  </section>
+
+  <footer><div style="margin-bottom:7px;opacity:.75">by <span class="pmark">PRIMAL<sup>APE</sup></span></div><span data-i18n="footer"></span></footer>
+</div>
+
+<script>
+const I18N={
+en:{
+ charitybar:'<b>20%</b> of all gross income goes to charity',
+ tag:'Parent Organisation',
+ warn:'NOT A REAL COMPANY &mdash; CONCEPT DRAFT, TO BE MADE REAL IN THE FUTURE',
+ h_about:'Overview', h_div:'Divisions', h_giving:'Giving', h_rec:'Receipts',
+ s_games:'Games', s_mod:'Modding Software',
+ p_about1:'Every project and every company sits under <b>ANGELCORP</b>. The idea is to be the first parent company to donate <b>20% of all gross income</b> to charity, and to show the total donated openly on the home page.',
+ p_about2:'That applies to everything, with no exceptions. Every project carries a minimum <b>20% donation</b> &mdash; including every game made by <b>PICODEV</b> and every tool made by <b>OSIRIS</b>. Anything done for profit is charitable first.',
+ p_about3:'<b>This is not a real company yet.</b> It is a concept draft, to be made real in the future. The divisions below are real and active; the structure around them is still being written.',
+ p_pico:'Six games in development with Godot, mostly .io-style multiplayer.',
+ p_osiris:'Modding tools. Home of PHAROAH for Paladins and HORUS for Smite.',
+ p_giving:'A fixed share of income from every project goes to humanitarian aid. The figures below are live and will stay honest &mdash; nothing is inflated, and nothing is claimed before it happens.',
+ l_pledge:'Of all income', l_raised:'Raised to date', l_goal:'First goal',
+ rec_l:'Raised so far by ANGELCORP',
+ rec_p:'Nothing has been raised yet. When it has, every donation receipt will be published here.',
+ footer:'ANGELCORP &mdash; concept draft. Nothing here is final.'
+},
+es:{
+ charitybar:'El <b>20%</b> de los ingresos brutos va a caridad',
+ tag:'Organizaci&oacute;n Matriz',
+ warn:'NO ES UNA EMPRESA REAL &mdash; BORRADOR CONCEPTUAL, SE HAR&Aacute; REAL EN EL FUTURO',
+ h_about:'Resumen', h_div:'Divisiones', h_giving:'Donaciones', h_rec:'Recibos',
+ s_games:'Juegos', s_mod:'Software de Modding',
+ p_about1:'Cada proyecto y cada empresa est&aacute; bajo <b>ANGELCORP</b>. La idea es ser la primera empresa matriz que dona el <b>20% de todos los ingresos brutos</b> a caridad, y mostrar el total donado abiertamente en la p&aacute;gina principal.',
+ p_about2:'Esto se aplica a todo, sin excepciones. Cada proyecto lleva una donaci&oacute;n m&iacute;nima del <b>20%</b> &mdash; incluidos todos los juegos de <b>PICODEV</b> y todas las herramientas de <b>OSIRIS</b>. Todo lo que se hace con &aacute;nimo de lucro es ben&eacute;fico primero.',
+ p_about3:'<b>A&uacute;n no es una empresa real.</b> Es un borrador conceptual, que se har&aacute; realidad en el futuro. Las divisiones son reales y activas; la estructura a&uacute;n se est&aacute; definiendo.',
+ p_pico:'Seis juegos en desarrollo con Godot, en su mayor&iacute;a multijugador tipo .io.',
+ p_osiris:'Herramientas de modding. Hogar de PHAROAH para Paladins y HORUS para Smite.',
+ p_giving:'Una parte fija de los ingresos de cada proyecto va a ayuda humanitaria. Las cifras son reales y se mantendr&aacute;n honestas &mdash; nada se infla ni se anuncia antes de ocurrir.',
+ l_pledge:'De los ingresos', l_raised:'Recaudado', l_goal:'Primera meta',
+ rec_l:'Recaudado hasta ahora por ANGELCORP',
+ rec_p:'A&uacute;n no se ha recaudado nada. Cuando se haga, todos los recibos se publicar&aacute;n aqu&iacute;.',
+ footer:'ANGELCORP &mdash; borrador conceptual. Nada es definitivo.'
+},
+ar:{
+ charitybar:'<b>&#1642;20</b> &#1605;&#1606; &#1573;&#1580;&#1605;&#1575;&#1604;&#1610; &#1575;&#1604;&#1583;&#1582;&#1604; &#1604;&#1604;&#1571;&#1593;&#1605;&#1575;&#1604; &#1575;&#1604;&#1582;&#1610;&#1585;&#1610;&#1577;',
+ tag:'&#1575;&#1604;&#1605;&#1572;&#1587;&#1587;&#1577; &#1575;&#1604;&#1571;&#1605;',
+ warn:'&#1604;&#1610;&#1587;&#1578; &#1588;&#1585;&#1603;&#1577; &#1581;&#1602;&#1610;&#1602;&#1610;&#1577; &mdash; &#1605;&#1587;&#1608;&#1583;&#1577; &#1571;&#1608;&#1604;&#1610;&#1577;',
+ h_about:'&#1606;&#1592;&#1585;&#1577; &#1593;&#1575;&#1605;&#1577;', h_div:'&#1575;&#1604;&#1571;&#1602;&#1587;&#1575;&#1605;',
+ h_giving:'&#1575;&#1604;&#1578;&#1576;&#1585;&#1593;', h_rec:'&#1575;&#1604;&#1573;&#1610;&#1589;&#1575;&#1604;&#1575;&#1578;',
+ s_games:'&#1571;&#1604;&#1593;&#1575;&#1576;', s_mod:'&#1576;&#1585;&#1605;&#1580;&#1610;&#1575;&#1578; &#1575;&#1604;&#1578;&#1593;&#1583;&#1610;&#1604;',
+ p_about1:'&#1603;&#1604; &#1605;&#1588;&#1585;&#1608;&#1593; &#1610;&#1602;&#1593; &#1578;&#1581;&#1578; <b>ANGELCORP</b>. &#1575;&#1604;&#1601;&#1603;&#1585;&#1577; &#1607;&#1610; &#1575;&#1604;&#1578;&#1576;&#1585;&#1593; &#1576;&#1606;&#1587;&#1576;&#1577; <b>&#1642;20</b> &#1605;&#1606; &#1573;&#1580;&#1605;&#1575;&#1604;&#1610; &#1575;&#1604;&#1583;&#1582;&#1604;.',
+ p_about2:'&#1610;&#1606;&#1591;&#1576;&#1602; &#1607;&#1584;&#1575; &#1593;&#1604;&#1609; &#1603;&#1604; &#1588;&#1610;&#1569; &#1583;&#1608;&#1606; &#1575;&#1587;&#1578;&#1579;&#1606;&#1575;&#1569;.',
+ p_about3:'<b>&#1604;&#1610;&#1587;&#1578; &#1588;&#1585;&#1603;&#1577; &#1581;&#1602;&#1610;&#1602;&#1610;&#1577; &#1576;&#1593;&#1583;.</b> &#1607;&#1584;&#1607; &#1605;&#1587;&#1608;&#1583;&#1577; &#1571;&#1608;&#1604;&#1610;&#1577;.',
+ p_pico:'&#1587;&#1578;&#1577; &#1571;&#1604;&#1593;&#1575;&#1576; &#1602;&#1610;&#1583; &#1575;&#1604;&#1578;&#1591;&#1608;&#1610;&#1585; &#1576;&#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605; Godot.',
+ p_osiris:'&#1571;&#1583;&#1608;&#1575;&#1578; &#1578;&#1593;&#1583;&#1610;&#1604;: PHAROAH &#1608; HORUS.',
+ p_giving:'&#1580;&#1586;&#1569; &#1579;&#1575;&#1576;&#1578; &#1605;&#1606; &#1575;&#1604;&#1583;&#1582;&#1604; &#1610;&#1584;&#1607;&#1576; &#1604;&#1604;&#1605;&#1587;&#1575;&#1593;&#1583;&#1575;&#1578; &#1575;&#1604;&#1573;&#1606;&#1587;&#1575;&#1606;&#1610;&#1577;.',
+ l_pledge:'&#1605;&#1606; &#1575;&#1604;&#1583;&#1582;&#1604;', l_raised:'&#1575;&#1604;&#1605;&#1580;&#1605;&#1608;&#1593;', l_goal:'&#1575;&#1604;&#1607;&#1583;&#1601; &#1575;&#1604;&#1571;&#1608;&#1604;',
+ rec_l:'&#1575;&#1604;&#1605;&#1580;&#1605;&#1608;&#1593; &#1581;&#1578;&#1609; &#1575;&#1604;&#1570;&#1606;',
+ rec_p:'&#1604;&#1605; &#1610;&#1578;&#1605; &#1580;&#1605;&#1593; &#1588;&#1610;&#1569; &#1576;&#1593;&#1583;.',
+ footer:'ANGELCORP &mdash; &#1605;&#1587;&#1608;&#1583;&#1577;.'
+},
+ru:{
+ charitybar:'<b>20%</b> &#1074;&#1072;&#1083;&#1086;&#1074;&#1086;&#1075;&#1086; &#1076;&#1086;&#1093;&#1086;&#1076;&#1072; &#1080;&#1076;&#1105;&#1090; &#1085;&#1072; &#1073;&#1083;&#1072;&#1075;&#1086;&#1090;&#1074;&#1086;&#1088;&#1080;&#1090;&#1077;&#1083;&#1100;&#1085;&#1086;&#1089;&#1090;&#1100;',
+ tag:'&#1043;&#1086;&#1083;&#1086;&#1074;&#1085;&#1072;&#1103; &#1054;&#1088;&#1075;&#1072;&#1085;&#1080;&#1079;&#1072;&#1094;&#1080;&#1103;',
+ warn:'&#1055;&#1054;&#1050;&#1040; &#1053;&#1045; &#1056;&#1045;&#1040;&#1051;&#1068;&#1053;&#1040;&#1071; &#1050;&#1054;&#1052;&#1055;&#1040;&#1053;&#1048;&#1071; &mdash; &#1063;&#1045;&#1056;&#1053;&#1054;&#1042;&#1048;&#1050;',
+ h_about:'&#1054;&#1073;&#1079;&#1086;&#1088;', h_div:'&#1055;&#1086;&#1076;&#1088;&#1072;&#1079;&#1076;&#1077;&#1083;&#1077;&#1085;&#1080;&#1103;',
+ h_giving:'&#1055;&#1086;&#1078;&#1077;&#1088;&#1090;&#1074;&#1086;&#1074;&#1072;&#1085;&#1080;&#1103;', h_rec:'&#1050;&#1074;&#1080;&#1090;&#1072;&#1085;&#1094;&#1080;&#1080;',
+ s_games:'&#1048;&#1075;&#1088;&#1099;', s_mod:'&#1055;&#1054; &#1076;&#1083;&#1103; &#1084;&#1086;&#1076;&#1086;&#1074;',
+ p_about1:'&#1050;&#1072;&#1078;&#1076;&#1099;&#1081; &#1087;&#1088;&#1086;&#1077;&#1082;&#1090; &#1085;&#1072;&#1093;&#1086;&#1076;&#1080;&#1090;&#1089;&#1103; &#1087;&#1086;&#1076; <b>ANGELCORP</b>. &#1062;&#1077;&#1083;&#1100; &mdash; &#1078;&#1077;&#1088;&#1090;&#1074;&#1086;&#1074;&#1072;&#1090;&#1100; <b>20%</b> &#1074;&#1072;&#1083;&#1086;&#1074;&#1086;&#1075;&#1086; &#1076;&#1086;&#1093;&#1086;&#1076;&#1072;.',
+ p_about2:'&#1069;&#1090;&#1086; &#1082;&#1072;&#1089;&#1072;&#1077;&#1090;&#1089;&#1103; &#1074;&#1089;&#1077;&#1075;&#1086; &#1073;&#1077;&#1079; &#1080;&#1089;&#1082;&#1083;&#1102;&#1095;&#1077;&#1085;&#1080;&#1081;.',
+ p_about3:'<b>&#1069;&#1090;&#1086; &#1077;&#1097;&#1105; &#1085;&#1077; &#1085;&#1072;&#1089;&#1090;&#1086;&#1103;&#1097;&#1072;&#1103; &#1082;&#1086;&#1084;&#1087;&#1072;&#1085;&#1080;&#1103;.</b> &#1069;&#1090;&#1086; &#1095;&#1077;&#1088;&#1085;&#1086;&#1074;&#1080;&#1082;.',
+ p_pico:'&#1064;&#1077;&#1089;&#1090;&#1100; &#1080;&#1075;&#1088; &#1085;&#1072; Godot.',
+ p_osiris:'&#1048;&#1085;&#1089;&#1090;&#1088;&#1091;&#1084;&#1077;&#1085;&#1090;&#1099;: PHAROAH &#1080; HORUS.',
+ p_giving:'&#1060;&#1080;&#1082;&#1089;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1085;&#1072;&#1103; &#1076;&#1086;&#1083;&#1103; &#1076;&#1086;&#1093;&#1086;&#1076;&#1072; &#1080;&#1076;&#1105;&#1090; &#1085;&#1072; &#1075;&#1091;&#1084;&#1072;&#1085;&#1080;&#1090;&#1072;&#1088;&#1085;&#1091;&#1102; &#1087;&#1086;&#1084;&#1086;&#1097;&#1100;.',
+ l_pledge:'&#1054;&#1090; &#1076;&#1086;&#1093;&#1086;&#1076;&#1072;', l_raised:'&#1057;&#1086;&#1073;&#1088;&#1072;&#1085;&#1086;', l_goal:'&#1055;&#1077;&#1088;&#1074;&#1072;&#1103; &#1094;&#1077;&#1083;&#1100;',
+ rec_l:'&#1057;&#1086;&#1073;&#1088;&#1072;&#1085;&#1086; &#1085;&#1072; &#1089;&#1077;&#1075;&#1086;&#1076;&#1085;&#1103;',
+ rec_p:'&#1055;&#1086;&#1082;&#1072; &#1085;&#1080;&#1095;&#1077;&#1075;&#1086; &#1085;&#1077; &#1089;&#1086;&#1073;&#1088;&#1072;&#1085;&#1086;.',
+ footer:'ANGELCORP &mdash; &#1095;&#1077;&#1088;&#1085;&#1086;&#1074;&#1080;&#1082;.'
+},
+tr:{
+ charitybar:'T&uuml;m br&uuml;t gelirin <b>%20</b>&rsquo;si hayır i&ccedil;in',
+ tag:'Ana Kuruluş',
+ warn:'GER&Ccedil;EK BİR ŞİRKET DEĞİL &mdash; TASLAK',
+ h_about:'Genel Bakış', h_div:'B&ouml;l&uuml;mler', h_giving:'Bağış', h_rec:'Makbuzlar',
+ s_games:'Oyunlar', s_mod:'Mod Yazılımı',
+ p_about1:'Her proje <b>ANGELCORP</b> altında toplanır. Ama&ccedil;, t&uuml;m br&uuml;t gelirin <b>%20</b>&rsquo;sini hayıra bağışlayan ilk ana şirket olmak.',
+ p_about2:'Bu istisnasız her şey i&ccedil;in ge&ccedil;erlidir.',
+ p_about3:'<b>Hen&uuml;z ger&ccedil;ek bir şirket değil.</b> Bu bir taslaktır.',
+ p_pico:'Godot ile geliştirilen altı oyun.',
+ p_osiris:'Mod ara&ccedil;ları: PHAROAH ve HORUS.',
+ p_giving:'Her projenin gelirinin sabit bir kısmı insani yardıma gidiyor.',
+ l_pledge:'T&uuml;m gelirden', l_raised:'Toplanan', l_goal:'İlk hedef',
+ rec_l:'Şimdiye kadar toplanan',
+ rec_p:'Hen&uuml;z hi&ccedil;bir şey toplanmadı.',
+ footer:'ANGELCORP &mdash; taslak.'
+}};
+
+let lang='en';
+function render(){
+  const L=I18N[lang];
+  document.documentElement.lang=lang;
+  document.documentElement.dir=(lang==='ar')?'rtl':'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    const k=el.dataset.i18n;
+    if(L[k]) el.innerHTML=L[k];
+  });
+}
+document.getElementById('langsel').addEventListener('change',function(e){lang=e.target.value;render();});
+document.getElementById('mode').addEventListener('click',function(){
+  document.body.dataset.mode = document.body.dataset.mode==='light' ? 'dark' : 'light';
+});
+render();
+</script>
+</body>
+</html>

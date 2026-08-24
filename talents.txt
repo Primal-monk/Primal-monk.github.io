@@ -1,0 +1,596 @@
+GUIDE ON HOW TO Use
+
+PALADINS 4TH TALENT TEXT GUIDE:
+
+STEP 1: DOWNLOAD TEMPEST - - https://github.com/LowRezStudio/Tempest/tags  - open this tab, you should see a bunch of versions listed, it will say " v1.0.0-47      2 days ago 96b2874 zip tar.gz Notes Downloads " - the downloads button is right there, click it
+
+STEP 2: DOWNLOAD CHEAT ENGINE
+https://www.cheatengine.org/ - cheat engine download link ( BE CAREFUL, it installed freeware with it like anti viruses, make sure to reject them, and remove any extra programs it installs)
+
+STEP 3:
+create a new file - doesn't matter where, and have tempest install to that file - install the latest version of paladins into that file - YOU CAN KEEP STEAM VERSION AS WELL - it will take a while to download.
+once downloaded, run the game from tempest, ensure to add "-Steam" so it runs online.
+-
+once downloaded - use the code key (IN THE TXT I PROVIDED AT THE TOP) - along with cheat-engine
+go into shooting range, and select a character
+
+then open up cheat engine
+-
+Attach Cheat Engine to the running Paladins process:
+Click the computer/magnifying glass icon in Cheat Engine.
+Pick the Paladins process from the list (GO TO PROGRAMS)
+
+Then the guide's TXT "code key" - cheat engine should automatically work with this.
+first put the code of the existing talent, and swap it with the hidden talent of your choice.
+then click that talent - then go back and return it to "last" number. then play.
+
+DONE! 4th/5h/6th talent unlocked! 
+for any questions, please ask in ⁠discussion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Paladins - All Talents Combined (Complete Reference)
+
+**Complete talent database with ALL IDs and descriptions where available. Merged from message(1).txt (base structure) and Talents.txt (supplementary descriptions).**
+
+---
+
+## Androxus
+
+**In-Game (Available):**
+- 16368: Godslayer — [Reversal] Reversal always fires back and does an additional 800 damage.
+- 20085: Defiant Fist — [Defiance] Successful hits with your Revolver increase the damage of your next Defiance by 20%, stacking up to 100%.
+- 19292: Dark Stalker — Nether Step now has 3 separate charges and is no longer linked.
+
+**Hidden:**
+- 16369: Cursed Revolver — [Weapon] Your Revolver applies a Bleed for 1s, dealing damage every 0.1s that increases the longer it remains on the enemy. Maximum damage per 0.1s is 20. Additional hits refresh the duration.
+- 16504: Dark Stalker (Alternate) — Deal 20% more weapon damage to enemies below 50% Health.
+- 19827: Lingering Curse — Accursed Arm lasts 8s longer, can fire 8 more shots, and charges 15% faster.
+- 24721: Cursed Cylinder v2 — Your Revolver's ammo capacity is increased by 3.
+
+## Ash
+
+**In-Game (Available):**
+- 18388: Battering Ram — [Shoulder Bash] Reduce your damage taken by 75% while using Shoulder Bash.
+- 18556: Fortress Breaker — [Siege Shield] Increase Siege Shield's maximum Health by 2500 and its size by 50%, but reduce its Movement Speed by 80%.
+- 20087: Slug Shot — [Weapon] Your weapon shots travel 50% faster and 100% farther, but no longer explode.
+
+**Hidden:**
+- 18416: Rally Here — Assert Dominance now charges 15% faster, stuns enemies for 2s, and causes them to take 35% more damage.
+- 19846: Super Smash — Your knockbacks knock enemies back up to 100% further based on their missing Health.
+
+## Atlas
+- 24477: Deja vu — [Setback] Setback becomes a lobbed explosive, capable of Rewinding multiple enemies.
+- 24483: Temporal Divide — [Stasis Field] Greatly increase the size of Stasis Field, but its Cooldown is increased by 65%.
+- 27390  - Unstable fissure - MODERN - rewind enemies close to you
+
+OLD Unstable Fissure :   24487  - leave a bomb that explodes for 1000 dmg
+## Azaan
+- 27718: Persistence — Gain 30% Lifesteal on your hits with Judgement.
+- 27719: Tempering — Augment Reckoning, Sanctuary, and Conviction, but increase their base Cooldown by 25%.
+- 27720: Eternal — Your Ire no longer decays due to not taking or dealing damage, but you no longer gain the passive damage increase while above Ire threshold.
+
+
+## Barik
+
+**In-Game (Available):**
+- #16397: Fortify — [Barricade] Increase the maximum Health of Barricade by 2000 and reduce its Cooldown by 3s.
+- 16400: Tinkerin — [Weapon] Modify your Blunderbuss to fire a single slug that deals 600 damage.
+- 27389: Forgefire — [Dome Shield] Dome Shield now costs 40% Ultimate charge and places a Flamethrower Turret with modified values and no Shield. Can have two active at once.
+
+**Hidden:**
+- 12934: Architectonics — Increase the damage of your Turrets by 20% and reduce their Cooldown by 2s.
+- 19828: Burninate — Barik Turrets now shoot flames dealing 400 damage per second.
+- 20088: Hair Trigger — Blunderbuss fires 30% faster.
+- 27391: LTM_BARIK_DFT — Turret Talent for LTM Dwarf Fortress
+
+## Betty la Bomba
+- 28008: Fiery Disposition — [Weapon] Explosive damage sets enemies on fire for 0.3% of their maximum Health every 0.1s for 1.5s. Additional hits refresh the duration.
+- 28009: Controlled Fury — [Hail of Bombs] Reduce the range of Hail of Bombs by 50%, concentrating the explosions in a smaller area, and reduce the Cooldown of Hail of Bombs by 2s.
+- 28010: Gotta Bounce — [Explosive Personality] Reduce the Cooldown of Explosive Personality by 5s, but reduce your Movement Speed by 15%.
+
+## Bomb King
+
+**In-Game (Available):**
+- 16427: Accelerant — [Grumpy Bomb] Reduces the time it takes for Grumpy Bomb to explode by 40%.
+- 16426: Chain Reaction — [Detonate] Hitting with more than one Sticky Bomb on a use of Detonate increases the damage of each explosion after the first by 30% of its base damage, up to 150%.
+- 20216: Royal Subjects — [Weapon] Increase the radius of Sticky Bombs' explosions by 20%, but reduce maximum Ammo count by 2.
+
+**Hidden:**
+- 16506: Demolition — Grumpy Bomb destroys all shields when it explodes and its blast radius is increased by 30%.
+- 20089: Pop'n'Lock — Poppy Bomb now deals bonus damage and cripples for 2s.
+- 20321: zOldBKLeg2 — [Weapon] Increase the explosion size of Sticky bombs by 100%. *(added from Talents.txt — missing from original list)*
+
+## Buck
+
+**In-Game (Available):**
+- 12931: Bounce House — [Heroic Leap] Heroic Leap deals 600 damage and applies a Knockback to enemies within 20 units of your landing location.
+- 16386: Ensnare — [Net Shot] Increase the damage you deal to targets Slowed by Net Shot by 20% and increases the duration of Net Shot's Slow by 0.5s. The damage increase lasts a minimum of 2s.
+- 16392: Bulk Up — [Recovery] Using Recovery instantly Heals you for 400 and increases your maximum Health by 300 for 5s.
+
+**Hidden:**
+- 20329: Blessed — Receive 40% more healing.
+- 20339: Bucking Madness — Eliminations increase your attack speed by 20% for 10s.
+- 23572: Bounce House v2 — [Heroic Leap] Heroic Leap now deals 600 damage, knocks up enemies straight up and has a 20% increased radius. *(added from Talents.txt — missing from original list)*
+Buck - 23458 (Double Barrel) - makes weapon shots deal 900 damage instead of 700, max 2 ammo instead
+DOES NOT WORK IN REAL MATCHES
+## Caspian
+- 31057: Measured Cadence — Fire a weaker copy of Rogue's Tempo forward from your crosshairs for every 6 Ammo consumed.
+- 31058: Everywhere at Once — The Cooldown of Deadly Momentum is permanently set to 5s and cannot be modified, reduced, or increased through other means. Gain 1 stack of Piercing and Sharp Momentum for each enemy hit with Deadly Momentum.
+- 31059: It's Got Some Heft — [War] Increase the Range and Damage of War, but decrease its rate of fire. War's attacks now deal an additional 20% damage to each enemy hit for each enemy hit in total with your attack.
+
+## Cassie
+
+**In-Game (Available):**
+- 16382: Impulse — [Blast Shot] Blast Shot has its damage increased by 150 and its Cooldown decreased by 2s.
+- 16384: Exaction — [Dodge Roll] For 8s after using Dodge Roll, your next weapon shot's damage is increased by 30%.
+- 16385: Big Game — [Disengage] For 4s after hitting an enemy with Disengage, your weapon shots deal an additional 8% of that enemy's maximum Health as damage.
+
+**Hidden:**
+- 19869: Deadeye — Your attack speed is increased by 20% and after hitting a target your next shot does 30% more damage to them.
+- 19913: Just Breathe — Crossbow shots deal 850 damage past 120 feet.
+
+## Corvus
+- 25366: Spreading Influence — [Mark of Fate] Decrease the percentage of Healing given to Marked targets by 20%
+- 25370: Stunning Visage — [Projection] Enemies hit by Projection are stunned for 1s and any enemy caught between your Projection and you when you Teleport takes 800 damage.
+- 25371: Dark Gifts — [Abyssal Reconstruction] Your Marked ally gains 15% Crowd Control reduction
+
+## Dredge
+
+**In-Game (Available):**
+- 23688: Hurl — [Harpoon] Harpoon no longer has a Cooldown
+- 23690: Scuttle — [Weapon] The projectile launched by reloading your Cursed Howitzer explodes in a 20-unit-radius area on contact.
+- 23807: Abyss Spike — [Harpoon] Harpoon lodges into terrain and explodes when an enemy comes within 20 units
+
+**Hidden:**
+- 23692: Freebooter — Allies may Pass through your Shortcut.
+
+## Drogoz
+
+**In-Game (Available):**
+- 16364: W.Y.R.M. Jets — [Armor] Increase your Movement Speed while using your Booster.
+- 16383: Fusillade — [Weapon] Damage dealt when hitting an enemy directly with Rocket Launcher or Salvo is increased by 25%.
+- 16514: Combustible — [Fire Spit] Fire Spit applies a Knockback and deals an additional 300 damage over 2s.
+
+**Hidden:**
+- 20175: Dragonskin — ⚠️ DO NOT RUN - WILL CRASH GAME!! The amount of Booster you have also acts as a shield that can absorb damage.
+- 20259: Reign of Terror — Salvo now activates instantly, always fires 6 shots, and has its cooldown reduced by 5s.
+- 20358: Dragon Overdrive — Dragon Punch deals damage equal to your victims maximum health in a radius around their location and charges faster.
+
+## Evie
+
+**In-Game (Available):**
+- 16370: Over the Moon — [Soar] Increase the damage you deal with your weapon shots by 25% for 3s after Soar ends.
+- 16371: Wormhole — [Blink] Blink can be refired within 4s of its use to return to the initial casting location.
+- 20235: Snow Globe — [Ice Storm] Ice Storm has its damage increased by 100% and its Ultimate charge decreased by 50%
+
+**Hidden:**
+- 16372: Reprieve — Heal 300 Health per second during Ice Block.
+- 20237: Snowball — Kills increase your damage by 5% up to 20% until you die.
+
+## Fernando
+
+**In-Game (Available):**
+- 16379: Aegis — [Shield] Your Shield now uses a resource that Regenerates over time instead of using a Cooldown.
+- 16380: Scorch — [Fireball] Increase the damage of Fireball by 35%
+- 16381: Formidable — [Charge] You now have 2 charges of Charge
+
+**Hidden:**
+- 20090: Overrun — Charge now deals 700 damage.
+- 20229: Dragonfire Lance — Flame Lance now fires small fireballs that deal 120 damage every 0.2s.
+
+## Furia
+- 23358: Exterminate — [Pyre Strike] When Pyre Strike hits an enemy champion it stops moving until it ends and deals up to 100% more damage to enemies under it
+- 23362: Solar Blessing — [Pyre Strike] Refiring Pyre Strike stops it in place. Any ally in its beam is Healed for 150 every 0.1s for 1.5s. Additional hits refresh the effect. Remedy (+5% Damage +10% Healing)
+- 23394: Cherish — [Kindle Soul] Kindle Soul's range is increased by 300% and now applies additional healing to your ally for 15% of their maximum Health. Curative (+20% Healing)
+
+- 23391: Celerity — [Wings of Wrath] Wings of Wrath gains an additional charge.
+## Grohk
+
+**In-Game (Available):**
+- 16377: Totemic Ward — [Healing Totem] Gain a third charge of Healing Totem
+- 16378: Maelstrom — [Shock Pulse] Increase the damage of Lightning Staff to 70
+- 20325: Spirit's Domain — [Weapon] Hitting allies with your Lightning Staff Heals them for 800 per second and your maximum Ammo capacity is increased by 15%. Curative (+20% Healing)
+
+**Hidden:**
+- 16425: Wraith — When you take lethal damage Ghost Walk activates and heals you for 15% of your maximum Health.
+- 20308: Marked for Death — Targets hit by Lightning Staff take 15% increased damage for 2s.
+- 24382: PvE_SelfDestruct_Trigger — When you take lethal damage Self Destruct activates *(added from Talents.txt — missing from original list)*
+- 24383: PvE_DamageHealth — Deal large damage to self *(added from Talents.txt — missing from original list)*
+Grohk - 24383/24382 (they do the same thing) - the last killing blow won't kill you, instead you'll get healed for the amount you are shot with (very weird but this one works)
+
+
+
+## Grover
+
+**In-Game (Available):**
+- 16389: Ferocity — [Weapon] Increase your maximum damage scaling over distance by 60%. Surgery (+10% Damage)
+- 16582: Deep Roots — [Crippling Throw] Crippling Throw chains to nearby enemies up to 2 times
+
+**Hidden:**
+- 20091: Efflorescence — Increase the passive healing of Blossom by 100% and its radius by 50%.
+- 20249: Great Oak — Eliminations increase your maximum Health by 150 until you die. Stacks up to 5 times.
+- 16402: Rampant Blooming — [Vine] Heal for a burst of 500 and an additional 300 over 2s in a 50 unit radius at your location when you finish Vining. Curative (+20% Healing)
+- 16488: zDeprecated (Deep Roots) — Crippling throw now Roots instead of Cripples.
+- 27759: Grover LTM InHand Override — Set's grover's inhand to firemode 2 for an LTM.
+- 27776: Grover LTM Vine Override — Set's grover's vine ability to firemode 2 for an LTM.
+
+## Imani
+- 24136: Mana Rift — [Armor] Remaining still for 1s creates a Mana Rift around you that generates Mana every 1s. Leaving the Mana Rift destroys it.
+- 24144: Pyromania — [Pyre Ball] Each of your Pyre Balls explodes in a 20-unit-radius area on hit and generate more Mana
+- 24145: Splitting Ice — [Frost Bolt] Frost Bolt Chains to a nearby enemy within 30 units
+
+## Inara
+
+**In-Game (Available):**
+- 16600: Treacherous Ground — [Warder's Field] The radius of Warder's Field is increased by 50% and it Cripples enemies within it.
+- 16601: Mother's Grace — [Earthen Guard] Reduce your damage taken by 15%
+- 16605: Tremors — [Impasse] Impasse now has 2 charges and its Cooldown is reduced to 12s
+
+**Hidden:**
+- 20214: Wrath of the Stagalla — Hitting all 3 shots on the same target deals an extra 200 damage.
+- 20233: The Stone Protects — 30% of all damage dealt to you is instead taken by your deployables if they are active.
+
+## Io
+- 24663: Sacrifice — [Guardian Spirit] If Io falls below 200 Health while Luna is active
+- 24673: Life Link — [Guardian Spirit] Luna Heals allies around her for 320 per second. Reduce Moonlight's Healing to 135 every 0.15s.
+- 24674: Goddess' Blessing — [Moonlight] Allies being Healed by Moonlight take 15% reduced damage.
+
+## Jenos
+
+**In-Game (Available):**
+- 19190: The Power Cosmeum — [Void Grip] Enemies affected by Void Grip are Crippled and take an additional 480 damage over its duration.
+- 19223: Luminary — [Astral Mark] All allies already affected by Astral Mark are Healed for an additional 285 when you use Astral Mark.
+- 20092: Binary Star — [Weapon] Star Splitter now deals 360 damage every 0.4s
+
+**Hidden:**
+- 19189: Celestial Touch — When you cast Astral Mark on an ally, they are immediately healed for 10% of their maximum Health.
+- 20231: Rising Star — Weapon shots increase the duration of active Astral Marks by .1s.
+
+## Khan
+- 22888: Lian's Shield — [Bulwark] Your Shield now regenerates at 120% effectiveness
+- 22890: Storm of Bullets — [Weapon] Increase your Attack Speed by 40%
+- 22891: Vortex Grip — [Commander's Grab] Targets hit by Commander's Grab are Stunned for an additional 1.4s.
+
+- 22889: Firing Line  - Battle Shout → Heal + Self Invulnerability (base ability) → Allies gain +20% Damage → Allies gain CC Immunity → Lasts 4s
+
+## Kinessa
+
+**In-Game (Available):**
+- 16456: Steady Aim — [Sniper Mode] For 4s after hitting a fully-charged weapon shot
+- 20093: Reposition — [Transporter] Using Transporter instantly Teleports you to its target location.
+
+**Hidden:**
+- 16387: Oppression — You can have two additional Oppressor Mines out at one time and you throw out two Mines per use, but your Mines have a lifetime of 6s.
+- 16507: Suppression — Oppressor Mines can now affect 2 more targets and Sniper Shots against enemies affected by Mines deal 30% more damage.
+- 20332: Failsafe Shield — When receiving fatal damage, instead gain a shield that absorbs 1000 damage and lasts 3 seconds.
+
+## Koga
+- 23481: Blood Reaper — [Cyclone Strike] Cyclone Strike deals 125% of its target's maximum Health as damage over its duration and your Movement Speed is increased by 25% during the attack.
+- 23482: Dragon Fangs — [Dragon Stance] Dragon Stance consumes Health instead of Energy at a rate of 200 Health per second. Dragon Stance requires at least 300 Health to activate and automatically cancels at 15 Health.
+
+
+23518, Default Koga Card, Adrenaline Junkie
+- 23556: Master of Arms — Successful Hits with your Submachine Guns have a 50% chance to cost no ammo.
+edbn 23556
+## Lex
+
+**In-Game (Available):**
+- 16807: Heroism — [Combat Slide] Gain Immunity to Crowd Control and reduce your damage taken by 90% while using Combat Slide.
+- 16909: Death Hastens — [Weapon] Your weapon shots deal 680 damage every 0.7s
+- 16914: Discovery — [Retribution] Increase the damage you deal to your Retribution target by 25%.
+
+**Hidden:**
+- 20094: Fought The Law —In Pursuit dealt 51% of the target's maximum health over its duration.
+- 20225: The Law Won — Killing your Retribution target grants a 5% damage buff that stacks up to 5 times.
+- 24722: Death Hastens v2 — Your Weapon Shots deal 25% more damage to targets over 65% Health.
+
+## Lian
+
+**In-Game (Available):**
+- 18814: Precision — [Weapon] Hitting an enemy with Heirloom Rifle increases your Heirloom Rifle damage against that enemy by 7% for 3s
+- 18815: Eminence — [Presence] Increase the damage of Presence by up to 50% based on the range at which it hits and reduce its Cooldown by 4s.
+- 18816: Alacrity — [Grace] Grace now hits all enemies in front of you instead of only one
+
+**Hidden:**
+- 20095: Death and Taxes — Your weapon shots reduce the effect of healing on your target by 90% for 1.5s.
+- 20330: Warrior Princess — For every enemy you hit with Valor gain 10% increased damage for 4s.
+
+## Lillith
+- 30807: Maelstrom of Carnage
+- 30808: Murderous Intent
+
+## Maeve
+
+**In-Game (Available):**
+- 16406: Cat Burglar — [Prowl] Increase the damage of each of your daggers from your first dagger sets within 5s of Prowl ending by 30%.
+- 16449: Rogue's Gambit — [Armor] Increase the damage done by Pounce by 15%
+- 16502: Artful Dodger — Activating Nine Lives cleanses all Crowd Control effects and heals for 400.
+
+**Hidden:**
+- 20196: Street Justice — [Pounce] Pounce Executes targets at or below 35% Health.
+- 20213: Queen of Knives — Hitting both daggers reduces the cooldown of Nine Lives by 6s.
+
+## Makoa
+
+**In-Game (Available):**
+- 16432: Leviathan — [Ancient Rage] Increase your Ultimate charge rate by 25% and Health by 500. Activating Ancient Rage resets the Cooldown of Dredge Anchor and Shell Spin
+- 16433: Pluck — [Dredge Anchor] For 4s after hitting an enemy with Dredge Anchor
+- 16525: Half Shell — [Shell Shield] Shell Shield is placed on the ground instead of channeled around you
+
+**Hidden:**
+- 20192: Leaden Cannonball — Fire a burst of smaller shells that deal a total of 800 damage.
+- 20250: Davey Jones Locker — Your Shell Spin now lasts until canceled and you can control its direction.
+
+## Mal'Damba
+
+**In-Game (Available):**
+- 16494: Wekono's Wrath
+- 16495: Spirit's Chosen
+- 20191: Ripened Gourd
+
+**Hidden:**
+- 16491: Ripened Gourd OLD — Gourd has a 50% chance to not go on Cooldown.
+- 20257: Gourd Season — Every tick of healing or damage from Gourd reduces the cooldown of Gourd by 0.1s.
+- 27406: Spirit's Chosen (punted) — [Slither] While using Slither, passing through an ally will Heal them for 800 and passing through an enemy will damage them for 650.
+- 27797  - poison slither  - DOES NOT WORK (found my primal_monke but doesn't work sadly :< )
+- 33438 - WEKONOS CURSE - Mending Spirits (right-click) could be cast on enemies instead of allies, poisoning them and dealing damage over time. 
+- 27798 OLD talent code for wekonos curse. (only works in shooting range)(I FOUND THIS ONE MYSELF, FULL CREDIT TO PRIMAL_MONKE - ME!!!)  
+
+
+## Moji
+
+shown:
+|**Jubilation**|**33416**|
+|**Spit Shine**|**33417**|
+|**Realm Runner**|**33418**|
+
+| HIDDEN |                   |                                                                                                                                                    |
+| ------ | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 22033  | **Snack Attack**  | [Armor] On Elimination, drop a Health Pack that heals your whole team 900 when picked up by an ally. Only your team can see/use it.                |
+| 22037  | **Yummy**         | Eating a victim of your ultimate recharges 50% ultimate charge and heals you 1000.                                                                 |
+| 22048  | **Boom Boom**     | [Weapon] Detonating a Magic Mark also deals 75% of its damage to all enemies within 15 units of the victim (splash).                               |
+| 22053  | **Toot**          | [Scamper] Using Scamper heals you and allies within 25 units for 600 over 3s.                                                                      |
+| 27800  | **LTM Moji Time** | No description text — just a label, looks like an internal/placeholder entry for a Limited Time Mode, not a real talent effect. - DOES NOT WORK!!! |
+
+## Octavia
+- 26957: Commander Talent (Leap)
+- 27042: Hell or High Water
+
+## Pip
+
+**In-Game (Available):**
+- 16376: Mega Potion — [Healing Potion] Healing Potion's Healing is increased by 100% and now provides a Stacking 200 Shield. Remedy (+5% Damage and +10% Healing Done)
+- 16391: Catalyst — [Explosive Flask] Enemies hit with Explosive Flask take 35% increased damage from your weapon shots for 4s. Surgery (+10% Damage Done)
+- 16516: Combat Medic — [Weapon] Potion Launcher also Heals allies hit for 750 and your Potion Launcher fire rate is increased by 10%. You no longer take damage from your weapon shots. Curative (+20% Healing)
+
+**Hidden:**
+- 20096: Mischief — Hits with your Potion Launcher reduce the Cooldown of all other skills by 1s.
+- 20194: Lead Vial — Healing Potions now only activate when directly hitting a target, and may persist for 10s after hitting a surface.
+- 20391: Chicken Tender-izer — You deal 100% more damage to chickens, and for every chicken that dies your ult recharges.
+
+## Raum
+- 24778: Enforcer — [Juggernaut] Reduce your damage taken by 40% while using Juggernaut.
+- 24779: Earthsplitter — [Cataclysm] Increase your Ultimate charge rate by 60%.
+- 24780: Subservience — [Soul Harvest] All your living allies are Healed for 1.5% of their maximum Health for each Soul Harvested.
+
+- 27772: LTM Raumpage Cataclysm — Increase damage done on enemies hit by Cataclysm.
+
+## Rei
+- 27314: Restraint — [Spirit Link] While Envelop is active and you are Linked to an enemy
+- 27315: Focus — [Spirit Link] Spirit Link's Cooldown is increased to 7s and it now only lasts for 4s
+- 27316: Extension — Increase the range of Chain Heal bounces by 40%.
+
+## Ruckus
+
+**In-Game (Available):**
+- 16503: Aerial Assault — [Advance] Advance gains a 3rd charge and activating Advance while standing still causes you to jet upwards.
+- 16519: Flux Generator — [Emitter] Increase the Shield granted by Emitter by 1300.
+- 20097: Rocket Barrage — [Missile Launcher] Increase the radius of Missile Launcher's explosions by 66%.
+
+**Hidden:**
+- 16390: Overdrive — Deal up to 40% more damage based on your missing Health.
+- 20331: Excavation — Weapon shots cause targets to take 1% additional damage from your Miniguns for 3s, stacking up to 25%.
+- 20876: zDeprecated Overdrive III — [Weapon] Deal up to 40% more damage based on your missing Health.
+
+## Saati
+- 27508: Improvised — The Dead Ringer Decoy is now rigged to explode! The Dead Ringer decoy will now explode when enemies are close
+- 27509: Window of Opportunity — Blast Back now knocks enemies straight up and enemies take 20% more DMG from Saati for 1.5s.
+- Spare Change - saati
+
+**Hidden:**
+- 27510: Heads or Tails — Ricocheted shots deal 200% more damage to shields
+## Seris
+
+**In-Game (Available):**
+- 16608: Agony — [Restore Soul] For each stack of Soul Orb detonated by Rend Soul
+- 16609: Mortal Reach — [Restore Soul] Increase the range of Restore Soul by 300% and reduce the time between Healing ticks by 20%.
+- 16610: Soul Collector — [Rend Soul] Each Soul Charge you detonate with Rend Soul increases your maximum Health and weapon damage by 2% until you die. Stacks up to 12 times.
+
+Forsake    Internal Torment   Resuscitate
+
+**Hidden:**
+- 20136: The Void Abides — Heal all allies within 50ft of your Restore Soul target for 50% of the healing value.
+- 20328: The Void Protects — When using Restore Soul on full health players, 100% of your healing becomes a shield.
+- 31302: zzzCopy of Spooky — Obtainable from the Rise of Furia event.
+
+## Sha Lin
+
+**In-Game (Available):**
+- 16453: Desert Silence — [Crippling Arrow] Reduce the Cooldown of Crippling Arrow by 1s. Crippling Arrow now Silences and Slows enemies by 15% for 2s instead.
+- 16455: Recurve — [Weapon] Increase the rate at which your Longbow charges by 25%.
+- 20263: Sand Trap — [Crippling Arrow] Crippling Arrow now explodes in a 20-unit-radius area on contact
+
+**Hidden:**
+- 16454: Shifting Sands — Killing an enemy resets the Cooldown of Planted and Planted deals 10% more damage.
+- 20098: Heavy Cord — Increase your bow's maximum draw time by 10% and damage by 200.
+- 21953: zDeprecated zoldRecurve IV — [Weapon] Draw your bow 15% faster. *(added from Talents.txt — missing from original list)*
+
+## Skye
+
+**In-Game (Available):**
+- 16374: Debilitate — [Poison Bolts] Increase the damage done by Poison Bolts by 25% and the rate at which they deal damage by 75%.
+- 16375: Preparation — [Armor] When activating Hidden
+- 20148: Smoke and Dagger — [Smoke Screen] Benefits from your Smoke Screen cards also benefit allies who enter Smoke Screen and allies are Healed for 100 every 1s while in your Smoke Screen
+
+**Hidden:**
+- 16373: Surprise Attack — Deal 500 bonus damage on your first successful Weapon Shot out of Hidden.
+- 20258: Shhhh — Enemies inside Smoke Screen are silenced.
+
+## Strix
+
+**In-Game (Available):**
+- 19468: Nocturnal — [Stealth] Reduce the rate of Stealth Energy consumption by 50% and increase your Movement Speed by 20% while in Stealth.
+- 19477: Crack Shot — [Weapon] Talon Rifle gains non-scoped Accuracy
+- 20279: Unauthorized Use — [Flare] Flare deals 250% base damage
+
+**Hidden:**
+- 19467: Ambush — Weapon Shots made in Stealth deal 15% more damage.
+- 20255: Titanslayer — Headshots will deal an additional 20% of your target's maximum health as damage. 
+
+## Talus
+
+**In-Game (Available):**
+- 19623: Inner Strength — [Rune of Travel] Reduce the Cooldown of Overcharge and Blitz Upper by 6s when you Teleport using Rune of Travel.
+- 19626: Faustian Bargain — [Rune of Travel] Rune of Travel no longer automatically activates
+- 19706: Nothing Personal — [True Power] Increase your Ultimate charge rate by 15% and enemies at or below 65% Health are Revealed to you.
+
+**Hidden:**
+- 19624: Raging Demon — The duration of Overcharge is increased by 1s.
+- 20197: Secret Technique — Deal up to 100% more damage with Blitz Upper based on your opponent's missing health.
+- 21823: zDeprecated Secret Technique V — [Blitz Upper] Deal up to 100% more damage with Blitz Upper based on your opponent's missing health. *(added from Talents.txt — missing from original list)*
+
+## Terminus
+
+**In-Game (Available):**
+- 19943: Undying — [Armor] Reduce the damage you take by 20% while at or below 50% Health.
+- 19944: Decimation — [Calamity Blast] Each Calamity Blast deals an additional 100 damage.
+- 20028: Crush — [Shatterfall] Shatterfall Stuns enemies hit for 1s
+
+**Hidden:**
+- 20030: Seething Rage — Attack 20% faster when you have no Charges of Calamity Blast stored.
+- 20320: Unholy Strength — Successful Calamity Blast hits heal you for 250 health.
+
+## Tiberius
+- 25181: Tigron's Fury — [Heavy Blade] Heavy Blade now explodes on reactivation instead of recalling
+- 25182: Vicious Assault — [Crouching Tigron] Crouching Tigron now has 2 charges and deals 600 damage in a 20-unit-radius area on landing.
+
+**Hidden:**
+- 25180: Predatory Instincts — [Weapon] Bladed Chakrams are able to bounce 2 additional times before disappearing.
+## Torvald
+
+**In-Game (Available):**
+- 16450: Direct Current — [Nullify] Double the range at which you can use Nullify.
+- 16451: Field Study — [Protection] Increase the damage done by allies by 10% while they are Shielded by Protection.
+- 20099: Thanks, Grandpa
+
+**Hidden:**
+- 16492: Alternating Current — Increase Recharge's Duration by 1.5s.
+- 20340: Overprotective — Gain a second charge of Protection.
+
+## Tyra
+
+**In-Game (Available):**
+- 16448: Hunting Party — [Hunter's Mark] Hunter's Mark has 2 charges and grants its benefits to allies.
+- 16458: Mercy Kill — [Nade Launcher] Nade Launcher has 3 charges
+- 20230: Burn, Monster!
+
+**Hidden:**
+- 16452: First Blood — Gain 30% Lifesteal.
+- 20170: Huntress — All enemies within 60ft of you are revealed to you.
+- 21543: zOLDHunting Party — [Hunter's Mark] Hunter's Mark's damage increase now also benefits allies, is increased to 25% bonus damage, and has a 2s reduced Cooldown.
+## Vatu
+- 27231: LTM Claws Out Ult Damage Amp
+
+## VII
+- 27929: Tribunal Upgrades — Heavy SMG has three elemental effects: Fire imbued Mag Dump -- dealing damage over time
+- 27930: Overcharged — Overcharge your Grappling Hook to now pull non-Frontline Champions to VII. Reduce Grappling Hook's damage by 100
+- 27931: Spring Loaded — Explosive Dodge - Drop an explosion where you land and take off from; decrease the cooldown by 30% and increase range by 25%
+
+
+
+## Viktor
+
+**In-Game (Available):**
+- 16429: Burst Mode — [Weapon] Switch your rifle to Three-Shot-Burst mode
+- 16430: Firefight — [Weapon] Gain 30% bonus damage while Hip Firing.
+- 16431: Cardio — [Hustle] Heal for 300 per second while using Hustle.
+
+**Hidden:**
+- 20100: Shrapnel — Increase the radius of Frag Grenade's explosion by 40%.
+- 20171: Standard Issue — When receiving fatal damage, instead gain a shield that absorbs 1000 damage and lasts 3 seconds.
+
+## Vivian
+
+**In-Game (Available):**
+- 20315: Opportunity in Chaos — [Weapon] After firing continuously for 2s
+- 20316: Suspect Everyone — [Armor] The Health of Deflector Shield is increased by 350 and its Cooldown is reduced by half if it is destroyed by an enemy.
+- 21261: Booby Trap — [Sensor Drone] Your Sensor Drones explode
+
+**Hidden:**
+- 20314: Sapper Rounds — Deal 150% increased damage to Shields.
+- 20317: Self Destruction — If an enemy is within 20 units of Sensor Drone it explodes, dealing 500 damage.
+- 20318: Ace in the Hole — You always respawn with one Sentinel active.
+- 23605: Booby Trap v2 — Your Sensor Drones explode with increased effect when an enemy is close.
+- 23723: Halloween Booby Trap — Your Sensor Drones explode dealing 500 damage and knocking back when an enemy is within 20ft.
+
+## Willo
+
+**In-Game (Available):**
+- 17111: Scorn — [Seedling] Increase the damage of each Seedling to 750 and reduce the time it takes for them to explode by 25%.
+- 17137: Blastflower — [Weapon] Hitting an enemy with your weapon shots increases the damage they take from weapon shots by 80 for 3s
+- 20319: Nightshade — [Dead Zone] Dead Zone damage is increased to 650.
+
+**Hidden:**
+- 16888: Disc Jump — Gain knock up when hitting yourself with Spinfusor.
+- 17112: Scorched Earth — Dead Zone damages shields for 50% of their maximum Health per second, and its cooldown is reduced by 3s.
+- 20310: Spring Fever — Your first shot after Flutter deals 100% more damage in a 50% larger radius.
+- 21401: zDeprecated zoldNightshade IV — [Dead Zone] Dead Zone now deals 600 damage when the initial explosion hits an enemy. *(added from Talents.txt — missing from original list)*
+Willo - 24021 (Scorched Earth v2) Dead Zone heals instead of just damage (test version)   - DOESNT WORK
+## Ying
+
+**In-Game (Available):**
+- 16367: Focusing Lens — [Weapon] Deal an additional 200 damage to an enemy if you hit them with all 5 shots of Illusory Mirror.
+- 16366: Resonance — [Shatter] If an Illusion is killed or expires
+- 20359: Life Exchange — [Shatter] Shatter instantly Heals your target for 800
+
+**Hidden:**
+- 16365: Lifelike — Illusions can now target two allies when Healing, but Illusions heal for 20% less.
+- 20101: Revitalizing Link — Dimensional Link now heals you for 400 every time you teleport.
+Ying - 23620 (zzzzLife Exchange test)  Get 2 illusions out, cast Shatter on ally — should heal for 1600 total and remove the illusions  - DOES NOT WORK
+
+## Zhin
+
+**In-Game (Available):**
+- 18302: Smolder — [Billow] Heal for 15% of your maximum Health per second while using Billow.
+- 18303: Guillotine — [Spite] Spite deals 20% of its target's maximum Health with each hit.
+- 20222: Yomi — [Weapon] Your heavy hit with Inferno Blade deals an additional 150 damage.
+
+**Hidden:**
+- 18304: Retaliation — After Countering an attack you remain in your Counter stance and Counter Attack deals 10% more damage.
+- 20195: FINISH THEM! — Whirl does up to 100% increased damage based on your opponent's missing health.
+- 20212: Blademaster — Deal 30% more damage to enemies within 20ft of you.
+- 27438: TheHotStepper — Leave fire behind you on the ground as you move.
+
+---
+
+**Total Talents:** 309 (all IDs combined; 302 from the original base list + 7 newly cross-referenced from Talents.txt: Bomb King 20321, Buck 23572, Grohk 24382 & 24383, Sha Lin 21953, Talus 21823, Willo 21401)
+**Descriptions:** Filled in for ~85 talent IDs that previously had no description, using Talents.txt as the source; MSG:###### localization placeholders from Talents.txt were skipped as not real talents.
+**Data notes:** Barik's 27391 (LTM_BARIK_DFT) and Vatu's 27231 (LTM Claws Out Ult Damage Amp) are distinct talents on different champions, not a conflict. Cassie's "Just Breathe" is 19913. A duplicate copy of Skye's 16375 (Preparation) that had been mistakenly listed under Cassie's Hidden section was removed. Strix's unknown "XXXXX" Titanslayer ID was resolved to 20255 via Talents.txt.
+**Last Updated:** 2026-08-03

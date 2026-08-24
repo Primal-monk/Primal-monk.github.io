@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PHAROAH — 4th Talents</title>
+<link rel="icon" type="image/png" href="assets/pharoah.png">
+<meta name="description" content="Every Paladins talent ID, including the hidden 4th, 5th and 6th talents, with a full guide.">
+<style>
+  :root{
+    --sand-deep:#c9a86e; --sand:#c2a169; --sand-mid:#d0af74; --sand-light:#dcbd88;
+    --sand-pale:#e8d5ab; --parchment:#f0e2c0;
+    --ink:#2e2011; --ink-mid:#4a3620; --ink-soft:#634c2b; --logo-brown:#6b4d24;
+    --gold:#d9ae38; --gold-deep:#a8801d; --bronze:#8a6520; --bronze-dark:#6d4f18;
+    --line:#a8875a;
+    --blue:#0f63bf; --blue-deep:#0a4685; --blue-pale:#e7f0fc; --blue-line:#7ba8dd;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scrollbar-color:var(--gold) var(--sand-pale);scrollbar-width:thin}
+  body{font-family:"Trebuchet MS","Segoe UI",sans-serif;background:var(--sand-deep);
+    color:var(--ink);line-height:1.6;padding-top:52px}
+  ::-webkit-scrollbar{width:17px}
+  ::-webkit-scrollbar-track{background:var(--sand-pale);border-left:1px solid var(--line)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--gold),var(--gold-deep));
+    border:2px solid var(--sand-pale);border-radius:12px}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:52px;background:var(--sand-pale);
+    border-bottom:2px solid var(--gold-deep);display:flex;align-items:center;gap:12px;padding:0 18px;
+    box-shadow:0 2px 10px rgba(60,40,15,.22)}
+  .topbar .who{display:flex;align-items:center;gap:10px;text-decoration:none;
+    background:var(--sand-mid);border:1px solid var(--gold-deep);border-radius:8px;padding:5px 14px 5px 10px}
+  .topbar .who:hover{background:var(--gold)}
+  .topbar .who img{width:36px;height:36px;object-fit:contain}
+  .topbar .who span{font-size:.92rem;color:var(--ink);font-weight:700}
+  .topbar .backarrow{font-size:1.15rem;color:var(--bronze);font-weight:900}
+  .topbar .spacer{flex:1}
+  .pageswitch{display:inline-flex;border:2px solid #0f4a55;border-radius:6px;overflow:hidden;margin:12px 0 10px}
+  .pageswitch a{background:#17636f;padding:9px 26px;font-size:.8rem;font-weight:900;color:#cdeef4;
+    text-decoration:none;letter-spacing:.1em;transition:background .12s}
+  .pageswitch a:hover{background:#1e7d8c}
+  .pageswitch a.on{background:#0f4a55;color:#fff}
+  .pswitch{display:inline-flex;border:1px solid var(--gold-deep);border-radius:5px;overflow:hidden}
+  .pswitch a{background:var(--sand-mid);padding:7px 15px;font-size:.74rem;font-weight:900;
+    color:var(--ink);text-decoration:none;letter-spacing:.06em}
+  .pswitch a:hover{background:var(--sand-light)}
+  .pswitch a.on{background:var(--bronze);color:#fff5dd}
+  .langwrap{display:inline-flex;border:2px solid #0f4a55;border-radius:6px;overflow:hidden;margin:0 0 4px}
+  .lang{background:#17636f;border:0;cursor:pointer;padding:9px 26px;font-size:.8rem;
+    font-weight:900;color:#cdeef4;letter-spacing:.1em;font-family:inherit;transition:background .12s}
+  .lang:hover{background:#1e7d8c}
+  .lang.on{background:#0f4a55;color:#fff}
+  .switchrow{display:block}
+  .titlerow{display:flex;align-items:center;justify-content:center;gap:16px}
+  .hlogo{width:78px;height:78px;object-fit:contain;flex:none}
+  @media(max-width:560px){.hlogo{width:52px;height:52px}}
+  details.guidewrap{margin-bottom:22px}
+  details.guidewrap>summary{list-style:none;cursor:pointer;user-select:none;
+    background:#17636f;border:2px solid #0f4a55;border-radius:6px;color:#fff;
+    font-size:.86rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase;
+    padding:11px 16px;display:flex;align-items:center;gap:10px;transition:background .12s}
+  details.guidewrap>summary::-webkit-details-marker{display:none}
+  details.guidewrap>summary:hover{background:#1e7d8c}
+  details.guidewrap>summary::before{content:"B8";font-size:1rem;transition:transform .15s;display:inline-block}
+  details.guidewrap[open]>summary::before{transform:rotate(90deg)}
+  details.guidewrap>summary .hint{margin-left:auto;font-size:.66rem;font-weight:700;letter-spacing:.08em;opacity:.8;text-transform:none}
+  details.guidewrap section.vg{margin-top:16px}
+
+  .wrap{max-width:1340px;margin:0 auto;padding:0 22px}
+  header{text-align:center;padding:18px 0 10px}
+  h1{font-size:clamp(2rem,6vw,3.2rem);letter-spacing:.16em;font-weight:900;color:var(--logo-brown);
+    text-shadow:1px 1px 0 var(--gold)}
+  .sub{margin-top:5px;color:var(--ink-soft);letter-spacing:.2em;font-size:.76rem;text-transform:uppercase}
+  .counts{margin-top:10px;display:inline-block;background:var(--gold);border:1px solid var(--gold-deep);
+    border-radius:20px;padding:4px 18px;font-size:.76rem;font-weight:900;color:#3a2a08;letter-spacing:.08em}
+
+  section{margin-bottom:30px}
+  h2{color:var(--ink);font-size:.92rem;letter-spacing:.18em;text-transform:uppercase;
+    padding-bottom:7px;margin-bottom:14px;border-bottom:2px solid var(--gold)}
+
+  .vidwrap{position:relative;width:100%;margin:0 0 12px;aspect-ratio:16/9;
+    border:2px solid var(--gold-deep);border-radius:8px;overflow:hidden;background:#000}
+  .vidwrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  section.vg{margin-bottom:22px}
+  .vg{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:22px;align-items:start}
+  @media(max-width:960px){.vg{grid-template-columns:1fr}}
+  .vg ol.steps li{padding:7px 0 7px 40px;font-size:.85rem}
+  .vg ol.steps li::before{width:26px;height:26px;top:7px;font-size:.76rem}
+  .vg .warn{font-size:.8rem;padding:10px 13px}
+  h2.hblue{border-bottom-color:#17636f}
+  .dlrow{text-align:center}
+  .dlbtn{display:inline-block;background:var(--bronze);color:#fff5dd;text-decoration:none;
+    padding:11px 26px;border-radius:5px;font-size:.84rem;font-weight:900;letter-spacing:.07em;
+    text-transform:uppercase;border:1px solid var(--bronze-dark)}
+  .dlbtn:hover{background:var(--bronze-dark)}
+
+  ol.steps{list-style:none;counter-reset:s;background:var(--sand-pale);border:1px solid var(--line);
+    border-radius:7px;padding:16px 20px}
+  ol.steps li{counter-increment:s;position:relative;padding:10px 0 10px 44px;color:var(--ink);
+    border-bottom:1px solid var(--sand);font-size:.9rem}
+  ol.steps li:last-child{border-bottom:0}
+  ol.steps li::before{content:counter(s);position:absolute;left:0;top:9px;width:29px;height:29px;
+    border-radius:5px;background:var(--bronze);color:#fff5dd;display:grid;place-items:center;
+    font-weight:900;font-size:.82rem}
+  ol.steps a{color:var(--bronze-dark);font-weight:700}
+  .warn{background:#e9cfb4;border:1px solid #b08a5e;border-left:4px solid var(--bronze);
+    border-radius:5px;padding:12px 16px;margin-top:12px;font-size:.86rem;color:#4a3218}
+  .warn b{color:#7a4a18}
+
+  .tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  .tools input{flex:1;min-width:240px;background:#17636f;border:2px solid #0f4a55;
+    border-radius:6px;padding:13px 15px;font-size:.95rem;font-weight:700;color:#fff;font-family:inherit;
+    box-shadow:0 0 0 3px rgba(23,99,111,.2)}
+  .tools input::placeholder{color:#a9d8e2;font-weight:600}
+  .tools input:focus{outline:0;border-color:#1e7d8c;box-shadow:0 0 0 4px rgba(23,99,111,.42)}
+
+  .sheet{background:var(--sand-pale);border:1px solid var(--line);border-radius:7px;padding:20px 24px;font-size:.9rem;line-height:1.75}
+  .sheet .ch{color:var(--ink);font-weight:900;font-size:1.05rem;letter-spacing:.14em;margin-top:20px;padding-top:14px;border-top:2px solid var(--gold)}
+  .sheet .ch:first-child{margin-top:0;padding-top:0;border-top:0}
+  .sheet .sec{color:var(--bronze-dark);font-weight:900;font-size:.72rem;letter-spacing:.18em;margin-top:9px}
+  .sheet .row{padding:1px 0 1px 2px}
+  .sheet .id{font-family:Consolas,monospace;font-weight:900;color:#fff;cursor:pointer;padding:1px 6px;border-radius:4px;background:#17636f;border:1px solid #0f4a55}
+  .sheet .id:hover{background:#1e7d8c;border-color:#0f4a55}
+  .sheet .id:active{background:#0f4a55}
+  .sheet .num{color:#17636f;font-weight:900}
+  .sheet .nm{font-weight:700;color:var(--ink)}
+  .sheet .ds{color:var(--ink-mid)}
+  .none{text-align:center;color:var(--ink-soft);padding:26px;font-style:italic}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
+    background:var(--bronze);color:#fff5dd;padding:11px 22px;border-radius:6px;font-size:.85rem;
+    font-weight:700;border:1px solid var(--bronze-dark);opacity:0;pointer-events:none;
+    transition:opacity .2s,transform .2s;z-index:80}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  footer{text-align:center;padding:22px 0 34px;border-top:1px solid var(--sand);
+    font-size:.76rem;color:var(--ink-soft)}
+
+/* ============================================================
+   THE WORDMARK - why this is plain letters and not the fancy ones
+   ============================================================
+   It used to be written with Mathematical Bold Sans-Serif capitals
+   (U+1D5E3...) and modifier letters (U+1D2C...). Those are real Unicode,
+   but almost no font actually contains them - so most browsers drew
+   empty boxes instead of letters. That is the block symbol.
+
+   Now it is ordinary A-Z, made bold and superscripted with CSS, which
+   every font on earth can render. Looks the same, cannot break. */
+.pmark{ font-weight:800; letter-spacing:.06em; }
+.pmark sup{ font-size:.62em; font-weight:800; letter-spacing:.04em;
+            vertical-align:super; margin-left:.06em; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="who" href="osiris.html"><span class="backarrow">&larr;</span>
+    <img src="assets/osiris.png" alt=""><span>OSIRIS</span></a>
+  <div class="spacer"></div>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="titlerow">
+      <img class="hlogo" src="assets/pharoah.png" alt="PHAROAH">
+      <h1 data-i18n="h1">4TH TALENTS</h1>
+    </div>
+    <div class="sub" data-i18n="sub">Every talent ID in Paladins</div>
+    <div class="switchrow"><div class="pageswitch"><a href="index.html">BASE</a><a href="talents.html" class="on">4TH TALENTS</a></div></div>
+    <div class="switchrow"><div class="langwrap">
+      <button class="lang on" data-lang="en">ENGLISH</button>
+      <button class="lang" data-lang="es">ESPA&Ntilde;OL</button>
+    </div></div>
+    <div class="counts" id="counts"></div>
+  </header>
+
+  <details class="guidewrap" open>
+    <summary><span data-i18n="h_toggle">Guide</span><span class="hint" data-i18n="hint_toggle">click to collapse</span></summary>
+  <section class="vg">
+    <div>
+    <h2 data-i18n="h_vid">Video Guide</h2>
+    <div class="vidwrap">
+      <iframe src="https://www.youtube.com/embed/y7jOmlAdm90" title="4th Talent Guide"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+    <div class="dlrow"><a class="dlbtn" href="talents.txt" download data-i18n="dl">Download the full list (.txt)</a></div>
+    </div>
+    <div>
+    <h2 data-i18n="h_guide">Written Guide</h2>
+    <ol class="steps" id="steps"></ol>
+    <div class="warn" data-i18n="warn"></div>
+    </div>
+  </section>
+  </details>
+
+  <section>
+    <h2 class="hblue" data-i18n="h_list">All Talents</h2>
+    <div class="tools">
+      <input id="q" type="text">
+    </div>
+    <div id="list"></div>
+  </section>
+
+  <footer><div style="margin-bottom:7px;opacity:.75">by <span class="pmark">PRIMAL<sup>APE</sup></span></div><span data-i18n="footer"></span></footer>
+</div>
+
+<div class="toast" id="toast">Copied</div>
+
+<script>
+const TALENTS=[
+{c:"Androxus",t:[{i:"16368",n:"Godslayer",d:"[Reversal] Reversal always fires back and does an additional 800 damage.",s:"live"},{i:"20085",n:"Defiant Fist",d:"[Defiance] Successful hits with your Revolver increase the damage of your next Defiance by 20%, stacking up to 100%.",s:"live"},{i:"19292",n:"Dark Stalker",d:"Nether Step now has 3 separate charges and is no longer linked.",s:"live"},{i:"16369",n:"Cursed Revolver",d:"[Weapon] Your Revolver applies a Bleed for 1s, dealing damage every 0.1s that increases the longer it remains on the enemy. Maximum damage per 0.1s is 20. Additional hits refresh the duration.",s:"hidden"},{i:"16504",n:"Dark Stalker (Alternate)",d:"Deal 20% more weapon damage to enemies below 50% Health.",s:"hidden"},{i:"19827",n:"Lingering Curse",d:"Accursed Arm lasts 8s longer, can fire 8 more shots, and charges 15% faster.",s:"hidden"},{i:"24721",n:"Cursed Cylinder v2",d:"Your Revolver's ammo capacity is increased by 3.",s:"hidden"},]},
+{c:"Ash",t:[{i:"18388",n:"Battering Ram",d:"[Shoulder Bash] Reduce your damage taken by 75% while using Shoulder Bash.",s:"live"},{i:"18556",n:"Fortress Breaker",d:"[Siege Shield] Increase Siege Shield's maximum Health by 2500 and its size by 50%, but reduce its Movement Speed by 80%.",s:"live"},{i:"20087",n:"Slug Shot",d:"[Weapon] Your weapon shots travel 50% faster and 100% farther, but no longer explode.",s:"live"},{i:"18416",n:"Rally Here",d:"Assert Dominance now charges 15% faster, stuns enemies for 2s, and causes them to take 35% more damage.",s:"hidden"},{i:"19846",n:"Super Smash",d:"Your knockbacks knock enemies back up to 100% further based on their missing Health.",s:"hidden"},]},
+{c:"Atlas",t:[{i:"24477",n:"Deja vu",d:"[Setback] Setback becomes a lobbed explosive, capable of Rewinding multiple enemies.",s:"other"},{i:"24483",n:"Temporal Divide",d:"[Stasis Field] Greatly increase the size of Stasis Field, but its Cooldown is increased by 65%.",s:"other"},{i:"27390",n:"- Unstable fissure",d:"MODERN - rewind enemies close to you",s:"other"},{i:"24487",n:"OLD Unstable Fissure :   24487  - leave a bomb that explodes for 1000 dmg",d:"",s:"note"},]},
+{c:"Azaan",t:[{i:"27718",n:"Persistence",d:"Gain 30% Lifesteal on your hits with Judgement.",s:"other"},{i:"27719",n:"Tempering",d:"Augment Reckoning, Sanctuary, and Conviction, but increase their base Cooldown by 25%.",s:"other"},{i:"27720",n:"Eternal",d:"Your Ire no longer decays due to not taking or dealing damage, but you no longer gain the passive damage increase while above Ire threshold.",s:"other"},]},
+{c:"Barik",t:[{i:"16397",n:"Fortify",d:"[Barricade] Increase the maximum Health of Barricade by 2000 and reduce its Cooldown by 3s.",s:"live"},{i:"16400",n:"Tinkerin",d:"[Weapon] Modify your Blunderbuss to fire a single slug that deals 600 damage.",s:"live"},{i:"27389",n:"Forgefire",d:"[Dome Shield] Dome Shield now costs 40% Ultimate charge and places a Flamethrower Turret with modified values and no Shield. Can have two active at once.",s:"live"},{i:"12934",n:"Architectonics",d:"Increase the damage of your Turrets by 20% and reduce their Cooldown by 2s.",s:"hidden"},{i:"19828",n:"Burninate",d:"Barik Turrets now shoot flames dealing 400 damage per second.",s:"hidden"},{i:"20088",n:"Hair Trigger",d:"Blunderbuss fires 30% faster.",s:"hidden"},{i:"27391",n:"LTM_BARIK_DFT",d:"Turret Talent for LTM Dwarf Fortress",s:"hidden"},]},
+{c:"Betty la Bomba",t:[{i:"28008",n:"Fiery Disposition",d:"[Weapon] Explosive damage sets enemies on fire for 0.3% of their maximum Health every 0.1s for 1.5s. Additional hits refresh the duration.",s:"other"},{i:"28009",n:"Controlled Fury",d:"[Hail of Bombs] Reduce the range of Hail of Bombs by 50%, concentrating the explosions in a smaller area, and reduce the Cooldown of Hail of Bombs by 2s.",s:"other"},{i:"28010",n:"Gotta Bounce",d:"[Explosive Personality] Reduce the Cooldown of Explosive Personality by 5s, but reduce your Movement Speed by 15%.",s:"other"},]},
+{c:"Bomb King",t:[{i:"16427",n:"Accelerant",d:"[Grumpy Bomb] Reduces the time it takes for Grumpy Bomb to explode by 40%.",s:"live"},{i:"16426",n:"Chain Reaction",d:"[Detonate] Hitting with more than one Sticky Bomb on a use of Detonate increases the damage of each explosion after the first by 30% of its base damage, up to 150%.",s:"live"},{i:"20216",n:"Royal Subjects",d:"[Weapon] Increase the radius of Sticky Bombs' explosions by 20%, but reduce maximum Ammo count by 2.",s:"live"},{i:"16506",n:"Demolition",d:"Grumpy Bomb destroys all shields when it explodes and its blast radius is increased by 30%.",s:"hidden"},{i:"20089",n:"Pop'n'Lock",d:"Poppy Bomb now deals bonus damage and cripples for 2s.",s:"hidden"},{i:"20321",n:"zOldBKLeg2",d:"[Weapon] Increase the explosion size of Sticky bombs by 100%. *(added from Talents.txt — missing from original list)*",s:"hidden"},]},
+{c:"Buck",t:[{i:"12931",n:"Bounce House",d:"[Heroic Leap] Heroic Leap deals 600 damage and applies a Knockback to enemies within 20 units of your landing location.",s:"live"},{i:"16386",n:"Ensnare",d:"[Net Shot] Increase the damage you deal to targets Slowed by Net Shot by 20% and increases the duration of Net Shot's Slow by 0.5s. The damage increase lasts a minimum of 2s.",s:"live"},{i:"16392",n:"Bulk Up",d:"[Recovery] Using Recovery instantly Heals you for 400 and increases your maximum Health by 300 for 5s.",s:"live"},{i:"20329",n:"Blessed",d:"Receive 40% more healing.",s:"hidden"},{i:"20339",n:"Bucking Madness",d:"Eliminations increase your attack speed by 20% for 10s.",s:"hidden"},{i:"23572",n:"Bounce House v2",d:"[Heroic Leap] Heroic Leap now deals 600 damage, knocks up enemies straight up and has a 20% increased radius. *(added from Talents.txt — missing from original list)*",s:"hidden"},{i:"23458",n:"Buck - 23458 (Double Barrel) - makes weapon shots deal 900 damage instead of 700, max 2 ammo instead",d:"",s:"note"},]},
+{c:"Caspian",t:[{i:"31057",n:"Measured Cadence",d:"Fire a weaker copy of Rogue's Tempo forward from your crosshairs for every 6 Ammo consumed.",s:"other"},{i:"31058",n:"Everywhere at Once",d:"The Cooldown of Deadly Momentum is permanently set to 5s and cannot be modified, reduced, or increased through other means. Gain 1 stack of Piercing and Sharp Momentum for each enemy hit with Deadly Momentum.",s:"other"},{i:"31059",n:"It's Got Some Heft",d:"[War] Increase the Range and Damage of War, but decrease its rate of fire. War's attacks now deal an additional 20% damage to each enemy hit for each enemy hit in total with your attack.",s:"other"},]},
+{c:"Cassie",t:[{i:"16382",n:"Impulse",d:"[Blast Shot] Blast Shot has its damage increased by 150 and its Cooldown decreased by 2s.",s:"live"},{i:"16384",n:"Exaction",d:"[Dodge Roll] For 8s after using Dodge Roll, your next weapon shot's damage is increased by 30%.",s:"live"},{i:"16385",n:"Big Game",d:"[Disengage] For 4s after hitting an enemy with Disengage, your weapon shots deal an additional 8% of that enemy's maximum Health as damage.",s:"live"},{i:"19869",n:"Deadeye",d:"Your attack speed is increased by 20% and after hitting a target your next shot does 30% more damage to them.",s:"hidden"},{i:"19913",n:"Just Breathe",d:"Crossbow shots deal 850 damage past 120 feet.",s:"hidden"},]},
+{c:"Corvus",t:[{i:"25366",n:"Spreading Influence",d:"[Mark of Fate] Decrease the percentage of Healing given to Marked targets by 20%",s:"other"},{i:"25370",n:"Stunning Visage",d:"[Projection] Enemies hit by Projection are stunned for 1s and any enemy caught between your Projection and you when you Teleport takes 800 damage.",s:"other"},{i:"25371",n:"Dark Gifts",d:"[Abyssal Reconstruction] Your Marked ally gains 15% Crowd Control reduction",s:"other"},]},
+{c:"Dredge",t:[{i:"23688",n:"Hurl",d:"[Harpoon] Harpoon no longer has a Cooldown",s:"live"},{i:"23690",n:"Scuttle",d:"[Weapon] The projectile launched by reloading your Cursed Howitzer explodes in a 20-unit-radius area on contact.",s:"live"},{i:"23807",n:"Abyss Spike",d:"[Harpoon] Harpoon lodges into terrain and explodes when an enemy comes within 20 units",s:"live"},{i:"23692",n:"Freebooter",d:"Allies may Pass through your Shortcut.",s:"hidden"},]},
+{c:"Drogoz",t:[{i:"16364",n:"W.Y.R.M. Jets",d:"[Armor] Increase your Movement Speed while using your Booster.",s:"live"},{i:"16383",n:"Fusillade",d:"[Weapon] Damage dealt when hitting an enemy directly with Rocket Launcher or Salvo is increased by 25%.",s:"live"},{i:"16514",n:"Combustible",d:"[Fire Spit] Fire Spit applies a Knockback and deals an additional 300 damage over 2s.",s:"live"},{i:"20175",n:"Dragonskin",d:"⚠️ DO NOT RUN - WILL CRASH GAME!! The amount of Booster you have also acts as a shield that can absorb damage.",s:"hidden"},{i:"20259",n:"Reign of Terror",d:"Salvo now activates instantly, always fires 6 shots, and has its cooldown reduced by 5s.",s:"hidden"},{i:"20358",n:"Dragon Overdrive",d:"Dragon Punch deals damage equal to your victims maximum health in a radius around their location and charges faster.",s:"hidden"},]},
+{c:"Evie",t:[{i:"16370",n:"Over the Moon",d:"[Soar] Increase the damage you deal with your weapon shots by 25% for 3s after Soar ends.",s:"live"},{i:"16371",n:"Wormhole",d:"[Blink] Blink can be refired within 4s of its use to return to the initial casting location.",s:"live"},{i:"20235",n:"Snow Globe",d:"[Ice Storm] Ice Storm has its damage increased by 100% and its Ultimate charge decreased by 50%",s:"live"},{i:"16372",n:"Reprieve",d:"Heal 300 Health per second during Ice Block.",s:"hidden"},{i:"20237",n:"Snowball",d:"Kills increase your damage by 5% up to 20% until you die.",s:"hidden"},]},
+{c:"Fernando",t:[{i:"16379",n:"Aegis",d:"[Shield] Your Shield now uses a resource that Regenerates over time instead of using a Cooldown.",s:"live"},{i:"16380",n:"Scorch",d:"[Fireball] Increase the damage of Fireball by 35%",s:"live"},{i:"16381",n:"Formidable",d:"[Charge] You now have 2 charges of Charge",s:"live"},{i:"20090",n:"Overrun",d:"Charge now deals 700 damage.",s:"hidden"},{i:"20229",n:"Dragonfire Lance",d:"Flame Lance now fires small fireballs that deal 120 damage every 0.2s.",s:"hidden"},]},
+{c:"Furia",t:[{i:"23358",n:"Exterminate",d:"[Pyre Strike] When Pyre Strike hits an enemy champion it stops moving until it ends and deals up to 100% more damage to enemies under it",s:"other"},{i:"23362",n:"Solar Blessing",d:"[Pyre Strike] Refiring Pyre Strike stops it in place. Any ally in its beam is Healed for 150 every 0.1s for 1.5s. Additional hits refresh the effect. Remedy (+5% Damage +10% Healing)",s:"other"},{i:"23394",n:"Cherish",d:"[Kindle Soul] Kindle Soul's range is increased by 300% and now applies additional healing to your ally for 15% of their maximum Health. Curative (+20% Healing)",s:"other"},{i:"23391",n:"Celerity",d:"[Wings of Wrath] Wings of Wrath gains an additional charge.",s:"other"},]},
+{c:"Grohk",t:[{i:"16377",n:"Totemic Ward",d:"[Healing Totem] Gain a third charge of Healing Totem",s:"live"},{i:"16378",n:"Maelstrom",d:"[Shock Pulse] Increase the damage of Lightning Staff to 70",s:"live"},{i:"20325",n:"Spirit's Domain",d:"[Weapon] Hitting allies with your Lightning Staff Heals them for 800 per second and your maximum Ammo capacity is increased by 15%. Curative (+20% Healing)",s:"live"},{i:"16425",n:"Wraith",d:"When you take lethal damage Ghost Walk activates and heals you for 15% of your maximum Health.",s:"hidden"},{i:"20308",n:"Marked for Death",d:"Targets hit by Lightning Staff take 15% increased damage for 2s.",s:"hidden"},{i:"24382",n:"PvE_SelfDestruct_Trigger",d:"When you take lethal damage Self Destruct activates *(added from Talents.txt — missing from original list)*",s:"hidden"},{i:"24383",n:"PvE_DamageHealth",d:"Deal large damage to self *(added from Talents.txt — missing from original list)*",s:"hidden"},{i:"24383",n:"Grohk - 24383/24382 (they do the same thing) - the last killing blow won't kill you, instead you'll get healed for the amount you are shot with (very weird but this one works)",d:"",s:"note"},]},
+{c:"Grover",t:[{i:"16389",n:"Ferocity",d:"[Weapon] Increase your maximum damage scaling over distance by 60%. Surgery (+10% Damage)",s:"live"},{i:"16582",n:"Deep Roots",d:"[Crippling Throw] Crippling Throw chains to nearby enemies up to 2 times",s:"live"},{i:"20091",n:"Efflorescence",d:"Increase the passive healing of Blossom by 100% and its radius by 50%.",s:"hidden"},{i:"20249",n:"Great Oak",d:"Eliminations increase your maximum Health by 150 until you die. Stacks up to 5 times.",s:"hidden"},{i:"16402",n:"Rampant Blooming",d:"[Vine] Heal for a burst of 500 and an additional 300 over 2s in a 50 unit radius at your location when you finish Vining. Curative (+20% Healing)",s:"hidden"},{i:"16488",n:"zDeprecated (Deep Roots)",d:"Crippling throw now Roots instead of Cripples.",s:"hidden"},{i:"27759",n:"Grover LTM InHand Override",d:"Set's grover's inhand to firemode 2 for an LTM.",s:"hidden"},{i:"27776",n:"Grover LTM Vine Override",d:"Set's grover's vine ability to firemode 2 for an LTM.",s:"hidden"},]},
+{c:"Imani",t:[{i:"24136",n:"Mana Rift",d:"[Armor] Remaining still for 1s creates a Mana Rift around you that generates Mana every 1s. Leaving the Mana Rift destroys it.",s:"other"},{i:"24144",n:"Pyromania",d:"[Pyre Ball] Each of your Pyre Balls explodes in a 20-unit-radius area on hit and generate more Mana",s:"other"},{i:"24145",n:"Splitting Ice",d:"[Frost Bolt] Frost Bolt Chains to a nearby enemy within 30 units",s:"other"},]},
+{c:"Inara",t:[{i:"16600",n:"Treacherous Ground",d:"[Warder's Field] The radius of Warder's Field is increased by 50% and it Cripples enemies within it.",s:"live"},{i:"16601",n:"Mother's Grace",d:"[Earthen Guard] Reduce your damage taken by 15%",s:"live"},{i:"16605",n:"Tremors",d:"[Impasse] Impasse now has 2 charges and its Cooldown is reduced to 12s",s:"live"},{i:"20214",n:"Wrath of the Stagalla",d:"Hitting all 3 shots on the same target deals an extra 200 damage.",s:"hidden"},{i:"20233",n:"The Stone Protects",d:"30% of all damage dealt to you is instead taken by your deployables if they are active.",s:"hidden"},]},
+{c:"Io",t:[{i:"24663",n:"Sacrifice",d:"[Guardian Spirit] If Io falls below 200 Health while Luna is active",s:"other"},{i:"24673",n:"Life Link",d:"[Guardian Spirit] Luna Heals allies around her for 320 per second. Reduce Moonlight's Healing to 135 every 0.15s.",s:"other"},{i:"24674",n:"Goddess' Blessing",d:"[Moonlight] Allies being Healed by Moonlight take 15% reduced damage.",s:"other"},]},
+{c:"Jenos",t:[{i:"19190",n:"The Power Cosmeum",d:"[Void Grip] Enemies affected by Void Grip are Crippled and take an additional 480 damage over its duration.",s:"live"},{i:"19223",n:"Luminary",d:"[Astral Mark] All allies already affected by Astral Mark are Healed for an additional 285 when you use Astral Mark.",s:"live"},{i:"20092",n:"Binary Star",d:"[Weapon] Star Splitter now deals 360 damage every 0.4s",s:"live"},{i:"19189",n:"Celestial Touch",d:"When you cast Astral Mark on an ally, they are immediately healed for 10% of their maximum Health.",s:"hidden"},{i:"20231",n:"Rising Star",d:"Weapon shots increase the duration of active Astral Marks by .1s.",s:"hidden"},]},
+{c:"Khan",t:[{i:"22888",n:"Lian's Shield",d:"[Bulwark] Your Shield now regenerates at 120% effectiveness",s:"other"},{i:"22890",n:"Storm of Bullets",d:"[Weapon] Increase your Attack Speed by 40%",s:"other"},{i:"22891",n:"Vortex Grip",d:"[Commander's Grab] Targets hit by Commander's Grab are Stunned for an additional 1.4s.",s:"other"},{i:"22889",n:"Firing Line",d:"Battle Shout → Heal + Self Invulnerability (base ability) → Allies gain +20% Damage → Allies gain CC Immunity → Lasts 4s",s:"other"},]},
+{c:"Kinessa",t:[{i:"16456",n:"Steady Aim",d:"[Sniper Mode] For 4s after hitting a fully-charged weapon shot",s:"live"},{i:"20093",n:"Reposition",d:"[Transporter] Using Transporter instantly Teleports you to its target location.",s:"live"},{i:"16387",n:"Oppression",d:"You can have two additional Oppressor Mines out at one time and you throw out two Mines per use, but your Mines have a lifetime of 6s.",s:"hidden"},{i:"16507",n:"Suppression",d:"Oppressor Mines can now affect 2 more targets and Sniper Shots against enemies affected by Mines deal 30% more damage.",s:"hidden"},{i:"20332",n:"Failsafe Shield",d:"When receiving fatal damage, instead gain a shield that absorbs 1000 damage and lasts 3 seconds.",s:"hidden"},]},
+{c:"Koga",t:[{i:"23481",n:"Blood Reaper",d:"[Cyclone Strike] Cyclone Strike deals 125% of its target's maximum Health as damage over its duration and your Movement Speed is increased by 25% during the attack.",s:"other"},{i:"23482",n:"Dragon Fangs",d:"[Dragon Stance] Dragon Stance consumes Health instead of Energy at a rate of 200 Health per second. Dragon Stance requires at least 300 Health to activate and automatically cancels at 15 Health.",s:"other"},{i:"23518",n:"23518, Default Koga Card, Adrenaline Junkie",d:"",s:"note"},{i:"23556",n:"Master of Arms",d:"Successful Hits with your Submachine Guns have a 50% chance to cost no ammo.",s:"other"},{i:"23556",n:"edbn 23556",d:"",s:"note"},]},
+{c:"Lex",t:[{i:"16807",n:"Heroism",d:"[Combat Slide] Gain Immunity to Crowd Control and reduce your damage taken by 90% while using Combat Slide.",s:"live"},{i:"16909",n:"Death Hastens",d:"[Weapon] Your weapon shots deal 680 damage every 0.7s",s:"live"},{i:"16914",n:"Discovery",d:"[Retribution] Increase the damage you deal to your Retribution target by 25%.",s:"live"},{i:"20094",n:"Fought The Law —In Pursuit dealt 51% of the target's maximum health over its duration.",d:"",s:"hidden"},{i:"20225",n:"The Law Won",d:"Killing your Retribution target grants a 5% damage buff that stacks up to 5 times.",s:"hidden"},{i:"24722",n:"Death Hastens v2",d:"Your Weapon Shots deal 25% more damage to targets over 65% Health.",s:"hidden"},]},
+{c:"Lian",t:[{i:"18814",n:"Precision",d:"[Weapon] Hitting an enemy with Heirloom Rifle increases your Heirloom Rifle damage against that enemy by 7% for 3s",s:"live"},{i:"18815",n:"Eminence",d:"[Presence] Increase the damage of Presence by up to 50% based on the range at which it hits and reduce its Cooldown by 4s.",s:"live"},{i:"18816",n:"Alacrity",d:"[Grace] Grace now hits all enemies in front of you instead of only one",s:"live"},{i:"20095",n:"Death and Taxes",d:"Your weapon shots reduce the effect of healing on your target by 90% for 1.5s.",s:"hidden"},{i:"20330",n:"Warrior Princess",d:"For every enemy you hit with Valor gain 10% increased damage for 4s.",s:"hidden"},]},
+{c:"Lillith",t:[{i:"30807",n:"Maelstrom of Carnage",d:"",s:"other"},{i:"30808",n:"Murderous Intent",d:"",s:"other"},]},
+{c:"Maeve",t:[{i:"16406",n:"Cat Burglar",d:"[Prowl] Increase the damage of each of your daggers from your first dagger sets within 5s of Prowl ending by 30%.",s:"live"},{i:"16449",n:"Rogue's Gambit",d:"[Armor] Increase the damage done by Pounce by 15%",s:"live"},{i:"16502",n:"Artful Dodger",d:"Activating Nine Lives cleanses all Crowd Control effects and heals for 400.",s:"live"},{i:"20196",n:"Street Justice",d:"[Pounce] Pounce Executes targets at or below 35% Health.",s:"hidden"},{i:"20213",n:"Queen of Knives",d:"Hitting both daggers reduces the cooldown of Nine Lives by 6s.",s:"hidden"},]},
+{c:"Makoa",t:[{i:"16432",n:"Leviathan",d:"[Ancient Rage] Increase your Ultimate charge rate by 25% and Health by 500. Activating Ancient Rage resets the Cooldown of Dredge Anchor and Shell Spin",s:"live"},{i:"16433",n:"Pluck",d:"[Dredge Anchor] For 4s after hitting an enemy with Dredge Anchor",s:"live"},{i:"16525",n:"Half Shell",d:"[Shell Shield] Shell Shield is placed on the ground instead of channeled around you",s:"live"},{i:"20192",n:"Leaden Cannonball",d:"Fire a burst of smaller shells that deal a total of 800 damage.",s:"hidden"},{i:"20250",n:"Davey Jones Locker",d:"Your Shell Spin now lasts until canceled and you can control its direction.",s:"hidden"},]},
+{c:"Mal'Damba",t:[{i:"16494",n:"Wekono's Wrath",d:"",s:"live"},{i:"16495",n:"Spirit's Chosen",d:"",s:"live"},{i:"20191",n:"Ripened Gourd",d:"",s:"live"},{i:"16491",n:"Ripened Gourd OLD",d:"Gourd has a 50% chance to not go on Cooldown.",s:"hidden"},{i:"20257",n:"Gourd Season",d:"Every tick of healing or damage from Gourd reduces the cooldown of Gourd by 0.1s.",s:"hidden"},{i:"27406",n:"Spirit's Chosen (punted)",d:"[Slither] While using Slither, passing through an ally will Heal them for 800 and passing through an enemy will damage them for 650.",s:"hidden"},{i:"27797",n:"- poison slither",d:"DOES NOT WORK (found my primal_monke but doesn't work sadly :< )",s:"hidden"},{i:"33438",n:"- WEKONOS CURSE",d:"Mending Spirits (right-click) could be cast on enemies instead of allies, poisoning them and dealing damage over time.",s:"hidden"},{i:"27798",n:"OLD talent code for wekonos curse. (only works in shooting range)(I FOUND THIS ONE MYSELF, FULL CREDIT TO PRIMAL_MONKE",d:"ME!!!)",s:"hidden"},]},
+{c:"Moji",t:[{i:"33416",n:"Jubilation",d:"",s:"live"},{i:"33417",n:"Spit Shine",d:"",s:"live"},{i:"33418",n:"Realm Runner",d:"",s:"live"},{i:"22033",n:"Snack Attack",d:"[Armor] On Elimination, drop a Health Pack that heals your whole team 900 when picked up by an ally. Only your team can see/use it.",s:"hidden"},{i:"22037",n:"Yummy",d:"Eating a victim of your ultimate recharges 50% ultimate charge and heals you 1000.",s:"hidden"},{i:"22048",n:"Boom Boom",d:"[Weapon] Detonating a Magic Mark also deals 75% of its damage to all enemies within 15 units of the victim (splash).",s:"hidden"},{i:"22053",n:"Toot",d:"[Scamper] Using Scamper heals you and allies within 25 units for 600 over 3s.",s:"hidden"},{i:"27800",n:"LTM Moji Time",d:"No description text — just a label, looks like an internal/placeholder entry for a Limited Time Mode, not a real talent effect. - DOES NOT WORK!!!",s:"hidden"},]},
+{c:"Octavia",t:[{i:"26957",n:"Commander Talent (Leap)",d:"",s:"other"},{i:"27042",n:"Hell or High Water",d:"",s:"other"},]},
+{c:"Pip",t:[{i:"16376",n:"Mega Potion",d:"[Healing Potion] Healing Potion's Healing is increased by 100% and now provides a Stacking 200 Shield. Remedy (+5% Damage and +10% Healing Done)",s:"live"},{i:"16391",n:"Catalyst",d:"[Explosive Flask] Enemies hit with Explosive Flask take 35% increased damage from your weapon shots for 4s. Surgery (+10% Damage Done)",s:"live"},{i:"16516",n:"Combat Medic",d:"[Weapon] Potion Launcher also Heals allies hit for 750 and your Potion Launcher fire rate is increased by 10%. You no longer take damage from your weapon shots. Curative (+20% Healing)",s:"live"},{i:"20096",n:"Mischief",d:"Hits with your Potion Launcher reduce the Cooldown of all other skills by 1s.",s:"hidden"},{i:"20194",n:"Lead Vial",d:"Healing Potions now only activate when directly hitting a target, and may persist for 10s after hitting a surface.",s:"hidden"},{i:"20391",n:"Chicken Tender-izer",d:"You deal 100% more damage to chickens, and for every chicken that dies your ult recharges.",s:"hidden"},]},
+{c:"Raum",t:[{i:"24778",n:"Enforcer",d:"[Juggernaut] Reduce your damage taken by 40% while using Juggernaut.",s:"other"},{i:"24779",n:"Earthsplitter",d:"[Cataclysm] Increase your Ultimate charge rate by 60%.",s:"other"},{i:"24780",n:"Subservience",d:"[Soul Harvest] All your living allies are Healed for 1.5% of their maximum Health for each Soul Harvested.",s:"other"},{i:"27772",n:"LTM Raumpage Cataclysm",d:"Increase damage done on enemies hit by Cataclysm.",s:"other"},]},
+{c:"Rei",t:[{i:"27314",n:"Restraint",d:"[Spirit Link] While Envelop is active and you are Linked to an enemy",s:"other"},{i:"27315",n:"Focus",d:"[Spirit Link] Spirit Link's Cooldown is increased to 7s and it now only lasts for 4s",s:"other"},{i:"27316",n:"Extension",d:"Increase the range of Chain Heal bounces by 40%.",s:"other"},]},
+{c:"Ruckus",t:[{i:"16503",n:"Aerial Assault",d:"[Advance] Advance gains a 3rd charge and activating Advance while standing still causes you to jet upwards.",s:"live"},{i:"16519",n:"Flux Generator",d:"[Emitter] Increase the Shield granted by Emitter by 1300.",s:"live"},{i:"20097",n:"Rocket Barrage",d:"[Missile Launcher] Increase the radius of Missile Launcher's explosions by 66%.",s:"live"},{i:"16390",n:"Overdrive",d:"Deal up to 40% more damage based on your missing Health.",s:"hidden"},{i:"20331",n:"Excavation",d:"Weapon shots cause targets to take 1% additional damage from your Miniguns for 3s, stacking up to 25%.",s:"hidden"},{i:"20876",n:"zDeprecated Overdrive III",d:"[Weapon] Deal up to 40% more damage based on your missing Health.",s:"hidden"},]},
+{c:"Saati",t:[{i:"27508",n:"Improvised",d:"The Dead Ringer Decoy is now rigged to explode! The Dead Ringer decoy will now explode when enemies are close",s:"other"},{i:"27509",n:"Window of Opportunity",d:"Blast Back now knocks enemies straight up and enemies take 20% more DMG from Saati for 1.5s.",s:"other"},{i:"27510",n:"Heads or Tails",d:"Ricocheted shots deal 200% more damage to shields",s:"hidden"},]},
+{c:"Seris",t:[{i:"16608",n:"Agony",d:"[Restore Soul] For each stack of Soul Orb detonated by Rend Soul",s:"live"},{i:"16609",n:"Mortal Reach",d:"[Restore Soul] Increase the range of Restore Soul by 300% and reduce the time between Healing ticks by 20%.",s:"live"},{i:"16610",n:"Soul Collector",d:"[Rend Soul] Each Soul Charge you detonate with Rend Soul increases your maximum Health and weapon damage by 2% until you die. Stacks up to 12 times.",s:"live"},{i:"20136",n:"The Void Abides",d:"Heal all allies within 50ft of your Restore Soul target for 50% of the healing value.",s:"hidden"},{i:"20328",n:"The Void Protects",d:"When using Restore Soul on full health players, 100% of your healing becomes a shield.",s:"hidden"},{i:"31302",n:"zzzCopy of Spooky",d:"Obtainable from the Rise of Furia event.",s:"hidden"},]},
+{c:"Sha Lin",t:[{i:"16453",n:"Desert Silence",d:"[Crippling Arrow] Reduce the Cooldown of Crippling Arrow by 1s. Crippling Arrow now Silences and Slows enemies by 15% for 2s instead.",s:"live"},{i:"16455",n:"Recurve",d:"[Weapon] Increase the rate at which your Longbow charges by 25%.",s:"live"},{i:"20263",n:"Sand Trap",d:"[Crippling Arrow] Crippling Arrow now explodes in a 20-unit-radius area on contact",s:"live"},{i:"16454",n:"Shifting Sands",d:"Killing an enemy resets the Cooldown of Planted and Planted deals 10% more damage.",s:"hidden"},{i:"20098",n:"Heavy Cord",d:"Increase your bow's maximum draw time by 10% and damage by 200.",s:"hidden"},{i:"21953",n:"zDeprecated zoldRecurve IV",d:"[Weapon] Draw your bow 15% faster. *(added from Talents.txt — missing from original list)*",s:"hidden"},]},
+{c:"Skye",t:[{i:"16374",n:"Debilitate",d:"[Poison Bolts] Increase the damage done by Poison Bolts by 25% and the rate at which they deal damage by 75%.",s:"live"},{i:"16375",n:"Preparation",d:"[Armor] When activating Hidden",s:"live"},{i:"20148",n:"Smoke and Dagger",d:"[Smoke Screen] Benefits from your Smoke Screen cards also benefit allies who enter Smoke Screen and allies are Healed for 100 every 1s while in your Smoke Screen",s:"live"},{i:"16373",n:"Surprise Attack",d:"Deal 500 bonus damage on your first successful Weapon Shot out of Hidden.",s:"hidden"},{i:"20258",n:"Shhhh",d:"Enemies inside Smoke Screen are silenced.",s:"hidden"},]},
+{c:"Strix",t:[{i:"19468",n:"Nocturnal",d:"[Stealth] Reduce the rate of Stealth Energy consumption by 50% and increase your Movement Speed by 20% while in Stealth.",s:"live"},{i:"19477",n:"Crack Shot",d:"[Weapon] Talon Rifle gains non-scoped Accuracy",s:"live"},{i:"20279",n:"Unauthorized Use",d:"[Flare] Flare deals 250% base damage",s:"live"},{i:"19467",n:"Ambush",d:"Weapon Shots made in Stealth deal 15% more damage.",s:"hidden"},{i:"20255",n:"Titanslayer",d:"Headshots will deal an additional 20% of your target's maximum health as damage.",s:"hidden"},]},
+{c:"Talus",t:[{i:"19623",n:"Inner Strength",d:"[Rune of Travel] Reduce the Cooldown of Overcharge and Blitz Upper by 6s when you Teleport using Rune of Travel.",s:"live"},{i:"19626",n:"Faustian Bargain",d:"[Rune of Travel] Rune of Travel no longer automatically activates",s:"live"},{i:"19706",n:"Nothing Personal",d:"[True Power] Increase your Ultimate charge rate by 15% and enemies at or below 65% Health are Revealed to you.",s:"live"},{i:"19624",n:"Raging Demon",d:"The duration of Overcharge is increased by 1s.",s:"hidden"},{i:"20197",n:"Secret Technique",d:"Deal up to 100% more damage with Blitz Upper based on your opponent's missing health.",s:"hidden"},{i:"21823",n:"zDeprecated Secret Technique V",d:"[Blitz Upper] Deal up to 100% more damage with Blitz Upper based on your opponent's missing health. *(added from Talents.txt — missing from original list)*",s:"hidden"},]},
+{c:"Terminus",t:[{i:"19943",n:"Undying",d:"[Armor] Reduce the damage you take by 20% while at or below 50% Health.",s:"live"},{i:"19944",n:"Decimation",d:"[Calamity Blast] Each Calamity Blast deals an additional 100 damage.",s:"live"},{i:"20028",n:"Crush",d:"[Shatterfall] Shatterfall Stuns enemies hit for 1s",s:"live"},{i:"20030",n:"Seething Rage",d:"Attack 20% faster when you have no Charges of Calamity Blast stored.",s:"hidden"},{i:"20320",n:"Unholy Strength",d:"Successful Calamity Blast hits heal you for 250 health.",s:"hidden"},]},
+{c:"Tiberius",t:[{i:"25181",n:"Tigron's Fury",d:"[Heavy Blade] Heavy Blade now explodes on reactivation instead of recalling",s:"other"},{i:"25182",n:"Vicious Assault",d:"[Crouching Tigron] Crouching Tigron now has 2 charges and deals 600 damage in a 20-unit-radius area on landing.",s:"other"},{i:"25180",n:"Predatory Instincts",d:"[Weapon] Bladed Chakrams are able to bounce 2 additional times before disappearing.",s:"hidden"},]},
+{c:"Torvald",t:[{i:"16450",n:"Direct Current",d:"[Nullify] Double the range at which you can use Nullify.",s:"live"},{i:"16451",n:"Field Study",d:"[Protection] Increase the damage done by allies by 10% while they are Shielded by Protection.",s:"live"},{i:"20099",n:"Thanks, Grandpa",d:"",s:"live"},{i:"16492",n:"Alternating Current",d:"Increase Recharge's Duration by 1.5s.",s:"hidden"},{i:"20340",n:"Overprotective",d:"Gain a second charge of Protection.",s:"hidden"},]},
+{c:"Tyra",t:[{i:"16448",n:"Hunting Party",d:"[Hunter's Mark] Hunter's Mark has 2 charges and grants its benefits to allies.",s:"live"},{i:"16458",n:"Mercy Kill",d:"[Nade Launcher] Nade Launcher has 3 charges",s:"live"},{i:"20230",n:"Burn, Monster!",d:"",s:"live"},{i:"16452",n:"First Blood",d:"Gain 30% Lifesteal.",s:"hidden"},{i:"20170",n:"Huntress",d:"All enemies within 60ft of you are revealed to you.",s:"hidden"},{i:"21543",n:"zOLDHunting Party",d:"[Hunter's Mark] Hunter's Mark's damage increase now also benefits allies, is increased to 25% bonus damage, and has a 2s reduced Cooldown.",s:"hidden"},]},
+{c:"Vatu",t:[{i:"27231",n:"LTM Claws Out Ult Damage Amp",d:"",s:"other"},]},
+{c:"VII",t:[{i:"27929",n:"Tribunal Upgrades",d:"Heavy SMG has three elemental effects: Fire imbued Mag Dump -- dealing damage over time",s:"other"},{i:"27930",n:"Overcharged",d:"Overcharge your Grappling Hook to now pull non-Frontline Champions to VII. Reduce Grappling Hook's damage by 100",s:"other"},{i:"27931",n:"Spring Loaded",d:"Explosive Dodge - Drop an explosion where you land and take off from; decrease the cooldown by 30% and increase range by 25%",s:"other"},]},
+{c:"Viktor",t:[{i:"16429",n:"Burst Mode",d:"[Weapon] Switch your rifle to Three-Shot-Burst mode",s:"live"},{i:"16430",n:"Firefight",d:"[Weapon] Gain 30% bonus damage while Hip Firing.",s:"live"},{i:"16431",n:"Cardio",d:"[Hustle] Heal for 300 per second while using Hustle.",s:"live"},{i:"20100",n:"Shrapnel",d:"Increase the radius of Frag Grenade's explosion by 40%.",s:"hidden"},{i:"20171",n:"Standard Issue",d:"When receiving fatal damage, instead gain a shield that absorbs 1000 damage and lasts 3 seconds.",s:"hidden"},]},
+{c:"Vivian",t:[{i:"20315",n:"Opportunity in Chaos",d:"[Weapon] After firing continuously for 2s",s:"live"},{i:"20316",n:"Suspect Everyone",d:"[Armor] The Health of Deflector Shield is increased by 350 and its Cooldown is reduced by half if it is destroyed by an enemy.",s:"live"},{i:"21261",n:"Booby Trap",d:"[Sensor Drone] Your Sensor Drones explode",s:"live"},{i:"20314",n:"Sapper Rounds",d:"Deal 150% increased damage to Shields.",s:"hidden"},{i:"20317",n:"Self Destruction",d:"If an enemy is within 20 units of Sensor Drone it explodes, dealing 500 damage.",s:"hidden"},{i:"20318",n:"Ace in the Hole",d:"You always respawn with one Sentinel active.",s:"hidden"},{i:"23605",n:"Booby Trap v2",d:"Your Sensor Drones explode with increased effect when an enemy is close.",s:"hidden"},{i:"23723",n:"Halloween Booby Trap",d:"Your Sensor Drones explode dealing 500 damage and knocking back when an enemy is within 20ft.",s:"hidden"},]},
+{c:"Willo",t:[{i:"17111",n:"Scorn",d:"[Seedling] Increase the damage of each Seedling to 750 and reduce the time it takes for them to explode by 25%.",s:"live"},{i:"17137",n:"Blastflower",d:"[Weapon] Hitting an enemy with your weapon shots increases the damage they take from weapon shots by 80 for 3s",s:"live"},{i:"20319",n:"Nightshade",d:"[Dead Zone] Dead Zone damage is increased to 650.",s:"live"},{i:"16888",n:"Disc Jump",d:"Gain knock up when hitting yourself with Spinfusor.",s:"hidden"},{i:"17112",n:"Scorched Earth",d:"Dead Zone damages shields for 50% of their maximum Health per second, and its cooldown is reduced by 3s.",s:"hidden"},{i:"20310",n:"Spring Fever",d:"Your first shot after Flutter deals 100% more damage in a 50% larger radius.",s:"hidden"},{i:"21401",n:"zDeprecated zoldNightshade IV",d:"[Dead Zone] Dead Zone now deals 600 damage when the initial explosion hits an enemy. *(added from Talents.txt — missing from original list)*",s:"hidden"},{i:"24021",n:"Willo - 24021 (Scorched Earth v2) Dead Zone heals instead of just damage (test version)   - DOESNT WORK",d:"",s:"note"},]},
+{c:"Ying",t:[{i:"16367",n:"Focusing Lens",d:"[Weapon] Deal an additional 200 damage to an enemy if you hit them with all 5 shots of Illusory Mirror.",s:"live"},{i:"16366",n:"Resonance",d:"[Shatter] If an Illusion is killed or expires",s:"live"},{i:"20359",n:"Life Exchange",d:"[Shatter] Shatter instantly Heals your target for 800",s:"live"},{i:"16365",n:"Lifelike",d:"Illusions can now target two allies when Healing, but Illusions heal for 20% less.",s:"hidden"},{i:"20101",n:"Revitalizing Link",d:"Dimensional Link now heals you for 400 every time you teleport.",s:"hidden"},{i:"23620",n:"Ying - 23620 (zzzzLife Exchange test)  Get 2 illusions out, cast Shatter on ally — should heal for 1600 total and remove the illusions  - DOES NOT WORK",d:"",s:"note"},]},
+{c:"Zhin",t:[{i:"18302",n:"Smolder",d:"[Billow] Heal for 15% of your maximum Health per second while using Billow.",s:"live"},{i:"18303",n:"Guillotine",d:"[Spite] Spite deals 20% of its target's maximum Health with each hit.",s:"live"},{i:"20222",n:"Yomi",d:"[Weapon] Your heavy hit with Inferno Blade deals an additional 150 damage.",s:"live"},{i:"18304",n:"Retaliation",d:"After Countering an attack you remain in your Counter stance and Counter Attack deals 10% more damage.",s:"hidden"},{i:"20195",n:"FINISH THEM!",d:"Whirl does up to 100% increased damage based on your opponent's missing health.",s:"hidden"},{i:"20212",n:"Blademaster",d:"Deal 30% more damage to enemies within 20ft of you.",s:"hidden"},{i:"27438",n:"TheHotStepper",d:"Leave fire behind you on the ground as you move.",s:"hidden"},]}
+];
+
+const I18N={
+en:{
+ h1:'4TH TALENTS', sub:'Every talent ID in Paladins',
+ h_vid:'Video Guide', h_guide:'Written Guide', h_list:'All Talents',
+ h_toggle:'Guide &mdash; video &amp; written steps', hint_toggle:'click to collapse',
+ dl:'Download the full list (.txt)',
+ f_all:'All', f_live:'In-game', f_hidden:'Hidden',
+ ph:'Search a champion, talent name or ID...',
+ steps:[
+  'Download <b>Tempest</b> from <a href="https://github.com/LowRezStudio/Tempest/tags" target="_blank" rel="noopener">github.com/LowRezStudio/Tempest/tags</a> &mdash; pick the newest version and hit Downloads.',
+  'Download <b>Cheat Engine</b> from <a href="https://www.cheatengine.org/" target="_blank" rel="noopener">cheatengine.org</a>. Decline the bundled extras during install.',
+  'Make a new folder, install Paladins into it through Tempest. You can keep your Steam copy. Run the game from Tempest with <b>-Steam</b> so it goes online.',
+  'Get into the <b>shooting range</b> and pick a champion.',
+  'Open Cheat Engine, click the computer icon, and attach it to the Paladins process.',
+  'Enter the <b>ID of a talent you already have</b>, scan, then change the value to the <b>hidden talent ID</b> you want from the list below.',
+  'Click that talent in game, then set the value back to the original number, and play.',
+  'Done &mdash; the 4th, 5th or 6th talent is now equipped.'
+ ],
+ warn:'<b>Careful:</b> a few talents are known to crash the game (Drogoz 20175 Dragonskin) and some only work in the shooting range, not in real matches. Those are marked in the list. Cheat Engine\'s installer bundles unwanted software &mdash; decline it.',
+ footer:'PHAROAH &mdash; a Paladins mod tool. Not affiliated with Hi-Rez Studios or Evil Mojo Games.'
+},
+es:{
+ h1:'4TH TALENTS', sub:'Todos los IDs de talento de Paladins',
+ h_vid:'V&iacute;deo Gu&iacute;a', h_guide:'Gu&iacute;a Escrita', h_list:'Todos los Talentos',
+ h_toggle:'Gu&iacute;a &mdash; v&iacute;deo y pasos escritos', hint_toggle:'clic para contraer',
+ dl:'Descargar la lista completa (.txt)',
+ f_all:'Todos', f_live:'En el juego', f_hidden:'Ocultos',
+ ph:'Busca un campe&oacute;n, nombre de talento o ID...',
+ steps:[
+  'Descarga <b>Tempest</b> desde <a href="https://github.com/LowRezStudio/Tempest/tags" target="_blank" rel="noopener">github.com/LowRezStudio/Tempest/tags</a> &mdash; elige la versi&oacute;n m&aacute;s nueva y pulsa Downloads.',
+  'Descarga <b>Cheat Engine</b> desde <a href="https://www.cheatengine.org/" target="_blank" rel="noopener">cheatengine.org</a>. Rechaza los extras que trae el instalador.',
+  'Crea una carpeta nueva e instala Paladins ah&iacute; con Tempest. Puedes conservar tu copia de Steam. Ejecuta el juego desde Tempest con <b>-Steam</b> para que funcione online.',
+  'Entra al <b>campo de tiro</b> y elige un campe&oacute;n.',
+  'Abre Cheat Engine, pulsa el icono del ordenador y adjunta el proceso de Paladins.',
+  'Introduce el <b>ID de un talento que ya tengas</b>, escanea, y cambia el valor al <b>ID del talento oculto</b> que quieras de la lista de abajo.',
+  'Haz clic en ese talento en el juego, luego devuelve el valor al n&uacute;mero original y juega.',
+  'Listo &mdash; el 4&ordm;, 5&ordm; o 6&ordm; talento ya est&aacute; equipado.'
+ ],
+ warn:'<b>Cuidado:</b> algunos talentos crashean el juego (Drogoz 20175 Dragonskin) y otros solo funcionan en el campo de tiro, no en partidas reales. Est&aacute;n marcados en la lista. El instalador de Cheat Engine trae software no deseado &mdash; recházalo.',
+ footer:'PHAROAH &mdash; herramienta de mods para Paladins. Sin afiliaci&oacute;n con Hi-Rez Studios ni Evil Mojo Games.'
+}};
+
+const ES_DESC={
+"16368":"[Reversal] Reversal siempre contraataca y hace 800 de daño adicional.",
+"20085":"[Defiance] Los impactos exitosos con tu Revólver aumentan el daño de tu próximo Defiance un 20%, acumulable hasta 100%.",
+"19292":"Nether Step ahora tiene 3 cargas independientes y ya no está vinculado.",
+"16369":"[Weapon] Tu Revólver aplica Sangrado durante 1s, causando daño cada 0.1s que aumenta cuanto más tiempo permanece en el enemigo. El daño máximo por 0.1s es 20. Los impactos adicionales renuevan la duración.",
+"16504":"Causa un 20% más de daño de arma a enemigos por debajo del 50% de Salud.",
+"19827":"Accursed Arm dura 8s más, puede disparar 8 tiros más y se carga un 15% más rápido.",
+"24721":"La capacidad de munición de tu Revólver aumenta en 3.",
+"18388":"[Shoulder Bash] Reduce el daño que recibes un 75% mientras usas Shoulder Bash.",
+"18556":"[Siege Shield] Aumenta la Salud máxima de Siege Shield en 2500 y su tamaño un 50%, pero reduce su Velocidad de Movimiento un 80%.",
+"20087":"[Weapon] Tus disparos viajan un 50% más rápido y un 100% más lejos, pero ya no explotan.",
+"18416":"Assert Dominance se carga un 15% más rápido, aturde a los enemigos durante 2s y hace que reciban un 35% más de daño.",
+"19846":"Tus empujones lanzan a los enemigos hasta un 100% más lejos según la Salud que les falte.",
+"24477":"[Setback] Setback se convierte en un explosivo lanzado, capaz de Rebobinar a varios enemigos.",
+"24483":"[Stasis Field] Aumenta mucho el tamaño de Stasis Field, pero su Enfriamiento aumenta un 65%.",
+"27390":"MODERNO - rebobina a los enemigos cercanos a ti",
+"27718":"Gana 30% de Robo de Vida con tus impactos de Judgement.",
+"27719":"Mejora Reckoning, Sanctuary y Conviction, pero aumenta su Enfriamiento base un 25%.",
+"27720":"Tu Ire ya no decae por no recibir ni causar daño, pero dejas de ganar el aumento pasivo de daño al superar el umbral de Ire.",
+"16397":"[Barricade] Aumenta la Salud máxima de Barricade en 2000 y reduce su Enfriamiento en 3s.",
+"16400":"[Weapon] Modifica tu Blunderbuss para disparar una sola bala que causa 600 de daño.",
+"27389":"[Dome Shield] Dome Shield ahora cuesta un 40% de carga Definitiva y coloca una Torreta Lanzallamas con valores modificados y sin Escudo. Puedes tener dos activas a la vez.",
+"12934":"Aumenta el daño de tus Torretas un 20% y reduce su Enfriamiento en 2s.",
+"19828":"Las Torretas de Barik ahora disparan llamas que causan 400 de daño por segundo.",
+"20088":"Blunderbuss dispara un 30% más rápido.",
+"27391":"Talento de Torreta para el modo LTM Dwarf Fortress",
+"28008":"[Weapon] El daño explosivo incendia a los enemigos causando un 0.3% de su Salud máxima cada 0.1s durante 1.5s. Los impactos adicionales renuevan la duración.",
+"28009":"[Hail of Bombs] Reduce el alcance de Hail of Bombs un 50%, concentrando las explosiones en un área menor, y reduce su Enfriamiento en 2s.",
+"28010":"[Explosive Personality] Reduce el Enfriamiento de Explosive Personality en 5s, pero reduce tu Velocidad de Movimiento un 15%.",
+"16427":"[Grumpy Bomb] Reduce un 40% el tiempo que tarda Grumpy Bomb en explotar.",
+"16426":"[Detonate] Impactar con más de una Sticky Bomb en un uso de Detonate aumenta el daño de cada explosión tras la primera en un 30% de su daño base, hasta 150%.",
+"20216":"[Weapon] Aumenta el radio de las explosiones de Sticky Bombs un 20%, pero reduce la Munición máxima en 2.",
+"16506":"Grumpy Bomb destruye todos los escudos al explotar y su radio de explosión aumenta un 30%.",
+"20089":"Poppy Bomb ahora causa daño adicional e Inutiliza durante 2s.",
+"20321":"[Weapon] Aumenta el tamaño de explosión de las Sticky Bombs un 100%. *(añadido desde Talents.txt — faltaba en la lista original)*",
+"12931":"[Heroic Leap] Heroic Leap causa 600 de daño y empuja a los enemigos a menos de 20 unidades de tu punto de aterrizaje.",
+"16386":"[Net Shot] Aumenta un 20% el daño que causas a objetivos Ralentizados por Net Shot y aumenta la duración de su Ralentización en 0.5s. El aumento de daño dura un mínimo de 2s.",
+"16392":"[Recovery] Usar Recovery te Cura 400 al instante y aumenta tu Salud máxima en 300 durante 5s.",
+"20329":"Recibes un 40% más de curación.",
+"20339":"Las eliminaciones aumentan tu velocidad de ataque un 20% durante 10s.",
+"23572":"[Heroic Leap] Heroic Leap ahora causa 600 de daño, lanza a los enemigos hacia arriba y tiene un radio un 20% mayor. *(añadido desde Talents.txt — faltaba en la lista original)*",
+"31057":"Dispara una copia más débil de Rogue&rsquo;s Tempo desde tu mira por cada 6 de Munición consumida.",
+"31058":"El Enfriamiento de Deadly Momentum queda fijado permanentemente en 5s y no puede modificarse, reducirse ni aumentarse por otros medios. Gana 1 acumulación de Piercing y Sharp Momentum por cada enemigo golpeado con Deadly Momentum.",
+"31059":"[War] Aumenta el Alcance y el Daño de War, pero reduce su cadencia de fuego. Los ataques de War causan un 20% de daño adicional a cada enemigo golpeado por cada enemigo alcanzado en total con tu ataque.",
+"16382":"[Blast Shot] El daño de Blast Shot aumenta en 150 y su Enfriamiento se reduce en 2s.",
+"16384":"[Dodge Roll] Durante 8s tras usar Dodge Roll, el daño de tu siguiente disparo aumenta un 30%.",
+"16385":"[Disengage] Durante 4s tras golpear a un enemigo con Disengage, tus disparos causan un 8% adicional de la Salud máxima de ese enemigo como daño.",
+"19869":"Tu velocidad de ataque aumenta un 20% y tras golpear a un objetivo tu siguiente disparo le causa un 30% más de daño.",
+"19913":"Los disparos de ballesta causan 850 de daño más allá de 120 pies.",
+"25366":"[Mark of Fate] Reduce un 20% el porcentaje de Curación otorgado a los objetivos Marcados",
+"25370":"[Projection] Los enemigos golpeados por Projection quedan aturdidos 1s y cualquier enemigo atrapado entre tu Projection y tú al Teletransportarte recibe 800 de daño.",
+"25371":"[Abyssal Reconstruction] Tu aliado Marcado gana un 15% de reducción de Control de Masas",
+"23688":"[Harpoon] Harpoon ya no tiene Enfriamiento",
+"23690":"[Weapon] El proyectil lanzado al recargar tu Cursed Howitzer explota en un área de 20 unidades de radio al contacto.",
+"23807":"[Harpoon] Harpoon se clava en el terreno y explota cuando un enemigo se acerca a menos de 20 unidades",
+"23692":"Los aliados pueden atravesar tu Shortcut.",
+"16364":"[Armor] Aumenta tu Velocidad de Movimiento mientras usas tu Booster.",
+"16383":"[Weapon] El daño al golpear directamente a un enemigo con Rocket Launcher o Salvo aumenta un 25%.",
+"16514":"[Fire Spit] Fire Spit empuja y causa 300 de daño adicional durante 2s.",
+"20175":"⚠️ NO LO USES - ¡¡HARÁ QUE EL JUEGO SE CIERRE!! La cantidad de Booster que tienes también actúa como escudo que puede absorber daño.",
+"20259":"Salvo ahora se activa al instante, siempre dispara 6 proyectiles y su enfriamiento se reduce en 5s.",
+"20358":"Dragon Punch causa daño igual a la Salud máxima de tu víctima en un radio alrededor de su posición y se carga más rápido.",
+"16370":"[Soar] Aumenta un 25% el daño de tus disparos durante 3s tras terminar Soar.",
+"16371":"[Blink] Blink puede volver a activarse en los 4s siguientes a su uso para regresar al punto de lanzamiento inicial.",
+"20235":"[Ice Storm] El daño de Ice Storm aumenta un 100% y su carga Definitiva se reduce un 50%",
+"16372":"Cúrate 300 de Salud por segundo durante Ice Block.",
+"20237":"Las bajas aumentan tu daño un 5%, hasta un 20%, hasta que mueras.",
+"16379":"[Shield] Tu Escudo ahora usa un recurso que se Regenera con el tiempo en lugar de un Enfriamiento.",
+"16380":"[Fireball] Aumenta el daño de Fireball un 35%",
+"16381":"[Charge] Ahora tienes 2 cargas de Charge",
+"20090":"Charge ahora causa 700 de daño.",
+"20229":"Flame Lance ahora dispara pequeñas bolas de fuego que causan 120 de daño cada 0.2s.",
+"23358":"[Pyre Strike] Cuando Pyre Strike golpea a un campeón enemigo deja de moverse hasta terminar y causa hasta un 100% más de daño a los enemigos bajo él",
+"23362":"[Pyre Strike] Volver a activar Pyre Strike lo detiene en el sitio. Cualquier aliado en su haz es Curado 150 cada 0.1s durante 1.5s. Los impactos adicionales renuevan el efecto. Remedy (+5% Daño +10% Curación)",
+"23394":"[Kindle Soul] El alcance de Kindle Soul aumenta un 300% y ahora aplica curación adicional a tu aliado equivalente al 15% de su Salud máxima. Curative (+20% Curación)",
+"23391":"[Wings of Wrath] Wings of Wrath gana una carga adicional.",
+"16377":"[Healing Totem] Gana una tercera carga de Healing Totem",
+"16378":"[Shock Pulse] Aumenta el daño de Lightning Staff a 70",
+"20325":"[Weapon] Golpear a aliados con tu Lightning Staff los Cura 800 por segundo y tu capacidad máxima de Munición aumenta un 15%. Curative (+20% Curación)",
+"16425":"Cuando recibes daño letal se activa Ghost Walk y te cura un 15% de tu Salud máxima.",
+"20308":"Los objetivos golpeados por Lightning Staff reciben un 15% más de daño durante 2s.",
+"24382":"Cuando recibes daño letal se activa Self Destruct *(añadido desde Talents.txt — faltaba en la lista original)*",
+"24383":"Te causa mucho daño a ti mismo *(añadido desde Talents.txt — faltaba en la lista original)*",
+"16389":"[Weapon] Aumenta un 60% tu escalado de daño máximo con la distancia. Surgery (+10% Daño)",
+"16582":"[Crippling Throw] Crippling Throw se encadena a enemigos cercanos hasta 2 veces",
+"20091":"Aumenta la curación pasiva de Blossom un 100% y su radio un 50%.",
+"20249":"Las eliminaciones aumentan tu Salud máxima en 150 hasta que mueras. Acumulable hasta 5 veces.",
+"16402":"[Vine] Cúrate 500 de golpe y 300 adicionales durante 2s en un radio de 50 unidades en tu posición al terminar de usar Vine. Curative (+20% Curación)",
+"16488":"Crippling Throw ahora Enraíza en lugar de Inutilizar.",
+"27759":"Fija el arma en mano de Grover al modo de disparo 2 para un LTM.",
+"27776":"Fija la habilidad Vine de Grover al modo de disparo 2 para un LTM.",
+"24136":"[Armor] Permanecer quieto 1s crea una Grieta de Maná a tu alrededor que genera Maná cada 1s. Salir de la Grieta de Maná la destruye.",
+"24144":"[Pyre Ball] Cada una de tus Pyre Balls explota en un área de 20 unidades de radio al impactar y genera más Maná",
+"24145":"[Frost Bolt] Frost Bolt se encadena a un enemigo cercano en un radio de 30 unidades",
+"16600":"[Warder&rsquo;s Field] El radio de Warder&rsquo;s Field aumenta un 50% e Inutiliza a los enemigos dentro de él.",
+"16601":"[Earthen Guard] Reduce el daño que recibes un 15%",
+"16605":"[Impasse] Impasse ahora tiene 2 cargas y su Enfriamiento se reduce a 12s",
+"20214":"Acertar los 3 disparos en el mismo objetivo causa 200 de daño adicional.",
+"20233":"El 30% de todo el daño que recibes lo reciben en tu lugar tus desplegables si están activos.",
+"24663":"[Guardian Spirit] Si Io baja de 200 de Salud mientras Luna está activa",
+"24673":"[Guardian Spirit] Luna Cura a los aliados a su alrededor 320 por segundo. Reduce la Curación de Moonlight a 135 cada 0.15s.",
+"24674":"[Moonlight] Los aliados curados por Moonlight reciben un 15% menos de daño.",
+"19190":"[Void Grip] Los enemigos afectados por Void Grip quedan Inutilizados y reciben 480 de daño adicional durante su duración.",
+"19223":"[Astral Mark] Todos los aliados ya afectados por Astral Mark son Curados 285 adicionales cuando usas Astral Mark.",
+"20092":"[Weapon] Star Splitter ahora causa 360 de daño cada 0.4s",
+"19189":"Cuando lanzas Astral Mark sobre un aliado, este es curado al instante un 10% de su Salud máxima.",
+"20231":"Los disparos aumentan la duración de las Astral Marks activas en 0.1s.",
+"22888":"[Bulwark] Tu Escudo ahora se regenera con un 120% de efectividad",
+"22890":"[Weapon] Aumenta tu Velocidad de Ataque un 40%",
+"22891":"[Commander&rsquo;s Grab] Los objetivos golpeados por Commander&rsquo;s Grab quedan Aturdidos 1.4s adicionales.",
+"22889":"Battle Shout → Curación + Invulnerabilidad propia (habilidad base) → Los aliados ganan +20% de Daño → Los aliados ganan Inmunidad a Control de Masas → Dura 4s",
+"16456":"[Sniper Mode] Durante 4s tras acertar un disparo completamente cargado",
+"20093":"[Transporter] Usar Transporter te Teletransporta al instante a su ubicación objetivo.",
+"16387":"Puedes tener dos Oppressor Mines adicionales desplegadas a la vez y lanzas dos Minas por uso, pero tus Minas duran 6s.",
+"16507":"Las Oppressor Mines ahora pueden afectar a 2 objetivos más y los Disparos de Francotirador contra enemigos afectados por Minas causan un 30% más de daño.",
+"20332":"Al recibir daño mortal, en su lugar ganas un escudo que absorbe 1000 de daño y dura 3 segundos.",
+"23481":"[Cyclone Strike] Cyclone Strike causa un 125% de la Salud máxima de su objetivo como daño durante su duración y tu Velocidad de Movimiento aumenta un 25% durante el ataque.",
+"23482":"[Dragon Stance] Dragon Stance consume Salud en lugar de Energía a razón de 200 de Salud por segundo. Dragon Stance requiere al menos 300 de Salud para activarse y se cancela automáticamente a 15 de Salud.",
+"23556":"Los impactos exitosos con tus Subfusiles tienen un 50% de probabilidad de no consumir munición.",
+"16807":"[Combat Slide] Ganas Inmunidad al Control de Masas y reduces el daño que recibes un 90% mientras usas Combat Slide.",
+"16909":"[Weapon] Tus disparos causan 680 de daño cada 0.7s",
+"16914":"[Retribution] Aumenta un 25% el daño que causas a tu objetivo de Retribution.",
+"20225":"Matar a tu objetivo de Retribution otorga un 5% de bonificación de daño, acumulable hasta 5 veces.",
+"24722":"Tus disparos causan un 25% más de daño a objetivos por encima del 65% de Salud.",
+"18814":"[Weapon] Golpear a un enemigo con Heirloom Rifle aumenta un 7% tu daño de Heirloom Rifle contra ese enemigo durante 3s",
+"18815":"[Presence] Aumenta el daño de Presence hasta un 50% según la distancia a la que impacte y reduce su Enfriamiento en 4s.",
+"18816":"[Grace] Grace ahora golpea a todos los enemigos frente a ti en lugar de solo a uno",
+"20095":"Tus disparos reducen un 90% el efecto de la curación sobre tu objetivo durante 1.5s.",
+"20330":"Por cada enemigo que golpees con Valor ganas un 10% de daño aumentado durante 4s.",
+"16406":"[Prowl] Aumenta un 30% el daño de cada una de tus dagas de los primeros conjuntos lanzados en los 5s siguientes al fin de Prowl.",
+"16449":"[Armor] Aumenta el daño causado por Pounce un 15%",
+"16502":"Activar Nine Lives limpia todos los efectos de Control de Masas y cura 400.",
+"20196":"[Pounce] Pounce Ejecuta a objetivos con un 35% de Salud o menos.",
+"20213":"Acertar ambas dagas reduce el enfriamiento de Nine Lives en 6s.",
+"16432":"[Ancient Rage] Aumenta tu velocidad de carga Definitiva un 25% y tu Salud en 500. Activar Ancient Rage reinicia el Enfriamiento de Dredge Anchor y Shell Spin",
+"16433":"[Dredge Anchor] Durante 4s tras golpear a un enemigo con Dredge Anchor",
+"16525":"[Shell Shield] Shell Shield se coloca en el suelo en lugar de canalizarse a tu alrededor",
+"20192":"Dispara una ráfaga de proyectiles más pequeños que causan 800 de daño en total.",
+"20250":"Tu Shell Spin ahora dura hasta que lo canceles y puedes controlar su dirección.",
+"16491":"Gourd tiene un 50% de probabilidad de no entrar en Enfriamiento.",
+"20257":"Cada tic de curación o daño de Gourd reduce el enfriamiento de Gourd en 0.1s.",
+"27406":"[Slither] Mientras usas Slither, atravesar a un aliado lo Curará 800 y atravesar a un enemigo le causará 650 de daño.",
+"27797":"NO FUNCIONA (encontrado por primal_monke pero lamentablemente no funciona :< )",
+"33438":"Mending Spirits (clic derecho) podía lanzarse sobre enemigos en lugar de aliados, envenenándolos y causando daño con el tiempo.",
+"27798":"¡¡YO!!)",
+"22033":"[Armor] Al Eliminar, suelta un Paquete de Salud que cura 900 a todo tu equipo cuando un aliado lo recoge. Solo tu equipo puede verlo y usarlo.",
+"22037":"Comerte a una víctima de tu definitiva recarga un 50% de carga definitiva y te cura 1000.",
+"22048":"[Weapon] Detonar una Magic Mark también causa un 75% de su daño a todos los enemigos a menos de 15 unidades de la víctima (salpicadura).",
+"22053":"[Scamper] Usar Scamper te cura a ti y a los aliados a menos de 25 unidades 600 durante 3s.",
+"27800":"Sin texto de descripción — solo una etiqueta; parece una entrada interna o de marcador de posición para un Modo por Tiempo Limitado, no un efecto de talento real. ¡¡NO FUNCIONA!!",
+"16376":"[Healing Potion] La Curación de Healing Potion aumenta un 100% y ahora otorga un Escudo acumulable de 200. Remedy (+5% Daño y +10% Curación Realizada)",
+"16391":"[Explosive Flask] Los enemigos golpeados por Explosive Flask reciben un 35% más de daño de tus disparos durante 4s. Surgery (+10% Daño Realizado)",
+"16516":"[Weapon] Potion Launcher también Cura 750 a los aliados golpeados y su cadencia de fuego aumenta un 10%. Ya no recibes daño de tus propios disparos. Curative (+20% Curación)",
+"20096":"Los impactos con tu Potion Launcher reducen el Enfriamiento de todas las demás habilidades en 1s.",
+"20194":"Las Healing Potions ahora solo se activan al golpear directamente a un objetivo, y pueden persistir 10s tras impactar en una superficie.",
+"20391":"Causas un 100% más de daño a las gallinas, y por cada gallina que muere tu definitiva se recarga.",
+"24778":"[Juggernaut] Reduce el daño que recibes un 40% mientras usas Juggernaut.",
+"24779":"[Cataclysm] Aumenta tu velocidad de carga Definitiva un 60%.",
+"24780":"[Soul Harvest] Todos tus aliados vivos son Curados un 1.5% de su Salud máxima por cada Alma Cosechada.",
+"27772":"Aumenta el daño causado a los enemigos golpeados por Cataclysm.",
+"27314":"[Spirit Link] Mientras Envelop está activo y estás Vinculado a un enemigo",
+"27315":"[Spirit Link] El Enfriamiento de Spirit Link aumenta a 7s y ahora solo dura 4s",
+"27316":"Aumenta un 40% el alcance de los rebotes de Chain Heal.",
+"16503":"[Advance] Advance gana una 3ª carga y activarlo estando quieto te impulsa hacia arriba.",
+"16519":"[Emitter] Aumenta el Escudo otorgado por Emitter en 1300.",
+"20097":"[Missile Launcher] Aumenta el radio de las explosiones de Missile Launcher un 66%.",
+"16390":"Causa hasta un 40% más de daño según la Salud que te falte.",
+"20331":"Tus disparos hacen que los objetivos reciban un 1% de daño adicional de tus Miniguns durante 3s, acumulable hasta un 25%.",
+"20876":"[Weapon] Causa hasta un 40% más de daño según la Salud que te falte.",
+"27508":"¡El señuelo de Dead Ringer ahora está preparado para explotar! El señuelo de Dead Ringer explotará cuando haya enemigos cerca",
+"27509":"Blast Back ahora lanza a los enemigos hacia arriba y estos reciben un 20% más de daño de Saati durante 1.5s.",
+"27510":"Los disparos rebotados causan un 200% más de daño a los escudos",
+"16608":"[Restore Soul] Por cada acumulación de Soul Orb detonada por Rend Soul",
+"16609":"[Restore Soul] Aumenta el alcance de Restore Soul un 300% y reduce el tiempo entre tics de Curación un 20%.",
+"16610":"[Rend Soul] Cada Carga de Alma que detonas con Rend Soul aumenta tu Salud máxima y tu daño de arma un 2% hasta que mueras. Acumulable hasta 12 veces.",
+"20136":"Cura a todos los aliados a menos de 50 pies de tu objetivo de Restore Soul un 50% del valor de curación.",
+"20328":"Al usar Restore Soul en jugadores con la salud completa, el 100% de tu curación se convierte en escudo.",
+"31302":"Obtenible en el evento Rise of Furia.",
+"16453":"[Crippling Arrow] Reduce el Enfriamiento de Crippling Arrow en 1s. Crippling Arrow ahora Silencia y Ralentiza a los enemigos un 15% durante 2s en su lugar.",
+"16455":"[Weapon] Aumenta un 25% la velocidad a la que se carga tu Longbow.",
+"20263":"[Crippling Arrow] Crippling Arrow ahora explota en un área de 20 unidades de radio al contacto",
+"16454":"Matar a un enemigo reinicia el Enfriamiento de Planted y Planted causa un 10% más de daño.",
+"20098":"Aumenta el tiempo máximo de tensado de tu arco un 10% y su daño en 200.",
+"21953":"[Weapon] Tensa tu arco un 15% más rápido. *(añadido desde Talents.txt — faltaba en la lista original)*",
+"16374":"[Poison Bolts] Aumenta el daño causado por Poison Bolts un 25% y la velocidad a la que causan daño un 75%.",
+"16375":"[Armor] Al activar Hidden",
+"20148":"[Smoke Screen] Los beneficios de tus cartas de Smoke Screen también benefician a los aliados que entren en Smoke Screen, y los aliados son Curados 100 cada 1s mientras estén en tu Smoke Screen",
+"16373":"Causa 500 de daño adicional en tu primer Disparo exitoso al salir de Hidden.",
+"20258":"Los enemigos dentro de Smoke Screen quedan silenciados.",
+"19468":"[Stealth] Reduce un 50% la velocidad de consumo de Energía de Stealth y aumenta tu Velocidad de Movimiento un 20% mientras estás en Stealth.",
+"19477":"[Weapon] Talon Rifle gana Precisión sin apuntar",
+"20279":"[Flare] Flare causa un 250% de daño base",
+"19467":"Los Disparos realizados en Stealth causan un 15% más de daño.",
+"20255":"Los disparos a la cabeza causan un 20% adicional de la salud máxima de tu objetivo como daño.",
+"19623":"[Rune of Travel] Reduce el Enfriamiento de Overcharge y Blitz Upper en 6s cuando te Teletransportas usando Rune of Travel.",
+"19626":"[Rune of Travel] Rune of Travel ya no se activa automáticamente",
+"19706":"[True Power] Aumenta tu velocidad de carga Definitiva un 15% y los enemigos con un 65% de Salud o menos te son Revelados.",
+"19624":"La duración de Overcharge aumenta en 1s.",
+"20197":"Causa hasta un 100% más de daño con Blitz Upper según la salud que le falte a tu oponente.",
+"21823":"[Blitz Upper] Causa hasta un 100% más de daño con Blitz Upper según la salud que le falte a tu oponente. *(añadido desde Talents.txt — faltaba en la lista original)*",
+"19943":"[Armor] Reduce el daño que recibes un 20% cuando estás al 50% de Salud o menos.",
+"19944":"[Calamity Blast] Cada Calamity Blast causa 100 de daño adicional.",
+"20028":"[Shatterfall] Shatterfall Aturde a los enemigos golpeados durante 1s",
+"20030":"Atacas un 20% más rápido cuando no tienes Cargas de Calamity Blast almacenadas.",
+"20320":"Los impactos exitosos de Calamity Blast te curan 250 de salud.",
+"25181":"[Heavy Blade] Heavy Blade ahora explota al reactivarse en lugar de regresar",
+"25182":"[Crouching Tigron] Crouching Tigron ahora tiene 2 cargas y causa 600 de daño en un área de 20 unidades de radio al aterrizar.",
+"25180":"[Weapon] Los Bladed Chakrams pueden rebotar 2 veces adicionales antes de desaparecer.",
+"16450":"[Nullify] Duplica el alcance al que puedes usar Nullify.",
+"16451":"[Protection] Aumenta un 10% el daño causado por los aliados mientras estén Escudados por Protection.",
+"16492":"Aumenta la Duración de Recharge en 1.5s.",
+"20340":"Gana una segunda carga de Protection.",
+"16448":"[Hunter&rsquo;s Mark] Hunter&rsquo;s Mark tiene 2 cargas y otorga sus beneficios a los aliados.",
+"16458":"[Nade Launcher] Nade Launcher tiene 3 cargas",
+"16452":"Gana 30% de Robo de Vida.",
+"20170":"Todos los enemigos a menos de 60 pies de ti te son revelados.",
+"21543":"[Hunter&rsquo;s Mark] El aumento de daño de Hunter&rsquo;s Mark ahora también beneficia a los aliados, sube a un 25% de daño extra y tiene 2s menos de Enfriamiento.",
+"27929":"El Heavy SMG tiene tres efectos elementales: Mag Dump imbuido de fuego — causando daño con el tiempo",
+"27930":"Sobrecarga tu Grappling Hook para que ahora atraiga a Campeones que no sean de Primera Línea hacia VII. Reduce el daño de Grappling Hook en 100",
+"27931":"Explosive Dodge - Provoca una explosión donde aterrizas y desde donde despegas; reduce el enfriamiento un 30% y aumenta el alcance un 25%",
+"16429":"[Weapon] Cambia tu rifle al modo de Ráfaga de Tres Disparos",
+"16430":"[Weapon] Gana un 30% de daño adicional al disparar sin apuntar.",
+"16431":"[Hustle] Cúrate 300 por segundo mientras usas Hustle.",
+"20100":"Aumenta el radio de la explosión de Frag Grenade un 40%.",
+"20171":"Al recibir daño mortal, en su lugar ganas un escudo que absorbe 1000 de daño y dura 3 segundos.",
+"20315":"[Weapon] Tras disparar de forma continua durante 2s",
+"20316":"[Armor] La Salud de Deflector Shield aumenta en 350 y su Enfriamiento se reduce a la mitad si lo destruye un enemigo.",
+"21261":"[Sensor Drone] Tus Sensor Drones explotan",
+"20314":"Causa un 150% más de daño a los Escudos.",
+"20317":"Si un enemigo está a menos de 20 unidades de un Sensor Drone, este explota causando 500 de daño.",
+"20318":"Siempre reapareces con un Sentinel activo.",
+"23605":"Tus Sensor Drones explotan con mayor efecto cuando hay un enemigo cerca.",
+"23723":"Tus Sensor Drones explotan causando 500 de daño y empujando cuando un enemigo está a menos de 20 pies.",
+"17111":"[Seedling] Aumenta el daño de cada Seedling a 750 y reduce un 25% el tiempo que tardan en explotar.",
+"17137":"[Weapon] Golpear a un enemigo con tus disparos aumenta en 80 el daño que recibe de disparos durante 3s",
+"20319":"[Dead Zone] El daño de Dead Zone aumenta a 650.",
+"16888":"Ganas impulso hacia arriba al golpearte a ti mismo con Spinfusor.",
+"17112":"Dead Zone daña los escudos un 50% de su Salud máxima por segundo, y su enfriamiento se reduce en 3s.",
+"20310":"Tu primer disparo tras Flutter causa un 100% más de daño en un radio un 50% mayor.",
+"21401":"[Dead Zone] Dead Zone ahora causa 600 de daño cuando la explosión inicial golpea a un enemigo. *(añadido desde Talents.txt — faltaba en la lista original)*",
+"16367":"[Weapon] Causa 200 de daño adicional a un enemigo si le aciertas los 5 disparos de Illusory Mirror.",
+"16366":"[Shatter] Si una Ilusión muere o expira",
+"20359":"[Shatter] Shatter Cura al instante a tu objetivo 800",
+"16365":"Las Ilusiones ahora pueden curar a dos aliados a la vez, pero curan un 20% menos.",
+"20101":"Dimensional Link ahora te cura 400 cada vez que te teletransportas.",
+"18302":"[Billow] Cúrate un 15% de tu Salud máxima por segundo mientras usas Billow.",
+"18303":"[Spite] Spite causa un 20% de la Salud máxima de su objetivo con cada impacto.",
+"20222":"[Weapon] Tu golpe pesado con Inferno Blade causa 150 de daño adicional.",
+"18304":"Tras Contraatacar un ataque permaneces en tu postura de Counter y Counter Attack causa un 10% más de daño.",
+"20195":"Whirl causa hasta un 100% más de daño según la salud que le falte a tu oponente.",
+"20212":"Causa un 30% más de daño a los enemigos a menos de 20 pies de ti.",
+"27438":"Deja fuego en el suelo detrás de ti mientras te mueves."
+};
+let lang='en', filter='all', query='';
+
+function desc(t){ return (lang==='es' && ES_DESC[t.i]) ? ES_DESC[t.i] : t.d; }
+function bluenum(s){ return String(s).replace(/([0-9]+(?:[.,][0-9]+)*%?)/g, '<span class="num">$1</span>'); }
+function totals(){
+  let n=0; TALENTS.forEach(function(c){ n+=c.t.length; });
+  return {champs:TALENTS.length, talents:n};
+}
+function draw(){
+  const box=document.getElementById('list'); box.innerHTML='';
+  let html='';
+  const q=query.trim().toLowerCase();
+  let shown=0;
+  TALENTS.forEach(function(c){
+    const hits=c.t.filter(function(t){
+      if(filter!=='all' && t.s!==filter) return false;
+      if(!q) return true;
+      return (c.c+' '+t.n+' '+t.d+' '+desc(t)+' '+t.i).toLowerCase().indexOf(q)>=0;
+    });
+    if(!hits.length) return;
+    shown+=hits.length;
+    html+='<div class="ch">'+c.c.toUpperCase()+'</div>';
+    // Group into EXISTING / HIDDEN and print each as a plain run of lines,
+    // so the whole thing reads like one long text file you can select and copy.
+    ['live','hidden','other','note'].forEach(function(grp){
+      const rows=hits.filter(function(t){ return t.s===grp; });
+      if(!rows.length) return;
+      const label = grp==='live' ? (lang==='es'?'EXISTENTES':'EXISTING')
+                  : grp==='hidden' ? (lang==='es'?'OCULTOS':'HIDDEN')
+                  : (lang==='es'?'NOTAS':'NOTES');
+      html+='<div class="sec">'+label+'</div>';
+      rows.forEach(function(t){
+        html+='<div class="row"><span class="id" data-id="'+t.i+'" title="click to copy">'+t.i+'</span> '
+          +'<span class="nm">'+bluenum(t.n)+'</span>'
+          +(t.d?' <span class="ds">&mdash; '+bluenum(desc(t))+'</span>':'')+'</div>';
+      });
+    });
+  });
+  if(!shown) box.innerHTML='<div class="none">No matches.</div>';
+  else { const s=document.createElement('div'); s.className='sheet'; s.innerHTML=html; box.appendChild(s); }
+  box.querySelectorAll('.id').forEach(function(el){
+    el.addEventListener('click',function(){
+      const v=el.dataset.id;
+      const done=function(){
+        const t=document.getElementById('toast');
+        t.textContent=(lang==='es'?'ID copiado: ':'Copied ID: ')+v;
+        t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},1500);
+      };
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(v).then(done).catch(done);
+      } else { done(); }
+    });
+  });
+}
+function render(){
+  const L=I18N[lang]; document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    const k=el.dataset.i18n; if(L[k]) el.innerHTML=L[k];
+  });
+  document.getElementById('q').placeholder=L.ph.replace(/&[a-z]+;/g,'');
+  const st=document.getElementById('steps'); st.innerHTML='';
+  L.steps.forEach(function(s){ const li=document.createElement('li'); li.innerHTML=s; st.appendChild(li); });
+  const T=totals();
+  document.getElementById('counts').textContent =
+    T.talents+(lang==='es'?' talentos · ':' talents · ')+T.champs+(lang==='es'?' campeones':' champions');
+  document.querySelectorAll('.lang').forEach(function(b){b.classList.toggle('on',b.dataset.lang===lang);});
+  draw();
+}
+document.querySelectorAll('.lang').forEach(function(b){
+  b.addEventListener('click',function(){ lang=b.dataset.lang; render(); });});
+document.getElementById('q').addEventListener('input',function(e){ query=e.target.value; draw(); });
+render();
+</script>
+</body>
+</html>
