@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BigFoot VPN — Untraceable by Design</title>
+<link rel="icon" type="image/png" href="assets/typhon.png">
+<meta name="description" content="BigFoot VPN — a multi-hop VPN that bounces your connection through a chain of IPs instead of one. Concept draft under TYPHON.">
+<style>
+  /* Coffee-brown palette. Same warm family as PHAROAH's Egyptian sand theme
+     but its own thing, not a reskin of it: darker, roastier, less gold. */
+  :root{
+    --bg:#1a120b; --bg2:#241a10; --bg3:#2f2214; --bg4:#3d2c1a;
+    --crema:#d4a574; --crema2:#e8c398; --roast:#8b5a2b; --roast2:#a8712f;
+    --paper:#f5e6d3; --soft:#b89b7a; --line:rgba(212,165,116,.28);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scrollbar-color:var(--crema) var(--bg3);scrollbar-width:auto}
+  body{font-family:"Segoe UI","Trebuchet MS",sans-serif;background:var(--bg);
+    color:var(--soft);line-height:1.62;padding-top:56px}
+  ::-webkit-scrollbar{width:16px}
+  ::-webkit-scrollbar-track{background:var(--bg3)}
+  ::-webkit-scrollbar-thumb{background:var(--roast);border:2px solid var(--bg3);border-radius:10px}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:56px;background:var(--bg2);
+    border-bottom:2px solid var(--roast);display:flex;align-items:center;gap:12px;padding:0 16px}
+  .topbar .who{display:flex;align-items:center;gap:9px;text-decoration:none}
+  .topbar .who img{width:32px;height:32px;object-fit:contain;border-radius:6px}
+  .topbar .who span{font-size:.86rem;color:var(--crema);font-weight:700}
+  .topbar .back{color:var(--crema2);font-size:1.1rem;font-weight:900}
+  .topbar .spacer{flex:1}
+  .langwrap{display:inline-flex;border:1px solid var(--roast);border-radius:5px;overflow:hidden}
+  .lang{background:var(--bg3);border:0;cursor:pointer;padding:7px 12px;font-size:.72rem;
+    font-weight:700;color:var(--soft)}
+  .lang.on{background:var(--crema);color:#1a120b}
+
+  .wrap{max-width:1000px;margin:0 auto;padding:0 22px}
+  header{text-align:center;padding:50px 0 30px}
+  .word{font-size:clamp(2.2rem,7vw,3.6rem);letter-spacing:.05em;font-weight:900;color:var(--crema2)}
+  .word span{color:var(--roast2)}
+  .tag{margin-top:8px;color:var(--paper);letter-spacing:.14em;font-size:.92rem}
+  .draftpill{display:inline-block;margin-top:14px;background:var(--bg3);border:1px solid var(--roast);
+    border-radius:18px;padding:5px 17px;font-size:.7rem;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--crema)}
+
+  /* ---- the disabled CTA, greyed on purpose - it is not out yet ---- */
+  .ctarow{text-align:center;margin-top:26px}
+  .cta{display:inline-block;background:#4a4038;color:#8a8074;border:1px solid #5a4f45;
+    padding:15px 42px;border-radius:6px;font-weight:900;font-size:.95rem;letter-spacing:.1em;
+    text-transform:uppercase;text-decoration:none;cursor:not-allowed}
+  .ctanote{color:var(--soft);font-size:.78rem;margin-top:9px}
+
+  section{margin-bottom:38px}
+  h2{color:var(--crema);font-size:.92rem;letter-spacing:.18em;text-transform:uppercase;
+    padding-bottom:8px;margin-bottom:16px;border-bottom:2px solid var(--roast)}
+  p.body{color:var(--paper);margin-bottom:12px;font-size:.94rem}
+  p.body b{color:var(--crema2)}
+
+  .draftnote{background:var(--bg2);border:1px solid var(--roast);border-left:4px solid var(--roast);
+    border-radius:6px;padding:14px 18px;text-align:center;margin-bottom:20px}
+  .draftnote p{color:var(--paper);font-size:.86rem;margin:0}
+  .draftnote b{color:var(--crema2)}
+
+  /* ---- feature grid ---- */
+  .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .f{background:var(--bg2);border:1px solid var(--line);border-top:3px solid var(--roast);
+    border-radius:7px;padding:19px}
+  .f .ic{font-size:1.5rem;margin-bottom:8px}
+  .f h3{color:var(--crema2);font-size:.92rem;letter-spacing:.03em;margin-bottom:6px}
+  .f p{color:var(--paper);font-size:.85rem;margin:0}
+
+  /* ---- comparison table ---- */
+  .cmpwrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+  table.cmp{width:100%;border-collapse:collapse;min-width:520px}
+  table.cmp th,table.cmp td{padding:13px 16px;text-align:left;font-size:.86rem;border-bottom:1px solid var(--line)}
+  table.cmp th{background:var(--bg2);color:var(--crema);font-size:.76rem;letter-spacing:.08em;
+    text-transform:uppercase}
+  table.cmp td{color:var(--paper)}
+  table.cmp tr:last-child td{border-bottom:0}
+  table.cmp td.yes{color:var(--crema2);font-weight:700}
+  table.cmp td.no{color:var(--soft);opacity:.75}
+  table.cmp .rowlabel{color:var(--crema2);font-weight:700;white-space:nowrap}
+  .cmpnote{color:var(--soft);font-size:.76rem;margin-top:10px;font-style:italic}
+
+  /* ---- how it works ---- */
+  .steps3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .step{background:var(--bg2);border:1px solid var(--line);border-radius:7px;padding:20px;text-align:center}
+  .step .num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;
+    border-radius:50%;background:var(--roast);color:#1a120b;font-weight:900;font-size:1rem;margin-bottom:10px}
+  .step h3{color:var(--crema2);font-size:.9rem;margin-bottom:6px}
+  .step p{color:var(--paper);font-size:.84rem;margin:0}
+
+  footer{text-align:center;padding:26px 0 40px;border-top:1px solid var(--line);
+    font-size:.75rem;color:var(--soft)}
+
+.pmark{ font-weight:800; letter-spacing:.06em; }
+.pmark sup{ font-size:.62em; font-weight:800; letter-spacing:.04em;
+            vertical-align:super; margin-left:.06em; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="who" href="typhon.html">
+    <span class="back">&larr;</span>
+    <img src="assets/typhon.png" alt="">
+    <span>TYPHON</span>
+  </a>
+  <div class="spacer"></div>
+  <div class="langwrap">
+    <button class="lang on" data-lang="en">EN</button>
+    <button class="lang" data-lang="es">ES</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="word">BIGFOOT <span>VPN</span></div>
+    <div class="tag" data-i18n="tag">Untraceable by design.</div>
+    <div class="draftpill" data-i18n="draft">Concept &mdash; not built yet</div>
+    <div class="ctarow">
+      <a class="cta" href="#" onclick="return false;" data-i18n="cta">Get BigFoot VPN</a>
+      <div class="ctanote" data-i18n="ctanote">Not available yet &mdash; this is a product concept under TYPHON.</div>
+    </div>
+  </header>
+
+  <section>
+    <div class="draftnote"><p data-i18n="draftnote"></p></div>
+    <h2 data-i18n="h_what">Why BigFoot Is Different</h2>
+    <p class="body" data-i18n="p_what1"></p>
+    <p class="body" data-i18n="p_what2"></p>
+  </section>
+
+  <section>
+    <h2 data-i18n="h_feat">Planned Features</h2>
+    <div class="feat">
+      <div class="f"><div class="ic">&#127757;</div><h3 data-i18n="f1h">Multi-Hop by Default</h3><p data-i18n="f1p"></p></div>
+      <div class="f"><div class="ic">&#129513;</div><h3 data-i18n="f2h">One-Click Simplicity</h3><p data-i18n="f2p"></p></div>
+      <div class="f"><div class="ic">&#128268;</div><h3 data-i18n="f3h">Browser Extension</h3><p data-i18n="f3p"></p></div>
+      <div class="f"><div class="ic">&#128274;</div><h3 data-i18n="f4h">Kill Switch</h3><p data-i18n="f4p"></p></div>
+      <div class="f"><div class="ic">&#128257;</div><h3 data-i18n="f5h">Rotating Hop Chain</h3><p data-i18n="f5p"></p></div>
+      <div class="f"><div class="ic">&#128203;</div><h3 data-i18n="f6h">No-Logs by Design</h3><p data-i18n="f6p"></p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-i18n="h_cmp">How It Compares</h2>
+    <div class="cmpwrap">
+      <table class="cmp">
+        <tr>
+          <th data-i18n="cmp_col1">&nbsp;</th>
+          <th data-i18n="cmp_col2">A Typical VPN</th>
+          <th data-i18n="cmp_col3">BigFoot VPN</th>
+        </tr>
+        <tr>
+          <td class="rowlabel" data-i18n="cmp_r1">Exit hops</td>
+          <td data-i18n="cmp_r1a">1 (multi-hop usually a special opt-in server)</td>
+          <td class="yes" data-i18n="cmp_r1b">3+, chained by default</td>
+        </tr>
+        <tr>
+          <td class="rowlabel" data-i18n="cmp_r2">Setup</td>
+          <td data-i18n="cmp_r2a">One-click app</td>
+          <td class="yes" data-i18n="cmp_r2b">One-click app &mdash; same simplicity</td>
+        </tr>
+        <tr>
+          <td class="rowlabel" data-i18n="cmp_r3">Browser coverage</td>
+          <td data-i18n="cmp_r3a">Extension routes through the same single exit</td>
+          <td class="yes" data-i18n="cmp_r3b">Extension gets its own independent hop chain</td>
+        </tr>
+        <tr>
+          <td class="rowlabel" data-i18n="cmp_r4">Hop rotation</td>
+          <td class="no" data-i18n="cmp_r4a">Fixed for the session</td>
+          <td class="yes" data-i18n="cmp_r4b">Rotates automatically on an interval</td>
+        </tr>
+      </table>
+    </div>
+    <div class="cmpnote" data-i18n="cmpnote"></div>
+  </section>
+
+  <section>
+    <h2 data-i18n="h_how">How It Would Work</h2>
+    <div class="steps3">
+      <div class="step"><div class="num">1</div><h3 data-i18n="s1h">Install</h3><p data-i18n="s1p"></p></div>
+      <div class="step"><div class="num">2</div><h3 data-i18n="s2h">One Click</h3><p data-i18n="s2p"></p></div>
+      <div class="step"><div class="num">3</div><h3 data-i18n="s3h">Bounced, Not Wired</h3><p data-i18n="s3p"></p></div>
+    </div>
+  </section>
+
+  <footer><div style="margin-bottom:7px;opacity:.75">by <span class="pmark">PRIMAL<sup>APE</sup></span></div><span data-i18n="footer"></span></footer>
+</div>
+
+<script>
+const I18N={
+en:{
+ tag:'Untraceable by design.', draft:'Concept &mdash; not built yet',
+ cta:'Get BigFoot VPN', ctanote:'Not available yet &mdash; this is a product concept under TYPHON.',
+ draftnote:'<b>THIS IS A CONCEPT DRAFT.</b> BigFoot VPN does not exist yet. This page describes the plan as if it were finished, so the idea is fully written down before anything is built.',
+ h_what:'Why BigFoot Is Different',
+ p_what1:'Most VPNs wire your connection to <b>one</b> exit server. BigFoot would bounce it through a <b>chain of several IPs</b> instead &mdash; the way a proxy chain works, but wrapped in an app as simple as any consumer VPN. One button, no configuration, no idea what a "hop" even means required.',
+ p_what2:'A companion <b>Chrome extension</b> would cover browser traffic the same way, on its own independent hop chain, without needing the desktop app running. Named for the idea: hard to track, leaves nothing solid behind.',
+ h_feat:'Planned Features',
+ f1h:'Multi-Hop by Default', f1p:'Every connection routes through several IPs automatically, not as a special mode you have to dig for.',
+ f2h:'One-Click Simplicity', f2p:'Same ease of use as any major VPN app &mdash; the multi-hop routing happens behind the scenes.',
+ f3h:'Browser Extension', f3p:'A Chrome extension covers tab traffic on its own hop chain, independent of the desktop app.',
+ f4h:'Kill Switch', f4p:'If the connection drops, your traffic stops with it instead of falling back to your real IP.',
+ f5h:'Rotating Hop Chain', f5p:'The chain of IPs rotates on an interval instead of staying fixed for the whole session.',
+ f6h:'No-Logs by Design', f6p:'Built around not retaining what would need to be retained for anyone to hand over.',
+ h_cmp:'How It Compares',
+ cmp_col1:'&nbsp;', cmp_col2:'A Typical VPN', cmp_col3:'BigFoot VPN',
+ cmp_r1:'Exit hops', cmp_r1a:'1 (multi-hop usually a special opt-in server)', cmp_r1b:'3+, chained by default',
+ cmp_r2:'Setup', cmp_r2a:'One-click app', cmp_r2b:'One-click app &mdash; same simplicity',
+ cmp_r3:'Browser coverage', cmp_r3a:'Extension routes through the same single exit', cmp_r3b:'Extension gets its own independent hop chain',
+ cmp_r4:'Hop rotation', cmp_r4a:'Fixed for the session', cmp_r4b:'Rotates automatically on an interval',
+ cmpnote:'"A Typical VPN" describes standard single-hop consumer VPN behaviour as a category, not any specific competitor. Most major VPNs offer multi-hop only as an opt-in special server, if at all.',
+ h_how:'How It Would Work',
+ s1h:'Install', s1p:'Download the app (and the browser extension, if you want it) and sign in.',
+ s2h:'One Click', s2p:'Press connect. No server list to study, no settings to tune.',
+ s3h:'Bounced, Not Wired', s3p:'Your traffic bounces through the hop chain instead of going straight to one exit server.',
+ footer:'BIGFOOT VPN &mdash; a TYPHON concept. Nothing here is final or available yet.'
+},
+es:{
+ tag:'Imposible de rastrear, por dise&ntilde;o.', draft:'Concepto &mdash; a&uacute;n no construido',
+ cta:'Obtener BigFoot VPN', ctanote:'A&uacute;n no disponible &mdash; esto es un concepto de producto bajo TYPHON.',
+ draftnote:'<b>ESTO ES UN BORRADOR CONCEPTUAL.</b> BigFoot VPN todav&iacute;a no existe. Esta p&aacute;gina describe el plan como si estuviera terminado, para que la idea quede completamente escrita antes de construir nada.',
+ h_what:'Por qu&eacute; BigFoot es diferente',
+ p_what1:'La mayor&iacute;a de las VPN conectan tu tr&aacute;fico a <b>un</b> servidor de salida. BigFoot lo rebotar&iacute;a a trav&eacute;s de una <b>cadena de varias IPs</b> &mdash; como funciona una cadena de proxies, pero envuelta en una app tan simple como cualquier VPN comercial.',
+ p_what2:'Una <b>extensi&oacute;n de Chrome</b> complementaria cubrir&iacute;a el tr&aacute;fico del navegador de la misma forma, con su propia cadena de saltos independiente, sin necesitar la app de escritorio activa.',
+ h_feat:'Funciones Planeadas',
+ f1h:'Multisalto por Defecto', f1p:'Cada conexi&oacute;n pasa autom&aacute;ticamente por varias IPs, no como un modo especial que hay que buscar.',
+ f2h:'Simplicidad de un Clic', f2p:'La misma facilidad de uso que cualquier VPN importante &mdash; el enrutamiento multisalto ocurre por detr&aacute;s.',
+ f3h:'Extensi&oacute;n de Navegador', f3p:'Una extensi&oacute;n de Chrome cubre el tr&aacute;fico de pesta&ntilde;as con su propia cadena de saltos.',
+ f4h:'Interruptor de Emergencia', f4p:'Si la conexi&oacute;n cae, tu tr&aacute;fico se detiene con ella en vez de volver a tu IP real.',
+ f5h:'Cadena de Saltos Rotativa', f5p:'La cadena de IPs rota en un intervalo en vez de quedarse fija toda la sesi&oacute;n.',
+ f6h:'Sin Registros por Dise&ntilde;o', f6p:'Construido para no retener lo que alguien tendr&iacute;a que entregar si se lo pidieran.',
+ h_cmp:'C&oacute;mo se compara',
+ cmp_col1:'&nbsp;', cmp_col2:'Una VPN T&iacute;pica', cmp_col3:'BigFoot VPN',
+ cmp_r1:'Saltos de salida', cmp_r1a:'1 (el multisalto suele ser un servidor especial opcional)', cmp_r1b:'3+, encadenados por defecto',
+ cmp_r2:'Configuraci&oacute;n', cmp_r2a:'App de un clic', cmp_r2b:'App de un clic &mdash; misma simplicidad',
+ cmp_r3:'Cobertura del navegador', cmp_r3a:'La extensi&oacute;n usa la misma salida &uacute;nica', cmp_r3b:'La extensi&oacute;n tiene su propia cadena de saltos',
+ cmp_r4:'Rotaci&oacute;n de saltos', cmp_r4a:'Fija durante la sesi&oacute;n', cmp_r4b:'Rota autom&aacute;ticamente en un intervalo',
+ cmpnote:'"Una VPN T&iacute;pica" describe el comportamiento est&aacute;ndar de una VPN de un solo salto como categor&iacute;a, no a ning&uacute;n competidor espec&iacute;fico.',
+ h_how:'C&oacute;mo funcionar&iacute;a',
+ s1h:'Instalar', s1p:'Descarga la app (y la extensi&oacute;n, si quieres) e inicia sesi&oacute;n.',
+ s2h:'Un Clic', s2p:'Pulsa conectar. Sin lista de servidores que estudiar, sin ajustes que configurar.',
+ s3h:'Rebotado, No Cableado', s3p:'Tu tr&aacute;fico rebota por la cadena de saltos en vez de ir directo a un servidor de salida.',
+ footer:'BIGFOOT VPN &mdash; un concepto de TYPHON. Nada aqu&iacute; es definitivo ni est&aacute; disponible todav&iacute;a.'
+}};
+let lang='en';
+function render(){
+  const L=I18N[lang];document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    const k=el.dataset.i18n;if(L[k])el.innerHTML=L[k];});
+  document.querySelectorAll('.lang').forEach(function(b){b.classList.toggle('on',b.dataset.lang===lang);});
+}
+document.querySelectorAll('.lang').forEach(function(b){
+  b.addEventListener('click',function(){lang=b.dataset.lang;render();});});
+render();
+</script>
+</body>
+</html>

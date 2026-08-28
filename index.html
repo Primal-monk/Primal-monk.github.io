@@ -75,6 +75,23 @@
     letter-spacing:.08em;text-transform:uppercase;text-decoration:none}
   .proSoon{color:var(--ink-soft);font-size:.74rem;margin-top:9px;font-style:italic}
 
+  /* ---- evidence: collapsible donation receipts (same pattern as ANGELCORP) ---- */
+  details.evidence{background:var(--sand-mid);border:1px solid var(--gold-deep);
+    border-left:3px solid var(--bronze);padding:15px 18px;margin-top:15px}
+  details.evidence summary{cursor:pointer;color:var(--ink);font-weight:700;font-size:.85rem;
+    letter-spacing:.02em;list-style:none;display:flex;align-items:center;gap:8px}
+  details.evidence summary::-webkit-details-marker{display:none}
+  details.evidence summary::before{content:"+";color:var(--bronze);font-weight:900;font-size:1.1rem;
+    width:16px;text-align:center}
+  details.evidence[open] summary::before{content:"\2212"}
+  details.evidence .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:14px;margin-top:14px}
+  details.evidence figure{margin:0;background:var(--sand-pale);border:1px solid var(--line);
+    padding:10px;text-align:center}
+  details.evidence img{width:100%;height:230px;object-fit:contain;background:var(--sand-light);
+    display:block;border-radius:3px}
+  details.evidence figcaption{color:var(--bronze);font-size:.78rem;font-weight:700;margin-top:8px}
+
   /* ---------- game switch (Paladins / Smite) ---------- */
   .gameswitch{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px}
   @media(max-width:640px){.gameswitch{grid-template-columns:1fr}}
@@ -157,14 +174,18 @@
   .pageswitch a.on{background:#0f4a55;color:#fff}
 
   /* language switch — sits under the free/open-source line, fully spelled out */
+  /* Went from 2 buttons to 5 (added AR/RU/TR), so overflow:hidden on a single
+     inline-flex row would just clip the extras on a narrow screen. Wraps and
+     each button gets its own rounded corners instead of relying on the wrap's
+     edges. */
   .langwrap{
-    display:inline-flex;border:1px solid var(--gold-deep);border-radius:6px;
-    overflow:hidden;margin-top:12px;
+    display:flex;flex-wrap:wrap;gap:6px;border:1px solid var(--gold-deep);border-radius:6px;
+    padding:4px;margin-top:12px;background:var(--sand-mid);
   }
   .lang{
-    background:var(--sand-mid);border:0;cursor:pointer;
-    padding:8px 20px;font-size:.78rem;font-weight:700;color:var(--ink-soft);
-    letter-spacing:.07em;transition:background .12s;
+    background:var(--sand-pale);border:0;border-radius:4px;cursor:pointer;
+    padding:7px 14px;font-size:.73rem;font-weight:700;color:var(--ink-soft);
+    letter-spacing:.05em;transition:background .12s;
   }
   .lang:hover{background:var(--sand-light)}
   .lang.on{background:var(--bronze);color:#fff5dd}
@@ -404,6 +425,9 @@
       <div class="langwrap">
         <button class="lang on" data-lang="en">ENGLISH</button>
         <button class="lang" data-lang="es">ESPA&Ntilde;OL</button>
+        <button class="lang" data-lang="ar">&#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;</button>
+        <button class="lang" data-lang="ru">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</button>
+        <button class="lang" data-lang="tr">T&uuml;rk&ccedil;e</button>
       </div>
     </div>
   </header>
@@ -462,23 +486,24 @@
     <div class="charitybox">
       <div class="cmonth" data-i18n="c_month">August 2026</div>
       <div class="cgrid">
-        <div><div class="n">0</div><div class="l" data-i18n="c_unlocks">Unlocks</div></div>
-        <div><div class="n">$0</div><div class="l" data-i18n="c_donated">Donated</div></div>
+        <div><div class="n">$105</div><div class="l" data-i18n="c_donated">Donated</div></div>
         <div><div class="n">$200</div><div class="l" data-i18n="c_goal">First goal</div></div>
       </div>
-      <div class="cbar"><i style="width:0%"></i></div>
+      <div class="cbar"><i style="width:52.5%"></i></div>
       <p data-i18n="c_note"></p>
-      <div class="proBox">
-        <div class="proTitle" data-i18n="pro_t">Unlock Pro &mdash; $5</div>
-        <p data-i18n="pro_p"></p>
-        <ul class="proList">
-          <li data-i18n="pro_1">Unlock Pro features</li>
-          <li data-i18n="pro_2">$5 charitable contribution</li>
-          <li data-i18n="pro_3">Donation receipt</li>
-        </ul>
-        <a class="proBtn" href="#" onclick="return false;" data-i18n="pro_btn">Unlock &amp; Donate $5</a>
-        <div class="proSoon" data-i18n="pro_soon">Not live yet &mdash; nothing has been collected or donated.</div>
-      </div>
+      <details class="evidence">
+        <summary data-i18n="ev_sum">Evidence &mdash; donation receipts</summary>
+        <div class="grid">
+          <figure>
+            <img src="assets/donation-5.png" alt="Donation receipt, 5 dollars">
+            <figcaption data-i18n="ev_5">$5 &mdash; first community donation</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/donation-100.png" alt="Donation receipt, 100 dollars">
+            <figcaption data-i18n="ev_100">$100 &mdash; donated directly</figcaption>
+          </figure>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -526,13 +551,12 @@ const I18N = {
     me_nm:'PICODEV &mdash; my game studio',
     me_p:'PHAROAH is my first ever mod — my main work is six games being built in Godot, including a topdown hero shooter that is nearly finished.',
     me_go:'Visit PICODEV &rarr;',
-    h_charity:'Our Donations', c_month:'August 2026', c_unlocks:'Unlocks',
+    h_charity:'Our Donations', c_month:'August 2026',
     c_donated:'Donated', c_goal:'First goal',
-    c_note:'PHAROAH is free and always will be. Optional Pro unlocks exist purely so the tool can raise money for humanitarian aid &mdash; every figure above is real, and stays at zero until it isn&rsquo;t.',
-    pro_t:'Unlock Pro &mdash; $5', pro_p:'Your $5 supports humanitarian aid.',
-    pro_1:'Unlock Pro features', pro_2:'$5 charitable contribution', pro_3:'Donation receipt',
-    pro_btn:'Unlock &amp; Donate $5',
-    pro_soon:'Not live yet &mdash; nothing has been collected or donated.',
+    c_note:'PHAROAH is 100% free with nothing locked behind a paywall &mdash; that includes every feature that used to sit behind a charity gate. Donating is entirely optional and gets you nothing extra; it is just a way to support humanitarian aid if you want to. Every figure above is real.',
+    ev_sum:'Evidence &mdash; donation receipts',
+    ev_5:'$5 &mdash; first community donation',
+    ev_100:'$100 &mdash; donated directly',
     h_more:'More From OSIRIS', soon:'Coming soon',
     shared:'<b>SMITE AND PALADINS SHARE SERVERS.</b> An exploit that works on one will often apply to the other &mdash; and skins can work across both.',
     demolabel:'the menu, tab by tab — click to read',
@@ -563,13 +587,12 @@ const I18N = {
     me_nm:'PICODEV &mdash; mi estudio de juegos',
     me_p:'PHAROAH es mi primer mod — mi trabajo principal son seis juegos hechos en Godot, incluido un hero shooter cenital casi terminado.',
     me_go:'Visitar PICODEV &rarr;',
-    h_charity:'Nuestras Donaciones', c_month:'Agosto 2026', c_unlocks:'Desbloqueos',
+    h_charity:'Nuestras Donaciones', c_month:'Agosto 2026',
     c_donated:'Donado', c_goal:'Primera meta',
-    c_note:'PHAROAH es gratis y siempre lo ser&aacute;. Los desbloqueos Pro opcionales existen solo para que la herramienta pueda recaudar para ayuda humanitaria &mdash; todas las cifras son reales y se quedan en cero hasta que dejen de estarlo.',
-    pro_t:'Desbloquear Pro &mdash; $5', pro_p:'Tus $5 apoyan la ayuda humanitaria.',
-    pro_1:'Desbloquea funciones Pro', pro_2:'$5 de contribuci&oacute;n ben&eacute;fica', pro_3:'Recibo de donaci&oacute;n',
-    pro_btn:'Desbloquear y Donar $5',
-    pro_soon:'A&uacute;n no est&aacute; activo &mdash; no se ha recaudado ni donado nada.',
+    c_note:'PHAROAH es 100% gratis y no tiene nada bloqueado tras un muro de pago &mdash; eso incluye todo lo que antes estaba tras una puerta de caridad. Donar es totalmente opcional y no da nada extra; es solo una forma de apoyar la ayuda humanitaria si quieres. Todas las cifras de arriba son reales.',
+    ev_sum:'Evidencia &mdash; recibos de donaci&oacute;n',
+    ev_5:'$5 &mdash; primera donaci&oacute;n de la comunidad',
+    ev_100:'$100 &mdash; donado directamente',
     h_more:'M&aacute;s de OSIRIS', soon:'Pr&oacute;ximamente',
     shared:'<b>SMITE Y PALADINS COMPARTEN SERVIDORES.</b> Un exploit que funciona en uno suele aplicarse al otro &mdash; y los aspectos pueden funcionar en ambos.',
     demolabel:'el menú, pestaña por pestaña — haz clic para leer',
@@ -591,18 +614,126 @@ const I18N = {
     h_where:'Dónde está pensado usarse',
     p_where:'<strong>Salas privadas y verificadas.</strong> Está hecho para los servidores por invitación de la comunidad, donde todos los presentes lo han aceptado — muchos de esos servidores permiten mods abiertamente, y algunos usan reglas de solo-paredes que se juegan más como un MOBA, con todos visibles y un tiempo de muerte más largo. Esas salas están cerradas, vinculadas y moderadas, así que los jugadores no invitados no son un problema. Por favor úsalo solo ahí, y no lo lleves a partidas públicas.',
     footer:'PHAROAH — una herramienta de mods para Paladins. Sin afiliación con Hi-Rez Studios ni Evil Mojo Games.'
+  },
+  ar:{
+    madeby:'&#1576;&#1606;&#1575;&#1569; <span class="pmark">PRIMAL<sup>APE</sup></span>',
+    share:'&#1606;&#1587;&#1582; &#1585;&#1575;&#1576;&#1591; &#1575;&#1604;&#1605;&#1588;&#1575;&#1585;&#1603;&#1577;', sharebig:'&#1588;&#1575;&#1585;&#1603; &#1607;&#1584;&#1607; &#1575;&#1604;&#1589;&#1601;&#1581;&#1577;',
+    tagline:'&#1571;&#1583;&#1575;&#1577; &#1578;&#1593;&#1583;&#1610;&#1604; &#1604;&#1640;Paladins&#1641;',
+    free:'&#1605;&#1580;&#1575;&#1606;&#1610; &#1576;&#1606;&#1587;&#1576;&#1577; &#1642;100 &bull; &#1605;&#1601;&#1578;&#1608;&#1581; &#1575;&#1604;&#1605;&#1589;&#1583;&#1585; &bull; &#1587;&#1607;&#1604; &#1575;&#1604;&#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605;',
+    me_nm:'PICODEV &mdash; &#1575;&#1587;&#1578;&#1608;&#1583;&#1610;&#1608; &#1575;&#1604;&#1571;&#1604;&#1593;&#1575;&#1576; &#1575;&#1604;&#1582;&#1575;&#1589; &#1576;&#1610;',
+    me_p:'PHAROAH &#1607;&#1608; &#1571;&#1608;&#1604; &#1578;&#1593;&#1583;&#1610;&#1604; &#1587;&#1590;&#1608; &#1576;&#1607; &mdash; &#1593;&#1605;&#1604;&#1610; &#1575;&#1604;&#1585;&#1574;&#1610;&#1587;&#1610; &#1607;&#1608; &#1587;&#1578;&#1577; &#1571;&#1604;&#1593;&#1575;&#1576; &#1602;&#1610;&#1583; &#1575;&#1604;&#1578;&#1591;&#1608;&#1610;&#1585; &#1576;&#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605; Godot.',
+    me_go:'&#1586;&#1610;&#1575;&#1585;&#1577; PICODEV &larr;',
+    h_charity:'&#1578;&#1576;&#1585;&#1593;&#1575;&#1578;&#1606;&#1575;', c_month:'&#1571;&#1594;&#1587;&#1591;&#1587; 2026',
+    c_donated:'&#1578;&#1605; &#1575;&#1604;&#1578;&#1576;&#1585;&#1593; &#1576;&#1607;', c_goal:'&#1575;&#1604;&#1607;&#1583;&#1601; &#1575;&#1604;&#1571;&#1608;&#1604;',
+    c_note:'PHAROAH &#1605;&#1580;&#1575;&#1606;&#1610; &#1576;&#1606;&#1587;&#1576;&#1577; &#1642;100 &#1608;&#1604;&#1575; &#1610;&#1608;&#1580;&#1583; &#1571;&#1610; &#1588;&#1610;&#1569; &#1605;&#1602;&#1601;&#1604; &#1582;&#1604;&#1601; &#1580;&#1583;&#1575;&#1585; &#1583;&#1601;&#1593; &mdash; &#1608;&#1610;&#1588;&#1605;&#1604; &#1584;&#1604;&#1603; &#1603;&#1604; &#1605;&#1610;&#1586;&#1577; &#1603;&#1575;&#1606;&#1578; &#1587;&#1575;&#1576;&#1602;&#1611;&#1575; &#1582;&#1604;&#1601; &#1576;&#1608;&#1575;&#1576;&#1577; &#1582;&#1610;&#1585;&#1610;&#1577;. &#1575;&#1604;&#1578;&#1576;&#1585;&#1593; &#1575;&#1582;&#1578;&#1610;&#1575;&#1585;&#1610; &#1578;&#1605;&#1575;&#1605;&#1611;&#1575; &#1608;&#1604;&#1575; &#1610;&#1605;&#1606;&#1581;&#1603; &#1571;&#1610; &#1605;&#1610;&#1586;&#1577; &#1573;&#1590;&#1575;&#1601;&#1610;&#1577;.',
+    ev_sum:'&#1571;&#1583;&#1604;&#1577; &mdash; &#1573;&#1610;&#1589;&#1575;&#1604;&#1575;&#1578; &#1575;&#1604;&#1578;&#1576;&#1585;&#1593;',
+    ev_5:'&#1642;5 &mdash; &#1571;&#1608;&#1604; &#1578;&#1576;&#1585;&#1593; &#1605;&#1606; &#1575;&#1604;&#1605;&#1580;&#1578;&#1605;&#1593;',
+    ev_100:'&#1642;100 &mdash; &#1578;&#1576;&#1585;&#1593; &#1605;&#1576;&#1575;&#1588;&#1585;',
+    h_more:'&#1575;&#1604;&#1605;&#1586;&#1610;&#1583; &#1605;&#1606; OSIRIS', soon:'&#1602;&#1585;&#1610;&#1576;&#1611;&#1575;',
+    shared:'<b>&#1633;SMITE &#1608;&#1633;PALADINS &#1610;&#1588;&#1578;&#1585;&#1603;&#1575;&#1606; &#1575;&#1604;&#1582;&#1608;&#1575;&#1583;&#1605;.</b> &#1571;&#1610; &#1579;&#1594;&#1585;&#1577; &#1578;&#1593;&#1605;&#1604; &#1601;&#1610; &#1571;&#1581;&#1583;&#1607;&#1605;&#1575; &#1594;&#1575;&#1604;&#1576;&#1611;&#1575; &#1605;&#1575; &#1578;&#1606;&#1591;&#1576;&#1602; &#1593;&#1604;&#1609; &#1575;&#1604;&#1622;&#1582;&#1585; &mdash; &#1608;&#1575;&#1604;&#1605;&#1592;&#1575;&#1607;&#1585; &#1602;&#1583; &#1578;&#1593;&#1605;&#1604; &#1576;&#1610;&#1606; &#1575;&#1604;&#1604;&#1593;&#1576;&#1578;&#1610;&#1606;.',
+    demolabel:'&#1575;&#1604;&#1602;&#1575;&#1574;&#1605;&#1577;&#1548; &#1578;&#1576;&#1608;&#1610;&#1576;&#1611;&#1575; &#1578;&#1576;&#1608;&#1610;&#1576;&#1611;&#1575; &mdash; &#1575;&#1590;&#1594;&#1591; &#1604;&#1604;&#1602;&#1585;&#1575;&#1569;&#1577;',
+    keyhint:'INSERT = &#1573;&#1592;&#1607;&#1575;&#1585; / &#1573;&#1582;&#1601;&#1575;&#1569;',
+    fullrelease:'&#1573;&#1589;&#1583;&#1575;&#1585; &#1578;&#1580;&#1585;&#1610;&#1576;&#1610;', date:'23 &#1571;&#1594;&#1587;&#1591;&#1587;', notout:'&#1594;&#1610;&#1585; &#1605;&#1578;&#1608;&#1601;&#1585; &#1576;&#1593;&#1583;',
+    dlnow:'&#1578;&#1581;&#1605;&#1610;&#1604; PHAROAH',
+    demohead:'&#1578;&#1581;&#1605;&#1610;&#1604; &#1575;&#1604;&#1606;&#1587;&#1582;&#1577; &#1575;&#1604;&#1578;&#1580;&#1585;&#1610;&#1576;&#1610;&#1577; &#1605;&#1606; PHAROAH',
+    demonote:'&#1575;&#1604;&#1573;&#1589;&#1583;&#1575;&#1585; &#1575;&#1604;&#1605;&#1581;&#1583;&#1617;&#1579; &#1602;&#1575;&#1583;&#1605; &#1601;&#1610; 28 &#1571;&#1594;&#1587;&#1591;&#1587;',
+    nofuss:'&#1576;&#1583;&#1608;&#1606; &#1605;&#1579;&#1576;&#1617;&#1578; &#1608;&#1583;&#1608;&#1606; &#1571;&#1610; &#1573;&#1593;&#1583;&#1575;&#1583;. &#1601;&#1603; &#1575;&#1604;&#1590;&#1594;&#1591;&#1548; &#1588;&#1594;&#1617;&#1604;&#1607;&#1548; &#1575;&#1590;&#1594;&#1591; <strong>INSERT</strong>.',
+    h_what:'&#1605;&#1575; &#1607;&#1608; PHAROAH',
+    p_what1:'PHAROAH &#1571;&#1583;&#1575;&#1577; <strong>&#1578;&#1593;&#1583;&#1610;&#1604; &#1605;&#1580;&#1575;&#1606;&#1610;&#1577;</strong> &#1604;&#1640;Paladins&#1641;&#1548; &#1605;&#1576;&#1606;&#1610;&#1577; &#1593;&#1604;&#1609; &#1602;&#1575;&#1593;&#1583;&#1577; &#1608;&#1575;&#1581;&#1583;&#1577;: &#1610;&#1580;&#1576; &#1571;&#1606; &#1578;&#1603;&#1608;&#1606; &#1587;&#1607;&#1604;&#1577; &#1575;&#1604;&#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605;.',
+    p_what2:'&#1576;&#1583;&#1571; &#1603;&#1591;&#1585;&#1610;&#1602;&#1577; &#1604;&#1575;&#1587;&#1578;&#1593;&#1575;&#1583;&#1577; &#1571;&#1608;&#1590;&#1575;&#1593; &#1573;&#1591;&#1604;&#1575;&#1602; &#1605;&#1582;&#1601;&#1610;&#1577; &#1608;&#1606;&#1605;&#1575; &#1604;&#1610;&#1589;&#1576;&#1581; &#1605;&#1580;&#1605;&#1608;&#1593;&#1577; &#1571;&#1583;&#1608;&#1575;&#1578; &#1603;&#1575;&#1605;&#1604;&#1577;. &#1575;&#1604;&#1650;SDK &#1608;&#1575;&#1604;&#1603;&#1608;&#1583; &#1575;&#1604;&#1605;&#1589;&#1583;&#1585;&#1610; &#1605;&#1606;&#1588;&#1608;&#1585;&#1575;&#1606;.',
+    h_how:'&#1603;&#1610;&#1601;&#1610;&#1577; &#1575;&#1604;&#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605;',
+    steps:['&#1581;&#1605;&#1617;&#1604; &#1575;&#1604;&#1571;&#1585;&#1588;&#1610;&#1601; &#1608;&#1601;&#1603;&#1607; &#1601;&#1610; &#1571;&#1610; &#1605;&#1603;&#1575;&#1606;.',
+           '&#1588;&#1594;&#1617;&#1604; Paladins &#1608;&#1589;&#1604; &#1573;&#1604;&#1609; &#1575;&#1604;&#1602;&#1575;&#1574;&#1605;&#1577; &#1575;&#1604;&#1585;&#1574;&#1610;&#1587;&#1610;&#1577;.',
+           '&#1588;&#1594;&#1617;&#1604; &#1605;&#1588;&#1594;&#1617;&#1604; PHAROAH &#1605;&#1606; &#1584;&#1604;&#1603; &#1575;&#1604;&#1605;&#1580;&#1604;&#1583;.',
+           '&#1575;&#1590;&#1594;&#1591; <strong>INSERT</strong> &#1583;&#1575;&#1582;&#1604; &#1575;&#1604;&#1604;&#1593;&#1576;&#1577; &#1604;&#1601;&#1578;&#1581; &#1575;&#1604;&#1602;&#1575;&#1574;&#1605;&#1577; &#1608;&#1573;&#1594;&#1604;&#1575;&#1602;&#1607;&#1575;.',
+           '&#1575;&#1582;&#1578;&#1585; &#1593;&#1604;&#1575;&#1605;&#1577; &#1578;&#1576;&#1608;&#1610;&#1576;. &#1603;&#1604; &#1588;&#1610;&#1569; &#1605;&#1608;&#1590;&#1617;&#1581;.'],
+    h_where:'&#1571;&#1610;&#1606; &#1610;&#1615;&#1601;&#1636;&#1584;&#1604; &#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605;&#1607;',
+    p_where:'<strong>&#1594;&#1585;&#1601; &#1582;&#1575;&#1589;&#1577; &#1608;&#1605;&#1608;&#1579;&#1602;&#1577;.</strong> &#1589;&#1615;&#1605;&#1617;&#1605; &#1604;&#1582;&#1608;&#1575;&#1583;&#1605; &#1575;&#1604;&#1605;&#1580;&#1578;&#1605;&#1593; &#1575;&#1604;&#1582;&#1575;&#1589;&#1577; &#1576;&#1575;&#1604;&#1583;&#1593;&#1608;&#1577;&#1548; &#1581;&#1610;&#1579; &#1608;&#1575;&#1601;&#1602; &#1575;&#1604;&#1580;&#1605;&#1610;&#1593; &#1593;&#1604;&#1609; &#1584;&#1604;&#1603;. &#1610;&#1615;&#1585;&#1580;&#1609; &#1593;&#1583;&#1605; &#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605;&#1607; &#1601;&#1610; &#1575;&#1604;&#1605;&#1576;&#1575;&#1585;&#1610;&#1575;&#1578; &#1575;&#1604;&#1593;&#1575;&#1605;&#1577;.',
+    footer:'PHAROAH &mdash; &#1571;&#1583;&#1575;&#1577; &#1578;&#1593;&#1583;&#1610;&#1604; &#1604;&#1640;Paladins&#1641;. &#1594;&#1610;&#1585; &#1578;&#1575;&#1576;&#1593;&#1577; &#1604;&#1640;Hi-Rez Studios&#1641; &#1571;&#1608; &#1640;Evil Mojo Games&#1641;.'
+  },
+  ru:{
+    madeby:'&#1089;&#1076;&#1077;&#1083;&#1072;&#1085;&#1086; <span class="pmark">PRIMAL<sup>APE</sup></span>',
+    share:'&#1050;&#1054;&#1055;&#1048;&#1056;&#1054;&#1042;&#1040;&#1058;&#1068; &#1057;&#1057;&#1067;&#1051;&#1050;&#1059;', sharebig:'&#1055;&#1054;&#1044;&#1045;&#1051;&#1048;&#1058;&#1068;&#1057;&#1071; &#1069;&#1058;&#1054;&#1049; &#1057;&#1058;&#1056;&#1040;&#1053;&#1048;&#1062;&#1045;&#1049;',
+    tagline:'&#1048;&#1085;&#1089;&#1090;&#1088;&#1091;&#1084;&#1077;&#1085;&#1090; &#1084;&#1086;&#1076;&#1086;&#1074; &#1076;&#1083;&#1103; Paladins',
+    free:'100% &#1073;&#1077;&#1089;&#1087;&#1083;&#1072;&#1090;&#1085;&#1086; &bull; &#1086;&#1090;&#1082;&#1088;&#1099;&#1090;&#1099;&#1081; &#1080;&#1089;&#1093;&#1086;&#1076;&#1085;&#1099;&#1081; &#1082;&#1086;&#1076; &bull; &#1087;&#1088;&#1086;&#1089;&#1090;&#1086; &#1074; &#1080;&#1089;&#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1085;&#1080;&#1080;',
+    me_nm:'PICODEV &mdash; &#1084;&#1086;&#1103; &#1080;&#1075;&#1088;&#1086;&#1074;&#1072;&#1103; &#1089;&#1090;&#1091;&#1076;&#1080;&#1103;',
+    me_p:'PHAROAH &mdash; &#1084;&#1086;&#1081; &#1087;&#1077;&#1088;&#1074;&#1099;&#1081; &#1084;&#1086;&#1076; &mdash; &#1086;&#1089;&#1085;&#1086;&#1074;&#1085;&#1072;&#1103; &#1088;&#1072;&#1073;&#1086;&#1090;&#1072; &mdash; &#1096;&#1077;&#1089;&#1090;&#1100; &#1080;&#1075;&#1088; &#1085;&#1072; Godot.',
+    me_go:'&#1055;&#1077;&#1088;&#1077;&#1081;&#1090;&#1080; &#1085;&#1072; PICODEV &rarr;',
+    h_charity:'&#1053;&#1072;&#1096;&#1080; &#1087;&#1086;&#1078;&#1077;&#1088;&#1090;&#1074;&#1086;&#1074;&#1072;&#1085;&#1080;&#1103;', c_month:'&#1040;&#1074;&#1075;&#1091;&#1089;&#1090; 2026',
+    c_donated:'&#1057;&#1086;&#1073;&#1088;&#1072;&#1085;&#1086;', c_goal:'&#1055;&#1077;&#1088;&#1074;&#1072;&#1103; &#1094;&#1077;&#1083;&#1100;',
+    c_note:'PHAROAH &#1087;&#1086;&#1083;&#1085;&#1086;&#1089;&#1090;&#1100;&#1102; &#1073;&#1077;&#1089;&#1087;&#1083;&#1072;&#1090;&#1077;&#1085; &#1080; &#1085;&#1080;&#1095;&#1077;&#1075;&#1086; &#1085;&#1077; &#1089;&#1082;&#1088;&#1099;&#1090;&#1086; &#1079;&#1072; &#1087;&#1083;&#1072;&#1090;&#1085;&#1099;&#1084; &#1076;&#1086;&#1089;&#1090;&#1091;&#1087;&#1086;&#1084;. &#1055;&#1086;&#1078;&#1077;&#1088;&#1090;&#1074;&#1086;&#1074;&#1072;&#1085;&#1080;&#1077; &#1087;&#1086;&#1083;&#1085;&#1086;&#1089;&#1090;&#1100;&#1102; &#1076;&#1086;&#1073;&#1088;&#1086;&#1074;&#1086;&#1083;&#1100;&#1085;&#1086;&#1077;.',
+    ev_sum:'&#1044;&#1086;&#1082;&#1072;&#1079;&#1072;&#1090;&#1077;&#1083;&#1100;&#1089;&#1090;&#1074;&#1072; &mdash; &#1082;&#1074;&#1080;&#1090;&#1072;&#1085;&#1094;&#1080;&#1080; &#1087;&#1086;&#1078;&#1077;&#1088;&#1090;&#1074;&#1086;&#1074;&#1072;&#1085;&#1080;&#1081;',
+    ev_5:'$5 &mdash; &#1087;&#1077;&#1088;&#1074;&#1086;&#1077; &#1087;&#1086;&#1078;&#1077;&#1088;&#1090;&#1074;&#1086;&#1074;&#1072;&#1085;&#1080;&#1077; &#1089;&#1086;&#1086;&#1073;&#1097;&#1077;&#1089;&#1090;&#1074;&#1072;',
+    ev_100:'$100 &mdash; &#1087;&#1086;&#1078;&#1077;&#1088;&#1090;&#1074;&#1086;&#1074;&#1072;&#1085;&#1086; &#1085;&#1072;&#1087;&#1088;&#1103;&#1084;&#1091;&#1102;',
+    h_more:'&#1041;&#1086;&#1083;&#1100;&#1096;&#1077; &#1086;&#1090; OSIRIS', soon:'&#1057;&#1082;&#1086;&#1088;&#1086;',
+    shared:'<b>SMITE &#1048; PALADINS &#1044;&#1045;&#1051;&#1071;&#1058; &#1057;&#1045;&#1056;&#1042;&#1045;&#1056;&#1067;.</b> &#1069;&#1082;&#1089;&#1087;&#1083;&#1086;&#1081;&#1090;, &#1088;&#1072;&#1073;&#1086;&#1090;&#1072;&#1102;&#1097;&#1080;&#1081; &#1074; &#1086;&#1076;&#1085;&#1086;&#1081;, &#1095;&#1072;&#1089;&#1090;&#1086; &#1087;&#1086;&#1076;&#1093;&#1086;&#1076;&#1080;&#1090; &#1080; &#1076;&#1083;&#1103; &#1076;&#1088;&#1091;&#1075;&#1086;&#1081;.',
+    demolabel:'&#1084;&#1077;&#1085;&#1102;, &#1074;&#1082;&#1083;&#1072;&#1076;&#1082;&#1072; &#1079;&#1072; &#1074;&#1082;&#1083;&#1072;&#1076;&#1082;&#1086;&#1081; &mdash; &#1085;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#1076;&#1083;&#1103; &#1095;&#1090;&#1077;&#1085;&#1080;&#1103;',
+    keyhint:'INSERT = &#1087;&#1086;&#1082;&#1072;&#1079;&#1072;&#1090;&#1100;/&#1089;&#1082;&#1088;&#1099;&#1090;&#1100;',
+    fullrelease:'&#1044;&#1077;&#1084;&#1086;-&#1074;&#1077;&#1088;&#1089;&#1080;&#1103;', date:'23 &#1040;&#1042;&#1043;&#1059;&#1057;&#1058;&#1040;', notout:'&#1045;&#1097;&#1105; &#1085;&#1077; &#1074;&#1099;&#1096;&#1083;&#1086;',
+    dlnow:'&#1057;&#1050;&#1040;&#1063;&#1040;&#1058;&#1068; PHAROAH',
+    demohead:'&#1057;&#1050;&#1040;&#1063;&#1040;&#1058;&#1068; &#1044;&#1045;&#1052;&#1054;-&#1042;&#1045;&#1056;&#1057;&#1048;&#1102; PHAROAH',
+    demonote:'&#1054;&#1041;&#1053;&#1054;&#1042;&#1051;&#1045;&#1053;&#1053;&#1040;&#1071; &#1042;&#1045;&#1056;&#1057;&#1048;&#1071; 28 &#1040;&#1042;&#1043;&#1059;&#1057;&#1058;&#1040;',
+    nofuss:'&#1041;&#1077;&#1079; &#1091;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1097;&#1080;&#1082;&#1072; &#1080; &#1073;&#1077;&#1079; &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1077;&#1082;. &#1056;&#1072;&#1089;&#1087;&#1072;&#1082;&#1091;&#1081;&#1090;&#1077;, &#1079;&#1072;&#1087;&#1091;&#1089;&#1090;&#1080;&#1090;&#1077;, &#1085;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; <strong>INSERT</strong>.',
+    h_what:'&#1063;&#1090;&#1086; &#1090;&#1072;&#1082;&#1086;&#1077; PHAROAH',
+    p_what1:'PHAROAH &mdash; <strong>&#1073;&#1077;&#1089;&#1087;&#1083;&#1072;&#1090;&#1085;&#1099;&#1081; &#1084;&#1086;&#1076;-&#1090;&#1091;&#1083;</strong> &#1076;&#1083;&#1103; Paladins &#1089; &#1086;&#1076;&#1085;&#1080;&#1084; &#1087;&#1088;&#1072;&#1074;&#1080;&#1083;&#1086;&#1084;: &#1086;&#1085; &#1076;&#1086;&#1083;&#1078;&#1077;&#1085; &#1073;&#1099;&#1090;&#1100; &#1087;&#1088;&#1086;&#1089;&#1090;&#1099;&#1084; &#1074; &#1080;&#1089;&#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1085;&#1080;&#1080;.',
+    p_what2:'&#1054;&#1085; &#1085;&#1072;&#1095;&#1072;&#1083;&#1089;&#1103; &#1082;&#1072;&#1082; &#1089;&#1087;&#1086;&#1089;&#1086;&#1073; &#1074;&#1077;&#1088;&#1085;&#1091;&#1090;&#1100; &#1089;&#1082;&#1088;&#1099;&#1090;&#1099;&#1077; &#1088;&#1077;&#1078;&#1080;&#1084;&#1099; &#1089;&#1090;&#1088;&#1077;&#1083;&#1100;&#1073;&#1099; &#1080; &#1074;&#1099;&#1088;&#1086;&#1089; &#1074; &#1087;&#1086;&#1083;&#1085;&#1099;&#1081; &#1085;&#1072;&#1073;&#1086;&#1088; &#1080;&#1085;&#1089;&#1090;&#1088;&#1091;&#1084;&#1077;&#1085;&#1090;&#1086;&#1074;. SDK &#1080; &#1080;&#1089;&#1093;&#1086;&#1076;&#1085;&#1099;&#1081; &#1082;&#1086;&#1076; &#1086;&#1090;&#1082;&#1088;&#1099;&#1090;&#1099;.',
+    h_how:'&#1050;&#1072;&#1082; &#1080;&#1089;&#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1100;',
+    steps:['&#1057;&#1082;&#1072;&#1095;&#1072;&#1081;&#1090;&#1077; &#1072;&#1088;&#1093;&#1080;&#1074; &#1080; &#1088;&#1072;&#1089;&#1087;&#1072;&#1082;&#1091;&#1081;&#1090;&#1077; &#1077;&#1075;&#1086; &#1075;&#1076;&#1077; &#1091;&#1075;&#1086;&#1076;&#1085;&#1086;.',
+           '&#1047;&#1072;&#1087;&#1091;&#1089;&#1090;&#1080;&#1090;&#1077; Paladins &#1080; &#1076;&#1086;&#1081;&#1076;&#1080;&#1090;&#1077; &#1076;&#1086; &#1075;&#1083;&#1072;&#1074;&#1085;&#1086;&#1075;&#1086; &#1084;&#1077;&#1085;&#1102;.',
+           '&#1047;&#1072;&#1087;&#1091;&#1089;&#1090;&#1080;&#1090;&#1077; PHAROAH &#1080;&#1079; &#1101;&#1090;&#1086;&#1081; &#1087;&#1072;&#1087;&#1082;&#1080;.',
+           '&#1053;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; <strong>INSERT</strong> &#1074; &#1080;&#1075;&#1088;&#1077;, &#1095;&#1090;&#1086;&#1073;&#1099; &#1086;&#1090;&#1082;&#1088;&#1099;&#1090;&#1100;/&#1079;&#1072;&#1082;&#1088;&#1099;&#1090;&#1100; &#1084;&#1077;&#1085;&#1102;.',
+           '&#1042;&#1099;&#1073;&#1077;&#1088;&#1080;&#1090;&#1077; &#1074;&#1082;&#1083;&#1072;&#1076;&#1082;&#1091;. &#1042;&#1089;&#1105; &#1087;&#1086;&#1076;&#1087;&#1080;&#1089;&#1072;&#1085;&#1086; &#1087;&#1088;&#1086;&#1089;&#1090;&#1099;&#1084; &#1103;&#1079;&#1099;&#1082;&#1086;&#1084;.'],
+    h_where:'&#1043;&#1076;&#1077; &#1101;&#1090;&#1086; &#1089;&#1090;&#1086;&#1080;&#1090; &#1080;&#1089;&#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1100;',
+    p_where:'<strong>&#1063;&#1072;&#1089;&#1090;&#1085;&#1099;&#1077; &#1087;&#1088;&#1086;&#1074;&#1077;&#1088;&#1077;&#1085;&#1085;&#1099;&#1077; &#1089;&#1077;&#1088;&#1074;&#1077;&#1088;&#1099;.</strong> &#1057;&#1076;&#1077;&#1083;&#1072;&#1085;&#1086; &#1076;&#1083;&#1103; &#1089;&#1077;&#1088;&#1074;&#1077;&#1088;&#1086;&#1074; &#1087;&#1086; &#1087;&#1088;&#1080;&#1075;&#1083;&#1072;&#1096;&#1077;&#1085;&#1080;&#1103;&#1084;, &#1075;&#1076;&#1077; &#1074;&#1089;&#1077; &#1089;&#1086;&#1075;&#1083;&#1072;&#1089;&#1085;&#1099;. &#1053;&#1077; &#1073;&#1077;&#1088;&#1080;&#1090;&#1077; &#1101;&#1090;&#1086; &#1074; &#1087;&#1091;&#1073;&#1083;&#1080;&#1095;&#1085;&#1099;&#1077; &#1084;&#1072;&#1090;&#1095;&#1080;.',
+    footer:'PHAROAH &mdash; &#1084;&#1086;&#1076; &#1076;&#1083;&#1103; Paladins. &#1053;&#1077; &#1089;&#1074;&#1103;&#1079;&#1072;&#1085; &#1089; Hi-Rez Studios &#1080;&#1083;&#1080; Evil Mojo Games.'
+  },
+  tr:{
+    madeby:'yapan <span class="pmark">PRIMAL<sup>APE</sup></span>',
+    share:'BA&Ntilde;LANTIYI KOPYALA', sharebig:'BU SAYFAYI PAYLAŞ',
+    tagline:'Paladins Mod Arac&#305;',
+    free:'%100 &#252;cretsiz &bull; a&ccedil;&#305;k kaynak &bull; kullan&#305;m&#305; kolay',
+    me_nm:'PICODEV &mdash; oyun st&#252;dyom',
+    me_p:'PHAROAH ilk modum &mdash; asıl işim Godot ile geliştirdiğim altı oyun.',
+    me_go:'PICODEV&rsquo;i ziyaret et &rarr;',
+    h_charity:'Bağışlarımız', c_month:'Ağustos 2026',
+    c_donated:'Bağışlanan', c_goal:'İlk hedef',
+    c_note:'PHAROAH %100 &#252;cretsizdir ve hi&ccedil;bir şey bir &ouml;deme duvar&#305;n&#305;n arkas&#305;nda değildir. Bağ&#305;ş tamamen isteğe bağl&#305;d&#305;r ve ekstra bir şey vermez &mdash; sadece iste​rseniz insani yard&#305;m&#305; desteklemenin bir yoludur.',
+    ev_sum:'Kan&#305;t &mdash; bağ&#305;ş makbuzlar&#305;',
+    ev_5:'$5 &mdash; ilk topluluk bağ&#305;ş&#305;',
+    ev_100:'$100 &mdash; doğrudan bağ&#305;şland&#305;',
+    h_more:'OSIRIS&rsquo;ten Daha Fazlas&#305;', soon:'Yak&#305;nda',
+    shared:'<b>SMITE VE PALADINS SUNUCULARI PAYLAŞIYOR.</b> Birinde işe yarayan bir exploit genellikle diğerinde de işe yarar &mdash; kostümler de her ikisinde &ccedil;al&#305;şabilir.',
+    demolabel:'men&#252;, sekme sekme &mdash; okumak i&ccedil;in t&#305;klay&#305;n',
+    keyhint:'INSERT = g&ouml;ster / gizle',
+    fullrelease:'Demo S&#252;r&#252;m&#252;', date:'23 AĞUSTOS', notout:'Hen&#252;z yay&#305;nlanmad&#305;',
+    dlnow:'PHAROAH İNDİR',
+    demohead:'PHAROAH DEMO İNDİR',
+    demonote:'G&Uuml;NCEL S&Uuml;R&Uuml;M 28 AĞUSTOS&rsquo;TA',
+    nofuss:'Kurulum yok, ayarlanacak hi&ccedil;bir şey yok. A&ccedil;, &ccedil;al&#305;şt&#305;r, <strong>INSERT</strong>&rsquo;e bas.',
+    h_what:'PHAROAH nedir',
+    p_what1:'PHAROAH, Paladins i&ccedil;in <strong>&#252;cretsiz bir mod arac&#305;d&#305;r</strong>, tek bir kural etraf&#305;nda kuruldu: kullan&#305;m&#305; kolay olmal&#305;. A&ccedil;, &ccedil;al&#305;şt&#305;r, INSERT&rsquo;e bas.',
+    p_what2:'Gizli ateş modlar&#305;n&#305; kurtarmakla başlad&#305; ve tam bir araç setine dönüştü &mdash; nişan yardımı, düşman görünürlüğü, tahmin, kozmetikler. SDK ve tam kaynak kod herkesin okuyabilmesi i&ccedil;in yay&#305;nland&#305;.',
+    h_how:'Nas&#305;l kullan&#305;l&#305;r',
+    steps:['Arşivi indir ve istediğin yere &ccedil;&#305;kart.',
+           'Paladins&rsquo;i başlat ve ana men&#252;ye git.',
+           'PHAROAH başlat&#305;c&#305;s&#305;n&#305; o klas&#246;rden &ccedil;al&#305;şt&#305;r.',
+           'Men&#252;y&#252; a&ccedil;mak/kapatmak i&ccedil;in oyunda <strong>INSERT</strong>&rsquo;e bas.',
+           'Bir sekme se&ccedil;. Her şey a&ccedil;&#305;k&ccedil;a etiketlenmiştir.'],
+    h_where:'Nerede kullan&#305;lmas&#305; amaçlan&#305;yor',
+    p_where:'<strong>Özel, onaylı lobiler.</strong> Bu, herkesin kabul ettiği topluluğun davetiye bazlı sunucular&#305; i&ccedil;in yap&#305;lm&#305;şt&#305;r. L&#252;tfen bunu genel eşleştirmeye taş&#305;may&#305;n.',
+    footer:'PHAROAH &mdash; bir Paladins mod arac&#305;. Hi-Rez Studios veya Evil Mojo Games ile bağlant&#305;l&#305; değildir.'
   }
 };
 
 const TABS = [
-  {k:'aim',  en:'Aim',        es:'Puntería'},
-  {k:'heal', en:'Auto-Heal',  es:'Auto-Cura'},
-  {k:'esp',  en:'Enemy ESP',  es:'ESP'},
-  {k:'octavia', en:'Octavia', es:'Octavia'},
-  {k:'fire', en:'Fire Modes', es:'Modos'},
-  {k:'talent',en:'4th Talents',es:'4&ordm; Talento'},
-  {k:'skins',en:'Skins',      es:'Aspectos'},
-  {k:'vis',  en:'Visuals',    es:'Visuales'}
+  {k:'aim',  en:'Aim',        es:'Puntería',   ar:'&#1578;&#1589;&#1584;&#1610;&#1576;',           ru:'&#1055;&#1088;&#1080;&#1094;&#1077;&#1083;',                tr:'Nişan'},
+  {k:'heal', en:'Auto-Heal',  es:'Auto-Cura',  ar:'&#1588;&#1601;&#1575;&#1569; &#1578;&#1604;&#1602;&#1575;&#1574;&#1610;', ru:'&#1040;&#1074;&#1090;&#1086;&#1083;&#1077;&#1095;&#1077;&#1085;&#1080;&#1077;', tr:'Otomatik İyileştirme'},
+  {k:'esp',  en:'Enemy ESP',  es:'ESP',        ar:'ESP',                                            ru:'ESP',                                                       tr:'ESP'},
+  {k:'octavia', en:'Octavia', es:'Octavia',    ar:'Octavia',                                        ru:'Octavia',                                                   tr:'Octavia'},
+  {k:'fire', en:'Fire Modes', es:'Modos',      ar:'&#1571;&#1608;&#1590;&#1575;&#1593; &#1575;&#1604;&#1573;&#1591;&#1604;&#1575;&#1602;', ru:'&#1056;&#1077;&#1078;&#1080;&#1084;&#1099; &#1089;&#1090;&#1088;&#1077;&#1083;&#1100;&#1073;&#1099;', tr:'Ateş Modları'},
+  {k:'talent',en:'4th Talents',es:'4&ordm; Talento', ar:'&#1575;&#1604;&#1605;&#1608;&#1607;&#1576;&#1577; 4', ru:'4-&#1081; &#1090;&#1072;&#1083;&#1072;&#1085;&#1090;', tr:'4. Yetenek'},
+  {k:'skins',en:'Skins',      es:'Aspectos',   ar:'&#1575;&#1604;&#1605;&#1592;&#1575;&#1607;&#1585;', ru:'&#1057;&#1082;&#1080;&#1085;&#1099;',                     tr:'Kostümler'},
+  {k:'vis',  en:'Visuals',    es:'Visuales',   ar:'&#1575;&#1604;&#1605;&#1585;&#1574;&#1610;&#1575;&#1578;', ru:'&#1042;&#1080;&#1079;&#1091;&#1072;&#1083;', tr:'Görseller'}
 ];
 
 const PANELS = {
@@ -835,7 +966,7 @@ function buildTabs(){
   TABS.forEach(t=>{
     const d = document.createElement('div');
     d.className = 'tab' + (t.k===active?' active':'');
-    d.textContent = t[lang];
+    d.textContent = t[lang] || t.en;
     d.addEventListener('click',()=>{active=t.k;render();});
     box.appendChild(d);
   });
@@ -843,6 +974,7 @@ function buildTabs(){
 function render(){
   const L = I18N[lang];
   document.documentElement.lang = lang;
+  document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const k = el.dataset.i18n;
     if(L[k]) el.innerHTML = L[k];
@@ -851,7 +983,11 @@ function render(){
   steps.innerHTML = '';
   L.steps.forEach(s=>{ const li=document.createElement('li'); li.innerHTML=s; steps.appendChild(li); });
   buildTabs();
-  document.getElementById('panel').innerHTML = PANELS[lang][active];
+  // The deep tab-by-tab walkthrough (PANELS) only has full EN/ES content -
+  // translating it into 3 more scripts is a much bigger job than the header
+  // and donation copy, and not worth risking translation errors in gaming-
+  // specific terminology. It falls back to English rather than crashing.
+  document.getElementById('panel').innerHTML = (PANELS[lang] || PANELS.en)[active];
   document.querySelectorAll('.lang').forEach(b=>b.classList.toggle('on', b.dataset.lang===lang));
 }
 document.querySelectorAll('.lang').forEach(b=>{

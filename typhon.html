@@ -3,89 +3,98 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TYPHON — Security & Penetration Testing</title>
+<title>TYPHON — Penetration Testing Suite</title>
 <link rel="icon" type="image/png" href="assets/typhon.png">
-<meta name="description" content="TYPHON — penetration testing and security tools. The real-world sibling of OSIRIS.">
+<meta name="description" content="TYPHON — a penetration testing suite for real systems, not just games. The real-world sibling of OSIRIS. Concept draft.">
 <style>
+  /* Same palette as HORUS, on purpose — TYPHON and HORUS are sibling concept
+     pages under OSIRIS/ANGELCORP, and sharing a look ties the family together
+     instead of every page inventing its own colours. */
   :root{
-    --bg:#0e1512; --bg2:#131f1a; --bg3:#1b2b23; --bg4:#25392e;
-    --hi:#3ddc84; --hi2:#2aa662; --sec:#a9c9b9; --paper:#e9f5ee;
-    --line:rgba(61,220,132,.3);
+    --bg:#4a1410; --bg2:#5c1a14; --bg3:#6e211a; --bg4:#832a20;
+    --ember:#e8622a; --ember2:#f5843f; --gold:#f2b229; --gold2:#ffcc55;
+    --paper:#ffe8d2; --soft:#d9a48c; --line:rgba(242,178,41,.3);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth;scrollbar-color:var(--hi) var(--bg3);scrollbar-width:auto}
-  body{font-family:"Trebuchet MS","Segoe UI",sans-serif;background:var(--bg);
-    color:var(--sec);line-height:1.62;padding-top:58px}
+  html{scroll-behavior:smooth;scrollbar-color:var(--gold) var(--bg3);scrollbar-width:auto}
+  body{font-family:"Trebuchet MS","Segoe UI",sans-serif;
+    background:linear-gradient(180deg,#3a0f0c 0%,var(--bg) 40%,#3a0f0c 100%);
+    color:var(--soft);line-height:1.62;padding-top:54px}
   ::-webkit-scrollbar{width:17px}
   ::-webkit-scrollbar-track{background:var(--bg3);border-left:1px solid var(--line)}
-  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--hi),var(--hi2));
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--gold),var(--ember));
     border:2px solid var(--bg3);border-radius:12px}
 
-  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:58px;background:var(--bg2);
-    border-bottom:2px solid var(--hi2);display:flex;align-items:center;gap:12px;padding:0 16px;
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:54px;background:var(--bg2);
+    border-bottom:2px solid var(--ember);display:flex;align-items:center;gap:12px;padding:0 16px;
     box-shadow:0 2px 12px rgba(0,0,0,.5)}
-  .topbar .who{display:flex;align-items:center;gap:10px;text-decoration:none}
-  .topbar .who img{width:38px;height:38px;object-fit:contain}
-  .topbar .who span{font-size:.95rem;color:var(--hi);font-weight:700;white-space:nowrap}
-  .topbar .back{color:var(--hi);font-size:1.1rem;font-weight:900}
+  .topbar .who{display:flex;align-items:center;gap:9px;text-decoration:none}
+  .topbar .who img{width:34px;height:34px;object-fit:contain}
+  .topbar .who span{font-size:.88rem;color:var(--gold);font-weight:700;white-space:nowrap}
+  .topbar .back{color:var(--ember2);font-size:1.1rem;font-weight:900}
   .topbar .spacer{flex:1}
-  .charity{font-size:.7rem;color:var(--sec);text-align:right;line-height:1.3;
-    border-right:1px solid var(--line);padding-right:12px}
-  .charity b{color:var(--hi)}
-  .langwrap{display:inline-flex;border:1px solid var(--hi2);border-radius:5px;overflow:hidden}
+  .langwrap{display:inline-flex;border:1px solid var(--gold);border-radius:5px;overflow:hidden}
   .lang{background:var(--bg3);border:0;cursor:pointer;padding:7px 12px;font-size:.72rem;
-    font-weight:700;color:var(--sec)}
-  .lang.on{background:var(--hi);color:var(--bg)}
+    font-weight:700;color:var(--soft)}
+  .lang.on{background:var(--gold);color:#4a1410}
 
-  .wrap{max-width:1000px;margin:0 auto;padding:0 22px}
-  header{text-align:center;padding:34px 0 24px}
-  .logo{width:170px;height:170px;object-fit:contain;display:block;margin:0 auto 12px}
-  h1{font-size:clamp(2.4rem,8vw,4.2rem);letter-spacing:.2em;font-weight:900;color:var(--hi)}
-  .tag{margin-top:5px;color:var(--paper);letter-spacing:.24em;font-size:.78rem;text-transform:uppercase}
-  .draftpill{display:inline-block;margin-top:12px;background:var(--bg4);border:1px solid var(--hi2);
-    border-radius:18px;padding:5px 17px;font-size:.72rem;font-weight:700;letter-spacing:.13em;
-    text-transform:uppercase;color:var(--hi)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+  header{text-align:center;padding:38px 0 26px}
+  .logo{width:170px;height:170px;object-fit:contain;display:block;margin:0 auto 14px;
+    filter:drop-shadow(0 6px 20px rgba(0,0,0,.6))}
+  h1{font-size:clamp(2.5rem,8vw,4.4rem);letter-spacing:.22em;font-weight:900;color:var(--gold2);
+    text-shadow:0 3px 0 #8a4a10, 0 0 40px rgba(232,98,42,.4);margin-left:.22em}
+  .tag{margin-top:6px;color:var(--paper);letter-spacing:.26em;font-size:.78rem;text-transform:uppercase}
+  .soonpill{display:inline-block;margin-top:14px;background:var(--ember);border:1px solid var(--gold);
+    border-radius:20px;padding:6px 22px;font-size:.76rem;font-weight:900;letter-spacing:.18em;
+    text-transform:uppercase;color:#fff}
 
-  section{margin-bottom:32px}
-  h2{color:var(--hi);font-size:.93rem;letter-spacing:.19em;text-transform:uppercase;
-    padding-bottom:7px;margin-bottom:14px;border-bottom:2px solid var(--hi2)}
+  section{margin-bottom:34px}
+  h2{color:var(--gold);font-size:.93rem;letter-spacing:.19em;text-transform:uppercase;
+    padding-bottom:7px;margin-bottom:6px;border-bottom:2px solid var(--ember)}
+  h2 + .subhead{color:var(--soft);font-size:.82rem;margin-bottom:16px;font-style:italic}
   p.body{color:var(--paper);margin-bottom:12px}
-  p.body b{color:var(--hi)}
+  p.body b{color:var(--gold2)}
 
-  .sharednote{background:var(--bg2);border:1px solid var(--hi);border-left:4px solid var(--hi);
-    border-radius:6px;padding:14px 17px;margin-bottom:16px;text-align:center}
-  .sharednote p{color:var(--paper);font-size:.88rem;margin:0;letter-spacing:.02em}
-  .sharednote b{color:var(--hi)}
+  .sharednote{background:var(--bg2);border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:6px;padding:15px 18px;text-align:center;margin-bottom:18px}
+  .sharednote p{color:var(--paper);font-size:.88rem;margin:0}
+  .sharednote b{color:var(--gold2)}
 
-  .flagship{background:var(--bg2);border:2px solid var(--line);border-radius:9px;
-    padding:24px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
-  .flagship img{width:88px;height:88px;object-fit:contain;flex:none}
-  .flagship .t{flex:1;min-width:220px}
-  .flagship .nm{color:var(--hi);font-weight:900;font-size:1.3rem;letter-spacing:.1em}
-  .flagship .gm{color:var(--sec);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
-  .flagship p{color:var(--paper);font-size:.87rem;margin-top:8px}
-  .st{display:inline-block;margin-top:11px;font-size:.66rem;padding:3px 12px;border-radius:12px;
-    font-weight:900;letter-spacing:.1em;text-transform:uppercase}
-  .st.soon{background:var(--hi2);color:#08150e}
-
-  .toolgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:13px}
-  .tool{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--hi);
+  /* ---- module suite: grouped category blocks, so it reads as a real
+     multi-tab product instead of one flat list ---- */
+  .category{margin-bottom:22px}
+  .category h3{color:var(--ember2);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;
+    margin-bottom:10px;padding-left:2px}
+  .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+  .f{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--ember);
     border-radius:6px;padding:15px 16px}
-  .tool h3{color:var(--hi);font-size:.88rem;letter-spacing:.06em;margin-bottom:5px}
-  .tool p{color:var(--paper);font-size:.84rem;margin:0}
+  .f h4{color:var(--gold2);font-size:.88rem;letter-spacing:.03em;margin-bottom:6px}
+  .f p{color:var(--paper);font-size:.83rem;margin:0}
+  .f .st{display:inline-block;margin-top:9px;font-size:.6rem;background:var(--bg4);
+    color:var(--gold);padding:2px 9px;border-radius:9px;font-weight:900;letter-spacing:.09em;
+    text-transform:uppercase}
+
+  /* ---- flagship product callout, links out to its own full page ---- */
+  .flagship{background:var(--bg2);border:2px solid var(--gold);border-radius:9px;
+    padding:24px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;text-decoration:none;
+    transition:border-color .15s,transform .15s}
+  .flagship:hover{border-color:var(--gold2);transform:translateY(-2px)}
+  .flagship img{width:86px;height:86px;object-fit:contain;flex:none}
+  .flagship .t{flex:1;min-width:220px}
+  .flagship .nm{color:var(--gold2);font-weight:900;font-size:1.35rem;letter-spacing:.1em}
+  .flagship .gm{color:var(--soft);font-size:.76rem;letter-spacing:.09em;text-transform:uppercase;margin-top:2px}
+  .flagship p{color:var(--paper);font-size:.87rem;margin-top:8px}
+  .flagship .go{display:inline-block;margin-top:11px;background:var(--ember);color:#fff;
+    padding:8px 18px;border-radius:5px;font-weight:900;font-size:.76rem;letter-spacing:.08em;
+    text-transform:uppercase}
+
   footer{text-align:center;padding:24px 0 38px;border-top:1px solid var(--line);
-    font-size:.77rem;color:var(--sec);margin-top:14px}
+    font-size:.77rem;color:var(--soft);margin-top:14px}
 
 /* ============================================================
    THE WORDMARK - why this is plain letters and not the fancy ones
-   ============================================================
-   It used to be written with Mathematical Bold Sans-Serif capitals
-   (U+1D5E3...) and modifier letters (U+1D2C...). Those are real Unicode,
-   but almost no font actually contains them - so most browsers drew
-   empty boxes instead of letters. That is the block symbol.
-
-   Now it is ordinary A-Z, made bold and superscripted with CSS, which
-   every font on earth can render. Looks the same, cannot break. */
+   ============================================================ */
 .pmark{ font-weight:800; letter-spacing:.06em; }
 .pmark sup{ font-size:.62em; font-weight:800; letter-spacing:.04em;
             vertical-align:super; margin-left:.06em; }
@@ -100,7 +109,6 @@
     <span><span style="color:#fff">ANGEL</span><span style="color:#e0554f">CORP</span><br><span style="font-size:.64rem;color:#e0554f;letter-spacing:.06em">parent company</span></span>
   </a>
   <div class="spacer"></div>
-  <div class="charity" data-i18n="charitybar"></div>
   <div class="langwrap">
     <button class="lang on" data-lang="en">EN</button>
     <button class="lang" data-lang="es">ES</button>
@@ -111,40 +119,78 @@
   <header>
     <img class="logo" src="assets/typhon.png" alt="TYPHON">
     <h1>TYPHON</h1>
-    <div class="tag" data-i18n="tag">Security &amp; Penetration Testing</div>
-    <div class="draftpill" data-i18n="draft">Draft &mdash; in development</div>
+    <div class="tag" data-i18n="tag">Penetration Testing Suite</div>
+    <div class="soonpill" data-i18n="soon">Concept &mdash; Not Built Yet</div>
   </header>
 
   <section>
     <h2 data-i18n="h_what">What TYPHON is</h2>
     <p class="body" data-i18n="p_what1"></p>
     <p class="body" data-i18n="p_what2"></p>
-    <div class="sharednote"><p data-i18n="sharednote"></p></div>
+    <div class="sharednote"><p data-i18n="shared"></p></div>
   </section>
 
   <section>
-    <h2 data-i18n="h_flagship">Flagship Concept</h2>
-    <a class="flagship" href="#" onclick="return false;" style="text-decoration:none">
+    <h2 data-i18n="h_suite">Planned Module Suite</h2>
+    <div class="subhead" data-i18n="suite_sub"></div>
+
+    <div class="category">
+      <h3 data-i18n="c_recon">Recon &amp; Discovery</h3>
+      <div class="feat">
+        <div class="f"><h4 data-i18n="m1h">Network Mapper</h4><p data-i18n="m1p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+        <div class="f"><h4 data-i18n="m2h">Subdomain Finder</h4><p data-i18n="m2p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+        <div class="f"><h4 data-i18n="m3h">OSINT Aggregator</h4><p data-i18n="m3p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+      </div>
+    </div>
+
+    <div class="category">
+      <h3 data-i18n="c_test">Testing &amp; Exploitation</h3>
+      <div class="feat">
+        <div class="f"><h4 data-i18n="m4h">Guided Exploit Runner</h4><p data-i18n="m4p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+        <div class="f"><h4 data-i18n="m5h">Web App Scanner</h4><p data-i18n="m5p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+        <div class="f"><h4 data-i18n="m6h">Wireless Auditor</h4><p data-i18n="m6p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+        <div class="f"><h4 data-i18n="m7h">Credential Audit</h4><p data-i18n="m7p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+      </div>
+    </div>
+
+    <div class="category">
+      <h3 data-i18n="c_social">Social Engineering</h3>
+      <div class="feat">
+        <div class="f"><h4 data-i18n="m8h">Phishing Simulator</h4><p data-i18n="m8p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+        <div class="f"><h4 data-i18n="m9h">Vishing Script Builder</h4><p data-i18n="m9p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+        <div class="f"><h4 data-i18n="m10h">Physical Drop-Test Tracker</h4><p data-i18n="m10p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+      </div>
+    </div>
+
+    <div class="category">
+      <h3 data-i18n="c_report">Reporting &amp; Management</h3>
+      <div class="feat">
+        <div class="f"><h4 data-i18n="m11h">Report Builder</h4><p data-i18n="m11p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+        <div class="f"><h4 data-i18n="m12h">Client Portal</h4><p data-i18n="m12p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+        <div class="f"><h4 data-i18n="m13h">Compliance Mapper</h4><p data-i18n="m13p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+      </div>
+    </div>
+
+    <div class="category">
+      <h3 data-i18n="c_ai">Intelligence Layer</h3>
+      <div class="feat">
+        <div class="f"><h4 data-i18n="m14h">AI Findings Assistant</h4><p data-i18n="m14p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+        <div class="f"><h4 data-i18n="m15h">Scenario Builder</h4><p data-i18n="m15p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-i18n="h_flagship">Flagship Product</h2>
+    <a class="flagship" href="bigfoot.html">
       <img src="assets/typhon.png" alt="">
       <div class="t">
         <div class="nm">BIGFOOT VPN</div>
-        <div class="gm" data-i18n="s_vpn">Multi-hop VPN + Browser Extension</div>
+        <div class="gm" data-i18n="s_vpn">Multi-Hop VPN + Browser Extension</div>
         <p data-i18n="p_bigfoot"></p>
-        <span class="st soon" data-i18n="st_soon">Concept &mdash; not built yet</span>
+        <span class="go" data-i18n="go_vpn">See the full page &rarr;</span>
       </div>
     </a>
-  </section>
-
-  <section>
-    <h2 data-i18n="h_tools">What TYPHON Might Offer Later</h2>
-    <div class="toolgrid">
-      <div class="tool"><h3 data-i18n="t1h">Network Mapper</h3><p data-i18n="t1p"></p></div>
-      <div class="tool"><h3 data-i18n="t2h">Report Builder</h3><p data-i18n="t2p"></p></div>
-      <div class="tool"><h3 data-i18n="t3h">Phishing Simulator</h3><p data-i18n="t3p"></p></div>
-      <div class="tool"><h3 data-i18n="t4h">Credential Audit</h3><p data-i18n="t4p"></p></div>
-      <div class="tool"><h3 data-i18n="t5h">Scenario Builder</h3><p data-i18n="t5p"></p></div>
-      <div class="tool"><h3 data-i18n="t6h">AI Findings Assistant</h3><p data-i18n="t6p"></p></div>
-    </div>
   </section>
 
   <footer><div style="margin-bottom:7px;opacity:.75">by <span class="pmark">PRIMAL<sup>APE</sup></span></div><span data-i18n="footer"></span></footer>
@@ -153,40 +199,64 @@
 <script>
 const I18N={
 en:{
- charitybar:'<b>20%</b> of all income goes to charity',
- tag:'Security &amp; Penetration Testing', draft:'Draft &mdash; in development',
- h_what:'What TYPHON is', h_flagship:'Flagship Concept', h_tools:'What TYPHON Might Offer Later',
- p_what1:'<b>TYPHON</b> is the real-world sibling of <b>OSIRIS</b>. Where OSIRIS is built for game security only, TYPHON is aimed at both games and real systems &mdash; a penetration-testing toolkit built the same way everything else here is: clean buttons, no terminal, nothing you need a manual to operate.',
- p_what2:'It is designed around its own purpose-built <b>AI MCP layer</b>, so the tool can reason about a target and suggest a next step instead of just running a canned script. Inspired by the old click-to-run tools like LOIC, but built properly &mdash; guided, logged, and meant for authorized testing only.',
- sharednote:'<b>THIS IS A CONCEPT DRAFT.</b> Nothing on this page exists yet. It is a plan to be built later, written down now so it does not get lost.',
- s_vpn:'Multi-hop VPN + Browser Extension',
- p_bigfoot:'A VPN that does not just wire your connection to one exit server. BigFoot bounces it through a chain of IPs instead of just one, wrapped in an app as simple as any consumer VPN &mdash; one button, no configuration. A companion Chrome extension covers browser traffic the same way without needing the desktop app running.',
- st_soon:'Concept &mdash; not built yet',
- t1h:'Network Mapper', t1p:'A visual, point-and-click map of a target network&rsquo;s live hosts and open services.',
- t2h:'Report Builder', t2p:'Turns a finished engagement into a client-ready report automatically, sorted by severity.',
- t3h:'Phishing Simulator', t3p:'Send an authorized, controlled phishing test to a client&rsquo;s own staff and see who clicks.',
- t4h:'Credential Audit', t4p:'Checks a client&rsquo;s exposed credentials against known breach data and flags reuse.',
- t5h:'Scenario Builder', t5p:'Script a red-team exercise as a flow chart instead of a shell script.',
- t6h:'AI Findings Assistant', t6p:'The MCP layer explains a scan result in plain English and suggests the next test.',
- footer:'TYPHON &mdash; a draft. Nothing here is final.'
+ tag:'Penetration Testing Suite', soon:'Concept &mdash; Not Built Yet',
+ h_what:'What TYPHON is', h_suite:'Planned Module Suite', h_flagship:'Flagship Product',
+ p_what1:'<b>TYPHON</b> is the real-world sibling of <b>OSIRIS</b>. Where OSIRIS is built for game security only, TYPHON is aimed at real systems &mdash; a full penetration-testing suite built the same way everything else here is: clean buttons, no terminal, nothing you need a manual to operate.',
+ p_what2:'It is designed around its own purpose-built <b>AI MCP layer</b>, so the tool can reason about a target and suggest a next step instead of just running a canned script. Inspired by the old click-to-run tools like LOIC, but built as a proper multi-module platform &mdash; guided, logged, and meant for authorized testing only.',
+ shared:'<b>THIS IS A CONCEPT DRAFT.</b> Nothing on this page exists yet. This would be a legitimate company built for authorized penetration testing &mdash; the module list below is the plan, written down now so it does not get lost.',
+ suite_sub:'Every module below is planned, not built. Grouped the way a finished product would be, so the shape of the thing is clear before a line of it exists.',
+ c_recon:'Recon &amp; Discovery', c_test:'Testing &amp; Exploitation', c_social:'Social Engineering',
+ c_report:'Reporting &amp; Management', c_ai:'Intelligence Layer',
+ st_plan:'Planned',
+ m1h:'Network Mapper', m1p:'A visual, point-and-click map of a target network&rsquo;s live hosts and open services.',
+ m2h:'Subdomain Finder', m2p:'Automatically enumerates a target&rsquo;s subdomains and flags anything unusual.',
+ m3h:'OSINT Aggregator', m3p:'Pulls public records and social footprint into a single client-approved profile.',
+ m4h:'Guided Exploit Runner', m4p:'Curated, vetted modules behind an explicit consent screen &mdash; simple, but never silent.',
+ m5h:'Web App Scanner', m5p:'An automated OWASP Top 10 sweep that reports findings in plain English.',
+ m6h:'Wireless Auditor', m6p:'Tests a client&rsquo;s own Wi-Fi security posture against common attack classes.',
+ m7h:'Credential Audit', m7p:'Checks a client&rsquo;s exposed credentials against known breach data and flags reuse.',
+ m8h:'Phishing Simulator', m8p:'Sends an authorized, controlled phishing test to a client&rsquo;s own staff and tracks who clicks.',
+ m9h:'Vishing Script Builder', m9p:'Generates call scripts for authorized phone-based social-engineering tests.',
+ m10h:'Physical Drop-Test Tracker', m10p:'Logs and reports on authorized physical drop-test results (USB drives, badges, etc).',
+ m11h:'Report Builder', m11p:'Turns a finished engagement into a client-ready report automatically, sorted by severity.',
+ m12h:'Client Portal', m12p:'Clients watch engagement progress live instead of waiting on an email chain.',
+ m13h:'Compliance Mapper', m13p:'Matches findings automatically against SOC2, PCI-DSS and ISO 27001 controls.',
+ m14h:'AI Findings Assistant', m14p:'The MCP layer explains a scan result in plain English and suggests the next test.',
+ m15h:'Scenario Builder', m15p:'Script a full red-team exercise as a flow chart instead of a shell script.',
+ s_vpn:'Multi-Hop VPN + Browser Extension',
+ p_bigfoot:'A VPN that does not just wire your connection to one exit server &mdash; it bounces through a chain of IPs instead, wrapped in an app as simple as any consumer VPN.',
+ go_vpn:'See the full page &rarr;',
+ footer:'TYPHON &mdash; a draft. Nothing here is final. Would be a legitimate company for authorized testing only.'
 },
 es:{
- charitybar:'El <b>20%</b> de todos los ingresos va a caridad',
- tag:'Seguridad y Pruebas de Penetraci&oacute;n', draft:'Borrador &mdash; en desarrollo',
- h_what:'Qu&eacute; es TYPHON', h_flagship:'Concepto Insignia', h_tools:'Qu&eacute; podr&iacute;a ofrecer TYPHON despu&eacute;s',
- p_what1:'<b>TYPHON</b> es el hermano del mundo real de <b>OSIRIS</b>. Mientras OSIRIS se centra solo en seguridad de videojuegos, TYPHON apunta tanto a juegos como a sistemas reales &mdash; un conjunto de herramientas de pruebas de penetraci&oacute;n construido igual que todo lo dem&aacute;s aqu&iacute;: botones limpios, sin terminal.',
- p_what2:'Est&aacute; dise&ntilde;ado alrededor de su propia capa de <b>IA MCP</b>, para que la herramienta razone sobre un objetivo y sugiera el siguiente paso en vez de solo ejecutar un script fijo. Inspirado en herramientas antiguas como LOIC, pero hecho correctamente &mdash; guiado, registrado, y pensado solo para pruebas autorizadas.',
- sharednote:'<b>ESTO ES UN BORRADOR CONCEPTUAL.</b> Nada en esta p&aacute;gina existe todav&iacute;a. Es un plan para construir despu&eacute;s.',
+ tag:'Suite de Pruebas de Penetraci&oacute;n', soon:'Concepto &mdash; A&uacute;n no construido',
+ h_what:'Qu&eacute; es TYPHON', h_suite:'Suite de M&oacute;dulos Planeada', h_flagship:'Producto Insignia',
+ p_what1:'<b>TYPHON</b> es el hermano del mundo real de <b>OSIRIS</b>. Mientras OSIRIS se centra solo en seguridad de videojuegos, TYPHON apunta a sistemas reales &mdash; una suite completa de pruebas de penetraci&oacute;n construida igual que todo lo dem&aacute;s aqu&iacute;: botones limpios, sin terminal.',
+ p_what2:'Est&aacute; dise&ntilde;ado alrededor de su propia capa de <b>IA MCP</b>, para que la herramienta razone sobre un objetivo y sugiera el siguiente paso. Inspirado en herramientas antiguas como LOIC, pero construido como una plataforma multi-m&oacute;dulo real &mdash; guiada, registrada y pensada solo para pruebas autorizadas.',
+ shared:'<b>ESTO ES UN BORRADOR CONCEPTUAL.</b> Nada en esta p&aacute;gina existe todav&iacute;a. Ser&iacute;a una empresa leg&iacute;tima para pruebas de penetraci&oacute;n autorizadas &mdash; la lista de m&oacute;dulos de abajo es el plan.',
+ suite_sub:'Cada m&oacute;dulo de abajo est&aacute; planeado, no construido. Agrupado como lo estar&iacute;a en un producto terminado.',
+ c_recon:'Reconocimiento y Descubrimiento', c_test:'Pruebas y Explotaci&oacute;n', c_social:'Ingenier&iacute;a Social',
+ c_report:'Informes y Gesti&oacute;n', c_ai:'Capa de Inteligencia',
+ st_plan:'Planeado',
+ m1h:'Mapeador de Red', m1p:'Un mapa visual de los equipos activos y servicios abiertos de una red objetivo.',
+ m2h:'Buscador de Subdominios', m2p:'Enumera autom&aacute;ticamente los subdominios de un objetivo y marca lo inusual.',
+ m3h:'Agregador OSINT', m3p:'Re&uacute;ne registros p&uacute;blicos y huella social en un solo perfil aprobado por el cliente.',
+ m4h:'Ejecutor de Exploits Guiado', m4p:'M&oacute;dulos verificados tras una pantalla de consentimiento expl&iacute;cito &mdash; simple, nunca silencioso.',
+ m5h:'Escáner de Apps Web', m5p:'Un barrido autom&aacute;tico del OWASP Top 10 con hallazgos en lenguaje simple.',
+ m6h:'Auditor Inal&aacute;mbrico', m6p:'Prueba la seguridad Wi-Fi propia del cliente contra ataques comunes.',
+ m7h:'Auditor&iacute;a de Credenciales', m7p:'Revisa las credenciales expuestas de un cliente contra brechas conocidas.',
+ m8h:'Simulador de Phishing', m8p:'Env&iacute;a una prueba de phishing autorizada al personal del cliente y rastrea qui&eacute;n hace clic.',
+ m9h:'Constructor de Guiones Vishing', m9p:'Genera guiones de llamada para pruebas telef&oacute;nicas autorizadas.',
+ m10h:'Rastreador de Pruebas F&iacute;sicas', m10p:'Registra e informa sobre pruebas f&iacute;sicas autorizadas (USB, credenciales, etc).',
+ m11h:'Generador de Informes', m11p:'Convierte una prueba terminada en un informe listo para el cliente, ordenado por severidad.',
+ m12h:'Portal del Cliente', m12p:'Los clientes ven el progreso en vivo en vez de esperar una cadena de correos.',
+ m13h:'Mapeador de Cumplimiento', m13p:'Compara hallazgos autom&aacute;ticamente contra controles SOC2, PCI-DSS e ISO 27001.',
+ m14h:'Asistente IA de Hallazgos', m14p:'La capa MCP explica un resultado en lenguaje simple y sugiere la siguiente prueba.',
+ m15h:'Constructor de Escenarios', m15p:'Dise&ntilde;a un ejercicio de red team completo como un diagrama de flujo.',
  s_vpn:'VPN multisalto + Extensi&oacute;n de Navegador',
- p_bigfoot:'Una VPN que no solo conecta a un servidor de salida. BigFoot rebota la conexi&oacute;n a trav&eacute;s de una cadena de IPs, envuelta en una app tan simple como cualquier VPN comercial &mdash; un bot&oacute;n, sin configuraci&oacute;n. Una extensi&oacute;n de Chrome cubre el navegador de la misma forma.',
- st_soon:'Concepto &mdash; a&uacute;n no construido',
- t1h:'Mapeador de Red', t1p:'Un mapa visual de los equipos activos y servicios abiertos de una red objetivo.',
- t2h:'Generador de Informes', t2p:'Convierte una prueba terminada en un informe listo para el cliente, ordenado por severidad.',
- t3h:'Simulador de Phishing', t3p:'Env&iacute;a una prueba de phishing autorizada y controlada al personal del cliente.',
- t4h:'Auditor&iacute;a de Credenciales', t4p:'Revisa las credenciales expuestas de un cliente contra brechas conocidas.',
- t5h:'Constructor de Escenarios', t5p:'Dise&ntilde;a un ejercicio de red team como un diagrama de flujo.',
- t6h:'Asistente IA de Hallazgos', t6p:'La capa MCP explica un resultado de escaneo en lenguaje simple y sugiere la siguiente prueba.',
- footer:'TYPHON &mdash; un borrador. Nada aqu&iacute; es definitivo.'
+ p_bigfoot:'Una VPN que no solo conecta a un servidor de salida &mdash; rebota a trav&eacute;s de una cadena de IPs, envuelta en una app tan simple como cualquier VPN comercial.',
+ go_vpn:'Ver la p&aacute;gina completa &rarr;',
+ footer:'TYPHON &mdash; un borrador. Ser&iacute;a una empresa leg&iacute;tima solo para pruebas autorizadas.'
 }};
 let lang='en';
 function render(){
