@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seraphim — Concept Draft</title>
+<link rel="icon" type="image/png" href="assets/seraphim.png">
+<meta name="description" content="Seraphim — a fictional aerospace concept draft. Not a real company. No real products, specifications, or contact information.">
+<style>
+  /* Dark, minimal, deliberately unglamorous - a serious corporate register,
+     not an action-movie one. No bright colours, no dramatic imagery. */
+  :root{
+    --bg:#0c1116; --bg2:#141b22; --bg3:#1c252e; --line:#2a3540;
+    --steel:#8a9aa8; --ink:#e4ebf0; --accent:#5b7a94;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--steel);
+    line-height:1.65}
+
+  /* The disclaimer is the loudest thing on the page, deliberately - this is
+     the one page on the site where that matters more than the design. */
+  .disclaimer{background:#3a1010;border-bottom:2px solid #7a2020;color:#ffd6d6;
+    text-align:center;padding:14px 20px;font-size:.82rem;font-weight:700;letter-spacing:.02em}
+  .disclaimer b{color:#fff}
+
+  .topbar{background:var(--bg2);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:14px;padding:14px 24px}
+  .topbar .wordmark{font-weight:700;font-size:1.05rem;color:var(--ink);letter-spacing:.14em}
+  .topbar .spacer{flex:1}
+  .topbar .back{font-size:.78rem;color:var(--steel);text-decoration:none}
+  .topbar .back:hover{color:var(--ink)}
+
+  .wrap{max-width:840px;margin:0 auto;padding:0 24px}
+  header{text-align:center;padding:60px 0 40px}
+  h1{font-size:clamp(2rem,6vw,3rem);font-weight:300;letter-spacing:.3em;color:var(--ink);
+    margin-left:.3em}
+  .tag{margin-top:12px;color:var(--steel);letter-spacing:.14em;font-size:.8rem;text-transform:uppercase}
+
+  section{margin-bottom:40px}
+  h2{color:var(--ink);font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;
+    padding-bottom:9px;margin-bottom:14px;border-bottom:1px solid var(--line);font-weight:600}
+  p.body{color:var(--steel);font-size:.92rem;margin-bottom:12px}
+  p.body b{color:var(--ink)}
+
+  .notice{background:var(--bg2);border:1px solid var(--line);border-left:3px solid #7a2020;
+    border-radius:4px;padding:16px 19px;font-size:.85rem;color:var(--steel)}
+  .notice b{color:var(--ink)}
+
+  .areas{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .area{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:19px}
+  .area h3{color:var(--ink);font-size:.88rem;font-weight:600;margin-bottom:7px;letter-spacing:.02em}
+  .area p{font-size:.83rem;color:var(--steel)}
+  .area .tag2{display:inline-block;margin-top:10px;font-size:.62rem;color:var(--accent);
+    letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--accent);
+    border-radius:10px;padding:2px 9px}
+
+  footer{text-align:center;padding:30px 24px 40px;border-top:1px solid var(--line);
+    font-size:.78rem;color:var(--steel)}
+  footer a{color:var(--accent);text-decoration:none}
+  footer .disclaimerFooter{max-width:600px;margin:0 auto 14px;font-size:.76rem;
+    color:#c99;line-height:1.5}
+</style>
+</head>
+<body>
+
+<div class="disclaimer">
+  <b>CONCEPT DRAFT.</b> Seraphim is not a real company. No products, capabilities, contracts,
+  or clients exist. Nothing on this page should be treated as an offer, a specification,
+  or a claim of fact.
+</div>
+
+<div class="topbar">
+  <div class="wordmark">SERAPHIM</div>
+  <div class="spacer"></div>
+  <a class="back" href="omni.html">&larr; ANGELCORP concept drafts</a>
+</div>
+
+<div class="wrap">
+  <header>
+    <h1>SERAPHIM</h1>
+    <div class="tag">Aerospace Concept &mdash; Draft Stage</div>
+  </header>
+
+  <section>
+    <h2>About this page</h2>
+    <div class="notice">
+      <p><b>This is a fictional business idea, drafted for a personal portfolio of company
+      concepts.</b> It is not a functioning organisation. It has no products, no engineering,
+      no funding, no employees, and no relationship to any real defense contractor. The
+      categories below are placeholders for a future, much more detailed draft &mdash;
+      intentionally vague, with no specifications, capabilities, or operational details of
+      any kind.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Concept</h2>
+    <p class="body">The early idea is an aerospace company built around unmanned aerial
+    systems for <b>non-combat</b> roles &mdash; the kind of work that is slow, repetitive, or
+    hard to staff for a human crew. Nothing about targeting, weapons, or combat use is part
+    of this concept.</p>
+    <p class="body">At this stage that is the entire idea. There is no engineering plan, no
+    named hardware, and no timeline. This page exists so the idea is written down, not lost
+    &mdash; not to describe something that is being built.</p>
+  </section>
+
+  <section>
+    <h2>Areas Being Considered</h2>
+    <div class="areas">
+      <div class="area">
+        <h3>Reconnaissance &amp; Survey</h3>
+        <p>Long-endurance aerial survey for terrain and infrastructure monitoring.</p>
+        <span class="tag2">Concept only</span>
+      </div>
+      <div class="area">
+        <h3>Logistics &amp; Cargo</h3>
+        <p>Unmanned cargo transport for remote or hard-to-reach delivery routes.</p>
+        <span class="tag2">Concept only</span>
+      </div>
+      <div class="area">
+        <h3>Perimeter &amp; Site Monitoring</h3>
+        <p>Continuous automated monitoring of a fixed site or boundary.</p>
+        <span class="tag2">Concept only</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What is deliberately not here</h2>
+    <p class="body">No technical specifications. No weapons or combat systems. No pricing.
+    No sales or procurement process. No claimed clients, contracts, or government
+    relationships. No contact information for acquiring anything &mdash; because there is
+    nothing to acquire.</p>
+  </section>
+
+  <footer>
+    <div class="disclaimerFooter">
+      Seraphim is an unfinished, fictional concept draft on a personal website. It does not
+      describe a real company, product, or capability, and is not intended to be read as one.
+    </div>
+    <div>Part of the <a href="omni.html">ANGELCORP</a> concept-draft library.</div>
+  </footer>
+</div>
+
+</body>
+</html>

@@ -118,6 +118,14 @@
   .div.grover .nm{color:#fff}
   .div.grover .sub{color:#7fe8a8}
   .div.grover p{color:#e4f5ea}
+  /* TweetShield: no logo image (none provided yet), so a drawn badge fills
+     the same slot the other cards use for their img. */
+  .div.tweetshield{background:#0f1f33;border-color:rgba(120,180,255,.4);border-top-color:#4a9eff}
+  .div.tweetshield .nm{color:#fff}
+  .div.tweetshield .sub{color:#8fc4ff}
+  .div.tweetshield p{color:#e4edf5}
+  .ts-badge{width:58px;height:58px;border-radius:50%;background:#1a3455;border:1px solid #4a9eff;
+    display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:10px}
 
 /* ============================================================
    THE WORDMARK - why this is plain letters and not the fancy ones
@@ -243,20 +251,28 @@
 <div id="hiddenDivs">
   <section>
     <h2 style="margin-top:6px">Unlisted</h2>
+    <p style="color:var(--steel);font-size:.78rem;margin:-8px 0 14px">Each of these is drafted as its own separate company &mdash; click through for the full site. Eventually these get their own URLs.</p>
     <div class="divs">
-      <div class="div grover" style="cursor:default">
+      <a class="div grover" href="grover.html">
         <img src="assets/grassly.png" alt="">
         <div class="nm">GROVER</div>
         <div class="sub">On-Demand Lawn Care</div>
-        <p>The idea, in one line: <b>Uber, but for mowing your lawn.</b> Post a job instead of mowing it yourself &mdash; someone nearby picks it up, cuts the grass, and moves on, the same way a rideshare driver picks up a fare. No subscriptions, no recurring crew to schedule &mdash; just a job posted when you need one done.</p>
-        <p style="opacity:.55;font-size:.72rem;margin-top:6px">(placeholder logo &mdash; real branding to come)</p>
-      </div>
-      <div class="div" style="cursor:default">
+        <p>The idea, in one line: <b>Uber, but for mowing your lawn.</b> Post a job instead of mowing it yourself &mdash; someone nearby picks it up, cuts the grass, and moves on.</p>
+        <p style="opacity:.55;font-size:.72rem;margin-top:6px">Full concept site &rarr;</p>
+      </a>
+      <a class="div" href="seraphim.html">
         <img src="assets/seraphim.png" alt="">
         <div class="nm">SERAPHIM</div>
         <div class="sub">Aerospace &amp; Defense</div>
-        <p>Early idea for a drone hardware company. Nothing detailed yet &mdash; a placeholder for later.</p>
-        <p style="opacity:.55;font-size:.72rem;margin-top:6px">(placeholder logo)</p>
+        <p>Early idea for a drone hardware company. Nothing detailed &mdash; positioning only, no real capability or specification content.</p>
+        <p style="opacity:.55;font-size:.72rem;margin-top:6px">Full concept site &rarr;</p>
+      </a>
+      <div class="div tweetshield" style="cursor:default">
+        <div class="ts-badge">&#128274;</div>
+        <div class="nm">TWEETSHIELD</div>
+        <div class="sub">Browser Extension</div>
+        <p>Lets you filter what you see on X/Twitter by the poster&rsquo;s <b>country of origin</b> &mdash; an allow-list, a block-list, or both. See only posts from Italy. Block the US, China and Russia and see everything else. Twitter already tags where a post comes from; this just gives you the switch.</p>
+        <p style="opacity:.55;font-size:.72rem;margin-top:6px">(idea only &mdash; nothing built yet)</p>
       </div>
     </div>
   </section>
