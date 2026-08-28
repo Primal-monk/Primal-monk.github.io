@@ -56,8 +56,10 @@
   p.body{color:var(--paper);margin-bottom:12px;font-size:.94rem}
   p.body b{color:var(--red2)}
 
-  .divs{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-  @media(max-width:760px){.divs{grid-template-columns:1fr}}
+  /* auto-fit instead of a fixed 1fr 1fr: a third division (or a fourth,
+     later) wraps cleanly instead of leaving an awkward lone tile stretched
+     to full width. */
+  .divs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
   .div{background:var(--bg2);border:1px solid var(--line);border-top:3px solid var(--red);
     padding:19px;text-decoration:none;display:block;transition:transform .14s,border-color .14s}
   .div:hover{transform:translateY(-3px);border-color:var(--red2)}
@@ -79,6 +81,37 @@
 
   footer{text-align:center;padding:26px 0 40px;border-top:1px solid var(--line);
     font-size:.75rem;color:var(--steel)}
+
+  /* ---- EVIDENCE: collapsible donation receipts ---- */
+  details.evidence{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--red);
+    padding:16px 19px;margin-top:14px}
+  details.evidence summary{cursor:pointer;color:var(--paper);font-weight:700;font-size:.86rem;
+    letter-spacing:.03em;list-style:none;display:flex;align-items:center;gap:8px}
+  details.evidence summary::-webkit-details-marker{display:none}
+  details.evidence summary::before{content:"+";color:var(--red2);font-weight:900;font-size:1.1rem;
+    width:16px;text-align:center;transition:transform .15s}
+  details.evidence[open] summary::before{content:"\2212"}
+  details.evidence .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:14px;margin-top:15px}
+  details.evidence figure{margin:0;background:var(--bg3);border:1px solid var(--line);
+    padding:10px;text-align:center}
+  details.evidence img{width:100%;height:230px;object-fit:contain;background:var(--bg);
+    display:block;border-radius:3px}
+  details.evidence figcaption{color:var(--red2);font-size:.78rem;font-weight:700;margin-top:8px;
+    letter-spacing:.04em}
+
+  /* ---- the quiet passcode area at the very bottom ---- */
+  .quietbox{max-width:1000px;margin:50px auto 20px;padding:0 22px;text-align:center}
+  .quietbox .lbl{color:var(--steel);font-size:.68rem;opacity:.5;letter-spacing:.03em}
+  .quietrow{display:inline-flex;gap:7px;margin-top:6px}
+  .quietrow input{background:var(--bg2);border:1px solid var(--line);color:var(--steel);
+    font-size:.72rem;padding:5px 8px;width:150px;opacity:.6}
+  .quietrow input:focus{opacity:1;outline:none;border-color:var(--red)}
+  .quietrow button{background:var(--bg2);border:1px solid var(--line);color:var(--steel);
+    font-size:.68rem;padding:5px 10px;cursor:pointer;opacity:.6}
+  .quietrow button:hover{opacity:1}
+  .quietmsg{font-size:.68rem;margin-top:5px;min-height:14px;color:var(--red2)}
+  #hiddenDivs{display:none;max-width:1000px;margin:0 auto;padding:0 22px 40px}
 
 /* ============================================================
    THE WORDMARK - why this is plain letters and not the fancy ones
@@ -147,15 +180,22 @@
         <div class="sub" data-i18n="s_mod">Modding Software</div>
         <p data-i18n="p_osiris"></p>
       </a>
+      <a class="div" href="typhon.html">
+        <img src="assets/typhon.png" alt="">
+        <div class="nm">TYPHON</div>
+        <div class="sub" data-i18n="s_sec">Security &amp; Pentesting</div>
+        <p data-i18n="p_typhon"></p>
+      </a>
     </div>
   </section>
 
   <section>
     <h2 data-i18n="h_giving">Giving</h2>
     <p class="body" data-i18n="p_giving"></p>
+    <p class="body" data-i18n="p_optional"></p>
     <div class="stat">
       <div><div class="n">20%</div><div class="l" data-i18n="l_pledge">Of all income</div></div>
-      <div><div class="n">$0</div><div class="l" data-i18n="l_raised">Raised to date</div></div>
+      <div><div class="n">$105</div><div class="l" data-i18n="l_raised">Raised to date</div></div>
       <div><div class="n">$200</div><div class="l" data-i18n="l_goal">First goal</div></div>
     </div>
   </section>
@@ -163,14 +203,83 @@
   <section>
     <h2 data-i18n="h_rec">Receipts</h2>
     <div class="recbox">
-      <div class="recn">$0</div>
+      <div class="recn">$105</div>
       <div class="recl" data-i18n="rec_l">Raised so far by ANGELCORP</div>
       <p data-i18n="rec_p"></p>
     </div>
+    <details class="evidence">
+      <summary data-i18n="ev_sum">Evidence — donation receipts</summary>
+      <div class="grid">
+        <figure>
+          <img src="assets/donation-5.png" alt="Donation receipt, 5 dollars">
+          <figcaption data-i18n="ev_5">$5 — first community donation</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/donation-100.png" alt="Donation receipt, 100 dollars">
+          <figcaption data-i18n="ev_100">$100 — donated directly</figcaption>
+        </figure>
+      </div>
+    </details>
   </section>
 
   <footer><div style="margin-bottom:7px;opacity:.75">by <span class="pmark">PRIMAL<sup>APE</sup></span></div><span data-i18n="footer"></span></footer>
 </div>
+
+<div class="quietbox">
+  <div class="lbl">Password &mdash; contact information</div>
+  <div class="quietrow">
+    <input type="password" id="quietPass" autocomplete="off" spellcheck="false">
+    <button id="quietBtn">Enter</button>
+  </div>
+  <div class="quietmsg" id="quietMsg"></div>
+</div>
+
+<div id="hiddenDivs">
+  <section>
+    <h2 style="margin-top:6px">Unlisted</h2>
+    <div class="divs">
+      <div class="div" style="cursor:default">
+        <img src="assets/grassly.png" alt="">
+        <div class="nm">GRASSLY</div>
+        <div class="sub">Grass Cutting App</div>
+        <p>Early idea for a simple lawn-care scheduling &amp; payment app. Nothing detailed yet &mdash; a placeholder for later.</p>
+        <p style="opacity:.55;font-size:.72rem;margin-top:6px">(placeholder logo)</p>
+      </div>
+      <div class="div" style="cursor:default">
+        <img src="assets/seraphim.png" alt="">
+        <div class="nm">SERAPHIM</div>
+        <div class="sub">Aerospace &amp; Defense</div>
+        <p>Early idea for a drone hardware company. Nothing detailed yet &mdash; a placeholder for later.</p>
+        <p style="opacity:.55;font-size:.72rem;margin-top:6px">(placeholder logo)</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  // Client-side only, on purpose - this hides unfinished notes from a casual
+  // visitor, it is not meant to be real access control. The code itself is
+  // findable in view-source by anyone who goes looking, which is fine: the
+  // point is that nobody stumbles onto it by accident.
+  var CODE = "EzikealEye963";
+  document.getElementById('quietBtn').addEventListener('click', reveal);
+  document.getElementById('quietPass').addEventListener('keydown', function(e){
+    if (e.key === 'Enter') reveal();
+  });
+  function reveal(){
+    var v = document.getElementById('quietPass').value;
+    var msg = document.getElementById('quietMsg');
+    if (v === CODE) {
+      document.getElementById('hiddenDivs').style.display = 'block';
+      msg.textContent = '';
+      document.getElementById('hiddenDivs').scrollIntoView({behavior:'smooth'});
+    } else {
+      msg.textContent = 'Not found.';
+    }
+  }
+})();
+</script>
 
 <script>
 const I18N={
@@ -185,10 +294,16 @@ en:{
  p_about3:'<b>This is not a real company yet.</b> It is a concept draft, to be made real in the future. The divisions below are real and active; the structure around them is still being written.',
  p_pico:'Six games in development with Godot, mostly .io-style multiplayer.',
  p_osiris:'Modding tools. Home of PHAROAH for Paladins and HORUS for Smite.',
+ s_sec:'Security &amp; Pentesting',
+ p_typhon:'Penetration-testing tools for real systems, not just games. The real-world sibling of OSIRIS.',
  p_giving:'A fixed share of income from every project goes to humanitarian aid. The figures below are live and will stay honest &mdash; nothing is inflated, and nothing is claimed before it happens.',
+ p_optional:'Every paid product also carries an optional charity-match: pay the listed price again as a donation instead, and you still get full access &mdash; even though ANGELCORP itself sees none of that second payment. It goes straight to the cause, every time.',
  l_pledge:'Of all income', l_raised:'Raised to date', l_goal:'First goal',
  rec_l:'Raised so far by ANGELCORP',
- rec_p:'Nothing has been raised yet. When it has, every donation receipt will be published here.',
+ rec_p:'Every donation receipt is published here as it comes in.',
+ ev_sum:'Evidence &mdash; donation receipts',
+ ev_5:'$5 &mdash; first community donation',
+ ev_100:'$100 &mdash; donated directly',
  footer:'ANGELCORP &mdash; concept draft. Nothing here is final.'
 },
 es:{
@@ -202,10 +317,16 @@ es:{
  p_about3:'<b>A&uacute;n no es una empresa real.</b> Es un borrador conceptual, que se har&aacute; realidad en el futuro. Las divisiones son reales y activas; la estructura a&uacute;n se est&aacute; definiendo.',
  p_pico:'Seis juegos en desarrollo con Godot, en su mayor&iacute;a multijugador tipo .io.',
  p_osiris:'Herramientas de modding. Hogar de PHAROAH para Paladins y HORUS para Smite.',
+ s_sec:'Seguridad y Pentesting',
+ p_typhon:'Herramientas de pruebas de penetraci&oacute;n para sistemas reales, no solo juegos. El hermano del mundo real de OSIRIS.',
  p_giving:'Una parte fija de los ingresos de cada proyecto va a ayuda humanitaria. Las cifras son reales y se mantendr&aacute;n honestas &mdash; nada se infla ni se anuncia antes de ocurrir.',
+ p_optional:'Cada producto de pago tambi&eacute;n tiene una opci&oacute;n de igualaci&oacute;n ben&eacute;fica: pagas el mismo precio otra vez como donaci&oacute;n en vez de comprarlo, y a&uacute;n as&iacute; obtienes acceso completo &mdash; aunque ANGELCORP no reciba nada de ese segundo pago. Va directo a la causa, siempre.',
  l_pledge:'De los ingresos', l_raised:'Recaudado', l_goal:'Primera meta',
  rec_l:'Recaudado hasta ahora por ANGELCORP',
- rec_p:'A&uacute;n no se ha recaudado nada. Cuando se haga, todos los recibos se publicar&aacute;n aqu&iacute;.',
+ rec_p:'Cada recibo de donaci&oacute;n se publica aqu&iacute; a medida que llega.',
+ ev_sum:'Evidencia &mdash; recibos de donaci&oacute;n',
+ ev_5:'$5 &mdash; primera donaci&oacute;n de la comunidad',
+ ev_100:'$100 &mdash; donado directamente',
  footer:'ANGELCORP &mdash; borrador conceptual. Nada es definitivo.'
 },
 ar:{
@@ -220,10 +341,14 @@ ar:{
  p_about3:'<b>&#1604;&#1610;&#1587;&#1578; &#1588;&#1585;&#1603;&#1577; &#1581;&#1602;&#1610;&#1602;&#1610;&#1577; &#1576;&#1593;&#1583;.</b> &#1607;&#1584;&#1607; &#1605;&#1587;&#1608;&#1583;&#1577; &#1571;&#1608;&#1604;&#1610;&#1577;.',
  p_pico:'&#1587;&#1578;&#1577; &#1571;&#1604;&#1593;&#1575;&#1576; &#1602;&#1610;&#1583; &#1575;&#1604;&#1578;&#1591;&#1608;&#1610;&#1585; &#1576;&#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605; Godot.',
  p_osiris:'&#1571;&#1583;&#1608;&#1575;&#1578; &#1578;&#1593;&#1583;&#1610;&#1604;: PHAROAH &#1608; HORUS.',
+ s_sec:'Security &amp; Pentesting',
+ p_typhon:'Penetration-testing tools for real systems, not just games.',
  p_giving:'&#1580;&#1586;&#1569; &#1579;&#1575;&#1576;&#1578; &#1605;&#1606; &#1575;&#1604;&#1583;&#1582;&#1604; &#1610;&#1584;&#1607;&#1576; &#1604;&#1604;&#1605;&#1587;&#1575;&#1593;&#1583;&#1575;&#1578; &#1575;&#1604;&#1573;&#1606;&#1587;&#1575;&#1606;&#1610;&#1577;.',
+ p_optional:'Every paid product also carries an optional charity-match, at no benefit to us.',
  l_pledge:'&#1605;&#1606; &#1575;&#1604;&#1583;&#1582;&#1604;', l_raised:'&#1575;&#1604;&#1605;&#1580;&#1605;&#1608;&#1593;', l_goal:'&#1575;&#1604;&#1607;&#1583;&#1601; &#1575;&#1604;&#1571;&#1608;&#1604;',
  rec_l:'&#1575;&#1604;&#1605;&#1580;&#1605;&#1608;&#1593; &#1581;&#1578;&#1609; &#1575;&#1604;&#1570;&#1606;',
- rec_p:'&#1604;&#1605; &#1610;&#1578;&#1605; &#1580;&#1605;&#1593; &#1588;&#1610;&#1569; &#1576;&#1593;&#1583;.',
+ rec_p:'Every donation receipt is published here as it comes in.',
+ ev_sum:'Evidence &mdash; donation receipts', ev_5:'$5 &mdash; first community donation', ev_100:'$100 &mdash; donated directly',
  footer:'ANGELCORP &mdash; &#1605;&#1587;&#1608;&#1583;&#1577;.'
 },
 ru:{
@@ -238,10 +363,14 @@ ru:{
  p_about3:'<b>&#1069;&#1090;&#1086; &#1077;&#1097;&#1105; &#1085;&#1077; &#1085;&#1072;&#1089;&#1090;&#1086;&#1103;&#1097;&#1072;&#1103; &#1082;&#1086;&#1084;&#1087;&#1072;&#1085;&#1080;&#1103;.</b> &#1069;&#1090;&#1086; &#1095;&#1077;&#1088;&#1085;&#1086;&#1074;&#1080;&#1082;.',
  p_pico:'&#1064;&#1077;&#1089;&#1090;&#1100; &#1080;&#1075;&#1088; &#1085;&#1072; Godot.',
  p_osiris:'&#1048;&#1085;&#1089;&#1090;&#1088;&#1091;&#1084;&#1077;&#1085;&#1090;&#1099;: PHAROAH &#1080; HORUS.',
+ s_sec:'Security &amp; Pentesting',
+ p_typhon:'Penetration-testing tools for real systems, not just games.',
  p_giving:'&#1060;&#1080;&#1082;&#1089;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1085;&#1072;&#1103; &#1076;&#1086;&#1083;&#1103; &#1076;&#1086;&#1093;&#1086;&#1076;&#1072; &#1080;&#1076;&#1105;&#1090; &#1085;&#1072; &#1075;&#1091;&#1084;&#1072;&#1085;&#1080;&#1090;&#1072;&#1088;&#1085;&#1091;&#1102; &#1087;&#1086;&#1084;&#1086;&#1097;&#1100;.',
+ p_optional:'Every paid product also carries an optional charity-match, at no benefit to us.',
  l_pledge:'&#1054;&#1090; &#1076;&#1086;&#1093;&#1086;&#1076;&#1072;', l_raised:'&#1057;&#1086;&#1073;&#1088;&#1072;&#1085;&#1086;', l_goal:'&#1055;&#1077;&#1088;&#1074;&#1072;&#1103; &#1094;&#1077;&#1083;&#1100;',
  rec_l:'&#1057;&#1086;&#1073;&#1088;&#1072;&#1085;&#1086; &#1085;&#1072; &#1089;&#1077;&#1075;&#1086;&#1076;&#1085;&#1103;',
- rec_p:'&#1055;&#1086;&#1082;&#1072; &#1085;&#1080;&#1095;&#1077;&#1075;&#1086; &#1085;&#1077; &#1089;&#1086;&#1073;&#1088;&#1072;&#1085;&#1086;.',
+ rec_p:'Every donation receipt is published here as it comes in.',
+ ev_sum:'Evidence &mdash; donation receipts', ev_5:'$5 &mdash; first community donation', ev_100:'$100 &mdash; donated directly',
  footer:'ANGELCORP &mdash; &#1095;&#1077;&#1088;&#1085;&#1086;&#1074;&#1080;&#1082;.'
 },
 tr:{
@@ -255,10 +384,14 @@ tr:{
  p_about3:'<b>Hen&uuml;z ger&ccedil;ek bir şirket değil.</b> Bu bir taslaktır.',
  p_pico:'Godot ile geliştirilen altı oyun.',
  p_osiris:'Mod ara&ccedil;ları: PHAROAH ve HORUS.',
+ s_sec:'Security &amp; Pentesting',
+ p_typhon:'Penetration-testing tools for real systems, not just games.',
  p_giving:'Her projenin gelirinin sabit bir kısmı insani yardıma gidiyor.',
+ p_optional:'Every paid product also carries an optional charity-match, at no benefit to us.',
  l_pledge:'T&uuml;m gelirden', l_raised:'Toplanan', l_goal:'İlk hedef',
  rec_l:'Şimdiye kadar toplanan',
- rec_p:'Hen&uuml;z hi&ccedil;bir şey toplanmadı.',
+ rec_p:'Every donation receipt is published here as it comes in.',
+ ev_sum:'Evidence &mdash; donation receipts', ev_5:'$5 &mdash; first community donation', ev_100:'$100 &mdash; donated directly',
  footer:'ANGELCORP &mdash; taslak.'
 }};
 
