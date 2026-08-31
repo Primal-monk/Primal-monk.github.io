@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TweetShield — See What You Choose to See</title>
+<link rel="icon" type="image/png" href="assets/tweetshield-logo.png">
+<meta name="description" content="TweetShield — a browser extension concept that filters X/Twitter posts by the poster's declared country of origin.">
+<style>
+  :root{
+    --bg:#0a1420; --bg2:#0f1e2e; --bg3:#15293d; --bg4:#1d364e;
+    --hi:#4a9eff; --hi2:#2f7ad4; --paper:#e4edf5; --sec:#8fa8c0;
+    --line:rgba(74,158,255,.28);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scrollbar-color:var(--hi) var(--bg3);scrollbar-width:auto}
+  body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--sec);
+    line-height:1.62;padding-top:56px}
+  ::-webkit-scrollbar{width:16px}
+  ::-webkit-scrollbar-track{background:var(--bg3)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--hi),var(--hi2));
+    border:2px solid var(--bg3);border-radius:10px}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:56px;background:var(--bg2);
+    border-bottom:2px solid var(--hi2);display:flex;align-items:center;gap:12px;padding:0 16px}
+  .topbar .who{display:flex;align-items:center;gap:9px;text-decoration:none}
+  .topbar .who img{width:30px;height:30px;object-fit:contain}
+  .topbar .who span{font-size:.86rem;color:var(--hi);font-weight:700}
+  .topbar .back{color:var(--hi);font-size:1.1rem;font-weight:900}
+  .topbar .spacer{flex:1}
+
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px}
+  header{text-align:center;padding:44px 0 28px}
+  .logo{width:120px;height:120px;object-fit:contain;display:block;margin:0 auto 14px;
+    filter:drop-shadow(0 6px 16px rgba(0,0,0,.5))}
+  h1{font-size:clamp(2.2rem,7vw,3.4rem);letter-spacing:.08em;font-weight:900;color:var(--hi)}
+  .tag{margin-top:8px;color:var(--paper);letter-spacing:.1em;font-size:.9rem}
+  .draftpill{display:inline-block;margin-top:14px;background:var(--bg3);border:1px solid var(--hi2);
+    border-radius:20px;padding:6px 20px;font-size:.72rem;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--hi)}
+
+  section{margin-bottom:36px}
+  h2{color:var(--hi);font-size:.9rem;letter-spacing:.18em;text-transform:uppercase;
+    padding-bottom:8px;margin-bottom:16px;border-bottom:2px solid var(--hi2)}
+  p.body{color:var(--paper);margin-bottom:12px;font-size:.94rem}
+  p.body b{color:var(--hi)}
+
+  /* ---- the little interactive-looking demo: two modes, some example
+     country chips. Not a real extension - just shows the idea clearly. ---- */
+  .demo{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:22px}
+  .modes{display:flex;gap:10px;margin-bottom:16px}
+  .modebtn{flex:1;background:var(--bg3);border:1px solid var(--line);border-radius:7px;
+    padding:12px;text-align:center;color:var(--sec);font-weight:700;font-size:.84rem;cursor:pointer}
+  .modebtn.on{background:var(--hi);color:#06131f;border-color:var(--hi)}
+  .chiprow{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .chip{background:var(--bg4);border:1px solid var(--line);border-radius:20px;padding:7px 16px;
+    font-size:.82rem;color:var(--paper);cursor:pointer;user-select:none}
+  .chip.on{background:var(--hi);color:#06131f;border-color:var(--hi);font-weight:700}
+  .demo .result{background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:14px 16px;
+    font-size:.84rem;color:var(--paper);margin-top:6px}
+  .demo .result b{color:var(--hi)}
+
+  .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .f{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--hi);
+    border-radius:6px;padding:16px}
+  .f h3{color:var(--paper);font-size:.9rem;margin-bottom:6px}
+  .f p{color:var(--sec);font-size:.84rem;margin:0}
+
+  .ctarow{text-align:center;margin-top:10px}
+  .cta{display:inline-block;background:#2a3540;color:#7c8a96;border:1px solid #3a4855;
+    padding:14px 34px;border-radius:6px;font-weight:900;font-size:.86rem;letter-spacing:.08em;
+    text-transform:uppercase;text-decoration:none;cursor:not-allowed}
+  .ctanote{margin-top:8px;font-size:.76rem;color:var(--sec)}
+
+  footer{text-align:center;padding:26px 0 40px;border-top:1px solid var(--line);
+    font-size:.76rem;color:var(--sec)}
+  footer a{color:var(--hi);text-decoration:none}
+
+.pmark{ font-weight:800; letter-spacing:.06em; }
+.pmark sup{ font-size:.62em; font-weight:800; letter-spacing:.04em;
+            vertical-align:super; margin-left:.06em; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="who" href="omni.html">
+    <span class="back">&larr;</span>
+    <img src="assets/angelcorp.png" alt="">
+    <span>ANGELCORP</span>
+  </a>
+  <div class="spacer"></div>
+</div>
+
+<div class="wrap">
+  <header>
+    <img class="logo" src="assets/tweetshield-logo.png" alt="TweetShield">
+    <h1>TWEETSHIELD</h1>
+    <div class="tag">See what you choose to see.</div>
+    <div class="draftpill">Concept draft &mdash; not built yet</div>
+  </header>
+
+  <section>
+    <h2>What it does</h2>
+    <p class="body">X/Twitter already tags where a post comes from. <b>TweetShield is a browser
+    extension that lets you filter your feed by that country tag</b> &mdash; either an
+    <b>allow-list</b> (only show me posts from these countries) or a <b>block-list</b> (hide
+    posts from these countries, show everything else).</p>
+    <p class="body">Set it to Italy only, and that&rsquo;s all you see. Block the US, China and
+    Russia, and everything else stays. Whatever mix you want &mdash; the choice belongs to you,
+    not to the algorithm.</p>
+  </section>
+
+  <section>
+    <h2>Try the idea</h2>
+    <div class="demo">
+      <div class="modes">
+        <div class="modebtn on">Allow-list (only show these)</div>
+        <div class="modebtn">Block-list (hide these)</div>
+      </div>
+      <div class="chiprow">
+        <span class="chip on">Italy</span>
+        <span class="chip">United States</span>
+        <span class="chip">France</span>
+        <span class="chip">China</span>
+        <span class="chip">Japan</span>
+        <span class="chip">Russia</span>
+        <span class="chip">Brazil</span>
+        <span class="chip">+ add a country</span>
+      </div>
+      <div class="result">Feed showing: <b>only posts tagged Italy.</b> Everything else is filtered out.</div>
+      <p class="placeholder-note" style="color:var(--sec);opacity:.65;font-size:.72rem;margin-top:12px;font-style:italic">
+        This is a static mock-up of the idea, not a working demo &mdash; the chips and mode
+        buttons above don&rsquo;t actually do anything yet.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why it&rsquo;s a browser extension, not an app</h2>
+    <div class="feat">
+      <div class="f"><h3>Works on the site you already use</h3><p>No new app, no new account &mdash; it filters what you already see on X/Twitter itself.</p></div>
+      <div class="f"><h3>Two modes, not one</h3><p>Allow-list to narrow to specific countries, or block-list to exclude a few and keep everything else.</p></div>
+      <div class="f"><h3>Stacks freely</h3><p>Add or remove countries any time &mdash; nothing locked to a single fixed list.</p></div>
+    </div>
+  </section>
+
+  <section class="ctarow">
+    <a class="cta" href="#" onclick="return false;">Add to Chrome</a>
+    <div class="ctanote">Not available yet &mdash; TweetShield is a concept draft, not a real extension.</div>
+  </section>
+
+  <footer>
+    <div style="margin-bottom:7px;opacity:.75">by <span class="pmark">PRIMAL<sup>APE</sup></span></div>
+    <div>TweetShield &mdash; a concept draft. Nothing here is final or available.</div>
+    <div style="margin-top:6px">Part of the <a href="omni.html">ANGELCORP</a> concept-draft library.</div>
+  </footer>
+</div>
+
+<script>
+// Purely cosmetic - lets you click the mock-up chips/modes to see the result
+// line change, so the idea is easier to grasp. Nothing here is a real filter.
+(function(){
+  const modes = document.querySelectorAll('.modebtn');
+  const chips = document.querySelectorAll('.chip');
+  const result = document.querySelector('.demo .result');
+  function refresh(){
+    const mode = document.querySelector('.modebtn.on').textContent.startsWith('Allow') ? 'allow' : 'block';
+    const on = [...chips].filter(c => c.classList.contains('on') && c.textContent !== '+ add a country').map(c => c.textContent);
+    if (on.length === 0) {
+      result.innerHTML = mode === 'allow'
+        ? 'Feed showing: <b>everything</b> (pick a country above to narrow it down).'
+        : 'Feed showing: <b>everything</b> (pick a country above to hide it).';
+      return;
+    }
+    result.innerHTML = mode === 'allow'
+      ? 'Feed showing: <b>only posts tagged ' + on.join(', ') + '.</b> Everything else is filtered out.'
+      : 'Feed showing: <b>everything except posts tagged ' + on.join(', ') + '.</b>';
+  }
+  modes.forEach(function(m){ m.addEventListener('click', function(){
+    modes.forEach(x => x.classList.remove('on'));
+    m.classList.add('on');
+    refresh();
+  }); });
+  chips.forEach(function(c){
+    if (c.textContent === '+ add a country') return;
+    c.addEventListener('click', function(){ c.classList.toggle('on'); refresh(); });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TYPHON — Penetration Testing Suite</title>
-<link rel="icon" type="image/png" href="assets/typhon.png">
+<link rel="icon" type="image/png" href="assets/typhon-logo.png">
 <meta name="description" content="TYPHON — a penetration testing suite for real systems, not just games. The real-world sibling of OSIRIS. Concept draft.">
 <style>
   /* Same palette as HORUS, on purpose — TYPHON and HORUS are sibling concept
@@ -117,7 +117,7 @@
 
 <div class="wrap">
   <header>
-    <img class="logo" src="assets/typhon.png" alt="TYPHON">
+    <img class="logo" src="assets/typhon-logo.png" alt="TYPHON">
     <h1>TYPHON</h1>
     <div class="tag" data-i18n="tag">Penetration Testing Suite</div>
     <div class="soonpill" data-i18n="soon">Concept &mdash; Not Built Yet</div>
@@ -181,14 +181,14 @@
   </section>
 
   <section>
-    <h2 data-i18n="h_flagship">Flagship Product</h2>
-    <a class="flagship" href="bigfoot.html">
-      <img src="assets/typhon.png" alt="">
+    <h2 data-i18n="h_related">Related</h2>
+    <a class="flagship" href="omni.html">
+      <img src="assets/typhon-logo.png" alt="">
       <div class="t">
-        <div class="nm">BIGFOOT VPN</div>
+        <div class="nm" data-i18n="rel_nm">BigFoot VPN is now its own thing</div>
         <div class="gm" data-i18n="s_vpn">Multi-Hop VPN + Browser Extension</div>
         <p data-i18n="p_bigfoot"></p>
-        <span class="go" data-i18n="go_vpn">See the full page &rarr;</span>
+        <span class="go" data-i18n="go_vpn">See it on ANGELCORP &rarr;</span>
       </div>
     </a>
   </section>
@@ -200,7 +200,7 @@
 const I18N={
 en:{
  tag:'Penetration Testing Suite', soon:'Concept &mdash; Not Built Yet',
- h_what:'What TYPHON is', h_suite:'Planned Module Suite', h_flagship:'Flagship Product',
+ h_what:'What TYPHON is', h_suite:'Planned Module Suite', h_related:'Related', rel_nm:'BigFoot VPN is now its own thing',
  p_what1:'<b>TYPHON</b> is the real-world sibling of <b>OSIRIS</b>. Where OSIRIS is built for game security only, TYPHON is aimed at real systems &mdash; a full penetration-testing suite built the same way everything else here is: clean buttons, no terminal, nothing you need a manual to operate.',
  p_what2:'It is designed around its own purpose-built <b>AI MCP layer</b>, so the tool can reason about a target and suggest a next step instead of just running a canned script. Inspired by the old click-to-run tools like LOIC, but built as a proper multi-module platform &mdash; guided, logged, and meant for authorized testing only.',
  shared:'<b>THIS IS A CONCEPT DRAFT.</b> Nothing on this page exists yet. This would be a legitimate company built for authorized penetration testing &mdash; the module list below is the plan, written down now so it does not get lost.',
@@ -225,12 +225,12 @@ en:{
  m15h:'Scenario Builder', m15p:'Script a full red-team exercise as a flow chart instead of a shell script.',
  s_vpn:'Multi-Hop VPN + Browser Extension',
  p_bigfoot:'A VPN that does not just wire your connection to one exit server &mdash; it bounces through a chain of IPs instead, wrapped in an app as simple as any consumer VPN.',
- go_vpn:'See the full page &rarr;',
+ go_vpn:'See it on ANGELCORP &rarr;',
  footer:'TYPHON &mdash; a draft. Nothing here is final. Would be a legitimate company for authorized testing only.'
 },
 es:{
  tag:'Suite de Pruebas de Penetraci&oacute;n', soon:'Concepto &mdash; A&uacute;n no construido',
- h_what:'Qu&eacute; es TYPHON', h_suite:'Suite de M&oacute;dulos Planeada', h_flagship:'Producto Insignia',
+ h_what:'Qu&eacute; es TYPHON', h_suite:'Suite de M&oacute;dulos Planeada', h_related:'Relacionado', rel_nm:'BigFoot VPN ahora es algo aparte',
  p_what1:'<b>TYPHON</b> es el hermano del mundo real de <b>OSIRIS</b>. Mientras OSIRIS se centra solo en seguridad de videojuegos, TYPHON apunta a sistemas reales &mdash; una suite completa de pruebas de penetraci&oacute;n construida igual que todo lo dem&aacute;s aqu&iacute;: botones limpios, sin terminal.',
  p_what2:'Est&aacute; dise&ntilde;ado alrededor de su propia capa de <b>IA MCP</b>, para que la herramienta razone sobre un objetivo y sugiera el siguiente paso. Inspirado en herramientas antiguas como LOIC, pero construido como una plataforma multi-m&oacute;dulo real &mdash; guiada, registrada y pensada solo para pruebas autorizadas.',
  shared:'<b>ESTO ES UN BORRADOR CONCEPTUAL.</b> Nada en esta p&aacute;gina existe todav&iacute;a. Ser&iacute;a una empresa leg&iacute;tima para pruebas de penetraci&oacute;n autorizadas &mdash; la lista de m&oacute;dulos de abajo es el plan.',
@@ -255,7 +255,7 @@ es:{
  m15h:'Constructor de Escenarios', m15p:'Dise&ntilde;a un ejercicio de red team completo como un diagrama de flujo.',
  s_vpn:'VPN multisalto + Extensi&oacute;n de Navegador',
  p_bigfoot:'Una VPN que no solo conecta a un servidor de salida &mdash; rebota a trav&eacute;s de una cadena de IPs, envuelta en una app tan simple como cualquier VPN comercial.',
- go_vpn:'Ver la p&aacute;gina completa &rarr;',
+ go_vpn:'Verlo en ANGELCORP &rarr;',
  footer:'TYPHON &mdash; un borrador. Ser&iacute;a una empresa leg&iacute;tima solo para pruebas autorizadas.'
 }};
 let lang='en';

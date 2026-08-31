@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalyst — Chemistry Concepts</title>
+<link rel="icon" type="image/png" href="assets/catalyst-logo.png">
+<meta name="description" content="Catalyst — candles, unpoppable bubbles, and candy/drinks that play tricks on your senses. Concept draft, not a real company.">
+<style>
+  /* PicoDev-style banner: a photo up top that fades down into the page's own
+     background colour, logo overlapping the seam. Purple, same family as the
+     rest of the ANGELCORP concept pages but its own palette. */
+  :root{
+    --bg:#1a1030; --bg2:#22143d; --bg3:#2c1a4e; --bg4:#392263;
+    --hi:#b78cff; --hi2:#8f5fe0; --paper:#ece4fb; --sec:#b6a3d6;
+    --line:rgba(183,140,255,.28);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scrollbar-color:var(--hi) var(--bg3);scrollbar-width:auto}
+  body{font-family:"Trebuchet MS","Segoe UI",sans-serif;background:var(--bg);
+    color:var(--sec);line-height:1.6;overflow-x:hidden}
+  ::-webkit-scrollbar{width:16px}
+  ::-webkit-scrollbar-track{background:var(--bg3)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--hi),var(--hi2));
+    border:2px solid var(--bg3);border-radius:10px}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:56px;background:var(--bg2);
+    border-bottom:2px solid var(--hi2);display:flex;align-items:center;gap:12px;padding:0 16px}
+  .topbar .who{display:flex;align-items:center;gap:9px;text-decoration:none}
+  .topbar .who img{width:32px;height:32px;object-fit:contain;border-radius:6px}
+  .topbar .who span{font-size:.88rem;color:var(--hi);font-weight:700}
+  .topbar .back{color:var(--hi);font-size:1.1rem;font-weight:900}
+  .topbar .spacer{flex:1}
+
+  /* ---- the banner, same trick as primal.html: image on top, gradient down
+     into var(--bg), logo overlapping the seam via negative margin ---- */
+  .heroimg{position:relative;width:100%;height:280px;overflow:hidden;margin-top:56px}
+  .heroimg img{width:100%;height:100%;object-fit:cover;object-position:center 40%}
+  .heroimg::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,transparent 0%,transparent 50%,var(--bg) 100%)}
+  .heroinner{position:relative;margin-top:-90px;z-index:3;text-align:center;padding:0 20px}
+  .logo{width:120px;height:120px;object-fit:contain;display:block;margin:0 auto 10px;
+    filter:drop-shadow(0 6px 16px rgba(0,0,0,.5))}
+  h1{font-size:clamp(2.2rem,7vw,3.6rem);letter-spacing:.1em;font-weight:900;color:var(--hi)}
+  .tag{margin-top:6px;color:var(--paper);letter-spacing:.14em;font-size:.85rem}
+  .draftpill{display:inline-block;margin-top:14px;background:var(--bg3);border:1px solid var(--hi2);
+    border-radius:20px;padding:6px 20px;font-size:.72rem;font-weight:700;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--hi)}
+
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px}
+  section{margin:36px auto}
+  h2{color:var(--hi);font-size:.9rem;letter-spacing:.18em;text-transform:uppercase;
+    padding-bottom:8px;margin-bottom:14px;border-bottom:2px solid var(--hi2)}
+  p.body{color:var(--paper);margin-bottom:12px;font-size:.94rem}
+  p.body b{color:var(--hi)}
+
+  .charity{background:var(--bg2);border:1px solid var(--hi2);border-left:4px solid var(--hi);
+    border-radius:6px;padding:14px 18px;text-align:center;margin-bottom:10px}
+  .charity p{color:var(--paper);font-size:.86rem;margin:0}
+  .charity b{color:var(--hi)}
+
+  /* ---- full-width collapsible product bars ---- */
+  details.bar{background:var(--bg2);border:1px solid var(--line);border-radius:10px;
+    margin-bottom:14px;overflow:hidden}
+  details.bar summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:16px;
+    padding:16px 20px}
+  details.bar summary::-webkit-details-marker{display:none}
+  details.bar summary img{width:56px;height:56px;object-fit:cover;border-radius:8px;flex:none}
+  details.bar summary .t{flex:1}
+  details.bar summary .nm{color:var(--paper);font-weight:900;font-size:1.05rem;letter-spacing:.03em}
+  details.bar summary .sub{color:var(--hi);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+  details.bar summary::after{content:"+";color:var(--hi);font-weight:900;font-size:1.4rem;
+    margin-left:auto;flex:none}
+  details.bar[open] summary::after{content:"\2212"}
+  details.bar .inner{padding:0 20px 22px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
+  details.bar .inner img.full{width:220px;max-width:100%;border-radius:8px;object-fit:cover;flex:none}
+  details.bar .inner .txt{flex:1;min-width:240px}
+  details.bar .inner p{color:var(--paper);font-size:.88rem;margin-bottom:10px}
+  details.bar .inner p b{color:var(--hi)}
+  .placeholder-note{color:var(--sec);opacity:.6;font-size:.7rem;font-style:italic;margin-top:8px}
+
+  footer{text-align:center;padding:30px 24px 42px;border-top:1px solid var(--line);
+    font-size:.76rem;color:var(--sec)}
+  footer a{color:var(--hi);text-decoration:none}
+
+.pmark{ font-weight:800; letter-spacing:.06em; }
+.pmark sup{ font-size:.62em; font-weight:800; letter-spacing:.04em;
+            vertical-align:super; margin-left:.06em; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="who" href="omni.html">
+    <span class="back">&larr;</span>
+    <img src="assets/angelcorp.png" alt="">
+    <span>ANGELCORP</span>
+  </a>
+  <div class="spacer"></div>
+</div>
+
+<div class="heroimg">
+  <img src="assets/catalyst-banner.jpg" alt="">
+</div>
+<div class="heroinner">
+  <img class="logo" src="assets/catalyst-logo.png" alt="Catalyst">
+  <h1>CATALYST</h1>
+  <div class="tag">Small chemistry, done properly.</div>
+  <div class="draftpill">Concept draft &mdash; not a real company yet</div>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="charity"><p><b>20%</b> of all gross income is pledged to charity, the same rule as every ANGELCORP concept.</p></div>
+    <p class="body">Catalyst is the name for now &mdash; a placeholder, same as everything else here. The idea: small, well-made chemistry products that do one clever thing really well. Three product lines so far, each collapsed below &mdash; click one open.</p>
+  </section>
+
+  <section>
+    <h2>Product Lines</h2>
+
+    <details class="bar" open>
+      <summary>
+        <img src="assets/catalyst-candles.jpg" alt="">
+        <div class="t">
+          <div class="nm">Colour-Fire Candles</div>
+          <div class="sub">Candles</div>
+        </div>
+      </summary>
+      <div class="inner">
+        <img class="full" src="assets/catalyst-candles.jpg" alt="">
+        <div class="txt">
+          <p>Candles that burn in <b>real, vivid colour</b> &mdash; not a tinted wax, an actual coloured flame, the same trick chemistry classrooms use with metal salts (strontium for red, copper for green/blue, sodium for that vivid yellow-orange). A whole rack of them side by side burning six different colours at once.</p>
+          <p>The pitch: normal candles are all the same orange flame no matter what colour the wax is. These would not be.</p>
+          <p class="placeholder-note">Placeholder photo &mdash; a real chemistry demo shot, not our product. Swapping for our own photography once these actually exist.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="bar">
+      <summary>
+        <img src="assets/catalyst-snowcaps.jpg" alt="">
+        <div class="t">
+          <div class="nm">Snow Caps / Frost-Bites Zero&deg;</div>
+          <div class="sub">Candy &amp; Drinks</div>
+        </div>
+      </summary>
+      <div class="inner">
+        <img class="full" src="assets/catalyst-snowcaps.jpg" alt="">
+        <div class="txt">
+          <p><b>A candy that makes your whole mouth feel freezing cold</b> &mdash; the same feeling as brushing your teeth and then drinking orange juice, deliberately engineered into one product instead of being an accident.</p>
+          <p>The mechanism: <b>menthol activates the cold receptors in your mouth</b>. A mint-flavoured mouthwash already contains menthol, which is why it feels cold even though it isn&rsquo;t. Add something acidic (like citrus) and something with a little alcohol, and all three effects stack &mdash; menthol for the cold sensation, acid for the sting, alcohol for the bite. That combination is the whole product.</p>
+          <p>A second idea in the same line: a carbonated drink with helium (or another safe carbonation gas) mixed in, so your voice comes out higher or lower right after drinking it. A party trick in a can &mdash; birthdays, mostly.</p>
+          <p class="placeholder-note">Placeholder photo. Real product photography once a formula actually exists.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="bar">
+      <summary>
+        <img src="assets/catalyst-bubbles.jpg" alt="">
+        <div class="t">
+          <div class="nm">Unbreakable Bubbles</div>
+          <div class="sub">Bubbles</div>
+        </div>
+      </summary>
+      <div class="inner">
+        <img class="full" src="assets/catalyst-bubbles.jpg" alt="">
+        <div class="txt">
+          <p>Ordinary bubbles pop the instant anything touches them. The idea here is a much tougher bubble film &mdash; one that can be touched, bounced, even briefly held, without bursting on contact the way a normal soap bubble does.</p>
+          <p>No formula yet &mdash; this is the idea stage, same as everything else on this page.</p>
+          <p class="placeholder-note">Placeholder photo &mdash; ordinary bubbles, for the colour and mood, not our (much tougher) version.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <footer>
+    <div style="margin-bottom:7px;opacity:.75">by <span class="pmark">PRIMAL<sup>APE</sup></span></div>
+    <div>Catalyst &mdash; a concept draft. Nothing here is final.</div>
+    <div style="margin-top:6px">Part of the <a href="omni.html">ANGELCORP</a> concept-draft library.</div>
+  </footer>
+</div>
+
+</body>
+</html>

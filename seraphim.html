@@ -3,144 +3,346 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Seraphim — Concept Draft</title>
+<title>Seraphim — Sensor, Surveillance &amp; Aerospace</title>
 <link rel="icon" type="image/png" href="assets/seraphim.png">
-<meta name="description" content="Seraphim — a fictional aerospace concept draft. Not a real company. No real products, specifications, or contact information.">
+<meta name="description" content="Seraphim — sensor and surveillance systems, done morally. A fictional concept draft, not a real company.">
 <style>
-  /* Dark, minimal, deliberately unglamorous - a serious corporate register,
-     not an action-movie one. No bright colours, no dramatic imagery. */
+  /* SHARP. Angular. No soft edges anywhere - zero border-radius on this whole
+     page, on purpose. Dark steel/crimson, built to read as a serious,
+     professional defense-and-sensing company, not a mood board. */
   :root{
-    --bg:#0c1116; --bg2:#141b22; --bg3:#1c252e; --line:#2a3540;
-    --steel:#8a9aa8; --ink:#e4ebf0; --accent:#5b7a94;
+    --bg:#0a0d12; --bg2:#12161d; --bg3:#1a2029; --bg4:#232b37;
+    --steel:#8fa0b0; --ink:#eef2f6; --red:#9a1f1f; --red2:#c92e2e;
+    --line:#2a333f;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
+  *{box-sizing:border-box;margin:0;padding:0;border-radius:0!important}
+  html{scroll-behavior:smooth;scrollbar-color:var(--red2) var(--bg3);scrollbar-width:auto}
   body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--steel);
-    line-height:1.65}
-
-  /* The disclaimer is the loudest thing on the page, deliberately - this is
-     the one page on the site where that matters more than the design. */
-  .disclaimer{background:#3a1010;border-bottom:2px solid #7a2020;color:#ffd6d6;
-    text-align:center;padding:14px 20px;font-size:.82rem;font-weight:700;letter-spacing:.02em}
-  .disclaimer b{color:#fff}
+    line-height:1.6}
+  ::-webkit-scrollbar{width:14px}
+  ::-webkit-scrollbar-track{background:var(--bg3)}
+  ::-webkit-scrollbar-thumb{background:var(--red2);border:2px solid var(--bg3)}
 
   .topbar{background:var(--bg2);border-bottom:1px solid var(--line);
     display:flex;align-items:center;gap:14px;padding:14px 24px}
-  .topbar .wordmark{font-weight:700;font-size:1.05rem;color:var(--ink);letter-spacing:.14em}
+  .topbar .wordmark{font-weight:800;font-size:1rem;color:var(--ink);letter-spacing:.18em}
   .topbar .spacer{flex:1}
   .topbar .back{font-size:.78rem;color:var(--steel);text-decoration:none}
   .topbar .back:hover{color:var(--ink)}
+  .draftpill{background:var(--bg3);border:1px solid var(--line);color:var(--steel);
+    font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px}
 
-  .wrap{max-width:840px;margin:0 auto;padding:0 24px}
-  header{text-align:center;padding:60px 0 40px}
-  h1{font-size:clamp(2rem,6vw,3rem);font-weight:300;letter-spacing:.3em;color:var(--ink);
-    margin-left:.3em}
-  .tag{margin-top:12px;color:var(--steel);letter-spacing:.14em;font-size:.8rem;text-transform:uppercase}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  header{text-align:center;padding:64px 0 40px;border-bottom:1px solid var(--line)}
+  .logo{width:130px;height:130px;object-fit:contain;display:block;margin:0 auto 18px}
+  h1{font-size:clamp(2.4rem,7vw,4rem);font-weight:200;letter-spacing:.32em;color:var(--ink);
+    margin-left:.32em}
+  .tag{margin-top:14px;color:var(--red2);letter-spacing:.14em;font-size:.85rem;
+    text-transform:uppercase;font-weight:700}
+  .subtag{margin-top:8px;color:var(--steel);font-size:.9rem;max-width:560px;margin-left:auto;
+    margin-right:auto}
 
-  section{margin-bottom:40px}
-  h2{color:var(--ink);font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;
-    padding-bottom:9px;margin-bottom:14px;border-bottom:1px solid var(--line);font-weight:600}
-  p.body{color:var(--steel);font-size:.92rem;margin-bottom:12px}
-  p.body b{color:var(--ink)}
+  section{padding:48px 0;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:0}
+  .kicker{color:var(--red2);font-weight:700;font-size:.7rem;letter-spacing:.16em;
+    text-transform:uppercase;margin-bottom:8px}
+  h2{color:var(--ink);font-size:1.4rem;font-weight:300;letter-spacing:.02em;margin-bottom:16px}
+  p.body{color:var(--steel);font-size:.94rem;margin-bottom:12px;max-width:760px}
+  p.body b{color:var(--ink);font-weight:600}
 
-  .notice{background:var(--bg2);border:1px solid var(--line);border-left:3px solid #7a2020;
-    border-radius:4px;padding:16px 19px;font-size:.85rem;color:var(--steel)}
+  .missionbar{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);
+    margin-top:24px}
+  @media(max-width:700px){.missionbar{grid-template-columns:1fr}}
+  .missionbar div{padding:20px;border-right:1px solid var(--line)}
+  .missionbar div:last-child{border-right:0}
+  .missionbar .n{color:var(--red2);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+    font-weight:700;margin-bottom:6px}
+  .missionbar p{color:var(--ink);font-size:.85rem;margin:0}
+
+  /* ---- clickable product quadrant, PicoDev-style, but sharp ---- */
+  .quad{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);
+    border:1px solid var(--line)}
+  @media(max-width:700px){.quad{grid-template-columns:1fr}}
+  .qcell{background:var(--bg2);position:relative;text-decoration:none;display:block;
+    aspect-ratio:16/10;overflow:hidden;cursor:pointer}
+  .qcell img{width:100%;height:100%;object-fit:cover;filter:grayscale(.3) brightness(.55);
+    transition:filter .2s,transform .3s}
+  .qcell:hover img{filter:grayscale(0) brightness(.7);transform:scale(1.04)}
+  .qcell .lbl{position:absolute;left:0;bottom:0;right:0;padding:16px 18px;
+    background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,transparent 100%)}
+  .qcell .lbl .nm{color:var(--ink);font-weight:800;font-size:1.05rem;letter-spacing:.04em}
+  .qcell .lbl .sub{color:var(--red2);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+    margin-top:2px}
+
+  /* the expanded product detail, shown/hidden by the tiny script below */
+  .pdetail{display:none;background:var(--bg2);border:1px solid var(--line);border-top:0;
+    padding:26px}
+  .pdetail.on{display:block}
+  .pdetail h3{color:var(--ink);font-size:1.1rem;font-weight:600;margin-bottom:10px}
+  .pdetail p{color:var(--steel);font-size:.9rem;margin-bottom:10px;max-width:720px}
+  .pdetail p b{color:var(--ink)}
+  .spectag{display:inline-block;background:var(--bg3);border:1px solid var(--line);color:var(--red2);
+    font-size:.64rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;
+    margin-right:6px;margin-top:4px}
+  .placeholder-note{color:var(--steel);opacity:.55;font-size:.7rem;font-style:italic;margin-top:10px}
+
+  .aeroblock{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
+    margin-top:10px}
+  @media(max-width:760px){.aeroblock{grid-template-columns:1fr}}
+  .aeroblock img{width:100%;height:100%;min-height:260px;object-fit:cover;display:block;
+    filter:grayscale(.2) brightness(.7)}
+  .aeroblock .t{padding:26px;background:var(--bg2)}
+  .aeroblock h3{color:var(--ink);font-size:1.05rem;font-weight:600;margin-bottom:10px}
+  .aeroblock p{color:var(--steel);font-size:.88rem;margin-bottom:10px}
+  .aeroblock p b{color:var(--ink)}
+
+  .toolgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;
+    background:var(--line);border:1px solid var(--line);margin-top:16px}
+  .tool{background:var(--bg2);padding:20px}
+  .tool h3{color:var(--ink);font-size:.92rem;font-weight:600;margin-bottom:6px}
+  .tool p{color:var(--steel);font-size:.84rem;margin:0}
+
+  /* software mock - deliberately generic/abstract, NOT a copy of any real
+     product's UI. Built from scratch in CSS for this page only. */
+  .swmock{background:#0d1218;border:1px solid var(--line);margin-top:18px;display:grid;
+    grid-template-columns:200px 1fr;min-height:280px}
+  @media(max-width:700px){.swmock{grid-template-columns:1fr}}
+  .swmock .side{background:var(--bg3);border-right:1px solid var(--line);padding:16px}
+  .swmock .side .row{padding:9px 10px;font-size:.78rem;color:var(--steel);border-left:2px solid transparent}
+  .swmock .side .row.on{background:var(--bg4);color:var(--ink);border-left-color:var(--red2)}
+  .swmock .main{padding:18px}
+  .swmock .main h4{color:var(--ink);font-size:.85rem;margin-bottom:12px;font-weight:600}
+  .swmock .map{background:#0a1a12;border:1px solid var(--line);height:170px;position:relative;
+    overflow:hidden}
+  .swmock .map .grid{position:absolute;inset:0;background-image:
+    linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:24px 24px;opacity:.4}
+  .swmock .map .dot{position:absolute;width:8px;height:8px;background:var(--red2);}
+  .swmock .list{margin-top:12px;font-size:.76rem;color:var(--steel)}
+  .swmock .list div{padding:6px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}
+  .swmock .list b{color:var(--ink);font-weight:600}
+
+  .fcgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;
+    background:var(--line);border:1px solid var(--line);margin-top:16px}
+  .fc{background:var(--bg2)}
+  .fc img{width:100%;height:170px;object-fit:cover;display:block;filter:grayscale(.4) brightness(.6)}
+  .fc .t{padding:16px}
+  .fc h3{color:var(--ink);font-size:.9rem;font-weight:600;margin-bottom:6px}
+  .fc p{color:var(--steel);font-size:.82rem;margin:0}
+
+  .charitybar{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--red2);
+    padding:16px 20px;margin-top:20px}
+  .charitybar p{color:var(--ink);font-size:.86rem;margin:0}
+  .charitybar b{color:var(--red2)}
+
+  .notice{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--red2);
+    padding:18px 22px;font-size:.86rem;color:var(--steel);margin-top:10px}
   .notice b{color:var(--ink)}
 
-  .areas{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
-  .area{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:19px}
-  .area h3{color:var(--ink);font-size:.88rem;font-weight:600;margin-bottom:7px;letter-spacing:.02em}
-  .area p{font-size:.83rem;color:var(--steel)}
-  .area .tag2{display:inline-block;margin-top:10px;font-size:.62rem;color:var(--accent);
-    letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--accent);
-    border-radius:10px;padding:2px 9px}
-
-  footer{text-align:center;padding:30px 24px 40px;border-top:1px solid var(--line);
-    font-size:.78rem;color:var(--steel)}
-  footer a{color:var(--accent);text-decoration:none}
-  footer .disclaimerFooter{max-width:600px;margin:0 auto 14px;font-size:.76rem;
-    color:#c99;line-height:1.5}
+  footer{text-align:center;padding:32px 24px 46px;font-size:.78rem;color:var(--steel)}
+  footer a{color:var(--red2);text-decoration:none}
 </style>
 </head>
 <body>
 
-<div class="disclaimer">
-  <b>CONCEPT DRAFT.</b> Seraphim is not a real company. No products, capabilities, contracts,
-  or clients exist. Nothing on this page should be treated as an offer, a specification,
-  or a claim of fact.
-</div>
-
 <div class="topbar">
   <div class="wordmark">SERAPHIM</div>
   <div class="spacer"></div>
-  <a class="back" href="omni.html">&larr; ANGELCORP concept drafts</a>
+  <div class="draftpill">Concept draft &mdash; not a real company</div>
+  <a class="back" href="omni.html" style="margin-left:14px">&larr; ANGELCORP</a>
 </div>
 
+<header>
+  <img class="logo" src="assets/seraphim.png" alt="Seraphim">
+  <h1>SERAPHIM</h1>
+  <div class="tag">Many eyes. Many wings.</div>
+  <p class="subtag">Sensor, surveillance and aerospace systems &mdash; the surveillance-tech
+  category done the way it should have been done from the start.</p>
+</header>
+
 <div class="wrap">
-  <header>
-    <h1>SERAPHIM</h1>
-    <div class="tag">Aerospace Concept &mdash; Draft Stage</div>
-  </header>
 
   <section>
-    <h2>About this page</h2>
+    <div class="kicker">Positioning</div>
+    <h2>What Seraphim is</h2>
+    <p class="body">Companies like <b>Palantir</b>, <b>Flock Safety</b> and <b>Axon</b> built the
+    surveillance-and-sensor category and proved the technology works. Seraphim&rsquo;s idea is the
+    same category, built to a different standard &mdash; the same capability, aimed at the same
+    problems, run under rules the others don&rsquo;t bind themselves to.</p>
+    <p class="body">The name is literal. A seraph is described with <b>many eyes and many
+    wings</b> &mdash; which is the whole company in two words: sensing (the eyes) and aerospace
+    (the wings), under one roof.</p>
+    <div class="missionbar">
+      <div><div class="n">Sensing</div><p>Eyes &mdash; detection, monitoring, and the software that makes sense of it.</p></div>
+      <div><div class="n">Aerospace</div><p>Wings &mdash; the aircraft and orbital systems that carry the sensors.</p></div>
+      <div><div class="n">Done Morally</div><p>Same capability the category already has. Different rules for how it gets used.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">Products</div>
+    <h2>Three product lines</h2>
+    <p class="body">Click a product to open it. Seraphim is not only a defense supplier &mdash;
+    every line below has a civilian or dual-use version.</p>
+
+    <div class="quad">
+      <a class="qcell" onclick="openP('orb');return false;" href="#orb">
+        <img src="assets/seraphim-orb.jpg" alt="">
+        <div class="lbl"><div class="nm">ORB</div><div class="sub">Floating sensor drone</div></div>
+      </a>
+      <a class="qcell" onclick="openP('sat');return false;" href="#sat">
+        <img src="assets/seraphim-spaceplane.jpg" alt="">
+        <div class="lbl"><div class="nm">Satellites</div><div class="sub">Mini &amp; nano-sat platforms</div></div>
+      </a>
+      <a class="qcell" onclick="openP('fiber');return false;" href="#fiber">
+        <img src="assets/seraphim-orb.jpg" alt="" style="filter:grayscale(1) brightness(.4)">
+        <div class="lbl"><div class="nm">Fiber-Tethered Quadcopters</div><div class="sub">Sensing &amp; civilian lines</div></div>
+      </a>
+      <a class="qcell" onclick="openP('log');return false;" href="#log">
+        <img src="assets/seraphim-spaceplane.jpg" alt="" style="filter:grayscale(1) brightness(.4)">
+        <div class="lbl"><div class="nm">Logistics Suite</div><div class="sub">All-in-one planning software</div></div>
+      </a>
+    </div>
+
+    <div id="pd-orb" class="pdetail">
+      <h3>ORB &mdash; a floating sensor drone</h3>
+      <p>The core idea is a <b>vacuum balloon</b>: a rigid, circular cage-net envelope with the
+      air pumped out entirely, so it floats on buoyancy alone rather than a lifting gas. A small
+      propeller and a compact sensor suite ride inside the cage. Filed as a concept patent &mdash;
+      the same category as Flock Safety&rsquo;s fixed cameras, except airborne and mobile.</p>
+      <p><span class="spectag">Vacuum lift</span><span class="spectag">Sensor suite</span><span class="spectag">Concept patent</span></p>
+      <p class="placeholder-note">Placeholder photo &mdash; a sourced sci-fi concept render, not our design. Swapped for real renders once ORB is actually engineered.</p>
+    </div>
+    <div id="pd-sat" class="pdetail">
+      <h3>Satellites &mdash; advanced mini- and nano-satellites</h3>
+      <p>Small-format satellite platforms, built for rapid, cheap deployment rather than the
+      traditional large-satellite model. Paired with the space-plane program below for launch.</p>
+      <p><span class="spectag">Mini-sat</span><span class="spectag">Nano-sat</span><span class="spectag">Concept only</span></p>
+      <p class="placeholder-note">No imagery yet for this line specifically.</p>
+    </div>
+    <div id="pd-fiber" class="pdetail">
+      <h3>Fiber-Tethered Quadcopters</h3>
+      <p>A tethered-fiber quadcopter line, with a <b>civilian version sold the way DJI sells its
+      consumer drones</b> &mdash; a parallel commercial product line, not just a defense-only
+      configuration.</p>
+      <p><span class="spectag">Tethered fiber</span><span class="spectag">Civilian line</span></p>
+      <p class="placeholder-note">No product imagery yet &mdash; the sourced reference photos for this line depicted real, currently-manufactured combat hardware and were left out rather than implying that is our design.</p>
+    </div>
+    <div id="pd-log" class="pdetail">
+      <h3>Logistics Suite</h3>
+      <p>An all-in-one logistics planning application &mdash; fleet, sensor and mission planning
+      in one piece of software rather than five disconnected tools.</p>
+      <p><span class="spectag">Software</span><span class="spectag">All-in-one</span></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">Aerospace</div>
+    <h2>Space planes &amp; Seraphim drones</h2>
+    <div class="aeroblock">
+      <img src="assets/seraphim-spaceplane.jpg" alt="">
+      <div class="t">
+        <h3>Multi-stage space planes</h3>
+        <p>A fleet of high-flying, winged carrier aircraft &mdash; not rockets. Each one flies to
+        altitude carrying a rocket on its back, releases it at the desired height, and the rocket
+        continues on to orbit while the carrier plane <b>returns and lands like any other
+        aircraft</b>, ready to fly again.</p>
+        <p>The pitch: SpaceX&rsquo;s reusability, reached a different way &mdash; a plane instead
+        of a landing booster. The target expertise is specifically <b>high-Earth orbit</b>
+        delivery.</p>
+      </div>
+    </div>
+    <div class="toolgrid">
+      <div class="tool"><h3>Seraphim Drones</h3><p>Ornithopter-based &mdash; wings, not propellers. Manned or unmanned, quiet enough for policing work where a loud quadcopter would announce itself.</p></div>
+      <div class="tool"><h3>ORB Ornithopter Line</h3><p>A wing-and-sensor variant of the ORB line, same quiet-flight principle, built for the same low-profile monitoring role.</p></div>
+      <div class="tool"><h3>High-Earth-Orbit Focus</h3><p>The space-plane program is deliberately scoped to the higher orbital bands, not a general-purpose launch competitor.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">Software</div>
+    <h2>The sensor-suite application</h2>
+    <p class="body">A government-facing application for tracking Seraphim hardware in the field
+    &mdash; where every deployed ORB is, its live sensor feed, and detection alerts routed through
+    one dashboard instead of a dozen disconnected tools. Mock-up below, built for this page &mdash;
+    not a screenshot of a real product.</p>
+    <div class="swmock">
+      <div class="side">
+        <div class="row on">Live Map</div>
+        <div class="row">Fleet Status</div>
+        <div class="row">Alerts</div>
+        <div class="row">Sensor Feeds</div>
+        <div class="row">Reports</div>
+      </div>
+      <div class="main">
+        <h4>Live Map &mdash; 6 units deployed</h4>
+        <div class="map">
+          <div class="grid"></div>
+          <div class="dot" style="left:30%;top:40%"></div>
+          <div class="dot" style="left:52%;top:60%"></div>
+          <div class="dot" style="left:70%;top:35%"></div>
+        </div>
+        <div class="list">
+          <div><span>ORB-04</span><b>Nominal &mdash; sensor active</b></div>
+          <div><span>ORB-07</span><b>Nominal &mdash; sensor active</b></div>
+          <div><span>ORB-11</span><b>Alert &mdash; motion detected</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">Future Concepts</div>
+    <h2>Further out</h2>
+    <p class="body">Earlier-stage ideas, kept here rather than lost. Nothing in this section is
+    engineered &mdash; it is a research direction, not a roadmap.</p>
+    <div class="fcgrid">
+      <div class="fc">
+        <div class="t">
+          <h3>Ground-effect / amphibious concepts</h3>
+          <p>Aircraft that can operate at the water&rsquo;s surface as well as in the air &mdash;
+          an old idea (a 1934 Soviet design was the first serious attempt) worth revisiting with
+          modern materials.</p>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="t">
+          <h3>Swarm coordination</h3>
+          <p>Multiple ORB units operating as one coordinated group rather than individually
+          piloted units.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
     <div class="notice">
-      <p><b>This is a fictional business idea, drafted for a personal portfolio of company
-      concepts.</b> It is not a functioning organisation. It has no products, no engineering,
-      no funding, no employees, and no relationship to any real defense contractor. The
-      categories below are placeholders for a future, much more detailed draft &mdash;
-      intentionally vague, with no specifications, capabilities, or operational details of
-      any kind.</p>
+      <p><b>This is a fictional concept draft</b>, made for a personal portfolio of company ideas
+      and gated behind a password so it isn&rsquo;t publicly discoverable. Seraphim is not a real
+      company, has no products, funding, or employees, and has no relationship to any real
+      defense contractor, government agency, or company named on this page for comparison. Several
+      images on this page are sourced placeholders standing in for art that does not exist yet
+      &mdash; used here purely to test layout and colour before commissioning original work, and
+      already replaced in one case where the only available reference depicted real, currently
+      manufactured weapons hardware.</p>
     </div>
-  </section>
-
-  <section>
-    <h2>Concept</h2>
-    <p class="body">The early idea is an aerospace company built around unmanned aerial
-    systems for <b>non-combat</b> roles &mdash; the kind of work that is slow, repetitive, or
-    hard to staff for a human crew. Nothing about targeting, weapons, or combat use is part
-    of this concept.</p>
-    <p class="body">At this stage that is the entire idea. There is no engineering plan, no
-    named hardware, and no timeline. This page exists so the idea is written down, not lost
-    &mdash; not to describe something that is being built.</p>
-  </section>
-
-  <section>
-    <h2>Areas Being Considered</h2>
-    <div class="areas">
-      <div class="area">
-        <h3>Reconnaissance &amp; Survey</h3>
-        <p>Long-endurance aerial survey for terrain and infrastructure monitoring.</p>
-        <span class="tag2">Concept only</span>
-      </div>
-      <div class="area">
-        <h3>Logistics &amp; Cargo</h3>
-        <p>Unmanned cargo transport for remote or hard-to-reach delivery routes.</p>
-        <span class="tag2">Concept only</span>
-      </div>
-      <div class="area">
-        <h3>Perimeter &amp; Site Monitoring</h3>
-        <p>Continuous automated monitoring of a fixed site or boundary.</p>
-        <span class="tag2">Concept only</span>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>What is deliberately not here</h2>
-    <p class="body">No technical specifications. No weapons or combat systems. No pricing.
-    No sales or procurement process. No claimed clients, contracts, or government
-    relationships. No contact information for acquiring anything &mdash; because there is
-    nothing to acquire.</p>
+    <div class="charitybar"><p><b>20%</b> of all gross income is pledged to charity, the same
+    rule as every ANGELCORP concept.</p></div>
   </section>
 
   <footer>
-    <div class="disclaimerFooter">
-      Seraphim is an unfinished, fictional concept draft on a personal website. It does not
-      describe a real company, product, or capability, and is not intended to be read as one.
-    </div>
+    <div style="margin-bottom:7px;opacity:.75">by PRIMAL_MONKE</div>
     <div>Part of the <a href="omni.html">ANGELCORP</a> concept-draft library.</div>
   </footer>
 </div>
+
+<script>
+function openP(id){
+  document.querySelectorAll('.pdetail').forEach(function(el){ el.classList.remove('on'); });
+  document.getElementById('pd-' + id).classList.add('on');
+  document.getElementById('pd-' + id).scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+</script>
 
 </body>
 </html>
