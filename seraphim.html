@@ -60,20 +60,6 @@
     font-weight:700;margin-bottom:6px}
   .missionbar p{color:var(--ink);font-size:.85rem;margin:0}
 
-  /* ---- top-of-page live preview teaser ---- */
-  .teasermap{background:#0d1218;border:1px solid var(--line);height:220px;position:relative;
-    overflow:hidden;margin-top:20px}
-  .teasermap .grid{position:absolute;inset:0;background-image:
-    linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
-    background-size:26px 26px;opacity:.4}
-  .teasermap .dot{position:absolute;width:9px;height:9px;background:var(--red2);
-    box-shadow:0 0 0 5px rgba(201,46,46,.18);animation:pulse 2s infinite}
-  @keyframes pulse{0%,100%{box-shadow:0 0 0 5px rgba(201,46,46,.18)}50%{box-shadow:0 0 0 9px rgba(201,46,46,.05)}}
-  .teasermap .badge{position:absolute;top:14px;right:16px;background:var(--bg2);border:1px solid var(--line);
-    color:var(--ink);font-size:.68rem;font-weight:700;letter-spacing:.1em;padding:5px 12px}
-  .teasermap .badge2{position:absolute;top:14px;left:16px;background:var(--bg2);border:1px solid var(--line);
-    color:var(--steel);font-size:.68rem;letter-spacing:.05em;padding:5px 12px}
-
   /* ---- clickable product quadrant, PicoDev-style, but sharp ---- */
   .quad{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);
     border:1px solid var(--line)}
@@ -91,37 +77,6 @@
   .quad:hover .qcell{opacity:.35}
   .quad .qcell:hover{opacity:1}
 
-  /* schematic thumbnails standing in where a real sourced photo would be
-     off-topic or would depict real, currently-fielded hardware */
-  .schematic{width:100%;height:100%;position:relative;background:
-    linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px),
-    linear-gradient(135deg,#0d1218 0%,#171e27 100%);background-size:20px 20px,20px 20px,cover}
-  .schematic .rig{position:absolute;top:50%;left:50%;width:74px;height:74px;
-    transform:translate(-50%,-50%);filter:brightness(.9)}
-  .schematic .rig i{position:absolute;width:26px;height:26px;border:2px solid var(--red2);
-    background:rgba(201,46,46,.08)}
-  .schematic .rig i:nth-child(1){top:0;left:0}
-  .schematic .rig i:nth-child(2){top:0;right:0}
-  .schematic .rig i:nth-child(3){bottom:0;left:0}
-  .schematic .rig i:nth-child(4){bottom:0;right:0}
-  .schematic .rig b{position:absolute;top:50%;left:50%;width:14px;height:14px;
-    background:var(--red2);transform:translate(-50%,-50%)}
-  .schematic .rig .arm{position:absolute;top:50%;left:50%;width:1px;height:1px;border-top:1px solid var(--line)}
-  .schematic .cap{position:absolute;bottom:10px;left:0;right:0;text-align:center;color:var(--steel);
-    font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
-
-  .minisw{width:100%;height:100%;display:grid;grid-template-columns:34%1fr;
-    background:linear-gradient(135deg,#0d1218 0%,#171e27 100%)}
-  .minisw .s{border-right:1px solid var(--line);padding:10px 8px}
-  .minisw .s div{height:6px;background:var(--bg4);margin-bottom:6px;width:80%}
-  .minisw .s div:nth-child(2){width:55%}
-  .minisw .m{padding:10px}
-  .minisw .m .bar{height:8px;background:var(--bg4);margin-bottom:7px}
-  .minisw .m .bar:nth-child(1){width:90%}
-  .minisw .m .bar:nth-child(2){width:65%}
-  .minisw .m .bar:nth-child(3){width:78%}
-  .minisw .m .tick{display:inline-block;width:8px;height:8px;background:var(--red2);margin-right:6px}
-
   /* the expanded product detail, shown/hidden by the tiny script below */
   .pdetail{display:none;background:var(--bg2);border:1px solid var(--line);border-top:0;
     padding:26px}
@@ -133,10 +88,13 @@
     font-size:.64rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;
     margin-right:6px;margin-top:4px}
   .placeholder-note{color:var(--steel);opacity:.55;font-size:.7rem;font-style:italic;margin-top:10px}
-  .orbimg{width:100%;max-width:380px;display:block;margin-bottom:14px;border:1px solid var(--line);
-    cursor:pointer}
-  .orbimg-hint{font-size:.68rem;color:var(--steel);opacity:.6;letter-spacing:.04em;margin-top:-4px;
+
+  /* all-images-at-once gallery shown inside a product's detail panel - no
+     animation here, the tile above is where the slow auto-cycle lives */
+  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;
     margin-bottom:14px}
+  .gallery img{width:100%;height:170px;object-fit:cover;border:1px solid var(--line);
+    filter:grayscale(.1)}
 
   .aeroblock{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
     margin-top:10px}
@@ -232,124 +190,6 @@
 <div class="wrap">
 
   <section>
-    <div class="kicker">Live Preview</div>
-    <h2>A peek at the console</h2>
-    <p class="body">Every deployed ORB reporting through one dashboard, live position and status
-    in one place instead of five disconnected tools. This is the condensed view &mdash;
-    <a href="#software-full">the full interactive console is further down this page.</a></p>
-    <div class="teasermap">
-      <div class="grid"></div>
-      <div class="badge2">LIVE MAP</div>
-      <div class="badge">6 UNITS &middot; 1 ALERT</div>
-      <div class="dot" style="left:30%;top:40%"></div>
-      <div class="dot" style="left:52%;top:60%"></div>
-      <div class="dot" style="left:70%;top:35%"></div>
-    </div>
-  </section>
-
-  <section>
-    <div class="kicker">Positioning</div>
-    <h2>What Seraphim is</h2>
-    <p class="body">Companies like <b>Palantir</b>, <b>Flock Safety</b> and <b>Axon</b> built the
-    surveillance-and-sensor category and proved the technology works. Seraphim&rsquo;s idea is the
-    same category, built to a different standard &mdash; the same capability, aimed at the same
-    problems, run under rules the others don&rsquo;t bind themselves to.</p>
-    <p class="body">The name is literal. A seraph is described with <b>many eyes and many
-    wings</b> &mdash; which is the whole company in two words: sensing (the eyes) and aerospace
-    (the wings), under one roof.</p>
-    <div class="missionbar">
-      <div><div class="n">Sensing</div><p>Eyes &mdash; detection, monitoring, and the software that makes sense of it.</p></div>
-      <div><div class="n">Aerospace</div><p>Wings &mdash; the aircraft and orbital systems that carry the sensors.</p></div>
-      <div><div class="n">Done Morally</div><p>Same capability the category already has. Different rules for how it gets used.</p></div>
-    </div>
-  </section>
-
-  <section>
-    <div class="kicker">Products</div>
-    <h2>ORB, fiber optics &amp; space planes</h2>
-    <p class="body">Click a product to open it. Seraphim is not only a defense supplier &mdash;
-    every line below has a civilian or dual-use version.</p>
-
-    <div class="quad">
-      <a class="qcell" onclick="openP('orb');return false;" href="#orb">
-        <img src="assets/seraphim-orb-1.jpg" alt="">
-        <div class="lbl"><div class="nm">ORB</div><div class="sub">Floating sensor drone</div></div>
-      </a>
-      <a class="qcell" onclick="openP('fiber');return false;" href="#fiber">
-        <div class="schematic"><div class="rig"><i></i><i></i><i></i><i></i><b></b></div><div class="cap">Schematic &mdash; concept only</div></div>
-        <div class="lbl"><div class="nm">Fiber-Tethered Quadcopters</div><div class="sub">Sensing &amp; civilian lines</div></div>
-      </a>
-      <a class="qcell" onclick="openP('plane');return false;" href="#plane">
-        <img src="assets/seraphim-spaceplane.jpg" alt="">
-        <div class="lbl"><div class="nm">Space Planes</div><div class="sub">Reusable orbital launch</div></div>
-      </a>
-      <a class="qcell" onclick="openP('log');return false;" href="#log">
-        <div class="minisw"><div class="s"><div></div><div></div><div></div></div><div class="m"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div></div>
-        <div class="lbl"><div class="nm">Logistics Suite</div><div class="sub">All-in-one planning software</div></div>
-      </a>
-    </div>
-
-    <div id="pd-orb" class="pdetail">
-      <h3>ORB &mdash; a floating sensor drone</h3>
-      <img id="orbBigImg" class="orbimg" src="assets/seraphim-orb-1.jpg" alt="ORB concept render" onclick="cycleOrb()">
-      <div class="orbimg-hint">Click the image to cycle through concept renders.</div>
-      <p>The core idea is a <b>vacuum balloon</b>: a rigid, circular cage-net envelope with the
-      air pumped out entirely, so it floats on buoyancy alone rather than a lifting gas. A small
-      propeller and a compact sensor suite ride inside the cage. Filed as a concept patent &mdash;
-      the same category as Flock Safety&rsquo;s fixed cameras, except airborne and mobile.</p>
-      <p><span class="spectag">Vacuum lift</span><span class="spectag">Sensor suite</span><span class="spectag">Concept patent</span></p>
-      <p class="placeholder-note">Placeholder renders &mdash; sourced sci-fi concept art, not our design. One of the two carries a visible artist credit ("Innervision Light &mdash; (c) Aladdin Muharemovic"); both are swapped for real renders once ORB is actually engineered.</p>
-    </div>
-    <div id="pd-fiber" class="pdetail">
-      <h3>Fiber-Tethered Quadcopters</h3>
-      <p>A tethered-fiber quadcopter line, with a <b>civilian version sold the way DJI sells its
-      consumer drones</b> &mdash; a parallel commercial product line, not just a defense-only
-      configuration.</p>
-      <p><span class="spectag">Tethered fiber</span><span class="spectag">Civilian line</span></p>
-      <p class="placeholder-note">No photo used for this line: every sourced reference in this folder turned out to be a real photo of currently-fielded military drone hardware (one visibly armed) rather than a generic stock render, so a plain schematic stands in instead of implying that gear is our design.</p>
-    </div>
-    <div id="pd-plane" class="pdetail">
-      <h3>Space Planes &mdash; reusable orbital launch</h3>
-      <p>A fleet of high-flying, winged carrier aircraft &mdash; not rockets. Each one flies to
-      altitude carrying a rocket on its back, releases it at the desired height, and the rocket
-      continues on to orbit while the carrier plane <b>returns and lands like any other
-      aircraft</b>, ready to fly again. See the Aerospace section below for the full pitch.</p>
-      <p><span class="spectag">Winged carrier</span><span class="spectag">High-Earth orbit</span><span class="spectag">Concept only</span></p>
-    </div>
-    <div id="pd-log" class="pdetail">
-      <h3>Logistics Suite</h3>
-      <p>An all-in-one logistics planning application &mdash; fleet, sensor and mission planning
-      in one piece of software rather than five disconnected tools. See the Software section
-      below for the full interactive console this product line is built around.</p>
-      <p><span class="spectag">Software</span><span class="spectag">All-in-one</span></p>
-      <p class="placeholder-note">No screenshot used here: the sourced reference for this slot was a real, shipped compliance/KYC dashboard from an unrelated industry &mdash; off-topic for a fleet-logistics tool and not ours to show as a preview, so a small mock thumbnail (in the same style as the full console below) stands in instead.</p>
-    </div>
-  </section>
-
-  <section>
-    <div class="kicker">Aerospace</div>
-    <h2>Space planes &amp; Seraphim drones</h2>
-    <div class="aeroblock">
-      <img src="assets/seraphim-spaceplane.jpg" alt="">
-      <div class="t">
-        <h3>Multi-stage space planes</h3>
-        <p>A fleet of high-flying, winged carrier aircraft &mdash; not rockets. Each one flies to
-        altitude carrying a rocket on its back, releases it at the desired height, and the rocket
-        continues on to orbit while the carrier plane <b>returns and lands like any other
-        aircraft</b>, ready to fly again.</p>
-        <p>The pitch: SpaceX&rsquo;s reusability, reached a different way &mdash; a plane instead
-        of a landing booster. The target expertise is specifically <b>high-Earth orbit</b>
-        delivery.</p>
-      </div>
-    </div>
-    <div class="toolgrid">
-      <div class="tool"><h3>Seraphim Drones</h3><p>Ornithopter-based &mdash; wings, not propellers. Manned or unmanned, quiet enough for policing work where a loud quadcopter would announce itself.</p></div>
-      <div class="tool"><h3>ORB Ornithopter Line</h3><p>A wing-and-sensor variant of the ORB line, same quiet-flight principle, built for the same low-profile monitoring role.</p></div>
-      <div class="tool"><h3>High-Earth-Orbit Focus</h3><p>The space-plane program is deliberately scoped to the higher orbital bands, not a general-purpose launch competitor.</p></div>
-    </div>
-  </section>
-
-  <section id="software-full">
     <div class="kicker">Software</div>
     <h2>The sensor-suite application</h2>
     <p class="body">A government-facing application for tracking Seraphim hardware in the field
@@ -441,6 +281,116 @@
   </section>
 
   <section>
+    <div class="kicker">Positioning</div>
+    <h2>What Seraphim is</h2>
+    <p class="body">Companies like <b>Palantir</b>, <b>Flock Safety</b> and <b>Axon</b> built the
+    surveillance-and-sensor category and proved the technology works. Seraphim&rsquo;s idea is the
+    same category, built to a different standard &mdash; the same capability, aimed at the same
+    problems, run under rules the others don&rsquo;t bind themselves to.</p>
+    <p class="body">The name is literal. A seraph is described with <b>many eyes and many
+    wings</b> &mdash; which is the whole company in two words: sensing (the eyes) and aerospace
+    (the wings), under one roof.</p>
+    <div class="missionbar">
+      <div><div class="n">Sensing</div><p>Eyes &mdash; detection, monitoring, and the software that makes sense of it.</p></div>
+      <div><div class="n">Aerospace</div><p>Wings &mdash; the aircraft and orbital systems that carry the sensors.</p></div>
+      <div><div class="n">Done Morally</div><p>Same capability the category already has. Different rules for how it gets used.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">Products</div>
+    <h2>ORB, fiber optics &amp; space planes</h2>
+    <p class="body">Click a product to open it. Each tile slowly cycles through its concept art on
+    its own &mdash; click through to see every image for that line together. Seraphim is not only
+    a defense supplier &mdash; every line below has a civilian or dual-use version.</p>
+
+    <div class="quad">
+      <a class="qcell" onclick="openP('orb');return false;" href="#orb">
+        <img id="orbTileImg" src="assets/seraphim-orb-1.jpg" alt="">
+        <div class="lbl"><div class="nm">ORB</div><div class="sub">Floating sensor drone</div></div>
+      </a>
+      <a class="qcell" onclick="openP('fiber');return false;" href="#fiber">
+        <img id="fiberTileImg" src="assets/seraphim-fiber-1.webp" alt="">
+        <div class="lbl"><div class="nm">Fiber-Tethered Quadcopters</div><div class="sub">Sensing &amp; civilian lines</div></div>
+      </a>
+      <a class="qcell" onclick="openP('plane');return false;" href="#plane">
+        <img src="assets/seraphim-spaceplane.jpg" alt="">
+        <div class="lbl"><div class="nm">Space Planes</div><div class="sub">Reusable orbital launch</div></div>
+      </a>
+      <a class="qcell" onclick="openP('log');return false;" href="#log">
+        <img src="assets/seraphim-logistics.png" alt="">
+        <div class="lbl"><div class="nm">Logistics Suite</div><div class="sub">All-in-one planning software</div></div>
+      </a>
+    </div>
+
+    <div id="pd-orb" class="pdetail">
+      <h3>ORB &mdash; a floating sensor drone</h3>
+      <div class="gallery">
+        <img src="assets/seraphim-orb-1.jpg" alt="">
+        <img src="assets/seraphim-orb.jpg" alt="">
+      </div>
+      <p>The core idea is a <b>vacuum balloon</b>: a rigid, circular cage-net envelope with the
+      air pumped out entirely, so it floats on buoyancy alone rather than a lifting gas. A small
+      propeller and a compact sensor suite ride inside the cage. Filed as a concept patent &mdash;
+      the same category as Flock Safety&rsquo;s fixed cameras, except airborne and mobile.</p>
+      <p><span class="spectag">Vacuum lift</span><span class="spectag">Sensor suite</span><span class="spectag">Concept patent</span></p>
+      <p class="placeholder-note">Placeholder renders &mdash; sourced concept art, not our design. Swapped for real renders once ORB is actually engineered.</p>
+    </div>
+    <div id="pd-fiber" class="pdetail">
+      <h3>Fiber-Tethered Quadcopters</h3>
+      <div class="gallery">
+        <img src="assets/seraphim-fiber-1.webp" alt="">
+        <img src="assets/seraphim-fiber-2.jpg" alt="">
+        <img src="assets/seraphim-fiber-3.jpg" alt="">
+      </div>
+      <p>A tethered-fiber quadcopter line, with a <b>civilian version sold the way DJI sells its
+      consumer drones</b> &mdash; a parallel commercial product line, not just a defense-only
+      configuration.</p>
+      <p><span class="spectag">Tethered fiber</span><span class="spectag">Civilian line</span></p>
+      <p class="placeholder-note">Placeholder photos &mdash; sourced reference images, not our hardware. Swapped for real product photography once this line exists.</p>
+    </div>
+    <div id="pd-plane" class="pdetail">
+      <h3>Space Planes &mdash; reusable orbital launch</h3>
+      <p>A fleet of high-flying, winged carrier aircraft &mdash; not rockets. Each one flies to
+      altitude carrying a rocket on its back, releases it at the desired height, and the rocket
+      continues on to orbit while the carrier plane <b>returns and lands like any other
+      aircraft</b>, ready to fly again. See the Aerospace section below for the full pitch.</p>
+      <p><span class="spectag">Winged carrier</span><span class="spectag">High-Earth orbit</span><span class="spectag">Concept only</span></p>
+    </div>
+    <div id="pd-log" class="pdetail">
+      <h3>Logistics Suite</h3>
+      <p>An all-in-one logistics planning application &mdash; fleet, sensor and mission planning
+      in one piece of software rather than five disconnected tools. See the Software console at
+      the top of this page for the interactive idea this product line is built around.</p>
+      <p><span class="spectag">Software</span><span class="spectag">All-in-one</span></p>
+      <p class="placeholder-note">Placeholder screenshot &mdash; a sourced reference image standing in for Logistics Suite&rsquo;s actual screens, which don&rsquo;t exist yet.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">Aerospace</div>
+    <h2>Space planes &amp; Seraphim drones</h2>
+    <div class="aeroblock">
+      <img src="assets/seraphim-spaceplane.jpg" alt="">
+      <div class="t">
+        <h3>Multi-stage space planes</h3>
+        <p>A fleet of high-flying, winged carrier aircraft &mdash; not rockets. Each one flies to
+        altitude carrying a rocket on its back, releases it at the desired height, and the rocket
+        continues on to orbit while the carrier plane <b>returns and lands like any other
+        aircraft</b>, ready to fly again.</p>
+        <p>The pitch: SpaceX&rsquo;s reusability, reached a different way &mdash; a plane instead
+        of a landing booster. The target expertise is specifically <b>high-Earth orbit</b>
+        delivery.</p>
+      </div>
+    </div>
+    <div class="toolgrid">
+      <div class="tool"><h3>Seraphim Drones</h3><p>Ornithopter-based &mdash; wings, not propellers. Manned or unmanned, quiet enough for policing work where a loud quadcopter would announce itself.</p></div>
+      <div class="tool"><h3>ORB Ornithopter Line</h3><p>A wing-and-sensor variant of the ORB line, same quiet-flight principle, built for the same low-profile monitoring role.</p></div>
+      <div class="tool"><h3>High-Earth-Orbit Focus</h3><p>The space-plane program is deliberately scoped to the higher orbital bands, not a general-purpose launch competitor.</p></div>
+    </div>
+  </section>
+
+  <section>
     <div class="kicker">Future Concepts</div>
     <h2>Further out</h2>
     <p class="body">Earlier-stage ideas, kept here rather than lost. Nothing in this section is
@@ -469,12 +419,9 @@
       <p><b>This is a fictional concept draft</b>, made for a personal portfolio of company ideas
       and gated behind a password so it isn&rsquo;t publicly discoverable. Seraphim is not a real
       company, has no products, funding, or employees, and has no relationship to any real
-      defense contractor, government agency, or company named on this page for comparison. A
-      couple of images on this page are sourced placeholders standing in for art that does not
-      exist yet, used purely to test layout and colour before commissioning original work; a
-      handful of others were deliberately left out or replaced with plain schematics/mock-ups
-      because the only available references depicted real, currently-fielded hardware or an
-      unrelated real company&rsquo;s shipped software.</p>
+      defense contractor, government agency, or company named on this page for comparison. Every
+      product photo on this page is a sourced placeholder standing in for art that does not exist
+      yet, used purely to test layout and colour before commissioning original work.</p>
     </div>
     <div class="charitybar"><p><b>20%</b> of all gross income is pledged to charity, the same
     rule as every ANGELCORP concept.</p></div>
@@ -491,20 +438,19 @@ function openP(id){
   document.querySelectorAll('.pdetail').forEach(function(el){ el.classList.remove('on'); });
   document.getElementById('pd-' + id).classList.add('on');
   document.getElementById('pd-' + id).scrollIntoView({behavior:'smooth', block:'nearest'});
-  if (id === 'orb') startOrbCycle();
 }
 
 const ORB_IMAGES = ['assets/seraphim-orb-1.jpg', 'assets/seraphim-orb.jpg'];
-let orbIdx = 0;
-let orbTimer = null;
-function cycleOrb(){
+const FIBER_IMAGES = ['assets/seraphim-fiber-1.webp', 'assets/seraphim-fiber-2.jpg', 'assets/seraphim-fiber-3.jpg'];
+let orbIdx = 0, fiberIdx = 0;
+setInterval(function(){
   orbIdx = (orbIdx + 1) % ORB_IMAGES.length;
-  document.getElementById('orbBigImg').src = ORB_IMAGES[orbIdx];
-}
-function startOrbCycle(){
-  if (orbTimer) return;
-  orbTimer = setInterval(cycleOrb, 5000);
-}
+  document.getElementById('orbTileImg').src = ORB_IMAGES[orbIdx];
+}, 5000);
+setInterval(function(){
+  fiberIdx = (fiberIdx + 1) % FIBER_IMAGES.length;
+  document.getElementById('fiberTileImg').src = FIBER_IMAGES[fiberIdx];
+}, 5000);
 
 document.querySelectorAll('.swmock .side .row').forEach(function(row){
   row.addEventListener('click', function(){
