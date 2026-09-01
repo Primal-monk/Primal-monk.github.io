@@ -89,6 +89,30 @@
     padding:8px 18px;border-radius:5px;font-weight:900;font-size:.76rem;letter-spacing:.08em;
     text-transform:uppercase}
 
+  /* ---- the fake app window, same shape as the PHAROAH menu demo on the
+     main site: a titlebar, a row of buttons, one panel that swaps ---- */
+  .appwin{background:var(--bg2);border:1px solid var(--gold);border-radius:6px;
+    box-shadow:0 8px 24px rgba(0,0,0,.4);overflow:hidden;margin-top:10px}
+  .appwin-title{background:var(--ember);padding:9px 14px;font-size:.82rem;font-weight:700;
+    color:#fff;letter-spacing:.1em;display:flex;justify-content:space-between;align-items:center}
+  .appwin-title .hint{font-size:.68rem;font-weight:400;opacity:.85;letter-spacing:.04em}
+  .appwin-body{padding:14px}
+  .appnav{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+  .appbtn{padding:8px 13px;background:var(--bg3);border:1px solid var(--line);border-radius:4px;
+    color:var(--paper);font-size:.76rem;font-weight:700;cursor:pointer;user-select:none;
+    transition:background .12s,color .12s}
+  .appbtn:hover{background:var(--bg4)}
+  .appbtn.active{background:var(--ember);border-color:var(--gold);color:#fff}
+  .apppanel{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:18px;
+    min-height:150px}
+  .apppanel h3{color:var(--gold);font-size:.94rem;letter-spacing:.04em;margin-bottom:4px}
+  .apppanel .cat{color:var(--ember2);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+    font-weight:700;margin-bottom:10px}
+  .apppanel p{color:var(--paper);font-size:.88rem;margin-bottom:8px}
+  .apppanel .st{display:inline-block;margin-top:6px;font-size:.62rem;background:var(--bg4);
+    color:var(--gold);padding:2px 9px;border-radius:9px;font-weight:900;letter-spacing:.09em;
+    text-transform:uppercase}
+
   footer{text-align:center;padding:24px 0 38px;border-top:1px solid var(--line);
     font-size:.77rem;color:var(--soft);margin-top:14px}
 
@@ -132,50 +156,16 @@
 
   <section>
     <h2 data-i18n="h_suite">Planned Module Suite</h2>
-    <div class="subhead" data-i18n="suite_sub"></div>
+    <div class="subhead">Click a module to read what it does &mdash; same idea as the PHAROAH menu demo.</div>
 
-    <div class="category">
-      <h3 data-i18n="c_recon">Recon &amp; Discovery</h3>
-      <div class="feat">
-        <div class="f"><h4 data-i18n="m1h">Network Mapper</h4><p data-i18n="m1p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
-        <div class="f"><h4 data-i18n="m2h">Subdomain Finder</h4><p data-i18n="m2p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
-        <div class="f"><h4 data-i18n="m3h">OSINT Aggregator</h4><p data-i18n="m3p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+    <div class="appwin">
+      <div class="appwin-title">
+        <span>TYPHON SUITE</span>
+        <span class="hint">click a module &rarr;</span>
       </div>
-    </div>
-
-    <div class="category">
-      <h3 data-i18n="c_test">Testing &amp; Exploitation</h3>
-      <div class="feat">
-        <div class="f"><h4 data-i18n="m4h">Guided Exploit Runner</h4><p data-i18n="m4p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
-        <div class="f"><h4 data-i18n="m5h">Web App Scanner</h4><p data-i18n="m5p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
-        <div class="f"><h4 data-i18n="m6h">Wireless Auditor</h4><p data-i18n="m6p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
-        <div class="f"><h4 data-i18n="m7h">Credential Audit</h4><p data-i18n="m7p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
-      </div>
-    </div>
-
-    <div class="category">
-      <h3 data-i18n="c_social">Social Engineering</h3>
-      <div class="feat">
-        <div class="f"><h4 data-i18n="m8h">Phishing Simulator</h4><p data-i18n="m8p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
-        <div class="f"><h4 data-i18n="m9h">Vishing Script Builder</h4><p data-i18n="m9p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
-        <div class="f"><h4 data-i18n="m10h">Physical Drop-Test Tracker</h4><p data-i18n="m10p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
-      </div>
-    </div>
-
-    <div class="category">
-      <h3 data-i18n="c_report">Reporting &amp; Management</h3>
-      <div class="feat">
-        <div class="f"><h4 data-i18n="m11h">Report Builder</h4><p data-i18n="m11p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
-        <div class="f"><h4 data-i18n="m12h">Client Portal</h4><p data-i18n="m12p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
-        <div class="f"><h4 data-i18n="m13h">Compliance Mapper</h4><p data-i18n="m13p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
-      </div>
-    </div>
-
-    <div class="category">
-      <h3 data-i18n="c_ai">Intelligence Layer</h3>
-      <div class="feat">
-        <div class="f"><h4 data-i18n="m14h">AI Findings Assistant</h4><p data-i18n="m14p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
-        <div class="f"><h4 data-i18n="m15h">Scenario Builder</h4><p data-i18n="m15p"></p><span class="st" data-i18n="st_plan">Planned</span></div>
+      <div class="appwin-body">
+        <div class="appnav" id="typhonNav"></div>
+        <div class="apppanel" id="typhonPanel"></div>
       </div>
     </div>
   </section>
@@ -258,6 +248,51 @@ es:{
  go_vpn:'Verlo en ANGELCORP &rarr;',
  footer:'TYPHON &mdash; un borrador. Ser&iacute;a una empresa leg&iacute;tima solo para pruebas autorizadas.'
 }};
+// ---- the fake app window ----
+// Same idea as the PHAROAH menu demo: a titlebar, a row of buttons, one
+// panel that swaps content. English only, deliberately - no translation
+// work for brand-new content like this batch.
+const MODULES = [
+ {g:'Recon',    n:'Network Mapper',            p:'A visual, point-and-click map of a target network’s live hosts and open services.'},
+ {g:'Recon',    n:'Subdomain Finder',          p:'Automatically enumerates a target’s subdomains and flags anything unusual.'},
+ {g:'Recon',    n:'OSINT Aggregator',          p:'Pulls public records and social footprint into a single client-approved profile.'},
+ {g:'Testing',  n:'Guided Exploit Runner',     p:'Curated, vetted modules behind an explicit consent screen — simple, but never silent.'},
+ {g:'Testing',  n:'Web App Scanner',           p:'An automated OWASP Top 10 sweep that reports findings in plain English.'},
+ {g:'Testing',  n:'Wireless Auditor',          p:'Tests a client’s own Wi-Fi security posture against common attack classes.'},
+ {g:'Testing',  n:'Credential Audit',          p:'Checks a client’s exposed credentials against known breach data and flags reuse.'},
+ {g:'Social',   n:'Phishing Simulator',        p:'Sends an authorized, controlled phishing test to a client’s own staff and tracks who clicks.'},
+ {g:'Social',   n:'Vishing Script Builder',    p:'Generates call scripts for authorized phone-based social-engineering tests.'},
+ {g:'Social',   n:'Physical Drop-Test Tracker',p:'Logs and reports on authorized physical drop-test results (USB drives, badges, etc).'},
+ {g:'Reporting',n:'Report Builder',            p:'Turns a finished engagement into a client-ready report automatically, sorted by severity.'},
+ {g:'Reporting',n:'Client Portal',             p:'Clients watch engagement progress live instead of waiting on an email chain.'},
+ {g:'Reporting',n:'Compliance Mapper',         p:'Matches findings automatically against SOC2, PCI-DSS and ISO 27001 controls.'},
+ {g:'AI Layer', n:'AI Findings Assistant',     p:'The MCP layer explains a scan result in plain English and suggests the next test.'},
+ {g:'AI Layer', n:'Scenario Builder',          p:'Script a full red-team exercise as a flow chart instead of a shell script.'}
+];
+let activeModule = 0;
+function buildTyphonNav(){
+  const nav = document.getElementById('typhonNav');
+  nav.innerHTML = '';
+  MODULES.forEach(function(m, i){
+    const b = document.createElement('div');
+    b.className = 'appbtn' + (i === activeModule ? ' active' : '');
+    b.textContent = m.n;
+    b.addEventListener('click', function(){ activeModule = i; renderTyphonPanel(); });
+    nav.appendChild(b);
+  });
+}
+function renderTyphonPanel(){
+  const m = MODULES[activeModule];
+  document.getElementById('typhonPanel').innerHTML =
+    '<div class="cat">' + m.g + '</div><h3>' + m.n + '</h3><p>' + m.p + '</p>' +
+    '<span class="st">Planned</span>';
+  document.querySelectorAll('#typhonNav .appbtn').forEach(function(b, i){
+    b.classList.toggle('active', i === activeModule);
+  });
+}
+buildTyphonNav();
+renderTyphonPanel();
+
 let lang='en';
 function render(){
   const L=I18N[lang];document.documentElement.lang=lang;

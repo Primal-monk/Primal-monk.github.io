@@ -56,8 +56,24 @@
   .chip{background:var(--bg4);border:1px solid var(--line);border-radius:20px;padding:7px 16px;
     font-size:.82rem;color:var(--paper);cursor:pointer;user-select:none}
   .chip.on{background:var(--hi);color:#06131f;border-color:var(--hi);font-weight:700}
+  .chip .x{margin-left:8px;opacity:.7;font-weight:900}
+  .pinlbl{color:var(--sec);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+    font-weight:700;margin-bottom:8px}
+  .searchwrap{position:relative}
+  #countrySearch{width:100%;background:var(--bg3);border:1px solid var(--line);border-radius:7px;
+    padding:12px 14px;color:var(--paper);font-size:.88rem;font-family:inherit}
+  #countrySearch:focus{outline:none;border-color:var(--hi)}
+  .searchdrop{display:none;position:absolute;left:0;right:0;top:calc(100% + 4px);
+    background:var(--bg3);border:1px solid var(--line);border-radius:7px;max-height:260px;
+    overflow-y:auto;z-index:20;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+  .searchdrop.open{display:block}
+  .searchdrop .opt{padding:9px 14px;font-size:.86rem;color:var(--paper);cursor:pointer;
+    display:flex;align-items:center;gap:10px}
+  .searchdrop .opt:hover{background:var(--bg4)}
+  .searchdrop .opt.taken{opacity:.4;cursor:default}
+  .searchdrop .none{padding:12px 14px;color:var(--sec);font-size:.82rem;font-style:italic}
   .demo .result{background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:14px 16px;
-    font-size:.84rem;color:var(--paper);margin-top:6px}
+    font-size:.84rem;color:var(--paper);margin-top:14px}
   .demo .result b{color:var(--hi)}
 
   .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
@@ -115,23 +131,25 @@
     <h2>Try the idea</h2>
     <div class="demo">
       <div class="modes">
-        <div class="modebtn on">Allow-list (only show these)</div>
-        <div class="modebtn">Block-list (hide these)</div>
+        <div class="modebtn on" id="modeAllow">Allow-list (only show these)</div>
+        <div class="modebtn" id="modeBlock">Block-list (hide these)</div>
       </div>
-      <div class="chiprow">
-        <span class="chip on">Italy</span>
-        <span class="chip">United States</span>
-        <span class="chip">France</span>
-        <span class="chip">China</span>
-        <span class="chip">Japan</span>
-        <span class="chip">Russia</span>
-        <span class="chip">Brazil</span>
-        <span class="chip">+ add a country</span>
+
+      <div class="pinlbl">Quick access</div>
+      <div class="chiprow" id="pinnedRow"></div>
+
+      <div class="searchwrap">
+        <input type="text" id="countrySearch" placeholder="Search any country&hellip;" autocomplete="off">
+        <div class="searchdrop" id="searchDrop"></div>
       </div>
-      <div class="result">Feed showing: <b>only posts tagged Italy.</b> Everything else is filtered out.</div>
+
+      <div class="pinlbl" style="margin-top:14px">Selected</div>
+      <div class="chiprow" id="selectedRow"></div>
+
+      <div class="result" id="resultLine"></div>
       <p class="placeholder-note" style="color:var(--sec);opacity:.65;font-size:.72rem;margin-top:12px;font-style:italic">
-        This is a static mock-up of the idea, not a working demo &mdash; the chips and mode
-        buttons above don&rsquo;t actually do anything yet.
+        This is a working mock-up of the idea, not a real filter &mdash; it does not touch your
+        actual X/Twitter feed. Every country below is real; the filtering behind it is not.
       </p>
     </div>
   </section>
@@ -158,35 +176,163 @@
 </div>
 
 <script>
-// Purely cosmetic - lets you click the mock-up chips/modes to see the result
-// line change, so the idea is easier to grasp. Nothing here is a real filter.
-(function(){
-  const modes = document.querySelectorAll('.modebtn');
-  const chips = document.querySelectorAll('.chip');
-  const result = document.querySelector('.demo .result');
-  function refresh(){
-    const mode = document.querySelector('.modebtn.on').textContent.startsWith('Allow') ? 'allow' : 'block';
-    const on = [...chips].filter(c => c.classList.contains('on') && c.textContent !== '+ add a country').map(c => c.textContent);
-    if (on.length === 0) {
-      result.innerHTML = mode === 'allow'
-        ? 'Feed showing: <b>everything</b> (pick a country above to narrow it down).'
-        : 'Feed showing: <b>everything</b> (pick a country above to hide it).';
-      return;
-    }
-    result.innerHTML = mode === 'allow'
-      ? 'Feed showing: <b>only posts tagged ' + on.join(', ') + '.</b> Everything else is filtered out.'
-      : 'Feed showing: <b>everything except posts tagged ' + on.join(', ') + '.</b>';
-  }
-  modes.forEach(function(m){ m.addEventListener('click', function(){
-    modes.forEach(x => x.classList.remove('on'));
-    m.classList.add('on');
-    refresh();
-  }); });
-  chips.forEach(function(c){
-    if (c.textContent === '+ add a country') return;
-    c.addEventListener('click', function(){ c.classList.toggle('on'); refresh(); });
+// The full country list, each with its flag emoji. Real countries; the
+// filtering behind them is the only fictional part of this page.
+const COUNTRIES = [
+"United States|🇺🇸","India|🇮🇳","China|🇨🇳","Brazil|🇧🇷","Indonesia|🇮🇩","Pakistan|🇵🇰",
+"Nigeria|🇳🇬","Bangladesh|🇧🇩","Russia|🇷🇺","Mexico|🇲🇽","Japan|🇯🇵","Philippines|🇵🇭",
+"Vietnam|🇻🇳","Germany|🇩🇪","Türkiye|🇹🇷","United Kingdom|🇬🇧","France|🇫🇷","Italy|🇮🇹",
+"South Korea|🇰🇷","Canada|🇨🇦","Spain|🇪🇸","Argentina|🇦🇷","South Africa|🇿🇦","Colombia|🇨🇴",
+"Egypt|🇪🇬","Iran|🇮🇷","Thailand|🇹🇭","Saudi Arabia|🇸🇦","Ukraine|🇺🇦","Poland|🇵🇱",
+"Australia|🇦🇺","Taiwan|🇹🇼","Malaysia|🇲🇾","Netherlands|🇳🇱","Venezuela|🇻🇪","Chile|🇨🇱",
+"Romania|🇷🇴","Peru|🇵🇪","Czechia|🇨🇿","Belgium|🇧🇪","Sweden|🇸🇪","Greece|🇬🇷","Portugal|🇵🇹",
+"Hungary|🇭🇺","Israel|🇮🇱","Austria|🇦🇹","Switzerland|🇨🇭","United Arab Emirates|🇦🇪",
+"Singapore|🇸🇬","Denmark|🇩🇰","Serbia|🇷🇸","Bulgaria|🇧🇬","Kazakhstan|🇰🇿","Iraq|🇮🇶",
+"Algeria|🇩🇿","Morocco|🇲🇦","Uzbekistan|🇺🇿","Nepal|🇳🇵","Kenya|🇰🇪","Tanzania|🇹🇿",
+"Ghana|🇬🇭","Ecuador|🇪🇨","Guatemala|🇬🇹","Cuba|🇨🇺","Belarus|🇧🇾","Bolivia|🇧🇴",
+"Dominican Republic|🇩🇴","Honduras|🇭🇳","Azerbaijan|🇦🇿","Tunisia|🇹🇳","Sri Lanka|🇱🇰",
+"Myanmar|🇲🇲","Slovakia|🇸🇰","Croatia|🇭🇷","Jordan|🇯🇴","Lebanon|🇱🇧","Libya|🇱🇾",
+"Paraguay|🇵🇾","El Salvador|🇸🇻","Nicaragua|🇳🇮","Costa Rica|🇨🇷","Lithuania|🇱🇹",
+"Slovenia|🇸🇮","Palestine|🇵🇸","Moldova|🇲🇩","Ireland|🇮🇪","Finland|🇫🇮","Norway|🇳🇴",
+"New Zealand|🇳🇿","Panama|🇵🇦","Uruguay|🇺🇾","Georgia|🇬🇪","Armenia|🇦🇲",
+"Bosnia and Herzegovina|🇧🇦","Ethiopia|🇪🇹","Uganda|🇺🇬","Cameroon|🇨🇲","Côte d’Ivoire|🇨🇮",
+"Senegal|🇸🇳","Zimbabwe|🇿🇼","Zambia|🇿🇲","Mozambique|🇲🇿","Angola|🇦🇴","Madagascar|🇲🇬",
+"Malawi|🇲🇼","Rwanda|🇷🇼","Burkina Faso|🇧🇫","Mali|🇲🇱","Niger|🇳🇪","Chad|🇹🇩","Somalia|🇸🇴",
+"South Sudan|🇸🇸","Sudan|🇸🇩","Democratic Republic of the Congo|🇨🇩","Republic of the Congo|🇨🇬",
+"Benin|🇧🇯","Guinea|🇬🇳","Togo|🇹🇬","Sierra Leone|🇸🇱","Liberia|🇱🇷","Mauritania|🇲🇷",
+"Namibia|🇳🇦","Botswana|🇧🇼","Lesotho|🇱🇸","Eswatini|🇸🇿","Mauritius|🇲🇺","Seychelles|🇸🇨",
+"Cabo Verde|🇨🇻","Guinea-Bissau|🇬🇼","Gambia|🇬🇲","Central African Republic|🇨🇫","Eritrea|🇪🇷",
+"Djibouti|🇩🇯","Comoros|🇰🇲","Equatorial Guinea|🇬🇶","Gabon|🇬🇦","São Tomé and Príncipe|🇸🇹",
+"Iceland|🇮🇸","Luxembourg|🇱🇺","Malta|🇲🇹","Cyprus|🇨🇾","Estonia|🇪🇪","Latvia|🇱🇻",
+"Albania|🇦🇱","North Macedonia|🇲🇰","Montenegro|🇲🇪","Kosovo|🇽🇰","Liechtenstein|🇱🇮",
+"Monaco|🇲🇨","Andorra|🇦🇩","San Marino|🇸🇲","Vatican City|🇻🇦","Afghanistan|🇦🇫","Yemen|🇾🇪",
+"Syria|🇸🇾","North Korea|🇰🇵","Turkmenistan|🇹🇲","Tajikistan|🇹🇯","Kyrgyzstan|🇰🇬",
+"Mongolia|🇲🇳","Bhutan|🇧🇹","Laos|🇱🇦","Cambodia|🇰🇭","Brunei|🇧🇳","Maldives|🇲🇻",
+"Timor-Leste|🇹🇱","Papua New Guinea|🇵🇬","Fiji|🇫🇯","Solomon Islands|🇸🇧","Vanuatu|🇻🇺",
+"Samoa|🇼🇸","Tonga|🇹🇴","Kiribati|🇰🇮","Tuvalu|🇹🇻","Nauru|🇳🇷","Marshall Islands|🇲🇭",
+"Micronesia|🇫🇲","Palau|🇵🇼","Bahamas|🇧🇸","Barbados|🇧🇧","Jamaica|🇯🇲",
+"Trinidad and Tobago|🇹🇹","Haiti|🇭🇹","Guyana|🇬🇾","Suriname|🇸🇷","Belize|🇧🇿",
+"Saint Lucia|🇱🇨","Grenada|🇬🇩","Saint Vincent and the Grenadines|🇻🇨",
+"Antigua and Barbuda|🇦🇬","Dominica|🇩🇲","Saint Kitts and Nevis|🇰🇳","Oman|🇴🇲","Qatar|🇶🇦",
+"Bahrain|🇧🇭","Kuwait|🇰🇼"
+].map(function(s){ const p = s.split('|'); return {name:p[0], flag:p[1]}; });
+
+// Pinned quick-access row - major countries, plus Israel specifically called
+// out for easy access alongside the largest ones.
+const PINNED = ["United States","India","China","Israel","Russia","United Kingdom","Germany","Japan","Brazil"];
+
+let mode = 'allow';           // 'allow' or 'block'
+let selected = ['Italy'];     // country names currently in the list
+
+function findCountry(name){ return COUNTRIES.find(function(c){ return c.name === name; }); }
+
+function renderPinned(){
+  const row = document.getElementById('pinnedRow');
+  row.innerHTML = '';
+  PINNED.forEach(function(name){
+    const c = findCountry(name);
+    if (!c) return;
+    const on = selected.indexOf(name) !== -1;
+    const chip = document.createElement('span');
+    chip.className = 'chip' + (on ? ' on' : '');
+    chip.textContent = c.flag + ' ' + c.name;
+    chip.addEventListener('click', function(){ toggleCountry(name); });
+    row.appendChild(chip);
   });
-})();
+}
+
+function renderSelected(){
+  const row = document.getElementById('selectedRow');
+  row.innerHTML = '';
+  if (selected.length === 0) {
+    const none = document.createElement('span');
+    none.style.cssText = 'color:var(--sec);font-size:.82rem;font-style:italic';
+    none.textContent = 'Nothing selected yet - search below or click a quick-access flag.';
+    row.appendChild(none);
+    renderResult();
+    return;
+  }
+  selected.forEach(function(name){
+    const c = findCountry(name);
+    const chip = document.createElement('span');
+    chip.className = 'chip on';
+    chip.innerHTML = (c ? c.flag + ' ' : '') + name + ' <span class="x">&times;</span>';
+    chip.addEventListener('click', function(){ toggleCountry(name); });
+    row.appendChild(chip);
+  });
+  renderResult();
+}
+
+function toggleCountry(name){
+  const i = selected.indexOf(name);
+  if (i === -1) selected.push(name); else selected.splice(i, 1);
+  renderPinned();
+  renderSelected();
+}
+
+function renderResult(){
+  const result = document.getElementById('resultLine');
+  if (selected.length === 0) {
+    result.innerHTML = mode === 'allow'
+      ? 'Feed showing: <b>everything</b> (pick a country to narrow it down).'
+      : 'Feed showing: <b>everything</b> (pick a country to hide it).';
+    return;
+  }
+  const withFlags = selected.map(function(n){ const c = findCountry(n); return c ? c.flag + ' ' + n : n; }).join(', ');
+  result.innerHTML = mode === 'allow'
+    ? 'Feed showing: <b>only posts tagged ' + withFlags + '.</b> Everything else is filtered out.'
+    : 'Feed showing: <b>everything except posts tagged ' + withFlags + '.</b>';
+}
+
+function renderSearch(q){
+  const drop = document.getElementById('searchDrop');
+  drop.innerHTML = '';
+  const query = q.trim().toLowerCase();
+  if (!query) { drop.classList.remove('open'); return; }
+  const matches = COUNTRIES.filter(function(c){ return c.name.toLowerCase().indexOf(query) !== -1; }).slice(0, 12);
+  if (matches.length === 0) {
+    const none = document.createElement('div');
+    none.className = 'none';
+    none.textContent = 'No country matches "' + q + '".';
+    drop.appendChild(none);
+  } else {
+    matches.forEach(function(c){
+      const taken = selected.indexOf(c.name) !== -1;
+      const opt = document.createElement('div');
+      opt.className = 'opt' + (taken ? ' taken' : '');
+      opt.innerHTML = c.flag + ' ' + c.name + (taken ? '  (already added)' : '');
+      if (!taken) opt.addEventListener('click', function(){
+        toggleCountry(c.name);
+        document.getElementById('countrySearch').value = '';
+        drop.classList.remove('open');
+      });
+      drop.appendChild(opt);
+    });
+  }
+  drop.classList.add('open');
+}
+
+document.getElementById('modeAllow').addEventListener('click', function(){
+  mode = 'allow';
+  document.getElementById('modeAllow').classList.add('on');
+  document.getElementById('modeBlock').classList.remove('on');
+  renderResult();
+});
+document.getElementById('modeBlock').addEventListener('click', function(){
+  mode = 'block';
+  document.getElementById('modeBlock').classList.add('on');
+  document.getElementById('modeAllow').classList.remove('on');
+  renderResult();
+});
+document.getElementById('countrySearch').addEventListener('input', function(e){
+  renderSearch(e.target.value);
+});
+document.addEventListener('click', function(e){
+  if (!e.target.closest('.searchwrap')) document.getElementById('searchDrop').classList.remove('open');
+});
+
+renderPinned();
+renderSelected();
 </script>
 
 </body>

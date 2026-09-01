@@ -111,6 +111,13 @@
   footer{text-align:center;padding:30px 24px 40px;border-top:1px solid var(--line);
     font-size:.76rem;color:var(--ink-soft)}
   footer a{color:var(--grass-dk);text-decoration:none;font-weight:600}
+
+  .herologo{width:96px;height:96px;object-fit:contain;margin:0 auto 20px;display:block}
+
+  .appshot{max-width:900px;margin:0 auto;background:var(--cloud);border:1px solid var(--line);
+    border-radius:20px;padding:22px;overflow-x:auto}
+  .appshot img{display:block;margin:0 auto;max-width:none;height:260px;border-radius:10px}
+  @media(max-width:760px){.appshot img{height:180px}}
 </style>
 </head>
 <body>
@@ -122,6 +129,7 @@
 </div>
 
 <div class="hero wrap">
+  <img class="herologo" src="assets/grover-logo.png" alt="Grover">
   <div class="draftpill">Concept draft &mdash; not a real company yet</div>
   <h1>Lawn care, <span>on demand.</span></h1>
   <p class="sub">Post a job instead of mowing it yourself. Someone nearby picks it up, cuts the grass, and moves on &mdash; the same way a rideshare driver picks up a fare.</p>
@@ -141,6 +149,17 @@
     <div class="step"><div class="n">2</div><h3>A mower nearby accepts</h3><p>Someone in your area picks it up, the same way a delivery driver claims an order.</p></div>
     <div class="step"><div class="n">3</div><h3>Done, rated, paid</h3><p>The job gets done, you rate it, payment goes through in the app &mdash; no cash, no invoice.</p></div>
   </div>
+</section>
+
+<section class="wrap">
+  <div class="kicker">The app</div>
+  <h2>Post a job the way you&rsquo;d request a ride</h2>
+  <p class="lede">Pick where, pick a plan, watch someone nearby accept it &mdash; the same rhythm as the ride-hail apps everyone already knows.</p>
+  <div class="appshot"><img src="assets/grover-interface.png" alt="Grover app concept mock-up"></div>
+  <p class="placeholder-note" style="text-align:center;color:var(--ink-soft);opacity:.65;font-size:.76rem;margin-top:14px;font-style:italic">
+    Mood-board mock-up used to block out the layout for this draft &mdash; not Grover&rsquo;s actual interface,
+    and will be swapped for original screens before this ever goes anywhere near real users.
+  </p>
 </section>
 
 <section class="wrap">
