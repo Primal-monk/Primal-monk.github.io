@@ -34,7 +34,12 @@
 
   .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
   header{text-align:center;padding:64px 0 40px;border-bottom:1px solid var(--line)}
-  .logo{width:130px;height:130px;object-fit:contain;display:block;margin:0 auto 18px}
+  .logowrap{position:relative;width:130px;height:130px;margin:0 auto 18px}
+  .logowrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+    transition:opacity .2s}
+  .logowrap .b{opacity:0}
+  .logowrap:hover .a{opacity:0}
+  .logowrap:hover .b{opacity:1}
   h1{font-size:clamp(2.4rem,7vw,4rem);font-weight:200;letter-spacing:.32em;color:var(--ink);
     margin-left:.32em}
   .tag{margin-top:14px;color:var(--red2);letter-spacing:.14em;font-size:.85rem;
@@ -71,6 +76,8 @@
   .qcell:hover img{filter:grayscale(0) brightness(.7);transform:scale(1.04)}
   .qcell .lbl{position:absolute;left:0;bottom:0;right:0;padding:16px 18px;z-index:2;
     background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,transparent 100%)}
+  .qcell .divicon{position:absolute;top:12px;right:12px;width:36px;height:36px;object-fit:cover;
+    z-index:2;border:1px solid var(--line);filter:none;background:#0a0d12}
   .qcell .lbl .nm{color:var(--ink);font-weight:800;font-size:1.05rem;letter-spacing:.04em}
   .qcell .lbl .sub{color:var(--red2);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
     margin-top:2px}
@@ -185,7 +192,10 @@
 </div>
 
 <header>
-  <img class="logo" src="assets/seraphim.png" alt="Seraphim">
+  <span class="logowrap">
+    <img class="a" src="assets/seraphim.png" alt="Seraphim">
+    <img class="b" src="assets/seraphim-hover.png" alt="Seraphim">
+  </span>
   <h1>SERAPHIM</h1>
   <div class="tag">Many eyes. Many wings.</div>
   <p class="subtag">Sensor, surveillance and aerospace systems &mdash; the surveillance-tech
@@ -320,6 +330,7 @@
       </a>
       <a class="qcell" onclick="openP('plane');return false;" href="#plane">
         <img id="planeTileImg" src="assets/seraphim-plane-1.gif" alt="">
+        <img class="divicon" src="assets/seraphim-plane-logo.jpg" alt="">
         <div class="lbl"><div class="nm">Space Planes</div><div class="sub">Reusable orbital launch</div></div>
       </a>
       <a class="qcell" onclick="openP('log');return false;" href="#log">
@@ -355,7 +366,7 @@
       <p class="placeholder-note">Placeholder photos &mdash; sourced reference images, not our hardware. Swapped for real product photography once this line exists.</p>
     </div>
     <div id="pd-plane" class="pdetail">
-      <h3>Space Planes &mdash; reusable orbital launch</h3>
+      <h3><img src="assets/seraphim-plane-logo.jpg" alt="" style="width:28px;height:28px;object-fit:cover;vertical-align:middle;margin-right:8px">Space Planes &mdash; reusable orbital launch</h3>
       <div class="gallery">
         <img src="assets/seraphim-plane-1.gif" alt="">
         <img src="assets/seraphim-plane-2.jpg" alt="">
