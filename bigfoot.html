@@ -7,25 +7,26 @@
 <link rel="icon" type="image/png" href="assets/bigfoot-logo.png">
 <meta name="description" content="BigFoot VPN — a multi-hop VPN that bounces your connection through a chain of IPs instead of one. Concept draft under TYPHON.">
 <style>
-  /* Autumn pumpkin theme, for real this time: the pumpkin orange itself IS
-     the page background, not just an accent on a light page. White/cream
-     text sits directly on top of it; cards are cream so denser copy (the
-     table, the feature grid) still reads easily. */
+  /* Autumn pumpkin theme, calmed down: a muted, brownish-orange terracotta
+     instead of a saturated traffic-cone pumpkin - still reads as autumn,
+     but the eye can actually rest on it. White/cream text sits on top;
+     cards are cream so denser copy (the table, the feature grid) still
+     reads easily. */
   :root{
-    --bg:#f78204; --bg-deep:#dd7300;
+    --bg:#c17a45; --bg-deep:#9c5c30;
     --card:#fff6ea; --card2:#fffaf3; --card3:#ffe9c4;
     --ink:#4a2408; --soft:#7a4d1c;
-    --white:#fff8ec; --gold:#ffe4a3; --rust:#7a3c00;
-    --line:rgba(122,61,0,.18); --lineOnBg:rgba(255,255,255,.4);
+    --white:#fbf1e2; --gold:#f4cf94; --rust:#7a3c00;
+    --line:rgba(122,61,0,.18); --lineOnBg:rgba(255,255,255,.35);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth;scrollbar-color:#ffb35c var(--bg-deep);scrollbar-width:auto}
+  html{scroll-behavior:smooth;scrollbar-color:#d19a63 var(--bg-deep);scrollbar-width:auto}
   body{font-family:"Segoe UI","Trebuchet MS",sans-serif;
     background:linear-gradient(180deg,var(--bg) 0%,var(--bg-deep) 100%);
     color:var(--white);line-height:1.62;padding-top:56px}
   ::-webkit-scrollbar{width:16px}
   ::-webkit-scrollbar-track{background:var(--bg-deep)}
-  ::-webkit-scrollbar-thumb{background:#ffb35c;border:2px solid var(--bg-deep);border-radius:10px}
+  ::-webkit-scrollbar-thumb{background:#d19a63;border:2px solid var(--bg-deep);border-radius:10px}
 
   .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:56px;background:var(--bg-deep);
     border-bottom:2px solid rgba(255,255,255,.5);display:flex;align-items:center;gap:12px;padding:0 16px}
