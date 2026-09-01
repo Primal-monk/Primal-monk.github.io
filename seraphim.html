@@ -111,6 +111,11 @@
   .tool{background:var(--bg2);padding:20px}
   .tool h3{color:var(--ink);font-size:.92rem;font-weight:600;margin-bottom:6px}
   .tool p{color:var(--steel);font-size:.84rem;margin:0}
+  .tool.imgtool{padding:0}
+  .tool.imgtool img{width:100%;height:140px;object-fit:cover;display:block;filter:grayscale(.2) brightness(.7)}
+  .tool.imgtool h3,.tool.imgtool p{padding-left:20px;padding-right:20px}
+  .tool.imgtool h3{margin-top:14px}
+  .tool.imgtool p{padding-bottom:20px}
 
   /* software mock - deliberately generic/abstract, NOT a copy of any real
      product's UI. Built from scratch in CSS for this page only. */
@@ -314,11 +319,11 @@
         <div class="lbl"><div class="nm">Fiber-Tethered Quadcopters</div><div class="sub">Sensing &amp; civilian lines</div></div>
       </a>
       <a class="qcell" onclick="openP('plane');return false;" href="#plane">
-        <img src="assets/seraphim-spaceplane.jpg" alt="">
+        <img id="planeTileImg" src="assets/seraphim-plane-1.gif" alt="">
         <div class="lbl"><div class="nm">Space Planes</div><div class="sub">Reusable orbital launch</div></div>
       </a>
       <a class="qcell" onclick="openP('log');return false;" href="#log">
-        <img src="assets/seraphim-logistics.png" alt="">
+        <img id="logTileImg" src="assets/seraphim-logistics.png" alt="">
         <div class="lbl"><div class="nm">Logistics Suite</div><div class="sub">All-in-one planning software</div></div>
       </a>
     </div>
@@ -351,6 +356,12 @@
     </div>
     <div id="pd-plane" class="pdetail">
       <h3>Space Planes &mdash; reusable orbital launch</h3>
+      <div class="gallery">
+        <img src="assets/seraphim-plane-1.gif" alt="">
+        <img src="assets/seraphim-plane-2.jpg" alt="">
+        <img src="assets/seraphim-plane-3.jpg" alt="">
+        <img src="assets/seraphim-plane-4.jpg" alt="">
+      </div>
       <p>A fleet of high-flying, winged carrier aircraft &mdash; not rockets. Each one flies to
       altitude carrying a rocket on its back, releases it at the desired height, and the rocket
       continues on to orbit while the carrier plane <b>returns and lands like any other
@@ -359,11 +370,16 @@
     </div>
     <div id="pd-log" class="pdetail">
       <h3>Logistics Suite</h3>
+      <div class="gallery">
+        <img src="assets/seraphim-logistics.png" alt="">
+        <img src="assets/seraphim-logistics-2.png" alt="">
+        <img src="assets/seraphim-logistics-3.png" alt="">
+        <img src="assets/seraphim-logistics-4.jpg" alt="">
+      </div>
       <p>An all-in-one logistics planning application &mdash; fleet, sensor and mission planning
       in one piece of software rather than five disconnected tools. See the Software console at
       the top of this page for the interactive idea this product line is built around.</p>
       <p><span class="spectag">Software</span><span class="spectag">All-in-one</span></p>
-      <p class="placeholder-note">Placeholder screenshot &mdash; a sourced reference image standing in for Logistics Suite&rsquo;s actual screens, which don&rsquo;t exist yet.</p>
     </div>
   </section>
 
@@ -371,7 +387,7 @@
     <div class="kicker">Aerospace</div>
     <h2>Space planes &amp; Seraphim drones</h2>
     <div class="aeroblock">
-      <img src="assets/seraphim-spaceplane.jpg" alt="">
+      <img id="aeroTileImg" src="assets/seraphim-plane-2.jpg" alt="">
       <div class="t">
         <h3>Multi-stage space planes</h3>
         <p>A fleet of high-flying, winged carrier aircraft &mdash; not rockets. Each one flies to
@@ -384,7 +400,7 @@
       </div>
     </div>
     <div class="toolgrid">
-      <div class="tool"><h3>Seraphim Drones</h3><p>Ornithopter-based &mdash; wings, not propellers. Manned or unmanned, quiet enough for policing work where a loud quadcopter would announce itself.</p></div>
+      <div class="tool imgtool"><img id="droneToolImg" src="assets/seraphim-drone-1.jpg" alt=""><h3>Seraphim Drones</h3><p>Ornithopter-based &mdash; wings, not propellers. Manned or unmanned, quiet enough for policing work where a loud quadcopter would announce itself.</p></div>
       <div class="tool"><h3>ORB Ornithopter Line</h3><p>A wing-and-sensor variant of the ORB line, same quiet-flight principle, built for the same low-profile monitoring role.</p></div>
       <div class="tool"><h3>High-Earth-Orbit Focus</h3><p>The space-plane program is deliberately scoped to the higher orbital bands, not a general-purpose launch competitor.</p></div>
     </div>
@@ -409,6 +425,11 @@
           <h3>Swarm coordination</h3>
           <p>Multiple ORB units operating as one coordinated group rather than individually
           piloted units.</p>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="t">
+          <h3>Atlas Wall Laser</h3>
         </div>
       </div>
     </div>
@@ -442,15 +463,26 @@ function openP(id){
 
 const ORB_IMAGES = ['assets/seraphim-orb-1.jpg', 'assets/seraphim-orb.jpg'];
 const FIBER_IMAGES = ['assets/seraphim-fiber-1.webp', 'assets/seraphim-fiber-2.jpg', 'assets/seraphim-fiber-3.jpg'];
-let orbIdx = 0, fiberIdx = 0;
-setInterval(function(){
-  orbIdx = (orbIdx + 1) % ORB_IMAGES.length;
-  document.getElementById('orbTileImg').src = ORB_IMAGES[orbIdx];
-}, 5000);
-setInterval(function(){
-  fiberIdx = (fiberIdx + 1) % FIBER_IMAGES.length;
-  document.getElementById('fiberTileImg').src = FIBER_IMAGES[fiberIdx];
-}, 5000);
+const PLANE_IMAGES = ['assets/seraphim-plane-1.gif', 'assets/seraphim-plane-2.jpg', 'assets/seraphim-plane-3.jpg', 'assets/seraphim-plane-4.jpg'];
+const LOG_IMAGES = ['assets/seraphim-logistics.png', 'assets/seraphim-logistics-2.png', 'assets/seraphim-logistics-3.png', 'assets/seraphim-logistics-4.jpg'];
+const DRONE_IMAGES = ['assets/seraphim-drone-1.jpg', 'assets/seraphim-drone-2.jpg'];
+
+function cycler(ids, images, startAt){
+  let i = startAt || 0;
+  setInterval(function(){
+    i = (i + 1) % images.length;
+    ids.forEach(function(id){
+      const el = document.getElementById(id);
+      if (el) el.src = images[i];
+    });
+  }, 5000);
+}
+cycler(['orbTileImg'], ORB_IMAGES);
+cycler(['fiberTileImg'], FIBER_IMAGES);
+cycler(['planeTileImg'], PLANE_IMAGES);
+cycler(['aeroTileImg'], PLANE_IMAGES, 1);
+cycler(['logTileImg'], LOG_IMAGES);
+cycler(['droneToolImg'], DRONE_IMAGES);
 
 document.querySelectorAll('.swmock .side .row').forEach(function(row){
   row.addEventListener('click', function(){
