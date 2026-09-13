@@ -92,17 +92,19 @@
     display:block;border-radius:3px}
   details.evidence figcaption{color:var(--bronze);font-size:.78rem;font-weight:700;margin-top:8px}
 
-  /* ---- video: collapsible intro video, same visual pattern as evidence above ---- */
-  details.videobox{background:var(--sand-mid);border:1px solid var(--gold-deep);
-    border-left:3px solid var(--bronze);padding:15px 18px;margin:0 0 30px}
+  /* ---- video: collapsible intro video. Blue on purpose (site theme is gold/
+     bronze everywhere else) so this one section reads as "video", not charity/
+     donation content - per PRIMAL_MONKE. ---- */
+  details.videobox{background:var(--sand-mid);border:1px solid #2f7fd1;
+    border-left:3px solid #2f7fd1;padding:15px 18px;margin:0 0 30px}
   details.videobox summary{cursor:pointer;color:var(--ink);font-weight:700;font-size:.85rem;
     letter-spacing:.02em;list-style:none;display:flex;align-items:center;gap:8px}
   details.videobox summary::-webkit-details-marker{display:none}
-  details.videobox summary::before{content:"+";color:var(--bronze);font-weight:900;font-size:1.1rem;
+  details.videobox summary::before{content:"+";color:#2f7fd1;font-weight:900;font-size:1.1rem;
     width:16px;text-align:center}
   details.videobox[open] summary::before{content:"\2212"}
   .vidwrap{position:relative;width:100%;margin-top:14px;aspect-ratio:16/9;
-    border:2px solid var(--gold-deep);border-radius:8px;overflow:hidden;background:#000}
+    border:2px solid #2f7fd1;border-radius:8px;overflow:hidden;background:#000}
   .vidwrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
   /* ---------- game switch (Paladins / Smite) ---------- */
