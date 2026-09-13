@@ -92,6 +92,19 @@
     display:block;border-radius:3px}
   details.evidence figcaption{color:var(--bronze);font-size:.78rem;font-weight:700;margin-top:8px}
 
+  /* ---- video: collapsible intro video, same visual pattern as evidence above ---- */
+  details.videobox{background:var(--sand-mid);border:1px solid var(--gold-deep);
+    border-left:3px solid var(--bronze);padding:15px 18px;margin:0 0 30px}
+  details.videobox summary{cursor:pointer;color:var(--ink);font-weight:700;font-size:.85rem;
+    letter-spacing:.02em;list-style:none;display:flex;align-items:center;gap:8px}
+  details.videobox summary::-webkit-details-marker{display:none}
+  details.videobox summary::before{content:"+";color:var(--bronze);font-weight:900;font-size:1.1rem;
+    width:16px;text-align:center}
+  details.videobox[open] summary::before{content:"\2212"}
+  .vidwrap{position:relative;width:100%;margin-top:14px;aspect-ratio:16/9;
+    border:2px solid var(--gold-deep);border-radius:8px;overflow:hidden;background:#000}
+  .vidwrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
   /* ---------- game switch (Paladins / Smite) ---------- */
   .gameswitch{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px}
   @media(max-width:640px){.gameswitch{grid-template-columns:1fr}}
@@ -457,6 +470,16 @@
     </div>
   </div>
 
+  <!-- ===== video ===== -->
+  <details class="videobox" open>
+    <summary data-i18n="v_sum">Video &mdash; see PHAROAH in action</summary>
+    <div class="vidwrap">
+      <iframe src="https://www.youtube.com/embed/hCefRbN4XKk" title="PHAROAH"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+  </details>
+
   <section>
     <h2 data-i18n="h_what">What PHAROAH is</h2>
     <p class="body" data-i18n="p_what1"></p>
@@ -551,6 +574,7 @@ const I18N = {
     h_charity:'Our Donations', c_month:'August 2026',
     c_donated:'Donated', c_goal:'First goal',
     c_note:'PHAROAH is 100% free with nothing locked behind a paywall &mdash; that includes every feature that used to sit behind a charity gate. Donating is entirely optional and gets you nothing extra; it is just a way to support humanitarian aid if you want to. Every figure above is real.',
+    v_sum:'Video &mdash; see PHAROAH in action',
     ev_sum:'Evidence &mdash; donation receipts',
     ev_5:'$5 &mdash; first community donation',
     ev_100:'$100 &mdash; donated directly',
@@ -588,6 +612,7 @@ const I18N = {
     h_charity:'Nuestras Donaciones', c_month:'Agosto 2026',
     c_donated:'Donado', c_goal:'Primera meta',
     c_note:'PHAROAH es 100% gratis y no tiene nada bloqueado tras un muro de pago &mdash; eso incluye todo lo que antes estaba tras una puerta de caridad. Donar es totalmente opcional y no da nada extra; es solo una forma de apoyar la ayuda humanitaria si quieres. Todas las cifras de arriba son reales.',
+    v_sum:'Video &mdash; mira PHAROAH en acci&oacute;n',
     ev_sum:'Evidencia &mdash; recibos de donaci&oacute;n',
     ev_5:'$5 &mdash; primera donaci&oacute;n de la comunidad',
     ev_100:'$100 &mdash; donado directamente',
