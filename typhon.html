@@ -78,10 +78,14 @@
   .hero{position:relative;padding-block:clamp(44px,7vw,86px)}
   .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:46px;align-items:center}
   @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:34px}}
-  .hero h1{font-family:var(--strong);font-weight:400;font-size:clamp(3.4rem,10vw,7.2rem);
-    line-height:.92;letter-spacing:.005em;text-transform:uppercase;margin:16px 0 0;
-    text-shadow:0 0 34px rgba(232,98,42,.22)}
-  .hero h1 .gradtext{background:linear-gradient(100deg,var(--gold2),var(--ember2) 50%,var(--gold));
+  .hero h1{font-family:var(--strong);font-weight:400;font-size:clamp(3.8rem,12vw,8.4rem);
+    line-height:.86;letter-spacing:.02em;text-transform:uppercase;margin:12px 0 0;
+    background:linear-gradient(100deg,var(--gold2),var(--ember2) 55%,var(--gold));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 34px rgba(232,98,42,.22))}
+  .tagline{font-family:var(--strong);font-weight:400;font-size:clamp(1.3rem,3.2vw,2.3rem);
+    letter-spacing:.16em;text-transform:uppercase;color:var(--paper);margin-top:8px}
+  .tagline .gradtext{background:linear-gradient(100deg,var(--gold2),var(--ember2) 60%,var(--gold));
     -webkit-background-clip:text;background-clip:text;color:transparent}
   .hero .sub{font-size:clamp(1rem,1.7vw,1.18rem);color:#c4c0b6;max-width:56ch;margin-top:20px}
   .hero .cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
@@ -184,8 +188,8 @@
   body[data-emblem="lockon"] .emblem .rmode{display:none}
   body[data-emblem="lockon"] .emblem img{filter:drop-shadow(0 0 46px rgba(224,29,43,.45)) drop-shadow(0 0 20px rgba(232,98,42,.5))}
   body[data-emblem="lockon"] .emblem .stamp{color:var(--danger2);text-shadow:0 0 14px rgba(224,29,43,.5)}
-  body[data-emblem="lockon"] .hero h1{text-shadow:0 0 38px rgba(224,29,43,.26)}
-  body[data-emblem="lockon"] .hero h1 .gradtext{background:linear-gradient(100deg,var(--gold2),var(--ember) 42%,var(--danger2))}
+  body[data-emblem="lockon"] .hero h1{filter:drop-shadow(0 0 34px rgba(224,29,43,.3))}
+  body[data-emblem="lockon"] .tagline .gradtext{background:linear-gradient(100deg,var(--gold2),var(--ember) 42%,var(--danger2));-webkit-background-clip:text;background-clip:text;color:transparent}
   @keyframes orbitspin{from{transform:rotateX(68deg) rotate(0)}to{transform:rotateX(68deg) rotate(360deg)}}
   @keyframes pulse{0%,100%{opacity:.85}50%{opacity:.32}}
   @keyframes breathe{50%{filter:drop-shadow(0 0 86px rgba(245,132,63,.82))}}
@@ -201,6 +205,15 @@
   .showcase img{display:block;width:100%;height:auto}
   .showcase .cap{padding:10px 14px;border-top:1px solid var(--line);font-family:var(--mono);
     font-size:10.5px;color:var(--faint);letter-spacing:.04em;text-align:center}
+  /* idea + preview two-up */
+  .idea-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center}
+  @media(max-width:860px){.idea-grid{grid-template-columns:1fr;gap:26px}}
+  .pillars-v{display:flex;flex-direction:column}
+  .pil-row{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:16px 2px;border-top:1px solid var(--line)}
+  .pil-row:last-child{border-bottom:1px solid var(--line)}
+  .pil-row .pn{font-family:var(--strong);font-size:1.7rem;color:var(--ember2);line-height:1}
+  .pil-b h3{font-family:var(--disp);font-weight:700;font-size:1.18rem;margin-bottom:3px}
+  .pil-b p{color:var(--dim);font-size:.92rem}
 
   /* ---------- section frame ---------- */
   section.band{padding-block:clamp(48px,7vw,84px);border-top:1px solid var(--line)}
@@ -377,7 +390,8 @@
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow" data-i18n="h_eyebrow">Operator-grade offensive security</span>
-      <h1 data-i18n="h_title">Chaos. <span class="gradtext">Weaponized.</span></h1>
+      <h1>TYPHON</h1>
+      <p class="tagline" data-i18n="h_title">Chaos. <span class="gradtext">Weaponized.</span></p>
       <p class="sub" data-i18n="h_sub">Every Kali tool, one clean weapon. TYPHON runs the full arsenal through a single command surface — recon, exploitation and reporting with the discipline of a red-team engagement, not a wall of buttons. Authorized work only: labs, CTFs, and systems you own.</p>
       <div class="cta">
         <a href="#download" class="btn btn-primary" data-i18n="h_cta1">Download for Windows</a>
@@ -408,40 +422,27 @@
   </div>
 </header>
 
-<!-- ===================== INTERFACE SHOWCASE ===================== -->
-<section class="band" id="inside" style="border-top:0;padding-top:clamp(18px,3vw,34px)">
-  <div class="wrap">
-    <div class="showcase">
-      <div class="showcase-bar"><span class="d a"></span><span class="d b"></span><span class="d"></span><span class="p">TYPHON — workspace preview</span></div>
-      <img src="typhon-ui.webp" alt="TYPHON workspace interface preview" loading="lazy" decoding="async">
-      <div class="cap" data-i18n="shot_cap">Interface preview — placeholder art, to be replaced with the live app build.</div>
-    </div>
-  </div>
-</section>
-
 <!-- ===================== OVERVIEW / PILLARS ===================== -->
 <section class="band" id="overview">
   <div class="wrap">
-    <div class="head">
-      <span class="eyebrow" data-i18n="o_eyebrow">The idea</span>
-      <h2 data-i18n="o_title">Not a pile of tools. A place to run an investigation.</h2>
-      <p data-i18n="o_sub">Kali gives you 600 tools and no structure. TYPHON wraps them in one workspace that remembers your target, your findings, and every step you took — three heads working as one.</p>
-    </div>
-    <div class="pillars">
-      <div class="pil">
-        <div class="n">01 · INVESTIGATE</div>
-        <h3 data-i18n="pil1_h">The Workspace</h3>
-        <p data-i18n="pil1_p">Targets, services, findings, evidence and a full timeline — every scan you run becomes structured intel instead of lost terminal output.</p>
+    <div class="idea-grid">
+      <div class="idea-left">
+        <div class="head" style="margin-bottom:18px">
+          <span class="eyebrow" data-i18n="o_eyebrow">The idea</span>
+          <h2 data-i18n="o_title">Not a pile of tools. A place to run an investigation.</h2>
+        </div>
+        <div class="pillars-v">
+          <div class="pil-row"><span class="pn">01</span><div class="pil-b"><h3 data-i18n="pil1_h">The Workspace</h3><p data-i18n="pil1_p">Targets, services, findings, evidence and a full timeline — every scan becomes structured intel instead of lost terminal output.</p></div></div>
+          <div class="pil-row"><span class="pn">02</span><div class="pil-b"><h3 data-i18n="pil2_h">The AI Analyst</h3><p data-i18n="pil2_p">A local AI that reads the workspace, decides which tool to run next, executes it, and separates fact from hypothesis.</p></div></div>
+          <div class="pil-row"><span class="pn">03</span><div class="pil-b"><h3 data-i18n="pil3_h">The DoS Lab</h3><p data-i18n="pil3_p">A focused module for authorized denial-of-service resilience testing — measure how your own service holds up, live.</p></div></div>
+        </div>
       </div>
-      <div class="pil">
-        <div class="n">02 · AUTOMATE</div>
-        <h3 data-i18n="pil2_h">The AI Analyst</h3>
-        <p data-i18n="pil2_p">A local AI that reads the workspace, decides which tool to run next, executes it, and separates observed fact from hypothesis.</p>
-      </div>
-      <div class="pil">
-        <div class="n">03 · SPECIALIZE</div>
-        <h3 data-i18n="pil3_h">The DoS Lab</h3>
-        <p data-i18n="pil3_p">A focused module for authorized denial-of-service resilience testing — measure how your own service holds up, live.</p>
+      <div class="idea-shot">
+        <div class="showcase">
+          <div class="showcase-bar"><span class="d a"></span><span class="d b"></span><span class="d"></span><span class="p">TYPHON — workspace preview</span></div>
+          <img src="typhon-ui.webp" alt="TYPHON workspace interface preview" loading="lazy" decoding="async">
+          <div class="cap" data-i18n="shot_cap">Interface preview — placeholder art, to be replaced with the live app build.</div>
+        </div>
       </div>
     </div>
   </div>
