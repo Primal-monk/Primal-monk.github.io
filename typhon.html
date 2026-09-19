@@ -148,7 +148,7 @@
   .emblem .tick i:nth-child(2){bottom:-5px;left:calc(50% - 1px);width:2px;height:12px}
   .emblem .tick i:nth-child(3){left:-5px;top:calc(50% - 1px);width:12px;height:2px}
   .emblem .tick i:nth-child(4){right:-5px;top:calc(50% - 1px);width:12px;height:2px}
-  .emblem img{width:min(400px,74%);position:relative;z-index:2;
+  .emblem img{width:min(400px,74%);position:relative;z-index:2;transform:translateY(5%);
     filter:drop-shadow(0 0 52px rgba(232,98,42,.55));animation:breathe 6s ease-in-out infinite}
   .emblem .stamp{position:absolute;bottom:1%;font-family:var(--mono);font-size:10.5px;letter-spacing:.30em;
     text-transform:uppercase;color:var(--faint)}
@@ -299,7 +299,7 @@
 <!-- ===================== STATUS STRIP ===================== -->
 <div class="statusstrip">
   <div class="wrap">
-    <span class="a">TYPHON // OFFENSIVE OPERATIONS PLATFORM</span>
+    <span class="a">TYPHON // CHAOS, WEAPONIZED</span>
     <span class="h" data-i18n="ss1">AUTHORIZED ENGAGEMENTS ONLY</span>
     <span class="ver" data-i18n="ss2">BUILD 0.9 · PRIVATE ACCESS</span>
   </div>
@@ -311,8 +311,8 @@
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow" data-i18n="h_eyebrow">Operator-grade offensive security</span>
-      <h1 data-i18n="h_title">Every Kali tool. <span class="gradtext">One clean weapon.</span></h1>
-      <p class="sub" data-i18n="h_sub">TYPHON runs the full Kali arsenal through a single command surface — recon, exploitation and reporting handled with the discipline of a red-team engagement, not a wall of buttons. Authorized work only: labs, CTFs, and systems you own.</p>
+      <h1 data-i18n="h_title">Chaos. <span class="gradtext">Weaponized.</span></h1>
+      <p class="sub" data-i18n="h_sub">Every Kali tool, one clean weapon. TYPHON runs the full arsenal through a single command surface — recon, exploitation and reporting with the discipline of a red-team engagement, not a wall of buttons. Authorized work only: labs, CTFs, and systems you own.</p>
       <div class="cta">
         <a href="#download" class="btn btn-primary" data-i18n="h_cta1">Download for Windows</a>
         <a href="#modules" class="btn btn-ghost" data-i18n="h_cta2">See the modules</a>
@@ -332,7 +332,7 @@
       <span class="ring r3"></span>
       <span class="tick"><i></i><i></i><i></i><i></i></span>
       <img src="assets/typhon-logo.png" alt="TYPHON emblem">
-      <span class="stamp" data-i18n="h_stamp">Father of Monsters</span>
+      <span class="stamp" data-i18n="h_stamp">Whirlwind of Chaos</span>
     </div>
   </div>
 </header>
@@ -543,11 +543,11 @@ const I18N={
 en:{
  nv_over:'Overview', nv_mod:'Modules', nv_dos:'DoS Lab', nv_ai:'AI Analyst', nv_get:'Get TYPHON',
  h_eyebrow:'Operator-grade offensive security',
- h_title:'Every Kali tool. <span class="gradtext">One clean weapon.</span>',
- h_sub:'TYPHON runs the full Kali arsenal through a single command surface — recon, exploitation and reporting handled with the discipline of a red-team engagement, not a wall of buttons. Authorized work only: labs, CTFs, and systems you own.',
+ h_title:'Chaos. <span class="gradtext">Weaponized.</span>',
+ h_sub:'Every Kali tool, one clean weapon. TYPHON runs the full arsenal through a single command surface — recon, exploitation and reporting with the discipline of a red-team engagement, not a wall of buttons. Authorized work only: labs, CTFs, and systems you own.',
  h_cta1:'Download for Windows', h_cta2:'See the modules',
  h_m1:'Windows 10 / 11', h_m2:'Local AI — no cloud required',
- h_stamp:'Father of Monsters', ss1:'AUTHORIZED ENGAGEMENTS ONLY', ss2:'BUILD 0.9 · PRIVATE ACCESS',
+ h_stamp:'Whirlwind of Chaos', ss1:'AUTHORIZED ENGAGEMENTS ONLY', ss2:'BUILD 0.9 · PRIVATE ACCESS',
  o_eyebrow:'The idea', o_title:'Not a pile of tools. A place to run an investigation.',
  o_sub:'Kali gives you 600 tools and no structure. TYPHON wraps them in one workspace that remembers your target, your findings, and every step you took — three heads working as one.',
  pil1_h:'The Workspace', pil1_p:'Targets, services, findings, evidence and a full timeline — every scan you run becomes structured intel instead of lost terminal output.',
@@ -575,11 +575,11 @@ en:{
 es:{
  nv_over:'Resumen', nv_mod:'Módulos', nv_dos:'Lab DoS', nv_ai:'Analista IA', nv_get:'Obtener TYPHON',
  h_eyebrow:'Seguridad ofensiva de nivel operador',
- h_title:'Todo Kali. <span class="gradtext">Una sola arma limpia.</span>',
- h_sub:'TYPHON ejecuta todo el arsenal de Kali desde una sola superficie de comando — reconocimiento, explotación e informes con la disciplina de un red team, no un muro de botones. Solo trabajo autorizado: laboratorios, CTFs y sistemas propios.',
+ h_title:'Caos. <span class="gradtext">Convertido en arma.</span>',
+ h_sub:'Todo Kali, una sola arma limpia. TYPHON ejecuta el arsenal completo desde una sola superficie de comando — reconocimiento, explotación e informes con la disciplina de un red team, no un muro de botones. Solo trabajo autorizado: laboratorios, CTFs y sistemas propios.',
  h_cta1:'Descargar para Windows', h_cta2:'Ver los módulos',
  h_m1:'Windows 10 / 11', h_m2:'IA local — sin nube',
- h_stamp:'Padre de los Monstruos', ss1:'SOLO COMPROMISOS AUTORIZADOS', ss2:'BUILD 0.9 · ACCESO PRIVADO',
+ h_stamp:'Torbellino de Caos', ss1:'SOLO COMPROMISOS AUTORIZADOS', ss2:'BUILD 0.9 · ACCESO PRIVADO',
  o_eyebrow:'La idea', o_title:'No un montón de herramientas. Un lugar para investigar.',
  o_sub:'Kali te da 600 herramientas y ninguna estructura. TYPHON las envuelve en un espacio que recuerda tu objetivo, tus hallazgos y cada paso — tres cabezas trabajando como una.',
  pil1_h:'El Espacio', pil1_p:'Objetivos, servicios, hallazgos, evidencia y una línea de tiempo — cada escaneo se vuelve inteligencia estructurada en vez de texto perdido.',
