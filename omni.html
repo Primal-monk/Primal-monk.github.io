@@ -104,9 +104,36 @@
     animation:halospin 150s linear infinite}
   .angel .halo{position:absolute;width:min(470px,102%);aspect-ratio:1;border-radius:50%;
     background:radial-gradient(circle, rgba(var(--ray),.20), rgba(var(--glow),.07) 46%, transparent 68%);filter:blur(4px)}
+  /* orbiting halo ring with travelling light */
+  .angel .haloring{position:absolute;width:min(440px,94%);aspect-ratio:1;border-radius:50%;
+    border:1px solid rgba(var(--ray),.34);transform:rotateX(66deg);box-shadow:0 0 26px rgba(var(--ray),.12)}
+  .angel .beadring{position:absolute;width:min(440px,94%);aspect-ratio:1;transform:rotateX(66deg);
+    animation:orbit 8s linear infinite}
+  .angel .beadring i{position:absolute;top:-5px;left:calc(50% - 5px);width:11px;height:11px;border-radius:50%;
+    background:radial-gradient(circle,#fff,rgba(var(--ray),1) 55%,transparent);box-shadow:0 0 18px 4px rgba(var(--ray),.75)}
+  .angel .beadring i.b2{top:auto;bottom:-4px;width:7px;height:7px;left:calc(50% - 3.5px);opacity:.8}
   .angel img{width:min(330px,74%);position:relative;z-index:2;
     filter:drop-shadow(0 6px 30px rgba(255,217,122,.32)) drop-shadow(0 0 60px rgba(143,192,245,.18))}
   @keyframes halospin{to{transform:rotate(360deg)}}
+  @keyframes orbit{from{transform:rotateX(66deg) rotate(0)}to{transform:rotateX(66deg) rotate(360deg)}}
+
+  /* ---------- cathedral flourishes ---------- */
+  #overview .body:first-of-type::first-letter{float:left;font-family:var(--disp);font-weight:700;
+    font-size:3.6em;line-height:.72;padding:8px 14px 4px 0;color:var(--red2)}
+  .colonnade{display:flex;justify-content:center;align-items:flex-end;height:88px;overflow:hidden}
+  .colonnade i{width:70px;height:88px;border:1px solid var(--line-red);border-bottom:0;
+    border-radius:50% 50% 0 0 / 96% 96% 0 0;margin-left:-1px;position:relative}
+  .colonnade i::after{content:"";position:absolute;left:50%;top:14%;width:1px;height:70%;
+    background:var(--line-red);opacity:.5;transform:translateX(-.5px)}
+  @media(max-width:760px){.colonnade i:nth-child(n+6){display:none}}
+  @media(max-width:460px){.colonnade i:nth-child(n+4){display:none}}
+  .ornament{display:flex;align-items:center;justify-content:center;gap:16px;margin:0 auto 26px}
+  .ornament::before,.ornament::after{content:"";height:1px;width:min(130px,24vw)}
+  .ornament::before{background:linear-gradient(90deg,transparent,var(--line-red))}
+  .ornament::after{background:linear-gradient(90deg,var(--line-red),transparent)}
+  .ornament i{width:9px;height:9px;background:var(--red);transform:rotate(45deg);box-shadow:0 0 0 4px color-mix(in srgb,var(--red) 18%,transparent)}
+  /* arch-topped section eyebrows */
+  .band .head .eyebrow{position:relative;padding-top:4px}
   .hero h1{font-family:var(--disp);font-weight:900;font-size:clamp(2.4rem,6.4vw,5rem);
     letter-spacing:-.01em;color:var(--paper)}
   .hero h1 .r{color:var(--red2)}
@@ -243,6 +270,8 @@
       <span class="rays"></span>
       <span class="arch"></span>
       <span class="halo"></span>
+      <span class="haloring"></span>
+      <span class="beadring"><i></i><i class="b2"></i></span>
       <img src="assets/angelcorp.png" alt="ANGELCORP">
     </div>
     <div class="hero-in">
@@ -267,6 +296,8 @@
     <div class="c"><div class="n">2025</div><div class="l" data-i18n="st_est">Year founded</div></div>
   </div>
 </div>
+
+<div class="wrap colonnade" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
 <!-- ===================== OVERVIEW ===================== -->
 <section class="band" id="overview">
@@ -354,6 +385,8 @@
     </div>
   </div>
 </section>
+
+<div class="wrap" style="padding-block:8px 34px"><div class="ornament"><i></i></div></div>
 
 <!-- ===================== FOOTER ===================== -->
 <footer>
