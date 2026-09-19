@@ -111,6 +111,48 @@
   .caret{display:inline-block;width:7px;height:14px;background:var(--ember2);vertical-align:-2px;margin-left:2px;animation:bl 1.1s steps(1) infinite}
   @keyframes bl{50%{opacity:0}}
 
+  /* ---------- tactical status strip ---------- */
+  .statusstrip{background:#0a0b0e;border-bottom:1px solid var(--line)}
+  .statusstrip .wrap{display:flex;gap:22px;align-items:center;height:32px;font-family:var(--mono);
+    font-size:10.5px;letter-spacing:.13em;color:var(--faint);text-transform:uppercase;overflow:hidden;white-space:nowrap}
+  .statusstrip .wrap .a{color:var(--ember2)}
+  .statusstrip .live{margin-left:auto;color:var(--green)}
+  .statusstrip .live b{animation:bl 1.4s steps(1) infinite;font-style:normal}
+  @media(max-width:620px){.statusstrip .wrap .h{display:none}}
+
+  /* ---------- hero background grid — fades out before the fold ---------- */
+  .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(242,178,41,.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(242,178,41,.06) 1px, transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(135% 92% at 74% 6%, #000 0 34%, transparent 78%);
+            mask-image:radial-gradient(135% 92% at 74% 6%, #000 0 34%, transparent 78%);}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:130px;z-index:0;pointer-events:none;
+    background:linear-gradient(180deg,transparent,var(--ink))}
+  .hero-grid{position:relative;z-index:1}
+
+  /* ---------- large emblem (replaces the demo) ---------- */
+  .emblem{position:relative;display:flex;align-items:center;justify-content:center;min-height:clamp(320px,42vw,470px)}
+  .emblem .glow{position:absolute;width:62%;aspect-ratio:1;border-radius:50%;
+    background:radial-gradient(circle,rgba(232,98,42,.42),transparent 62%);filter:blur(36px)}
+  .emblem .ring{position:absolute;aspect-ratio:1;border-radius:50%;border:1px solid rgba(242,178,41,.14)}
+  .emblem .ring.r1{width:min(500px,92%)}
+  .emblem .ring.r2{width:min(610px,110%);border-style:dashed;border-color:rgba(232,98,42,.20);animation:spin 46s linear infinite}
+  .emblem .ring.r3{width:min(410px,78%);border-color:rgba(242,178,41,.22)}
+  .emblem .tick{position:absolute;width:min(500px,92%);aspect-ratio:1;pointer-events:none}
+  .emblem .tick i{position:absolute;background:var(--ember2);opacity:.55}
+  .emblem .tick i:nth-child(1){top:-5px;left:calc(50% - 1px);width:2px;height:12px}
+  .emblem .tick i:nth-child(2){bottom:-5px;left:calc(50% - 1px);width:2px;height:12px}
+  .emblem .tick i:nth-child(3){left:-5px;top:calc(50% - 1px);width:12px;height:2px}
+  .emblem .tick i:nth-child(4){right:-5px;top:calc(50% - 1px);width:12px;height:2px}
+  .emblem img{width:min(400px,74%);position:relative;z-index:2;
+    filter:drop-shadow(0 0 52px rgba(232,98,42,.55));animation:breathe 6s ease-in-out infinite}
+  .emblem .stamp{position:absolute;bottom:1%;font-family:var(--mono);font-size:10.5px;letter-spacing:.30em;
+    text-transform:uppercase;color:var(--faint)}
+  @keyframes breathe{50%{filter:drop-shadow(0 0 84px rgba(245,132,63,.82))}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
   /* ---------- section frame ---------- */
   section.band{padding-block:clamp(48px,7vw,84px);border-top:1px solid var(--line)}
   .head{max-width:62ch;margin-bottom:34px}
@@ -240,9 +282,18 @@
   </div>
 </nav>
 
+<!-- ===================== STATUS STRIP ===================== -->
+<div class="statusstrip">
+  <div class="wrap">
+    <span class="a">// SYSTEMS ARMED</span>
+    <span class="h" data-i18n="ss1">AUTHORIZED TARGETS ONLY</span>
+    <span class="h" data-i18n="ss2">DoS RESILIENCE · v1</span>
+    <span class="live">● <b>LIVE</b> · EARLY BUILD</span>
+  </div>
+</div>
+
 <!-- ===================== HERO ===================== -->
 <header class="hero">
-  <img class="glow-logo" src="assets/typhon-logo.png" alt="">
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow" data-i18n="h_eyebrow">Offensive Security · Workspace</span>
@@ -259,37 +310,15 @@
       </div>
     </div>
 
-    <!-- product mockup -->
-    <div class="mock" role="img" aria-label="TYPHON workspace: a target's services shown as port bars with lock states, beside a recon terminal.">
-      <div class="mock-bar">
-        <span class="d a"></span><span class="d b"></span><span class="d c"></span>
-        <span class="path">typhon · engagement/DEMO-LAB · 10.10.10.24 (authorized)</span>
-      </div>
-      <div class="mock-panes">
-        <div class="mp">
-          <div class="mp-label">Workspace</div>
-          <div class="wsx">
-            <div class="h">▸ DEMO-LAB</div>
-            <div><span class="c">├</span> <span class="on">Targets</span> 1</div>
-            <div><span class="c">├</span> <span class="on">Services</span> 4</div>
-            <div><span class="c">├</span> Findings 3</div>
-            <div><span class="c">├</span> Evidence 7</div>
-            <div><span class="c">└</span> Timeline</div>
-          </div>
-        </div>
-        <div class="mp">
-          <div class="mp-label">Terminal · recon</div>
-          <div class="termx">
-            <div class="cmd"><span class="p">typhon</span>@lab:~$ scan 10.10.10.24</div>
-            <div class="warns"><b>⚠ proxy</b><b>⚠ firewall</b></div>
-            <div class="prow"><div class="l"><span>22/tcp · SSH</span><span class="locked">🔒 LOCKED</span></div><div class="pbar"><i style="width:76%"></i></div></div>
-            <div class="prow"><div class="l"><span>80/tcp · HTTP</span><span class="open">🔓 OPEN</span></div><div class="pbar o"><i style="width:100%"></i></div></div>
-            <div class="prow"><div class="l"><span>443/tcp · HTTPS</span><span class="locked">🔒 LOCKED</span></div><div class="pbar"><i style="width:44%"></i></div></div>
-            <div class="prow"><div class="l"><span>3306 · MySQL</span><span class="locked">🔒 FILTERED</span></div><div class="pbar"><i style="width:60%"></i></div></div>
-            <div class="cmd" style="margin-top:8px"><span class="p">typhon</span>@lab:~$ <span class="caret"></span></div>
-          </div>
-        </div>
-      </div>
+    <!-- emblem -->
+    <div class="emblem" aria-hidden="true">
+      <span class="glow"></span>
+      <span class="ring r2"></span>
+      <span class="ring r1"></span>
+      <span class="ring r3"></span>
+      <span class="tick"><i></i><i></i><i></i><i></i></span>
+      <img src="assets/typhon-logo.png" alt="TYPHON emblem">
+      <span class="stamp" data-i18n="h_stamp">Father of Monsters</span>
     </div>
   </div>
 </header>
@@ -497,6 +526,7 @@ en:{
  h_sub:'TYPHON runs the real Kali arsenal through a single Hacknet-style workspace — pick a target, investigate it, and let a local AI analyst run the tools and explain what it finds. Built for authorized testing: labs, CTFs, and systems you own.',
  h_cta1:'Download for Windows', h_cta2:'See the modules',
  h_m1:'Windows 10 / 11', h_m2:'Local AI — no cloud required',
+ h_stamp:'Father of Monsters', ss1:'AUTHORIZED TARGETS ONLY', ss2:'DoS RESILIENCE · v1',
  o_eyebrow:'The idea', o_title:'Not a pile of tools. A place to run an investigation.',
  o_sub:'Kali gives you 600 tools and no structure. TYPHON wraps them in one workspace that remembers your target, your findings, and every step you took — three heads working as one.',
  pil1_h:'The Workspace', pil1_p:'Targets, services, findings, evidence and a full timeline — every scan you run becomes structured intel instead of lost terminal output.',
@@ -528,6 +558,7 @@ es:{
  h_sub:'TYPHON ejecuta el arsenal real de Kali en un único espacio estilo Hacknet — elige un objetivo, investígalo y deja que una IA local ejecute las herramientas y explique lo que encuentra. Para pruebas autorizadas: laboratorios, CTFs y sistemas propios.',
  h_cta1:'Descargar para Windows', h_cta2:'Ver los módulos',
  h_m1:'Windows 10 / 11', h_m2:'IA local — sin nube',
+ h_stamp:'Padre de los Monstruos', ss1:'SOLO OBJETIVOS AUTORIZADOS', ss2:'RESILIENCIA DoS · v1',
  o_eyebrow:'La idea', o_title:'No un montón de herramientas. Un lugar para investigar.',
  o_sub:'Kali te da 600 herramientas y ninguna estructura. TYPHON las envuelve en un espacio que recuerda tu objetivo, tus hallazgos y cada paso — tres cabezas trabajando como una.',
  pil1_h:'El Espacio', pil1_p:'Objetivos, servicios, hallazgos, evidencia y una línea de tiempo — cada escaneo se vuelve inteligencia estructurada en vez de texto perdido.',
