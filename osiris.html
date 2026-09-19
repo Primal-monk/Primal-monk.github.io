@@ -8,7 +8,7 @@
 <meta name="description" content="OSIRIS — one application for the whole game-modding job: attach, dump the SDK, watch memory live, and inject. For titles you own.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Chakra+Petch:wght@500;600;700&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
 <style>
   :root{
     --ink:#0d0912; --ink2:#161020; --ink3:#1d1530; --raise:#241a38;
@@ -16,8 +16,9 @@
     --paper:#ede7f5; --dim:#9b90b5; --faint:#6a5f85;
     --violet:#b06bff; --violet2:#d0a8ff; --gold:#d8b35a;
     --cyan:#4fd6e0; --red:#ff5c8a; --green:#54e0a0;
-    --disp:"Saira",system-ui,sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif;
-    --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace; --maxw:1160px;
+    --strong:"Archivo Black",Impact,system-ui,sans-serif;
+    --disp:"Chakra Petch",system-ui,sans-serif; --body:"Archivo",system-ui,sans-serif;
+    --mono:"Space Mono",ui-monospace,Consolas,monospace; --maxw:1320px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -42,7 +43,7 @@
     letter-spacing:.08em;padding-right:14px;border-right:1px solid var(--line)}
   .brand{display:flex;align-items:center;gap:10px}
   .brand img{width:30px;height:30px;object-fit:contain}
-  .brand .wm{font-family:var(--disp);font-weight:800;font-size:20px;letter-spacing:.18em}
+  .brand .wm{font-family:var(--strong);font-weight:400;font-size:21px;letter-spacing:.12em}
   .navlinks{display:flex;gap:22px;margin-left:auto}
   .navlinks a{font-size:13.5px;color:var(--dim);transition:color .15s}
   .navlinks a:hover{color:var(--paper)}
@@ -50,7 +51,7 @@
   .langwrap{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
   .lang{background:transparent;border:0;cursor:pointer;padding:6px 10px;font-family:var(--mono);font-size:11px;color:var(--dim)}
   .lang.on{background:var(--violet);color:#120a1a}
-  @media(max-width:880px){.navlinks{display:none}.parent{display:none}}
+  @media(max-width:880px){.navlinks{display:none}}
 
   /* ops strip */
   .statusstrip{background:#0a0710;border-bottom:1px solid var(--line)}
@@ -69,7 +70,8 @@
   .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:120px;z-index:0;pointer-events:none;background:linear-gradient(180deg,transparent,var(--ink))}
   .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1.05fr;gap:44px;align-items:center}
   @media(max-width:920px){.hero-grid{grid-template-columns:1fr;gap:32px}}
-  .hero h1{font-size:clamp(2.5rem,6vw,4.4rem);font-weight:800;margin:18px 0 0}
+  .hero h1{font-family:var(--strong);font-weight:400;font-size:clamp(2.9rem,7vw,5.6rem);
+    line-height:1;letter-spacing:-.015em;margin:16px 0 0}
   .hero .sub{font-size:clamp(1rem,1.7vw,1.18rem);color:#c9c2da;max-width:56ch;margin-top:20px}
   .hero .cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
   .btn{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.04em;padding:10px 18px;border-radius:5px;
