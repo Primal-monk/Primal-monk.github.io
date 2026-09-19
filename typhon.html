@@ -60,6 +60,10 @@
   .lang{background:transparent;border:0;cursor:pointer;padding:6px 10px;font-family:var(--mono);
     font-size:11px;font-weight:500;color:var(--dim)}
   .lang.on{background:var(--gold);color:#120a04}
+  .modepill{background:var(--ink3);border:1px solid var(--line);border-radius:4px;color:var(--paper);
+    font-family:var(--mono);font-size:11px;padding:6px 11px;cursor:pointer;letter-spacing:.04em}
+  .modepill:hover{border-color:var(--gold)}
+  @media(max-width:520px){.modepill{display:none}}
   .btn{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.05em;padding:9px 16px;
     border-radius:5px;cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;display:inline-block}
   .btn:hover{transform:translateY(-1px)}
@@ -76,8 +80,8 @@
   @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:34px}}
   .hero h1{font-family:var(--strong);font-weight:400;font-size:clamp(3.4rem,10vw,7.2rem);
     line-height:.92;letter-spacing:.005em;text-transform:uppercase;margin:16px 0 0;
-    text-shadow:0 0 38px rgba(224,29,43,.26)}
-  .hero h1 .gradtext{background:linear-gradient(100deg,var(--gold2),var(--ember) 42%,var(--danger2));
+    text-shadow:0 0 34px rgba(232,98,42,.22)}
+  .hero h1 .gradtext{background:linear-gradient(100deg,var(--gold2),var(--ember2) 50%,var(--gold));
     -webkit-background-clip:text;background-clip:text;color:transparent}
   .hero .sub{font-size:clamp(1rem,1.7vw,1.18rem);color:#c4c0b6;max-width:56ch;margin-top:20px}
   .hero .cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
@@ -140,36 +144,51 @@
     background:linear-gradient(180deg,transparent,var(--ink))}
   .hero-grid{position:relative;z-index:1}
 
-  /* ---------- large emblem: a red lock-on / targeting system ---------- */
+  /* ---------- large emblem: Halo (default) or Lock-On mode ---------- */
   .emblem{position:relative;display:flex;align-items:center;justify-content:center;
-    min-height:clamp(340px,44vw,500px)}
+    min-height:clamp(340px,44vw,500px);perspective:1100px}
   .emblem span{position:absolute}
-  .emblem .glow{width:56%;aspect-ratio:1;border-radius:50%;
+  .emblem .glow{width:58%;aspect-ratio:1;border-radius:50%;
     background:radial-gradient(circle,rgba(232,98,42,.5),transparent 62%);filter:blur(40px)}
+  /* --- Halo mode (default): spinning angelic rings, ember/gold --- */
+  .emblem .haloflat{width:min(500px,94%);aspect-ratio:1;border-radius:50%;border:1px solid rgba(242,178,41,.14)}
+  .emblem .ringx{width:min(560px,100%);aspect-ratio:1;border-radius:50%;border:1px solid rgba(232,98,42,.18);transform:rotateY(70deg)}
+  .emblem .ringtilt{width:min(560px,100%);aspect-ratio:1;border-radius:50%;border:1px solid rgba(242,178,41,.32);
+    transform:rotateX(68deg);box-shadow:0 0 22px rgba(232,98,42,.12)}
+  .emblem .beadring{width:min(560px,100%);aspect-ratio:1;transform:rotateX(68deg);animation:orbitspin 6.5s linear infinite;z-index:4}
+  .emblem .beadring i{position:absolute;top:-6px;left:calc(50% - 6px);width:12px;height:12px;border-radius:50%;
+    background:radial-gradient(circle,#fff,var(--gold2) 45%,var(--ember) 100%);box-shadow:0 0 20px 5px rgba(255,204,85,.72)}
+  .emblem .beadring i.b2{top:auto;bottom:-5px;width:9px;height:9px;left:calc(50% - 4.5px);
+    background:radial-gradient(circle,var(--gold2),var(--ember) 60%);box-shadow:0 0 13px 3px rgba(232,98,42,.55)}
+  /* --- Lock-On mode: red targeting --- */
   .emblem .glowred{width:52%;aspect-ratio:1;border-radius:50%;
     background:radial-gradient(circle,rgba(224,29,43,.55),transparent 60%);filter:blur(40px);animation:pulse 2.6s ease-in-out infinite}
-  /* rotating radar sweep */
   .emblem .sweep{width:min(500px,96%);aspect-ratio:1;border-radius:50%;
     background:conic-gradient(from 0deg, rgba(224,29,43,.24) 0deg, rgba(232,98,42,.08) 26deg, transparent 46deg 360deg);
     animation:spin 3.6s linear infinite}
-  /* dashed lock rings */
-  .emblem .lockring{width:min(540px,98%);aspect-ratio:1;border-radius:50%;
-    border:1px dashed rgba(224,29,43,.38);animation:spin 26s linear infinite}
+  .emblem .lockring{width:min(540px,98%);aspect-ratio:1;border-radius:50%;border:1px dashed rgba(224,29,43,.38);animation:spin 26s linear infinite}
   .emblem .lockring.i2{width:min(420px,78%);border-color:rgba(242,178,41,.28);animation:spin 18s linear infinite reverse}
-  /* corner lock-on brackets */
   .emblem .lockbox{width:min(430px,82%);aspect-ratio:1;animation:pulse 2.2s ease-in-out infinite}
   .emblem .lockbox i{position:absolute;width:28px;height:28px;border:2px solid var(--danger2)}
   .emblem .lockbox i:nth-child(1){top:0;left:0;border-right:0;border-bottom:0}
   .emblem .lockbox i:nth-child(2){top:0;right:0;border-left:0;border-bottom:0}
   .emblem .lockbox i:nth-child(3){bottom:0;left:0;border-right:0;border-top:0}
   .emblem .lockbox i:nth-child(4){bottom:0;right:0;border-left:0;border-top:0}
+  /* shared */
   .emblem img{width:min(380px,72%);position:relative;z-index:3;transform:translateY(5%);
-    filter:drop-shadow(0 0 46px rgba(224,29,43,.45)) drop-shadow(0 0 20px rgba(232,98,42,.5));
-    animation:breathe 5s ease-in-out infinite}
+    filter:drop-shadow(0 0 54px rgba(232,98,42,.5));animation:breathe 6s ease-in-out infinite}
   .emblem .stamp{bottom:0;font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.3em;
-    text-transform:uppercase;color:var(--danger2);z-index:3;text-shadow:0 0 14px rgba(224,29,43,.5)}
-  @keyframes pulse{0%,100%{opacity:.85}50%{opacity:.3}}
-  @keyframes breathe{50%{filter:drop-shadow(0 0 78px rgba(224,29,43,.7)) drop-shadow(0 0 28px rgba(232,98,42,.7))}}
+    text-transform:uppercase;color:var(--gold2);z-index:4;text-shadow:0 0 12px rgba(232,98,42,.4)}
+  /* mode switching */
+  body:not([data-emblem="lockon"]) .emblem .lmode{display:none}
+  body[data-emblem="lockon"] .emblem .rmode{display:none}
+  body[data-emblem="lockon"] .emblem img{filter:drop-shadow(0 0 46px rgba(224,29,43,.45)) drop-shadow(0 0 20px rgba(232,98,42,.5))}
+  body[data-emblem="lockon"] .emblem .stamp{color:var(--danger2);text-shadow:0 0 14px rgba(224,29,43,.5)}
+  body[data-emblem="lockon"] .hero h1{text-shadow:0 0 38px rgba(224,29,43,.26)}
+  body[data-emblem="lockon"] .hero h1 .gradtext{background:linear-gradient(100deg,var(--gold2),var(--ember) 42%,var(--danger2))}
+  @keyframes orbitspin{from{transform:rotateX(68deg) rotate(0)}to{transform:rotateX(68deg) rotate(360deg)}}
+  @keyframes pulse{0%,100%{opacity:.85}50%{opacity:.32}}
+  @keyframes breathe{50%{filter:drop-shadow(0 0 86px rgba(245,132,63,.82))}}
   @keyframes spin{to{transform:rotate(360deg)}}
 
   /* ---------- section frame ---------- */
@@ -304,6 +323,7 @@
       <a href="#ai" data-i18n="nv_ai">AI Analyst</a>
     </div>
     <div class="navtools">
+      <button class="modepill" id="emblemBtn" title="Emblem style">Halo</button>
       <div class="langwrap">
         <button class="lang on" data-lang="en">EN</button>
         <button class="lang" data-lang="es">ES</button>
@@ -344,11 +364,15 @@
     <!-- emblem -->
     <div class="emblem" aria-hidden="true">
       <span class="glow"></span>
-      <span class="glowred"></span>
-      <span class="sweep"></span>
-      <span class="lockring"></span>
-      <span class="lockring i2"></span>
-      <span class="lockbox"><i></i><i></i><i></i><i></i></span>
+      <span class="haloflat rmode"></span>
+      <span class="ringx rmode"></span>
+      <span class="ringtilt rmode"></span>
+      <span class="beadring rmode"><i></i><i class="b2"></i></span>
+      <span class="glowred lmode"></span>
+      <span class="sweep lmode"></span>
+      <span class="lockring lmode"></span>
+      <span class="lockring i2 lmode"></span>
+      <span class="lockbox lmode"><i></i><i></i><i></i><i></i></span>
       <img src="assets/typhon-logo.png" alt="TYPHON emblem" decoding="async" fetchpriority="high">
       <span class="stamp" data-i18n="h_stamp">Whirlwind of Chaos</span>
     </div>
@@ -745,6 +769,16 @@ applyLang();
     }
     ssize(); window.addEventListener('resize', ssize); sframe();
   }
+})();
+</script>
+<script>
+/* emblem style toggle: Halo (default) <-> Lock-On, remembered */
+(function(){
+  var modes=[{id:'',name:'Halo'},{id:'lockon',name:'Lock-On'}];
+  var b=document.getElementById('emblemBtn'), i=0;
+  try{var s=localStorage.getItem('typhon-emblem');if(s!==null){for(var j=0;j<modes.length;j++)if(modes[j].id===s)i=j;}}catch(e){}
+  function ap(){var m=modes[i];if(m.id)document.body.setAttribute('data-emblem',m.id);else document.body.removeAttribute('data-emblem');b.textContent=m.name;try{localStorage.setItem('typhon-emblem',m.id);}catch(e){}}
+  b.addEventListener('click',function(){i=(i+1)%modes.length;ap();});ap();
 })();
 </script>
 </body>
