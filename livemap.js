@@ -43,9 +43,20 @@
     var counterEl = opts.counter ? document.getElementById(opts.counter) : null;
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var pal = opts.palette || {};
-    var dotColor = pal.dot || 'rgba(120,140,170,.32)';
-    var arcColors = pal.arcs || ['#e8622a', '#f2b229', '#ff5c68'];
-    var hubColor = pal.hub || '#ffcc55';
+    // Colours can come from CSS vars (--map-dot/--map-hub/--map-arcs) so a page's
+    // theme switch recolours the map live; otherwise fall back to opts.palette.
+    function readPal() {
+      var cs = getComputedStyle(canvas);
+      function v(n, f) { var x = cs.getPropertyValue(n).trim(); return x || f; }
+      var raw = v('--map-arcs', '');
+      return {
+        dot: v('--map-dot', pal.dot || 'rgba(120,140,170,.32)'),
+        hub: v('--map-hub', pal.hub || '#ffcc55'),
+        arcs: raw ? raw.split(',').map(function (s) { return s.trim(); }) : (pal.arcs || ['#e8622a', '#f2b229', '#ff5c68'])
+      };
+    }
+    var P = readPal();
+    setInterval(function () { P = readPal(); }, 600);
     var TYPES = opts.types || ['Port scan','Brute force','SQL probe','Malware C2','Exploit attempt','Recon'];
 
     var W, H, dpr = Math.min(window.devicePixelRatio || 1, 2), dots = [];
@@ -75,7 +86,7 @@
     function spawn() {
       var a = HUBS[(Math.random()*HUBS.length)|0], b = HUBS[(Math.random()*HUBS.length)|0];
       if (a === b) return;
-      arcs.push({ a:a, b:b, t:0, speed:0.006 + Math.random()*0.009, color:arcColors[(Math.random()*arcColors.length)|0] });
+      arcs.push({ a:a, b:b, t:0, speed:0.006 + Math.random()*0.009, color:P.arcs[(Math.random()*P.arcs.length)|0] });
       count++;
       if (counterEl) counterEl.textContent = count.toLocaleString();
       if (feedEl) {
@@ -89,11 +100,11 @@
     }
     function draw() {
       ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = dotColor;
+      ctx.fillStyle = P.dot;
       for (var i = 0; i < dots.length; i++) ctx.fillRect(dots[i][0], dots[i][1], 1.7, 1.7);
       for (var h = 0; h < HUBS.length; h++) {
         var p = project(HUBS[h][1], HUBS[h][2]);
-        ctx.beginPath(); ctx.arc(p[0], p[1], 1.7, 0, 6.283); ctx.fillStyle = hexA(hubColor, .7); ctx.fill();
+        ctx.beginPath(); ctx.arc(p[0], p[1], 1.7, 0, 6.283); ctx.fillStyle = hexA(P.hub, .7); ctx.fill();
       }
       for (var k = arcs.length - 1; k >= 0; k--) {
         var ar = arcs[k], pa = project(ar.a[1], ar.a[2]), pb = project(ar.b[1], ar.b[2]);
