@@ -11,16 +11,17 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
   :root{
-    --bg:#0c0e11; --bg2:#13161b; --bg3:#1a1e25; --raise:#20252e;
-    --line:#242932; --line-red:rgba(196,52,46,.30);
-    --red:#c4342e; --red2:#e6584f; --paper:#e9edf2; --steel:#9aa6b3; --faint:#5a636f;
+    --bg:#090b13; --bg2:#111421; --bg3:#181c2b; --raise:#1f2436;
+    --line:#242a3d; --line-red:rgba(232,184,74,.26);
+    --red:#e8b84a; --red2:#ffd97a; --sky:#5a9be0; --sky2:#8fc0f5;
+    --paper:#eef1f6; --steel:#9aa4bb; --faint:#5a6480;
     --disp:"Archivo",system-ui,sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif;
     --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace; --maxw:1120px;
   }
   body[data-mode="light"]{
-    --bg:#f3f5f8; --bg2:#ffffff; --bg3:#eef1f5; --raise:#e4e9ef;
-    --line:#dde3ea; --line-red:rgba(196,52,46,.28);
-    --paper:#141821; --steel:#4a5560; --faint:#8a94a0;
+    --bg:#f6f4ee; --bg2:#ffffff; --bg3:#f1eee4; --raise:#e8e3d4;
+    --line:#e3ddcd; --line-red:rgba(180,140,40,.34);
+    --red:#b8912f; --red2:#a07c22; --paper:#1b1a14; --steel:#5a5648; --faint:#918c78;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -57,16 +58,30 @@
   @media(max-width:900px){.navlinks{display:none}.chip{display:none}}
 
   /* ---------- hero ---------- */
-  .hero{position:relative;padding-block:clamp(56px,9vw,110px);overflow:hidden}
+  .hero{position:relative;padding-block:clamp(50px,8vw,96px);overflow:hidden}
   .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
-    background-size:60px 60px;opacity:.5;
-    -webkit-mask-image:radial-gradient(120% 90% at 30% 0%,#000 0 32%,transparent 74%);
-            mask-image:radial-gradient(120% 90% at 30% 0%,#000 0 32%,transparent 74%)}
+    background:
+      radial-gradient(58% 42% at 50% -8%, rgba(255,217,122,.15), transparent 62%),
+      radial-gradient(40% 32% at 50% 2%, rgba(143,192,245,.10), transparent 66%)}
   .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:120px;z-index:0;pointer-events:none;
     background:linear-gradient(180deg,transparent,var(--bg))}
-  .hero-in{position:relative;z-index:1;max-width:900px}
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:center}
+  @media(max-width:820px){.hero-grid{grid-template-columns:1fr;gap:28px;text-align:center}}
+  .hero-in{max-width:60ch}
+  @media(max-width:820px){.hero-in{margin:0 auto}}
   .hero .eyebrow{display:block;margin-bottom:18px}
+  /* heavenly angel emblem */
+  .angel{position:relative;display:flex;align-items:center;justify-content:center;min-height:clamp(250px,32vw,390px)}
+  .angel .rays{position:absolute;width:min(560px,120%);aspect-ratio:1;
+    background:repeating-conic-gradient(from 0deg, rgba(255,217,122,.07) 0 3deg, transparent 3deg 13deg);
+    -webkit-mask-image:radial-gradient(circle,transparent 24%,#000 40%,transparent 74%);
+            mask-image:radial-gradient(circle,transparent 24%,#000 40%,transparent 74%);
+    animation:halospin 150s linear infinite}
+  .angel .halo{position:absolute;width:min(470px,102%);aspect-ratio:1;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,217,122,.20), rgba(90,155,224,.07) 46%, transparent 68%);filter:blur(4px)}
+  .angel img{width:min(330px,74%);position:relative;z-index:2;
+    filter:drop-shadow(0 6px 30px rgba(255,217,122,.32)) drop-shadow(0 0 60px rgba(143,192,245,.18))}
+  @keyframes halospin{to{transform:rotate(360deg)}}
   .hero h1{font-family:var(--disp);font-weight:900;font-size:clamp(2.4rem,6.4vw,5rem);
     letter-spacing:-.01em;color:var(--paper)}
   .hero h1 .r{color:var(--red2)}
@@ -133,6 +148,10 @@
   details.evidence figure{margin:0;background:var(--bg3);border:1px solid var(--line);border-radius:6px;padding:10px;text-align:center}
   details.evidence img{width:100%;height:210px;object-fit:contain;background:var(--bg);border-radius:4px;display:block}
   details.evidence figcaption{font-family:var(--mono);color:var(--red2);font-size:.74rem;margin-top:9px}
+  details.evidence .ct{font-family:var(--mono);font-size:.64rem;color:var(--faint);border:1px solid var(--line);
+    border-radius:20px;padding:2px 9px;margin-left:4px;vertical-align:middle}
+  details.evidence figcaption .pj{display:block;color:var(--faint);font-size:.62rem;letter-spacing:.1em;
+    text-transform:uppercase;margin-top:4px}
 
   /* ---------- roadmap ---------- */
   .roadmap{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:13px}
@@ -194,13 +213,20 @@
 
 <!-- ===================== HERO ===================== -->
 <header class="hero">
-  <div class="wrap hero-in">
-    <span class="eyebrow"><span data-i18n="tag">Parent Organisation</span> · EST. 2025</span>
-    <h1 data-i18n="hero_t">We build companies that <span class="r">give more than they take.</span></h1>
-    <p class="sub" data-i18n="hero_s">ANGELCORP is a holding company for software, security and consumer ventures — bound by one rule: 20% of all gross income is pledged to charity, shown openly, before profit.</p>
-    <div class="cta">
-      <a href="#divisions" class="btn btn-primary" data-i18n="cta_div">Our divisions</a>
-      <a href="#giving" class="btn btn-ghost" data-i18n="cta_give">The pledge</a>
+  <div class="wrap hero-grid">
+    <div class="angel" aria-hidden="true">
+      <span class="rays"></span>
+      <span class="halo"></span>
+      <img src="assets/angelcorp.png" alt="ANGELCORP">
+    </div>
+    <div class="hero-in">
+      <span class="eyebrow"><span data-i18n="tag">Parent Organisation</span> · EST. 2025</span>
+      <h1 data-i18n="hero_t">We build companies that <span class="r">give more than they take.</span></h1>
+      <p class="sub" data-i18n="hero_s">ANGELCORP is a holding company for software, security and consumer ventures — bound by one rule: 20% of all gross income is pledged to charity, shown openly, before profit.</p>
+      <div class="cta">
+        <a href="#divisions" class="btn btn-primary" data-i18n="cta_div">Our divisions</a>
+        <a href="#giving" class="btn btn-ghost" data-i18n="cta_give">The pledge</a>
+      </div>
     </div>
   </div>
 </header>
@@ -210,7 +236,7 @@
   <div class="wrap row">
     <div class="c"><div class="n">5</div><div class="l" data-i18n="st_div">Active divisions</div></div>
     <div class="c"><div class="n"><b>20%</b></div><div class="l" data-i18n="l_pledge">Of all income</div></div>
-    <div class="c"><div class="n">$105</div><div class="l" data-i18n="l_raised">Donated to date</div></div>
+    <div class="c"><div class="n" data-total>$0</div><div class="l" data-i18n="l_raised">Donated to date</div></div>
     <div class="c"><div class="n">2025</div><div class="l" data-i18n="st_est">Year founded</div></div>
   </div>
 </div>
@@ -288,22 +314,13 @@
         <p class="body" data-i18n="p_optional"></p>
         <div class="stat">
           <div><div class="n">20%</div><div class="l" data-i18n="l_pledge">Of all income</div></div>
-          <div><div class="n">$105</div><div class="l" data-i18n="l_raised">Raised to date</div></div>
+          <div><div class="n" data-total>$0</div><div class="l" data-i18n="l_raised">Raised to date</div></div>
           <div><div class="n">$200</div><div class="l" data-i18n="l_goal">First goal</div></div>
         </div>
       </div>
       <details class="evidence" open>
-        <summary data-i18n="ev_sum">Evidence — donation receipts</summary>
-        <div class="grid">
-          <figure>
-            <img src="assets/donation-5.png" alt="Donation receipt, 5 dollars">
-            <figcaption data-i18n="ev_5">$5 — first community donation</figcaption>
-          </figure>
-          <figure>
-            <img src="assets/donation-100.png" alt="Donation receipt, 100 dollars">
-            <figcaption data-i18n="ev_100">$100 — donated directly</figcaption>
-          </figure>
-        </div>
+        <summary><span data-i18n="ev_sum">Evidence — donation receipts</span> <span class="ct" data-count>0</span></summary>
+        <div class="grid" id="receiptGallery"></div>
       </details>
     </div>
   </div>
@@ -537,6 +554,47 @@ document.getElementById('mode').addEventListener('click',function(){
   document.body.dataset.mode = document.body.dataset.mode==='light' ? 'dark' : 'light';
 });
 render();
+</script>
+
+<script>
+/* ---- donation aggregation ----
+   Reads donations.json (repo root) and sums EVERY project's donations into one
+   grand total + one receipt gallery. Add an entry to any project there and this
+   page's total, count and gallery update automatically. Sub-project pages can
+   read the same file to show only their own. */
+(function(){
+  var FALLBACK = { projects: { angelcorp: { label:"ANGELCORP", entries:[
+    {amount:5, image:"assets/donation-5.png", label:"First community donation"},
+    {amount:100, image:"assets/donation-100.png", label:"Donated directly"},
+    {amount:10.80, image:"assets/donation-10.80.png", label:"Community donation"}
+  ]}}};
+  function money(n){ return '$' + (Math.round(n*100)%100===0 ? n.toFixed(0) : n.toFixed(2)); }
+  function apply(data){
+    var entries=[], total=0, P=data.projects||{};
+    Object.keys(P).forEach(function(k){
+      var p=P[k]||{};
+      (p.entries||[]).forEach(function(e){
+        entries.push({project:p.label||k, amount:Number(e.amount)||0, image:e.image, label:e.label||''});
+        total += Number(e.amount)||0;
+      });
+    });
+    document.querySelectorAll('[data-total]').forEach(function(el){ el.textContent=money(total); });
+    document.querySelectorAll('[data-count]').forEach(function(el){ el.textContent=entries.length; });
+    var g=document.getElementById('receiptGallery');
+    if(g){
+      g.innerHTML='';
+      entries.forEach(function(e){
+        var fig=document.createElement('figure');
+        var img=document.createElement('img'); img.src=e.image; img.alt='Donation receipt — '+money(e.amount); img.loading='lazy';
+        var cap=document.createElement('figcaption');
+        cap.innerHTML=money(e.amount)+' &mdash; '+e.label+'<span class="pj">'+e.project+'</span>';
+        fig.appendChild(img); fig.appendChild(cap); g.appendChild(fig);
+      });
+    }
+  }
+  fetch('donations.json',{cache:'no-store'}).then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(apply).catch(function(){ apply(FALLBACK); });
+})();
 </script>
 </body>
 </html>

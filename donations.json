@@ -1,0 +1,18 @@
+{
+  "_note": "Every project's donations. ANGELCORP (omni.html) sums ALL entries into one grand total + gallery automatically. Add a receipt: put its image in assets/, then add {amount, image, label} to that project's entries. Do NOT include PHAROAH here.",
+  "currency": "USD",
+  "projects": {
+    "angelcorp": {
+      "label": "ANGELCORP",
+      "entries": [
+        { "amount": 5, "image": "assets/donation-5.png", "label": "First community donation" },
+        { "amount": 100, "image": "assets/donation-100.png", "label": "Donated directly" },
+        { "amount": 10.80, "image": "assets/donation-10.80.png", "label": "Community donation" }
+      ]
+    },
+    "typhon": { "label": "TYPHON", "entries": [] },
+    "osiris": { "label": "OSIRIS", "entries": [] },
+    "bigfoot": { "label": "BIGFOOT VPN", "entries": [] },
+    "catalyst": { "label": "CATALYST", "entries": [] }
+  }
+}
