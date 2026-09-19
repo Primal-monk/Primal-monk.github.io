@@ -5,139 +5,237 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BigFoot VPN — Untraceable by Design</title>
 <link rel="icon" type="image/png" href="assets/bigfoot-logo.png">
-<meta name="description" content="BigFoot VPN — a multi-hop VPN that bounces your connection through a chain of IPs instead of one. Concept draft under TYPHON.">
+<meta name="description" content="BigFoot VPN — a multi-hop VPN that bounces your connection through a chain of IPs instead of one exit. One click, no logs, rotating hops.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Archivo:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap">
 <style>
-  /* Autumn pumpkin theme, calmed down: a muted, brownish-orange terracotta
-     instead of a saturated traffic-cone pumpkin - still reads as autumn,
-     but the eye can actually rest on it. White/cream text sits on top;
-     cards are cream so denser copy (the table, the feature grid) still
-     reads easily. */
   :root{
-    --bg:#c17a45; --bg-deep:#9c5c30;
-    --card:#fff6ea; --card2:#fffaf3; --card3:#ffe9c4;
-    --ink:#4a2408; --soft:#7a4d1c;
-    --white:#fbf1e2; --gold:#f4cf94; --rust:#7a3c00;
-    --line:rgba(122,61,0,.18); --lineOnBg:rgba(255,255,255,.35);
+    --ink:#0a0f0e; --ink2:#0f1614; --ink3:#16201d; --raise:#1c2723;
+    --line:#233330; --line-acc:rgba(47,224,176,.20);
+    --paper:#e9f3ef; --dim:#8fa39c; --faint:#516059;
+    --acc:#2fe0b0; --acc2:#66f0cc; --cyan:#3bc9e6; --deep:#0c8f74;
+    --disp:"Sora",system-ui,sans-serif; --body:"Archivo",system-ui,sans-serif;
+    --mono:"Space Mono",ui-monospace,Consolas,monospace; --maxw:1280px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth;scrollbar-color:#d19a63 var(--bg-deep);scrollbar-width:auto}
-  body{font-family:"Segoe UI","Trebuchet MS",sans-serif;
-    background:linear-gradient(180deg,var(--bg) 0%,var(--bg-deep) 100%);
-    color:var(--white);line-height:1.62;padding-top:56px}
-  ::-webkit-scrollbar{width:16px}
-  ::-webkit-scrollbar-track{background:var(--bg-deep)}
-  ::-webkit-scrollbar-thumb{background:#d19a63;border:2px solid var(--bg-deep);border-radius:10px}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--ink);color:var(--paper);line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background-image:radial-gradient(900px 500px at 82% -10%, rgba(47,224,176,.10), transparent 60%),
+      radial-gradient(700px 420px at -5% 6%, rgba(59,201,230,.06), transparent 60%)}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{font-family:var(--disp);text-wrap:balance;line-height:1.08}
+  ::selection{background:var(--acc);color:#03110d}
+  ::-webkit-scrollbar{width:12px}::-webkit-scrollbar-track{background:var(--ink2)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--acc),var(--deep));border:3px solid var(--ink2);border-radius:8px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:22px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--acc)}
+  .gradtext{background:linear-gradient(96deg,var(--acc2),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
 
-  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:56px;background:var(--bg-deep);
-    border-bottom:2px solid rgba(255,255,255,.5);display:flex;align-items:center;gap:12px;padding:0 16px}
-  .topbar .who{display:flex;align-items:center;gap:9px;text-decoration:none}
-  .topbar .who img{width:32px;height:32px;object-fit:contain;border-radius:7px}
-  .topbar .who span{font-size:.86rem;color:var(--white);font-weight:700}
-  .topbar .back{color:var(--white);font-size:1.1rem;font-weight:900}
-  .topbar .spacer{flex:1}
-  .langwrap{display:inline-flex;border:1px solid var(--lineOnBg);border-radius:5px;overflow:hidden}
-  .lang{background:transparent;border:0;cursor:pointer;padding:7px 12px;font-size:.72rem;
-    font-weight:700;color:var(--white);opacity:.7}
-  .lang.on{background:rgba(255,255,255,.22);opacity:1}
+  /* nav */
+  .nav{position:sticky;top:0;z-index:60;background:rgba(10,15,14,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;gap:18px;height:60px}
+  .parent{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;color:var(--faint);
+    letter-spacing:.08em;padding-right:14px;border-right:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:30px;height:30px;object-fit:contain}
+  .brand .wm{font-family:var(--disp);font-weight:800;font-size:19px;letter-spacing:.06em}
+  .brand .wm span{color:var(--acc)}
+  .navtools{display:flex;align-items:center;gap:10px;margin-left:auto}
+  .langwrap{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .lang{background:transparent;border:0;cursor:pointer;padding:6px 10px;font-family:var(--mono);font-size:11px;color:var(--dim)}
+  .lang.on{background:var(--acc);color:#03110d}
+  .btn{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.02em;padding:10px 18px;border-radius:6px;
+    cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;display:inline-block}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:linear-gradient(96deg,var(--acc),var(--cyan));color:#03110d}.btn-primary:hover{filter:brightness(1.07)}
+  .btn-ghost{border-color:var(--line-acc);color:var(--paper)}.btn-ghost:hover{border-color:var(--acc)}
+  @media(max-width:860px){.parent span{display:none}}
 
-  .wrap{max-width:1000px;margin:0 auto;padding:0 22px}
-  header{text-align:center;padding:46px 0 26px}
-  .logo{width:140px;height:140px;object-fit:contain;display:block;margin:0 auto 14px;
-    filter:drop-shadow(0 8px 20px rgba(0,0,0,.25))}
-  .word{font-size:clamp(2.2rem,7vw,3.6rem);letter-spacing:.05em;font-weight:900;color:var(--white);
-    text-shadow:0 2px 10px rgba(0,0,0,.15)}
-  .word span{color:var(--gold)}
-  .tag{margin-top:8px;color:var(--white);opacity:.9;letter-spacing:.1em;font-size:.92rem}
-  .draftpill{display:inline-block;margin-top:14px;background:rgba(255,255,255,.16);border:1px solid var(--lineOnBg);
-    border-radius:18px;padding:5px 17px;font-size:.7rem;font-weight:700;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--white)}
+  /* hero */
+  .hero{position:relative;padding-block:clamp(40px,6vw,72px)}
+  .hero-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:center}
+  @media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:30px}}
+  .hero h1{font-family:var(--disp);font-weight:800;font-size:clamp(2.6rem,6vw,4.4rem);margin:16px 0 0;letter-spacing:-.01em}
+  .hero .sub{font-size:clamp(1rem,1.7vw,1.18rem);color:#bfd0ca;max-width:52ch;margin-top:18px}
+  .hero .cta{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+  .status{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--acc);border:1px solid var(--line-acc);border-radius:20px;padding:6px 13px}
+  .status i{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 10px var(--acc);animation:bl 1.8s steps(1) infinite}
+  @keyframes bl{50%{opacity:.35}}
 
-  .ctarow{text-align:center;margin-top:26px}
-  .cta{display:inline-block;background:rgba(255,255,255,.2);color:rgba(255,248,236,.7);border:1px solid var(--lineOnBg);
-    padding:15px 42px;border-radius:6px;font-weight:900;font-size:.95rem;letter-spacing:.1em;
-    text-transform:uppercase;text-decoration:none;cursor:not-allowed}
-  .ctanote{color:var(--white);opacity:.85;font-size:.78rem;margin-top:9px}
+  /* route chain */
+  .route{margin-top:26px;border:1px solid var(--line);border-radius:10px;background:var(--ink2);padding:16px 18px}
+  .route-top{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+  .hops{display:flex;align-items:center;gap:0;flex-wrap:wrap}
+  .hop{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:52px}
+  .hop b{font-family:var(--mono);font-size:12px;color:var(--paper)}
+  .hop span{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;color:var(--faint);text-transform:uppercase}
+  .hop.you b{color:var(--dim)} .hop.exit b{color:var(--acc2)}
+  .hopdot{width:12px;height:12px;border-radius:50%;background:var(--ink3);border:2px solid var(--acc);margin-bottom:2px}
+  .hop.you .hopdot{border-color:var(--faint)}
+  .hopline{flex:1;min-width:20px;height:2px;background:linear-gradient(90deg,var(--deep),var(--acc));position:relative;overflow:hidden;margin-bottom:20px}
+  .hopline::after{content:"";position:absolute;top:0;left:-40%;width:40%;height:100%;
+    background:linear-gradient(90deg,transparent,var(--acc2),transparent);animation:flow 2.2s linear infinite}
+  @keyframes flow{to{left:120%}}
 
-  section{margin-bottom:38px}
-  h2{color:var(--white);font-size:.92rem;letter-spacing:.18em;text-transform:uppercase;
-    padding-bottom:8px;margin-bottom:16px;border-bottom:2px solid rgba(255,255,255,.45)}
-  p.body{color:var(--white);margin-bottom:12px;font-size:.94rem}
-  p.body b{color:var(--gold)}
+  /* map */
+  .mapstage{position:relative;border:1px solid var(--line);border-radius:12px;background:#070c0b;overflow:hidden;
+    box-shadow:0 40px 90px -50px rgba(0,0,0,.9)}
+  .mapstage canvas{display:block;width:100%;height:clamp(320px,42vw,480px)}
+  .mapstat{position:absolute;left:16px;bottom:14px}
+  .mapstat-n{display:block;font-family:var(--disp);font-weight:800;font-size:2rem;color:var(--acc2);line-height:1;font-variant-numeric:tabular-nums}
+  .mapstat-l{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .mapfeed{position:absolute;right:14px;top:14px;width:190px;background:rgba(7,12,11,.72);backdrop-filter:blur(6px);
+    border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  @media(max-width:520px){.mapfeed{display:none}}
+  .mapfeed .ft{padding:8px 12px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:var(--faint)}
+  .fm{padding:4px 10px}
+  .fm-row{display:grid;grid-template-columns:auto auto 1fr;gap:7px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:10.5px}
+  .fm-row:last-child{border-bottom:0}
+  .fm-src{color:var(--paper)} .fm-ar{color:var(--faint)} .fm-dst{color:var(--acc2)} .fm-t{display:none}
 
-  .draftnote{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--bg);
-    border-radius:6px;padding:14px 18px;text-align:center;margin-bottom:20px}
-  .draftnote p{color:var(--ink);font-size:.86rem;margin:0}
-  .draftnote b{color:var(--rust)}
+  /* trust bar */
+  .trust{border-block:1px solid var(--line);background:var(--ink2)}
+  .trust .row{display:grid;grid-template-columns:repeat(4,1fr)}
+  @media(max-width:640px){.trust .row{grid-template-columns:repeat(2,1fr)}}
+  .trust .c{padding:22px;border-left:1px solid var(--line);text-align:center}
+  .trust .c:first-child{border-left:0}
+  @media(max-width:640px){.trust .c:nth-child(3){border-left:0}.trust .c:nth-child(n+3){border-top:1px solid var(--line)}}
+  .trust .n{font-family:var(--disp);font-weight:800;font-size:1.7rem;color:var(--acc2);line-height:1}
+  .trust .l{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-top:8px}
 
-  .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-  .f{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--bg);
-    border-radius:7px;padding:19px}
-  .f h3{color:var(--rust);font-size:.92rem;letter-spacing:.03em;margin-bottom:6px}
-  .f p{color:var(--ink);font-size:.85rem;margin:0}
+  section.band{padding-block:clamp(44px,6vw,74px);border-top:1px solid var(--line)}
+  .head{max-width:60ch;margin-bottom:30px}
+  .head .eyebrow{display:block;margin-bottom:12px}
+  .head h2{font-size:clamp(1.6rem,3.2vw,2.3rem);font-weight:700}
+  .head p{color:var(--dim);margin-top:10px}
+  p.body{color:#bfd0ca;margin-bottom:12px}
+  p.body b{color:var(--acc2)}
 
-  .cmpwrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+  .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .f{background:var(--ink2);border:1px solid var(--line);border-radius:10px;padding:20px;transition:border-color .15s,transform .15s}
+  .f:hover{border-color:var(--acc);transform:translateY(-3px)}
+  .f h3{font-family:var(--disp);color:var(--paper);font-weight:600;font-size:1.04rem;margin-bottom:6px}
+  .f h3::before{content:"";display:inline-block;width:7px;height:7px;background:var(--acc);border-radius:50%;margin-right:9px;vertical-align:middle;box-shadow:0 0 8px var(--acc)}
+  .f p{color:var(--dim);font-size:.9rem}
+
+  .cmpwrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
   table.cmp{width:100%;border-collapse:collapse;min-width:520px}
-  table.cmp th,table.cmp td{padding:13px 16px;text-align:left;font-size:.86rem;border-bottom:1px solid var(--line)}
-  table.cmp th{background:var(--card3);color:var(--rust);font-size:.76rem;letter-spacing:.08em;
-    text-transform:uppercase}
-  table.cmp td{color:var(--ink);background:var(--card)}
+  table.cmp th,table.cmp td{padding:14px 18px;text-align:left;font-size:.9rem;border-bottom:1px solid var(--line)}
+  table.cmp th{background:var(--ink3);color:var(--dim);font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+  table.cmp th:last-child{color:var(--acc2)}
+  table.cmp td{color:#bfd0ca;background:var(--ink2)}
   table.cmp tr:last-child td{border-bottom:0}
-  table.cmp td.yes{color:var(--bg-deep);font-weight:700}
-  table.cmp td.no{color:var(--soft);opacity:.85}
-  table.cmp .rowlabel{color:var(--rust);font-weight:700;white-space:nowrap}
-  .cmpnote{color:var(--white);opacity:.85;font-size:.76rem;margin-top:10px;font-style:italic}
+  table.cmp td.yes{color:var(--acc2);font-weight:600}
+  table.cmp td.no{color:var(--faint)}
+  table.cmp .rowlabel{color:var(--paper);font-weight:600;white-space:nowrap}
+  .cmpnote{color:var(--faint);font-size:.78rem;margin-top:10px;font-style:italic}
 
-  .steps3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-  .step{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:20px;text-align:center}
-  .step .num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;
-    border-radius:50%;background:var(--bg);color:#fff;font-weight:900;font-size:1rem;margin-bottom:10px}
-  .step h3{color:var(--rust);font-size:.9rem;margin-bottom:6px}
-  .step p{color:var(--ink);font-size:.84rem;margin:0}
+  .steps3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+  .step{background:var(--ink2);border:1px solid var(--line);border-radius:10px;padding:22px}
+  .step .num{font-family:var(--disp);font-weight:800;font-size:1.6rem;color:var(--acc);line-height:1}
+  .step h3{font-family:var(--disp);color:var(--paper);font-weight:600;font-size:1.04rem;margin:10px 0 6px}
+  .step p{color:var(--dim);font-size:.88rem}
 
-  footer{text-align:center;padding:26px 0 40px;border-top:1px solid rgba(255,255,255,.3);
-    font-size:.75rem;color:var(--white);opacity:.8}
+  .dl{border:1px solid var(--line-acc);border-radius:12px;background:linear-gradient(180deg,var(--ink2),#0a1512);
+    padding:clamp(30px,5vw,52px);text-align:center}
+  .dl h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800}
+  .dl p{color:#bfd0ca;max-width:50ch;margin:12px auto 0}
+  .dl .cta{display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+  .dl .note{margin-top:18px;font-family:var(--mono);font-size:11px;color:var(--faint)}
 
-.pmark{ font-weight:800; letter-spacing:.06em; }
-.pmark sup{ font-size:.62em; font-weight:800; letter-spacing:.04em;
-            vertical-align:super; margin-left:.06em; }
+  footer{border-top:1px solid var(--line);padding-block:32px}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .foot .l{display:flex;align-items:center;gap:11px}
+  .foot .l img{width:26px;height:26px;object-fit:contain}
+  .foot .l .x{font-family:var(--mono);font-size:11px;color:var(--dim);line-height:1.5}
+  .foot .l .x b{font-family:var(--disp);color:var(--paper)}
+  .foot .r{font-family:var(--mono);font-size:11px;color:var(--faint);text-align:right}
+  .pmark{font-family:var(--disp);font-weight:800;color:var(--dim)}
+  .pmark sup{font-size:.62em;vertical-align:super;margin-left:.06em}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <a class="who" href="omni.html">
-    <span class="back">&larr;</span>
-    <img src="assets/angelcorp.png" alt="">
-    <span>ANGELCORP</span>
-  </a>
-  <div class="spacer"></div>
-  <div class="langwrap">
-    <button class="lang on" data-lang="en">EN</button>
-    <button class="lang" data-lang="es">ES</button>
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="parent" href="omni.html" title="Parent company">&larr; <b>ANGELCORP</b></a>
+    <a class="brand" href="bigfoot.html">
+      <img src="assets/bigfoot-logo.png" alt="BigFoot VPN">
+      <span class="wm">BIGFOOT <span>VPN</span></span>
+    </a>
+    <div class="navtools">
+      <div class="langwrap">
+        <button class="lang on" data-lang="en">EN</button>
+        <button class="lang" data-lang="es">ES</button>
+      </div>
+      <a href="#get" class="btn btn-primary" data-i18n="cta">Get BigFoot</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="status"><i></i><span data-i18n="statusline">Protected · 3 hops active</span></span>
+      <h1><span data-i18n="h_lead">Untraceable</span> <span class="gradtext" data-i18n="h_lead2">by design.</span></h1>
+      <p class="sub" data-i18n="hero_sub">Most VPNs wire you to a single exit server. BigFoot bounces your connection through a chain of IPs across the world — the privacy of a proxy chain, in an app as simple as one button.</p>
+      <div class="cta">
+        <a href="#get" class="btn btn-primary" data-i18n="cta">Get BigFoot</a>
+        <a href="#how" class="btn btn-ghost" data-i18n="cta2">How it works</a>
+      </div>
+      <div class="route">
+        <div class="route-top" data-i18n="route_top">Your live route</div>
+        <div class="hops">
+          <div class="hop you"><span class="hopdot"></span><b data-i18n="hop_you">You</b><span>origin</span></div>
+          <div class="hopline"></div>
+          <div class="hop"><span class="hopdot"></span><b>AMS</b><span>hop 1</span></div>
+          <div class="hopline"></div>
+          <div class="hop"><span class="hopdot"></span><b>SIN</b><span>hop 2</span></div>
+          <div class="hopline"></div>
+          <div class="hop"><span class="hopdot"></span><b>TYO</b><span>hop 3</span></div>
+          <div class="hopline"></div>
+          <div class="hop exit"><span class="hopdot"></span><b data-i18n="hop_exit">Exit</b><span>the web</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="mapstage">
+      <canvas id="bmap" aria-hidden="true"></canvas>
+      <div class="mapstat"><span class="mapstat-n" id="bcount">0</span><span class="mapstat-l" data-i18n="map_l">routes established</span></div>
+      <div class="mapfeed">
+        <div class="ft" data-i18n="map_feed">Global network</div>
+        <div class="fm" id="bfeed"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="trust">
+  <div class="wrap row">
+    <div class="c"><div class="n">3+</div><div class="l" data-i18n="t1">Hops per connection</div></div>
+    <div class="c"><div class="n">60+</div><div class="l" data-i18n="t2">Exit locations</div></div>
+    <div class="c"><div class="n">0</div><div class="l" data-i18n="t3">Logs kept</div></div>
+    <div class="c"><div class="n">1</div><div class="l" data-i18n="t4">Click to connect</div></div>
   </div>
 </div>
 
-<div class="wrap">
-  <header>
-    <img class="logo" src="assets/bigfoot-logo.png" alt="BigFoot VPN">
-    <div class="word">BIGFOOT <span>VPN</span></div>
-    <div class="tag" data-i18n="tag">Untraceable by design.</div>
-    <div class="draftpill" data-i18n="draft">Concept &mdash; not built yet</div>
-    <div class="ctarow">
-      <a class="cta" href="#" onclick="return false;" data-i18n="cta">Get BigFoot VPN</a>
-      <div class="ctanote" data-i18n="ctanote">Not available yet &mdash; this is a product concept under TYPHON.</div>
+<section class="band">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow" data-i18n="h_what">Why BigFoot is different</span>
+      <h2 data-i18n="wt_title">One exit is one point of failure. We use a chain.</h2>
     </div>
-  </header>
-
-  <section>
-    <div class="draftnote"><p data-i18n="draftnote"></p></div>
-    <h2 data-i18n="h_what">Why BigFoot Is Different</h2>
     <p class="body" data-i18n="p_what1"></p>
     <p class="body" data-i18n="p_what2"></p>
-  </section>
+  </div>
+</section>
 
-  <section>
-    <h2 data-i18n="h_feat">Planned Features</h2>
+<section class="band" id="features">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow" data-i18n="h_feat">Features</span><h2 data-i18n="ft_title">Built for privacy, kept simple.</h2></div>
     <div class="feat">
       <div class="f"><h3 data-i18n="f1h">Multi-Hop by Default</h3><p data-i18n="f1p"></p></div>
       <div class="f"><h3 data-i18n="f2h">One-Click Simplicity</h3><p data-i18n="f2p"></p></div>
@@ -146,115 +244,141 @@
       <div class="f"><h3 data-i18n="f5h">Rotating Hop Chain</h3><p data-i18n="f5p"></p></div>
       <div class="f"><h3 data-i18n="f6h">No-Logs by Design</h3><p data-i18n="f6p"></p></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section>
-    <h2 data-i18n="h_cmp">How It Compares</h2>
+<section class="band">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow" data-i18n="h_cmp">How it compares</span><h2 data-i18n="cmp_title">Against a typical single-hop VPN.</h2></div>
     <div class="cmpwrap">
       <table class="cmp">
-        <tr>
-          <th data-i18n="cmp_col1">&nbsp;</th>
-          <th data-i18n="cmp_col2">A Typical VPN</th>
-          <th data-i18n="cmp_col3">BigFoot VPN</th>
-        </tr>
-        <tr>
-          <td class="rowlabel" data-i18n="cmp_r1">Exit hops</td>
-          <td data-i18n="cmp_r1a">1 (multi-hop usually a special opt-in server)</td>
-          <td class="yes" data-i18n="cmp_r1b">3+, chained by default</td>
-        </tr>
-        <tr>
-          <td class="rowlabel" data-i18n="cmp_r2">Setup</td>
-          <td data-i18n="cmp_r2a">One-click app</td>
-          <td class="yes" data-i18n="cmp_r2b">One-click app &mdash; same simplicity</td>
-        </tr>
-        <tr>
-          <td class="rowlabel" data-i18n="cmp_r3">Browser coverage</td>
-          <td data-i18n="cmp_r3a">Extension routes through the same single exit</td>
-          <td class="yes" data-i18n="cmp_r3b">Extension gets its own independent hop chain</td>
-        </tr>
-        <tr>
-          <td class="rowlabel" data-i18n="cmp_r4">Hop rotation</td>
-          <td class="no" data-i18n="cmp_r4a">Fixed for the session</td>
-          <td class="yes" data-i18n="cmp_r4b">Rotates automatically on an interval</td>
-        </tr>
+        <tr><th data-i18n="cmp_col1">&nbsp;</th><th data-i18n="cmp_col2">A Typical VPN</th><th data-i18n="cmp_col3">BigFoot VPN</th></tr>
+        <tr><td class="rowlabel" data-i18n="cmp_r1">Exit hops</td><td data-i18n="cmp_r1a"></td><td class="yes" data-i18n="cmp_r1b"></td></tr>
+        <tr><td class="rowlabel" data-i18n="cmp_r2">Setup</td><td data-i18n="cmp_r2a"></td><td class="yes" data-i18n="cmp_r2b"></td></tr>
+        <tr><td class="rowlabel" data-i18n="cmp_r3">Browser coverage</td><td data-i18n="cmp_r3a"></td><td class="yes" data-i18n="cmp_r3b"></td></tr>
+        <tr><td class="rowlabel" data-i18n="cmp_r4">Hop rotation</td><td class="no" data-i18n="cmp_r4a"></td><td class="yes" data-i18n="cmp_r4b"></td></tr>
       </table>
     </div>
     <div class="cmpnote" data-i18n="cmpnote"></div>
-  </section>
+  </div>
+</section>
 
-  <section>
-    <h2 data-i18n="h_how">How It Would Work</h2>
+<section class="band" id="how">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow" data-i18n="h_how">How it works</span><h2 data-i18n="hw_title">Three steps. Then forget it's on.</h2></div>
     <div class="steps3">
-      <div class="step"><div class="num">1</div><h3 data-i18n="s1h">Install</h3><p data-i18n="s1p"></p></div>
-      <div class="step"><div class="num">2</div><h3 data-i18n="s2h">One Click</h3><p data-i18n="s2p"></p></div>
-      <div class="step"><div class="num">3</div><h3 data-i18n="s3h">Bounced, Not Wired</h3><p data-i18n="s3p"></p></div>
+      <div class="step"><div class="num">01</div><h3 data-i18n="s1h">Install</h3><p data-i18n="s1p"></p></div>
+      <div class="step"><div class="num">02</div><h3 data-i18n="s2h">One Click</h3><p data-i18n="s2p"></p></div>
+      <div class="step"><div class="num">03</div><h3 data-i18n="s3h">Bounced, Not Wired</h3><p data-i18n="s3p"></p></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <footer><div style="margin-bottom:7px;opacity:.75">by <span class="pmark">PRIMAL<sup>APE</sup></span></div><span data-i18n="footer"></span></footer>
-</div>
+<section class="band" id="get">
+  <div class="wrap">
+    <div class="dl">
+      <span class="eyebrow" data-i18n="get_eyebrow">Early access · in development</span>
+      <h2 style="margin-top:12px" data-i18n="get_title">Disappear in one click.</h2>
+      <p data-i18n="get_sub">BigFoot is in active development under TYPHON. Join early and route your traffic through the chain.</p>
+      <div class="cta">
+        <a href="https://github.com/Primal-monk" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="cta">Get BigFoot</a>
+        <a href="typhon.html" class="btn btn-ghost" data-i18n="cta3">See TYPHON</a>
+      </div>
+      <div class="note" data-i18n="get_note">Windows · macOS · Chrome extension — coming with launch.</div>
+    </div>
+  </div>
+</section>
 
+<footer>
+  <div class="wrap foot">
+    <div class="l"><img src="assets/bigfoot-logo.png" alt=""><div class="x"><b>BIGFOOT VPN</b><br><span data-i18n="footer">Multi-hop privacy · a TYPHON venture.</span></div></div>
+    <div class="r"><span class="pmark">PRIMAL<sup>APE</sup></span> · under ANGELCORP</div>
+  </div>
+</footer>
+
+<script src="livemap.js"></script>
+<script>
+  if(window.initLiveMap) initLiveMap({
+    canvas:'bmap', feed:'bfeed', counter:'bcount',
+    palette:{dot:'rgba(80,140,125,.30)', arcs:['#2fe0b0','#3bc9e6','#66f0cc'], hub:'#66f0cc'},
+    types:['tunnel','relay','rotated','hop'], rate:780
+  });
+</script>
 <script>
 const I18N={
 en:{
- tag:'Untraceable by design.', draft:'Concept &mdash; not built yet',
- cta:'Get BigFoot VPN', ctanote:'Not available yet &mdash; this is a product concept under TYPHON.',
- draftnote:'<b>THIS IS A CONCEPT DRAFT.</b> BigFoot VPN does not exist yet. This page describes the plan as if it were finished, so the idea is fully written down before anything is built.',
- h_what:'Why BigFoot Is Different',
- p_what1:'Most VPNs wire your connection to <b>one</b> exit server. BigFoot would bounce it through a <b>chain of several IPs</b> instead &mdash; the way a proxy chain works, but wrapped in an app as simple as any consumer VPN. One button, no configuration, no idea what a "hop" even means required.',
- p_what2:'A companion <b>Chrome extension</b> would cover browser traffic the same way, on its own independent hop chain, without needing the desktop app running. Named for the idea: hard to track, leaves nothing solid behind.',
- h_feat:'Planned Features',
- f1h:'Multi-Hop by Default', f1p:'Every connection routes through several IPs automatically, not as a special mode you have to dig for.',
- f2h:'One-Click Simplicity', f2p:'Same ease of use as any major VPN app &mdash; the multi-hop routing happens behind the scenes.',
+ cta:'Get BigFoot', cta2:'How it works', cta3:'See TYPHON',
+ statusline:'Protected · 3 hops active',
+ h_lead:'Untraceable', h_lead2:'by design.',
+ hero_sub:'Most VPNs wire you to a single exit server. BigFoot bounces your connection through a chain of IPs across the world — the privacy of a proxy chain, in an app as simple as one button.',
+ route_top:'Your live route', hop_you:'You', hop_exit:'Exit',
+ map_l:'routes established', map_feed:'Global network',
+ t1:'Hops per connection', t2:'Exit locations', t3:'Logs kept', t4:'Click to connect',
+ h_what:'Why BigFoot is different', wt_title:'One exit is one point of failure. We use a chain.',
+ p_what1:'Most VPNs wire your connection to <b>one</b> exit server. BigFoot bounces it through a <b>chain of several IPs</b> instead — the way a proxy chain works, but wrapped in an app as simple as any consumer VPN. One button; no idea what a "hop" means required.',
+ p_what2:'A companion <b>Chrome extension</b> covers browser traffic the same way, on its own independent hop chain, without the desktop app running. Named for the idea: hard to track, leaves nothing solid behind.',
+ h_feat:'Features', ft_title:'Built for privacy, kept simple.',
+ f1h:'Multi-Hop by Default', f1p:'Every connection routes through several IPs automatically — not a special mode you have to dig for.',
+ f2h:'One-Click Simplicity', f2p:'Same ease as any major VPN app; the multi-hop routing happens behind the scenes.',
  f3h:'Browser Extension', f3p:'A Chrome extension covers tab traffic on its own hop chain, independent of the desktop app.',
  f4h:'Kill Switch', f4p:'If the connection drops, your traffic stops with it instead of falling back to your real IP.',
  f5h:'Rotating Hop Chain', f5p:'The chain of IPs rotates on an interval instead of staying fixed for the whole session.',
  f6h:'No-Logs by Design', f6p:'Built around not retaining what would need to be retained for anyone to hand over.',
- h_cmp:'How It Compares',
+ h_cmp:'How it compares', cmp_title:'Against a typical single-hop VPN.',
  cmp_col1:'&nbsp;', cmp_col2:'A Typical VPN', cmp_col3:'BigFoot VPN',
  cmp_r1:'Exit hops', cmp_r1a:'1 (multi-hop usually a special opt-in server)', cmp_r1b:'3+, chained by default',
- cmp_r2:'Setup', cmp_r2a:'One-click app', cmp_r2b:'One-click app &mdash; same simplicity',
+ cmp_r2:'Setup', cmp_r2a:'One-click app', cmp_r2b:'One-click app — same simplicity',
  cmp_r3:'Browser coverage', cmp_r3a:'Extension routes through the same single exit', cmp_r3b:'Extension gets its own independent hop chain',
  cmp_r4:'Hop rotation', cmp_r4a:'Fixed for the session', cmp_r4b:'Rotates automatically on an interval',
- cmpnote:'"A Typical VPN" describes standard single-hop consumer VPN behaviour as a category, not any specific competitor. Most major VPNs offer multi-hop only as an opt-in special server, if at all.',
- h_how:'How It Would Work',
+ cmpnote:'"A Typical VPN" describes standard single-hop consumer VPN behaviour as a category, not any specific competitor.',
+ h_how:'How it works', hw_title:'Three steps. Then forget it’s on.',
  s1h:'Install', s1p:'Download the app (and the browser extension, if you want it) and sign in.',
  s2h:'One Click', s2p:'Press connect. No server list to study, no settings to tune.',
- s3h:'Bounced, Not Wired', s3p:'Your traffic bounces through the hop chain instead of going straight to one exit server.',
- footer:'BIGFOOT VPN &mdash; a TYPHON concept. Nothing here is final or available yet.'
+ s3h:'Bounced, Not Wired', s3p:'Your traffic bounces through the hop chain instead of going straight to one exit.',
+ get_eyebrow:'Early access · in development', get_title:'Disappear in one click.',
+ get_sub:'BigFoot is in active development under TYPHON. Join early and route your traffic through the chain.',
+ get_note:'Windows · macOS · Chrome extension — coming with launch.',
+ footer:'Multi-hop privacy · a TYPHON venture.'
 },
 es:{
- tag:'Imposible de rastrear, por dise&ntilde;o.', draft:'Concepto &mdash; a&uacute;n no construido',
- cta:'Obtener BigFoot VPN', ctanote:'A&uacute;n no disponible &mdash; esto es un concepto de producto bajo TYPHON.',
- draftnote:'<b>ESTO ES UN BORRADOR CONCEPTUAL.</b> BigFoot VPN todav&iacute;a no existe. Esta p&aacute;gina describe el plan como si estuviera terminado, para que la idea quede completamente escrita antes de construir nada.',
- h_what:'Por qu&eacute; BigFoot es diferente',
- p_what1:'La mayor&iacute;a de las VPN conectan tu tr&aacute;fico a <b>un</b> servidor de salida. BigFoot lo rebotar&iacute;a a trav&eacute;s de una <b>cadena de varias IPs</b> &mdash; como funciona una cadena de proxies, pero envuelta en una app tan simple como cualquier VPN comercial.',
- p_what2:'Una <b>extensi&oacute;n de Chrome</b> complementaria cubrir&iacute;a el tr&aacute;fico del navegador de la misma forma, con su propia cadena de saltos independiente, sin necesitar la app de escritorio activa.',
- h_feat:'Funciones Planeadas',
- f1h:'Multisalto por Defecto', f1p:'Cada conexi&oacute;n pasa autom&aacute;ticamente por varias IPs, no como un modo especial que hay que buscar.',
- f2h:'Simplicidad de un Clic', f2p:'La misma facilidad de uso que cualquier VPN importante &mdash; el enrutamiento multisalto ocurre por detr&aacute;s.',
- f3h:'Extensi&oacute;n de Navegador', f3p:'Una extensi&oacute;n de Chrome cubre el tr&aacute;fico de pesta&ntilde;as con su propia cadena de saltos.',
- f4h:'Interruptor de Emergencia', f4p:'Si la conexi&oacute;n cae, tu tr&aacute;fico se detiene con ella en vez de volver a tu IP real.',
- f5h:'Cadena de Saltos Rotativa', f5p:'La cadena de IPs rota en un intervalo en vez de quedarse fija toda la sesi&oacute;n.',
- f6h:'Sin Registros por Dise&ntilde;o', f6p:'Construido para no retener lo que alguien tendr&iacute;a que entregar si se lo pidieran.',
- h_cmp:'C&oacute;mo se compara',
- cmp_col1:'&nbsp;', cmp_col2:'Una VPN T&iacute;pica', cmp_col3:'BigFoot VPN',
+ cta:'Obtener BigFoot', cta2:'Cómo funciona', cta3:'Ver TYPHON',
+ statusline:'Protegido · 3 saltos activos',
+ h_lead:'Imposible de rastrear,', h_lead2:'por diseño.',
+ hero_sub:'La mayoría de las VPN te conectan a un único servidor de salida. BigFoot rebota tu conexión por una cadena de IPs por todo el mundo — la privacidad de una cadena de proxies, en una app tan simple como un botón.',
+ route_top:'Tu ruta en vivo', hop_you:'Tú', hop_exit:'Salida',
+ map_l:'rutas establecidas', map_feed:'Red global',
+ t1:'Saltos por conexión', t2:'Ubicaciones de salida', t3:'Registros guardados', t4:'Clic para conectar',
+ h_what:'Por qué BigFoot es diferente', wt_title:'Una salida es un punto único de fallo. Usamos una cadena.',
+ p_what1:'La mayoría de las VPN conectan tu tráfico a <b>un</b> servidor de salida. BigFoot lo rebota por una <b>cadena de varias IPs</b> — como una cadena de proxies, pero en una app tan simple como cualquier VPN comercial.',
+ p_what2:'Una <b>extensión de Chrome</b> cubre el tráfico del navegador igual, con su propia cadena de saltos, sin la app de escritorio activa. Nombrada por la idea: difícil de rastrear, no deja nada sólido atrás.',
+ h_feat:'Funciones', ft_title:'Hecho para la privacidad, mantenido simple.',
+ f1h:'Multisalto por Defecto', f1p:'Cada conexión pasa por varias IPs automáticamente, no un modo especial que buscar.',
+ f2h:'Simplicidad de un Clic', f2p:'La misma facilidad que cualquier VPN importante; el multisalto ocurre por detrás.',
+ f3h:'Extensión de Navegador', f3p:'Una extensión de Chrome cubre las pestañas con su propia cadena de saltos.',
+ f4h:'Interruptor de Emergencia', f4p:'Si la conexión cae, tu tráfico se detiene en vez de volver a tu IP real.',
+ f5h:'Cadena de Saltos Rotativa', f5p:'La cadena de IPs rota en un intervalo en vez de quedarse fija toda la sesión.',
+ f6h:'Sin Registros por Diseño', f6p:'Construido para no retener lo que alguien tendría que entregar.',
+ h_cmp:'Cómo se compara', cmp_title:'Frente a una VPN típica de un solo salto.',
+ cmp_col1:'&nbsp;', cmp_col2:'Una VPN Típica', cmp_col3:'BigFoot VPN',
  cmp_r1:'Saltos de salida', cmp_r1a:'1 (el multisalto suele ser un servidor especial opcional)', cmp_r1b:'3+, encadenados por defecto',
- cmp_r2:'Configuraci&oacute;n', cmp_r2a:'App de un clic', cmp_r2b:'App de un clic &mdash; misma simplicidad',
- cmp_r3:'Cobertura del navegador', cmp_r3a:'La extensi&oacute;n usa la misma salida &uacute;nica', cmp_r3b:'La extensi&oacute;n tiene su propia cadena de saltos',
- cmp_r4:'Rotaci&oacute;n de saltos', cmp_r4a:'Fija durante la sesi&oacute;n', cmp_r4b:'Rota autom&aacute;ticamente en un intervalo',
- cmpnote:'"Una VPN T&iacute;pica" describe el comportamiento est&aacute;ndar de una VPN de un solo salto como categor&iacute;a, no a ning&uacute;n competidor espec&iacute;fico.',
- h_how:'C&oacute;mo funcionar&iacute;a',
- s1h:'Instalar', s1p:'Descarga la app (y la extensi&oacute;n, si quieres) e inicia sesi&oacute;n.',
- s2h:'Un Clic', s2p:'Pulsa conectar. Sin lista de servidores que estudiar, sin ajustes que configurar.',
- s3h:'Rebotado, No Cableado', s3p:'Tu tr&aacute;fico rebota por la cadena de saltos en vez de ir directo a un servidor de salida.',
- footer:'BIGFOOT VPN &mdash; un concepto de TYPHON. Nada aqu&iacute; es definitivo ni est&aacute; disponible todav&iacute;a.'
+ cmp_r2:'Configuración', cmp_r2a:'App de un clic', cmp_r2b:'App de un clic — misma simplicidad',
+ cmp_r3:'Cobertura del navegador', cmp_r3a:'La extensión usa la misma salida única', cmp_r3b:'La extensión tiene su propia cadena de saltos',
+ cmp_r4:'Rotación de saltos', cmp_r4a:'Fija durante la sesión', cmp_r4b:'Rota automáticamente en un intervalo',
+ cmpnote:'"Una VPN Típica" describe el comportamiento estándar de un solo salto como categoría, no a un competidor específico.',
+ h_how:'Cómo funciona', hw_title:'Tres pasos. Luego olvidas que está activa.',
+ s1h:'Instalar', s1p:'Descarga la app (y la extensión, si quieres) e inicia sesión.',
+ s2h:'Un Clic', s2p:'Pulsa conectar. Sin lista de servidores, sin ajustes.',
+ s3h:'Rebotado, No Cableado', s3p:'Tu tráfico rebota por la cadena de saltos en vez de ir directo a una salida.',
+ get_eyebrow:'Acceso anticipado · en desarrollo', get_title:'Desaparece en un clic.',
+ get_sub:'BigFoot está en desarrollo activo bajo TYPHON. Únete temprano y enruta tu tráfico por la cadena.',
+ get_note:'Windows · macOS · extensión de Chrome — al lanzamiento.',
+ footer:'Privacidad multisalto · un proyecto de TYPHON.'
 }};
 let lang='en';
 function render(){
   const L=I18N[lang];document.documentElement.lang=lang;
   document.querySelectorAll('[data-i18n]').forEach(function(el){
-    const k=el.dataset.i18n;if(L[k])el.innerHTML=L[k];});
+    const k=el.dataset.i18n;if(L[k]!==undefined)el.innerHTML=L[k];});
   document.querySelectorAll('.lang').forEach(function(b){b.classList.toggle('on',b.dataset.lang===lang);});
 }
 document.querySelectorAll('.lang').forEach(function(b){
