@@ -191,6 +191,17 @@
   @keyframes breathe{50%{filter:drop-shadow(0 0 86px rgba(245,132,63,.82))}}
   @keyframes spin{to{transform:rotate(360deg)}}
 
+  /* ---------- interface showcase ---------- */
+  .showcase{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--ink2);
+    box-shadow:0 40px 90px -50px rgba(0,0,0,.9), 0 0 0 1px rgba(242,178,41,.05) inset}
+  .showcase-bar{display:flex;align-items:center;gap:7px;padding:10px 14px;background:#0f1015;border-bottom:1px solid var(--line)}
+  .showcase-bar .d{width:10px;height:10px;border-radius:50%;background:#3a3f4b}
+  .showcase-bar .d.a{background:var(--ember)}.showcase-bar .d.b{background:var(--gold)}
+  .showcase-bar .p{margin-left:8px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .showcase img{display:block;width:100%;height:auto}
+  .showcase .cap{padding:10px 14px;border-top:1px solid var(--line);font-family:var(--mono);
+    font-size:10.5px;color:var(--faint);letter-spacing:.04em;text-align:center}
+
   /* ---------- section frame ---------- */
   section.band{padding-block:clamp(48px,7vw,84px);border-top:1px solid var(--line)}
   .head{max-width:62ch;margin-bottom:34px}
@@ -397,6 +408,17 @@
   </div>
 </header>
 
+<!-- ===================== INTERFACE SHOWCASE ===================== -->
+<section class="band" id="inside" style="border-top:0;padding-top:clamp(18px,3vw,34px)">
+  <div class="wrap">
+    <div class="showcase">
+      <div class="showcase-bar"><span class="d a"></span><span class="d b"></span><span class="d"></span><span class="p">TYPHON — workspace preview</span></div>
+      <img src="typhon-ui.webp" alt="TYPHON workspace interface preview" loading="lazy" decoding="async">
+      <div class="cap" data-i18n="shot_cap">Interface preview — placeholder art, to be replaced with the live app build.</div>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== OVERVIEW / PILLARS ===================== -->
 <section class="band" id="overview">
   <div class="wrap">
@@ -420,27 +442,6 @@
         <div class="n">03 · SPECIALIZE</div>
         <h3 data-i18n="pil3_h">The DoS Lab</h3>
         <p data-i18n="pil3_p">A focused module for authorized denial-of-service resilience testing — measure how your own service holds up, live.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== MODULES ===================== -->
-<section class="band" id="modules">
-  <div class="wrap">
-    <div class="head">
-      <span class="eyebrow" data-i18n="m_eyebrow">The suite</span>
-      <h2 data-i18n="m_title">Built as a real platform, module by module.</h2>
-      <p data-i18n="m_sub">Grouped the way a finished product would be. Click any module to see what it does.</p>
-    </div>
-    <div class="suite">
-      <div class="suite-top">
-        <span class="t">TYPHON SUITE</span>
-        <span class="hint" data-i18n="m_hint">select a module →</span>
-      </div>
-      <div class="suite-body">
-        <div class="suite-nav" id="suiteNav"></div>
-        <div class="suite-panel" id="suitePanel"></div>
       </div>
     </div>
   </div>
@@ -500,6 +501,27 @@
         <div class="feed-top"><span data-i18n="tm_feed">Live feed</span> <b>&#9679; REC</b></div>
         <div class="fm" id="tfeed"></div>
       </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MODULES (the suite) ===================== -->
+<section class="band" id="modules">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow" data-i18n="m_eyebrow">The suite</span>
+      <h2 data-i18n="m_title">Built as a real platform, module by module.</h2>
+      <p data-i18n="m_sub">Grouped the way a finished product would be. Click any module to see what it does.</p>
+    </div>
+    <div class="suite">
+      <div class="suite-top">
+        <span class="t">TYPHON SUITE</span>
+        <span class="hint" data-i18n="m_hint">select a module →</span>
+      </div>
+      <div class="suite-body">
+        <div class="suite-nav" id="suiteNav"></div>
+        <div class="suite-panel" id="suitePanel"></div>
+      </div>
     </div>
   </div>
 </section>
