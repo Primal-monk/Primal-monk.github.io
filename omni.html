@@ -8,7 +8,7 @@
 <meta name="description" content="ANGELCORP — a holding company built to give more than it takes. 20% of all gross income is pledged to charity.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Marcellus+SC&display=swap">
 <style>
   /* ---- theme tokens (Sanctum default; Crimson / Ivory / Marble via data-theme) ---- */
   :root{
@@ -17,8 +17,11 @@
     --red:#e6c07a; --red2:#ffe3a6; --sky:#6ea0dd; --sky2:#a9c8f2;
     --paper:#f2eee4; --steel:#a7aec6; --faint:#606a86;
     --ray:255,217,122; --glow:143,192,245;
-    --disp:"Cinzel",Georgia,serif; --body:"EB Garamond",Georgia,serif;
-    --mono:"Cinzel",Georgia,serif; --maxw:1120px;
+    --disp:"Marcellus SC",Georgia,serif; --body:"Cormorant Garamond",Georgia,serif;
+    --corp:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --mono:"Archivo","Helvetica Neue",Arial,sans-serif; --maxw:1120px;
+    /* where the blue eye sits inside assets/angelcorp.png (for centering the halo/wheels) */
+    --eye-x:50.5%; --eye-y:58%;
   }
   body[data-theme="crimson"]{
     --bg:#0f0708; --bg2:#180c0e; --bg3:#221215; --raise:#2c181b;
@@ -40,7 +43,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:var(--body);background:var(--bg);color:var(--steel);line-height:1.6;font-size:17px;
+  body{font-family:var(--body);font-weight:500;background:var(--bg);color:var(--steel);line-height:1.55;font-size:19px;
     -webkit-font-smoothing:antialiased;overflow-x:hidden;
     background-image:radial-gradient(rgba(var(--ray),.05) 1px, transparent 1.5px),
       radial-gradient(1100px 520px at 50% -6%, rgba(var(--ray),.06), transparent 62%);
@@ -88,10 +91,10 @@
       repeating-linear-gradient(90deg,#e8dec5 0 6px,#d3c6a4 7px,#e8dec5 11px)}
   .pillar.left{left:0;border-right:1px solid #b6ab8f}
   .pillar.right{right:0;border-left:1px solid #b6ab8f}
-  .pillar::before{content:"";position:absolute;top:0;left:-20%;right:-20%;height:clamp(48px,6vw,76px);
-    background:url("pillar.png") top center/100% auto no-repeat;filter:drop-shadow(0 3px 4px rgba(0,0,0,.3))}
-  .pillar::after{content:"";position:absolute;bottom:0;left:-20%;right:-20%;height:16px;
-    background:linear-gradient(180deg,#e8dec5,#c6b997);border-top:1px solid #b6ab8f}
+  .pillar::before{content:"";position:absolute;top:0;left:-52%;right:-52%;height:clamp(44px,5.4vw,66px);
+    background:url("pillar-top.png") bottom center/contain no-repeat;filter:drop-shadow(0 3px 5px rgba(0,0,0,.32))}
+  .pillar::after{content:"";position:absolute;bottom:0;left:-40%;right:-40%;height:clamp(34px,4.2vw,52px);
+    background:url("pillar-bottom.png") top center/contain no-repeat;filter:drop-shadow(0 -2px 4px rgba(0,0,0,.22))}
   @media(max-width:720px){.pillar{display:none}}
   /* stone arch across the top of the hero, landing on the columns */
   .archwrap{position:absolute;top:0;left:clamp(44px,5vw,78px);right:clamp(44px,5vw,78px);
@@ -117,30 +120,41 @@
   .creed .r{color:var(--red2);font-style:italic}
   .hero .sub{font-size:1.05rem;margin-top:12px;color:var(--steel)}
   .hero .cta{margin-top:22px}
-  /* holy rotating halo rings */
-  .angel{position:relative;display:flex;align-items:center;justify-content:center;min-height:clamp(260px,34vw,400px);perspective:1200px}
-  .angel .rays{position:absolute;inset:0;margin:auto;width:min(480px,142%);aspect-ratio:1;
-    background:repeating-conic-gradient(from 0deg, rgba(var(--ray),.08) 0 3deg, transparent 3deg 13deg);
-    -webkit-mask-image:radial-gradient(circle,transparent 22%,#000 38%,transparent 74%);
-            mask-image:radial-gradient(circle,transparent 22%,#000 38%,transparent 74%);
+  /* holy rotating halo rings — everything anchors to the blue EYE inside the logo,
+     which is not at the image centre. .orb matches the logo box; each decorative
+     layer is pinned to (--eye-x,--eye-y) so the wheels spin around the eye. */
+  .angel{position:relative;display:flex;align-items:center;justify-content:center;min-height:clamp(280px,34vw,420px);perspective:1200px}
+  .orb{position:relative;width:min(300px,82%);aspect-ratio:892/886}
+  .orb>*{position:absolute;left:var(--eye-x);top:var(--eye-y)}
+  .angel img{width:100%;height:100%;object-fit:contain;left:0;top:0;z-index:2;
+    filter:drop-shadow(0 6px 30px rgba(var(--ray),.35)) drop-shadow(0 0 50px rgba(var(--glow),.2))}
+  /* soft medallion behind the eye so the pale logo keeps contrast on light themes */
+  .angel .medal{width:150%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);z-index:0;
+    background:radial-gradient(circle, rgba(var(--glow),.12), transparent 66%)}
+  .angel .rays{width:210%;aspect-ratio:1;transform:translate(-50%,-50%);z-index:0;
+    background:repeating-conic-gradient(from 0deg, rgba(var(--ray),.10) 0 3deg, transparent 3deg 13deg);
+    -webkit-mask-image:radial-gradient(circle,transparent 20%,#000 36%,transparent 72%);
+            mask-image:radial-gradient(circle,transparent 20%,#000 36%,transparent 72%);
     animation:halospin 150s linear infinite}
-  .angel .halo{position:absolute;inset:0;margin:auto;width:min(400px,122%);aspect-ratio:1;border-radius:50%;
-    background:radial-gradient(circle, rgba(var(--ray),.24), rgba(var(--glow),.08) 46%, transparent 68%);filter:blur(4px)}
-  /* angel wheels (Ophanim): tilted rings, each with a bright arc that spins around it */
-  .angel .wheel{position:absolute;inset:0;margin:auto;width:min(360px,108%);aspect-ratio:1;border-radius:50%;
-    border:1px solid rgba(var(--ray),.16);z-index:1}
+  .angel .halo{width:170%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);z-index:0;
+    background:radial-gradient(circle, rgba(var(--ray),.26), rgba(var(--glow),.08) 46%, transparent 68%);filter:blur(4px)}
+  /* angel wheels (Ophanim): tilted rings, each with a bright arc that spins around the eye */
+  .angel .wheel{width:158%;aspect-ratio:1;border-radius:50%;
+    border:1px solid rgba(var(--ray),.18);z-index:1}
   .angel .wheel::before{content:"";position:absolute;inset:-1px;border-radius:50%;
     background:conic-gradient(from 0deg, transparent 0 58%, rgba(var(--ray),.85) 80%, #fff 89%, rgba(var(--ray),.85) 92%, transparent 100%);
     -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
             mask:radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
     animation:wheelspin 4.5s linear infinite}
-  .angel .w1{transform:rotateX(66deg)}
-  .angel .w2{width:min(320px,96%);transform:rotateY(66deg);z-index:3}
+  .angel .w1{transform:translate(-50%,-50%) rotateX(68deg)}
+  .angel .w2{width:150%;transform:translate(-50%,-50%) rotateY(68deg);z-index:3}
   .angel .w2::before{animation-duration:6s;animation-direction:reverse}
-  .angel img{width:min(228px,64%);position:relative;z-index:2;
-    filter:drop-shadow(0 6px 30px rgba(255,217,122,.35)) drop-shadow(0 0 50px rgba(143,192,245,.2))}
-  @keyframes halospin{to{transform:rotate(360deg)}}
+  @keyframes halospin{to{transform:translate(-50%,-50%) rotate(360deg)}}
   @keyframes wheelspin{to{transform:rotate(360deg)}}
+  body[data-theme="ivory"] .angel .medal,body[data-theme="marble"] .angel .medal{
+    background:radial-gradient(circle, rgba(30,26,14,.20), rgba(30,26,14,.07) 46%, transparent 70%)}
+  body[data-theme="ivory"] .angel img,body[data-theme="marble"] .angel img{
+    filter:drop-shadow(0 3px 12px rgba(40,32,10,.42)) drop-shadow(0 0 2px rgba(40,32,10,.35))}
 
   /* ---------- cathedral flourishes ---------- */
   #overview .body:first-of-type::first-letter{float:left;font-family:var(--disp);font-weight:700;
@@ -201,17 +215,22 @@
   .div:hover{transform:translateY(-4px);border-color:var(--acc);box-shadow:0 22px 54px -32px var(--acc)}
   .dhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
   .dhead img{width:54px;height:54px;object-fit:contain;margin:0}
-  .dcat{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);
-    border:1px solid var(--line);border-radius:20px;padding:4px 10px;white-space:nowrap}
+  .dcat{font-family:var(--corp);font-weight:700;font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--acc);
+    border:1px solid var(--line);border-radius:4px;padding:4px 10px;white-space:nowrap}
   .div img{width:52px;height:52px;object-fit:contain;margin-bottom:14px}
-  .div .nm{font-family:var(--disp);color:var(--paper);font-weight:800;font-size:1.3rem;letter-spacing:.1em}
+  .div .nm{font-family:var(--corp);color:var(--paper);font-weight:800;font-size:1.28rem;letter-spacing:.01em}
   .div .sub{font-family:var(--mono);color:var(--acc);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;margin-top:4px}
-  .div p{color:var(--steel);font-size:.9rem;margin-top:8px}
+  .div p{font-family:var(--corp);color:var(--steel);font-size:.86rem;line-height:1.5;margin-top:8px}
   .div .more{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:.72rem;color:var(--faint);letter-spacing:.06em}
   .div .more em{font-style:normal;color:var(--acc);display:inline-block;transition:transform .16s}
   .div:hover .more em{transform:translateX(5px)}
   .div.d-pico{--acc:#3ddc84} .div.d-osiris{--acc:#b06bff} .div.d-typhon{--acc:#e8622a} .div.d-bigfoot{--acc:#e8792e}
   .div.grover{--acc:#3ddc84} .div.tweetshield{--acc:#4a9eff}
+  /* corporate framing for the products/companies grid */
+  #divisions .head h2{font-family:var(--corp);font-weight:800;letter-spacing:-.01em}
+  #divisions .head p{font-family:var(--corp);font-size:.92rem;color:var(--faint)}
+  .div .more{font-family:var(--corp)!important}
+  .btn{font-family:var(--corp)!important}
 
   /* ---------- giving ---------- */
   .give-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:start}
@@ -312,11 +331,14 @@
   <div class="wrap">
     <div class="hero-grid">
       <div class="angel" aria-hidden="true">
-        <span class="rays"></span>
-        <span class="halo"></span>
-        <span class="wheel w1"></span>
-        <span class="wheel w2"></span>
-        <img src="assets/angelcorp.png" alt="ANGELCORP" decoding="async" fetchpriority="high">
+        <div class="orb">
+          <span class="medal"></span>
+          <span class="rays"></span>
+          <span class="halo"></span>
+          <span class="wheel w1"></span>
+          <span class="wheel w2"></span>
+          <img src="assets/angelcorp.png" alt="ANGELCORP" decoding="async" fetchpriority="high">
+        </div>
       </div>
       <div class="hero-in">
         <span class="eyebrow"><span data-i18n="tag">Parent Organisation</span> · EST. 2025</span>
@@ -347,7 +369,8 @@
   <div class="wrap">
     <div class="head" style="margin-bottom:22px">
       <span class="eyebrow" data-i18n="h_div">Divisions</span>
-      <h2 data-i18n="dv_title">The operating companies.</h2>
+      <h2 data-i18n="dv_title">Our companies &amp; products.</h2>
+      <p data-i18n="dv_sub">Each operating company below ships its own products. Click any to enter its site.</p>
     </div>
     <div class="divs">
       <a class="div d-pico" href="primal.html">
@@ -369,8 +392,8 @@
         <span class="more">Enter <em>→</em></span>
       </a>
       <a class="div d-bigfoot" href="bigfoot.html">
-        <div class="dhead"><img src="assets/bigfoot-logo.png" alt=""><span class="dcat">Multi-Hop VPN</span></div>
-        <div class="nm">BIGFOOT VPN</div>
+        <div class="dhead"><img src="assets/bigfoot-logo.png" alt=""><span class="dcat">Multi-Hop MVPN</span></div>
+        <div class="nm">BIGFOOT</div>
         <p>Bounces your connection through a chain of IPs instead of one exit server. A TYPHON venture.</p>
         <span class="more">Enter <em>→</em></span>
       </a>
@@ -423,7 +446,7 @@
       <h2 data-i18n="rd_title">2027 — four ventures past concept.</h2>
     </div>
     <div class="roadmap">
-      <div class="rm"><div class="y">2027 · Q1</div><div class="t">BigFoot VPN</div></div>
+      <div class="rm"><div class="y">2027 · Q1</div><div class="t">BigFoot MVPN</div></div>
       <div class="rm"><div class="y">2027 · Q2</div><div class="t">Grover</div></div>
       <div class="rm"><div class="y">2027 · Q3</div><div class="t">TweetShield</div></div>
       <div class="rm"><div class="y">2027 · Q4</div><div class="t">TYPHON / OSIRIS</div></div>
@@ -530,7 +553,7 @@ en:{
  st_div:'Ventures in group', st_est:'Year founded',
  h_about:'Overview', h_div:'Divisions', h_giving:'Giving', h_rec:'Receipts',
  ov_title:'One structure. Many ventures. A fixed obligation to give.',
- dv_title:'The operating companies.', gv_title:'Charitable first. Every product, every time.',
+ dv_title:'Our companies &amp; products.', dv_sub:'Each operating company below ships its own products. Click any to enter its site.', gv_title:'Charitable first. Every product, every time.',
  rd_title:'2027 — four ventures past concept.',
  s_games:'Games', s_mod:'Modding Software', s_sec:'Offensive Security',
  p_about1:'Every project and every company sits under <b>ANGELCORP</b> — the first parent company designed to donate <b>20% of all gross income</b> to charity, and to show the total donated openly on the home page.',

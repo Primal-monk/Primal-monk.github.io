@@ -16,19 +16,12 @@
     --paper:#eef2fb; --line:rgba(255,255,255,.14); --ink:#161d30; --dev:#93a3ca;
     --c-green:#3ddc84; --c-yellow:#ffd23f; --c-red:#ff5a5a; --c-orange:#ff8c3a;
   }
-  /* GAME BOY: classic DMG 4-green screen */
-  body[data-mode="gameboy"]{
-    --bg:#0f380f; --bg2:#17451a; --bg3:#245c23; --bg4:#356e30;
-    --hi:#9bbc0f; --hi2:#8bac0f; --sec:#8bac0f; --sec2:#d3e79a;
-    --paper:#e2f0ac; --line:rgba(155,188,15,.32); --ink:#0a260a; --dev:#8bac0f;
-    --c-green:#9bbc0f; --c-yellow:#c3d886; --c-orange:#6d9a2e; --c-red:#306230;
-  }
-  /* PURPLE: clean light purple */
-  body[data-mode="purple"]{
-    --bg:#e9e2fb; --bg2:#ffffff; --bg3:#f0ebfd; --bg4:#e0d6f7;
-    --hi:#7c4dff; --hi2:#5c2fd6; --sec:#8a5cff; --sec2:#2e2450;
-    --paper:#241b3d; --line:rgba(90,60,160,.18); --ink:#2a2150; --dev:#5a4a86;
-    --c-green:#25a457; --c-yellow:#e0a300; --c-orange:#ef7d1a; --c-red:#e23b3b;
+  /* DARK: black-plastic cartridge, neon label */
+  body[data-mode="dark"]{
+    --bg:#0c0f16; --bg2:#141926; --bg3:#1c2333; --bg4:#262f44;
+    --hi:#ffd23f; --hi2:#c9990f; --sec:#6fd0ff; --sec2:#c6cfe0;
+    --paper:#eef2fb; --line:rgba(255,255,255,.10); --ink:#04060b; --dev:#8090b4;
+    --c-green:#3ddc84; --c-yellow:#ffd23f; --c-red:#ff5a5a; --c-orange:#ff8c3a;
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
@@ -230,21 +223,79 @@
             vertical-align:super; margin-left:.06em; }
 
 /* =========================================================
-   PICODEV · 8-BIT ARCADE SKIN  (alternate design)
+   PICODEV · CARTRIDGE SKIN
+   greyish-blue moulded plastic + bold ordered dithering,
+   no grid, a real CRT scanline overlay, folder tabs.
    ========================================================= */
+/* moulded plastic + strong ordered dithering (Bayer-ish checker), NO grid */
 body{background-color:var(--bg);
   background-image:
-    repeating-conic-gradient(rgba(128,128,128,.06) 0 25%, transparent 0 50%),
-    repeating-linear-gradient(0deg, transparent 0 39px, rgba(128,128,128,.05) 39px 40px),
-    repeating-linear-gradient(90deg, transparent 0 119px, rgba(128,128,128,.04) 119px 120px),
-    radial-gradient(1200px 520px at 50% -8%, rgba(255,210,63,.06), transparent 60%);
-  background-size:4px 4px, 100% 40px, 120px 100%, 100% 100%}
-/* dithering field that follows the cursor */
-#ditherfield{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.6;
-  background-image:repeating-conic-gradient(rgba(128,128,128,.5) 0 25%, transparent 0 50%);background-size:4px 4px;
-  -webkit-mask:radial-gradient(150px 150px at var(--mx,-600px) var(--my,-600px), #000 0%, transparent 70%);
-          mask:radial-gradient(150px 150px at var(--mx,-600px) var(--my,-600px), #000 0%, transparent 70%)}
+    repeating-conic-gradient(rgba(255,255,255,.05) 0 25%, transparent 0 50%),
+    repeating-conic-gradient(from 45deg, rgba(0,0,0,.16) 0 25%, transparent 0 50%),
+    radial-gradient(1200px 560px at 50% -8%, rgba(255,210,63,.09), transparent 60%);
+  background-size:8px 8px, 8px 8px, 100% 100%}
+/* dithering field that follows the cursor — much more noticeable */
+#ditherfield{position:fixed;inset:0;pointer-events:none;z-index:3;mix-blend-mode:screen;opacity:.55;
+  background-image:repeating-conic-gradient(from 45deg, var(--hi) 0 25%, transparent 0 50%);background-size:9px 9px;
+  -webkit-mask:radial-gradient(210px 210px at var(--mx,-600px) var(--my,-600px), #000 0%, rgba(0,0,0,.45) 45%, transparent 72%);
+          mask:radial-gradient(210px 210px at var(--mx,-600px) var(--my,-600px), #000 0%, rgba(0,0,0,.45) 45%, transparent 72%)}
+/* CRT overlay: scanlines + vignette + faint flicker */
+#crt{position:fixed;inset:0;pointer-events:none;z-index:45;mix-blend-mode:multiply;
+  background:
+    repeating-linear-gradient(0deg, rgba(0,0,0,.22) 0 1px, transparent 1px 3px),
+    radial-gradient(130% 120% at 50% 50%, transparent 60%, rgba(0,0,0,.42));
+  animation:crtflick 5.5s steps(40) infinite}
+#crt::after{content:"";position:absolute;left:0;right:0;height:120px;top:-120px;
+  background:linear-gradient(180deg,transparent,rgba(255,255,255,.05),transparent);
+  animation:crtscan 7s linear infinite}
+@keyframes crtflick{0%,100%{opacity:.9}50%{opacity:.82}}
+@keyframes crtscan{to{transform:translateY(calc(100vh + 240px))}}
+@media(prefers-reduced-motion:reduce){#crt,#crt::after{animation:none}}
 .wrap{position:relative;z-index:2}
+
+/* ---- cartridge shell: the content reads like the back of a game cartridge ---- */
+.cartridge{position:relative;background:
+    linear-gradient(180deg,var(--bg2),var(--bg3));
+  border:3px solid var(--ink);border-radius:18px 18px 12px 12px;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.07), inset 0 -18px 40px rgba(0,0,0,.25), 0 30px 70px -34px #000;
+  padding:26px clamp(16px,3vw,34px) 34px;margin-bottom:34px}
+/* the ridged finger-grip strip along the top of the cartridge */
+.cartridge::before{content:"";position:absolute;left:16px;right:16px;top:8px;height:12px;border-radius:6px;
+  background:repeating-linear-gradient(90deg, rgba(0,0,0,.28) 0 3px, rgba(255,255,255,.05) 3px 6px);opacity:.8}
+.screw{position:absolute;width:15px;height:15px;border-radius:50%;z-index:3;
+  background:radial-gradient(circle at 38% 35%, #cfd6e6, #7b8399 62%, #3c4256 100%);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.4), 0 1px 2px rgba(0,0,0,.5)}
+.screw::before{content:"";position:absolute;inset:0;margin:auto;width:9px;height:2px;background:rgba(0,0,0,.55);
+  transform:rotate(var(--r,40deg))}
+.screw.tl{top:9px;left:9px}.screw.tr{top:9px;right:9px}
+.screw.bl{bottom:9px;left:9px;--r:-40deg}.screw.br{bottom:9px;right:9px;--r:-40deg}
+/* moulded caption line, like the embossed text on a cartridge */
+.cartcaption{font-family:"Press Start 2P",monospace;font-size:.5rem;letter-spacing:.12em;color:var(--sec2);
+  opacity:.55;text-align:center;margin:2px 0 18px;text-transform:uppercase}
+
+/* ---- folder tabs ---- */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;position:relative;z-index:2;margin-bottom:-3px;padding-left:6px}
+.tab{font-family:"Press Start 2P",monospace;font-size:.56rem;letter-spacing:.03em;color:var(--sec2);
+  background:linear-gradient(180deg,var(--bg3),var(--bg2));border:3px solid var(--ink);border-bottom:0;
+  border-radius:10px 10px 0 0;padding:12px 16px 14px;cursor:pointer;opacity:.5;transform:translateY(4px);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.05);transition:opacity .12s,transform .12s,color .12s;position:relative;display:flex;align-items:center;gap:8px}
+.tab:hover{opacity:.85}
+.tab .dot{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:2px 2px 0 var(--ink)}
+.tab .lock{font-size:.6rem;opacity:.7}
+.tab.on{opacity:1;transform:translateY(0);color:var(--hi);background:linear-gradient(180deg,var(--bg2),var(--bg3));z-index:3}
+.tab.on::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:5px;background:var(--bg2)}
+.tabpanel{display:none;animation:tabfade .18s ease}
+.tabpanel.on{display:block}
+@keyframes tabfade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+/* placeholder panels */
+.placeholder{text-align:center;padding:46px 20px}
+.placeholder .pico{font-family:"Press Start 2P",monospace;font-size:1.1rem;color:var(--hi);
+  text-shadow:3px 3px 0 var(--ink);margin-bottom:14px;letter-spacing:1px}
+.placeholder p{color:var(--paper);max-width:44ch;margin:0 auto 8px;font-size:.92rem}
+.placeholder .tag{display:inline-block;margin-top:14px;font-family:"Press Start 2P",monospace;font-size:.56rem;
+  color:var(--ink);background:var(--hi);border:3px solid var(--ink);box-shadow:4px 4px 0 rgba(0,0,0,.5);
+  padding:10px 16px;letter-spacing:.06em;animation:blink 1.2s steps(1) infinite}
+.placeholder .cart{font-size:3.4rem;margin-bottom:8px;filter:drop-shadow(3px 3px 0 var(--ink))}
 /* pixel type */
 h1{font-family:"Press Start 2P",monospace!important;font-size:clamp(1.5rem,5.2vw,3rem)!important;
   line-height:1.4!important;letter-spacing:3px!important}
@@ -317,8 +368,9 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
 .neonlogo:hover{transform:scale(1.06);filter:drop-shadow(0 0 10px var(--c-yellow))}
 </style>
 </head>
-<body data-theme="yellow">
+<body>
 <div id="ditherfield" aria-hidden="true"></div>
+<div id="crt" aria-hidden="true"></div>
 
 <div class="topbar">
   <a class="brand" href="omni.html" title="ANGELCORP - parent company">
@@ -364,33 +416,70 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
 
 <div class="wrap">
 
-  <section id="play">
-    <div class="h2row">
-      <h2 data-i18n="h_games">Select a Game</h2>
-      <div class="godotline"><img src="assets/godot.png" alt=""><span data-i18n="madewith">All made with Godot</span></div>
-      <span class="pad4" aria-hidden="true"><i class="g"></i><i class="y"></i><i class="r"></i><i class="o"></i></span>
+  <div class="tabs" role="tablist">
+    <button class="tab on" data-tab="games"><span class="dot" style="background:var(--c-green)"></span><span data-i18n="tab_games">GAMES</span></button>
+    <button class="tab" data-tab="studio"><span class="dot" style="background:var(--c-yellow)"></span><span data-i18n="tab_studio">STUDIO</span></button>
+    <button class="tab" data-tab="devlog"><span class="dot" style="background:var(--c-orange)"></span><span data-i18n="tab_devlog">DEVLOG</span> <span class="lock">🔒</span></button>
+    <button class="tab" data-tab="shop"><span class="dot" style="background:var(--c-red)"></span><span data-i18n="tab_shop">SHOP</span> <span class="lock">🔒</span></button>
+  </div>
+
+  <div class="cartridge">
+    <span class="screw tl" aria-hidden="true"></span><span class="screw tr" aria-hidden="true"></span>
+    <span class="screw bl" aria-hidden="true"></span><span class="screw br" aria-hidden="true"></span>
+    <div class="cartcaption" data-i18n="cart_cap">PICODEV · CART-01 · MADE WITH GODOT · © PRIMALAPE</div>
+
+    <!-- TAB: GAMES -->
+    <div class="tabpanel on" data-panel="games">
+      <section id="play">
+        <div class="h2row">
+          <h2 data-i18n="h_games">Select a Game</h2>
+          <div class="godotline"><img src="assets/godot.png" alt=""><span data-i18n="madewith">All made with Godot</span></div>
+          <span class="pad4" aria-hidden="true"><i class="g"></i><i class="y"></i><i class="r"></i><i class="o"></i></span>
+        </div>
+        <div class="games" id="games"></div>
+      </section>
     </div>
-    <div class="games" id="games"></div>
-  </section>
 
-  <section>
-    <div class="h2row"><h2 data-i18n="h_about">The Studio</h2></div>
-    <p class="body" data-i18n="p_about"></p>
-  </section>
+    <!-- TAB: STUDIO -->
+    <div class="tabpanel" data-panel="studio">
+      <section>
+        <div class="h2row"><h2 data-i18n="h_about">The Studio</h2></div>
+        <p class="body" data-i18n="p_about"></p>
+      </section>
+      <section>
+        <div class="h2row"><h2 data-i18n="h_future">On the Whiteboard</h2></div>
+        <div class="future"><p data-i18n="p_future"></p></div>
+      </section>
+      <section>
+        <div class="h2row"><h2 data-i18n="h_corp">Parent Company</h2></div>
+        <a class="mcard" href="omni.html" style="border-color:#b03a3a">
+          <img src="assets/angelcorp.png" alt="">
+          <div class="t"><div class="nm" style="color:#e0554f">ANGEL<span style="color:#fff">CORP</span></div>
+          <p data-i18n="p_corp"></p></div>
+        </a>
+      </section>
+    </div>
 
-  <section>
-    <div class="h2row"><h2 data-i18n="h_future">On the Whiteboard</h2></div>
-    <div class="future"><p data-i18n="p_future"></p></div>
-  </section>
+    <!-- TAB: DEVLOG (placeholder) -->
+    <div class="tabpanel" data-panel="devlog">
+      <div class="placeholder">
+        <div class="cart">🎮</div>
+        <div class="pico" data-i18n="ph_devlog_t">DEVLOG</div>
+        <p data-i18n="ph_devlog_p">Patch notes, build diaries and behind-the-scenes on each game will live here — one page per project.</p>
+        <span class="tag" data-i18n="ph_soon">INSERT CARTRIDGE — COMING SOON</span>
+      </div>
+    </div>
 
-  <section>
-    <div class="h2row"><h2 data-i18n="h_corp">Parent Company</h2></div>
-    <a class="mcard" href="omni.html" style="border-color:#b03a3a">
-      <img src="assets/angelcorp.png" alt="">
-      <div class="t"><div class="nm" style="color:#e0554f">ANGEL<span style="color:#fff">CORP</span></div>
-      <p data-i18n="p_corp"></p></div>
-    </a>
-  </section>
+    <!-- TAB: SHOP (placeholder) -->
+    <div class="tabpanel" data-panel="shop">
+      <div class="placeholder">
+        <div class="cart">🛒</div>
+        <div class="pico" data-i18n="ph_shop_t">SHOP</div>
+        <p data-i18n="ph_shop_p">Downloads, builds and merch will drop here as games ship. 20% of everything goes to charity.</p>
+        <span class="tag" data-i18n="ph_soon">INSERT CARTRIDGE — COMING SOON</span>
+      </div>
+    </div>
+  </div>
 
 </div>
 
@@ -406,6 +495,11 @@ en:{
  h_about:'The Studio', h_games:'Select a Game', h_mods:'Mod Tools',
  h_advice:'How I Think You Should Make Games', h_future:'On the Whiteboard',
  h_corp:'Parent Company', madewith:'All made with Godot', soon:'Coming soon',
+ tab_games:'GAMES', tab_studio:'STUDIO', tab_devlog:'DEVLOG', tab_shop:'SHOP',
+ cart_cap:'PICODEV · CART-01 · MADE WITH GODOT · &copy; PRIMALAPE',
+ ph_soon:'INSERT CARTRIDGE — COMING SOON',
+ ph_devlog_t:'DEVLOG', ph_devlog_p:'Patch notes, build diaries and behind-the-scenes on each game will live here — one page per project.',
+ ph_shop_t:'SHOP', ph_shop_p:'Downloads, builds and merch will drop here as games ship. 20% of everything goes to charity.',
  p_about:'<b>PICODEV</b> is my game studio. I make games in <b>Godot</b> &mdash; six in development, released as each one is finished. Most are built as <b>.io-style games</b>: quick to join, easy to play with friends, no tutorial needed.',
  p_assets:'I try to keep assets human-made, and only use AI for highly technical backend work where I struggle &mdash; my expertise is GDScript. Everything is made with real effort and a purpose, aimed at being a <b>good product</b> above all else. Games still in development may use asset packs or placeholder art; those get replaced before release.',
  p_pharoah:'Mod tool for Paladins.',
@@ -426,6 +520,11 @@ es:{
  h_about:'El Estudio', h_games:'Elige un Juego', h_mods:'Herramientas de Mods',
  h_advice:'C&oacute;mo Creo Que Se Deben Hacer Juegos', h_future:'En la Pizarra',
  h_corp:'Empresa Matriz', madewith:'Todo hecho con Godot', soon:'Pr&oacute;ximamente',
+ tab_games:'JUEGOS', tab_studio:'ESTUDIO', tab_devlog:'DEVLOG', tab_shop:'TIENDA',
+ cart_cap:'PICODEV · CART-01 · HECHO CON GODOT · &copy; PRIMALAPE',
+ ph_soon:'INSERTA CARTUCHO — PR&Oacute;XIMAMENTE',
+ ph_devlog_t:'DEVLOG', ph_devlog_p:'Notas de parches, diarios de desarrollo y detrás de cámaras de cada juego vivirán aquí — una página por proyecto.',
+ ph_shop_t:'TIENDA', ph_shop_p:'Descargas, builds y merch aparecerán aquí según se lancen los juegos. El 20% de todo va a caridad.',
  p_about:'<b>PICODEV</b> es mi estudio de juegos. Hago juegos en <b>Godot</b> &mdash; seis en desarrollo, publicados seg&uacute;n los termino. La mayor&iacute;a son <b>juegos tipo .io</b>: f&aacute;ciles de empezar, f&aacute;ciles de jugar con amigos, sin tutorial.',
  p_assets:'Intento que los assets sean hechos a mano, y solo uso IA para trabajo t&eacute;cnico de backend donde me cuesta &mdash; mi especialidad es GDScript. Todo est&aacute; hecho con esfuerzo real y con un prop&oacute;sito: que sea un <b>buen producto</b> por encima de todo. Los juegos en desarrollo pueden usar packs de assets o arte provisional; se reemplazan antes del lanzamiento.',
  p_pharoah:'Herramienta de mods para Paladins.',
@@ -631,11 +730,26 @@ function render(){
 document.querySelectorAll('.lang').forEach(function(b){
   b.addEventListener('click',function(){lang=b.dataset.lang;render();});});
 (function(){var b=document.getElementById('modeBtn');if(!b)return;
-  var M=[{id:'',n:'CARTRIDGE'},{id:'gameboy',n:'GAME BOY'},{id:'purple',n:'PURPLE'}],i=0;
+  var M=[{id:'',n:'CARTRIDGE'},{id:'dark',n:'DARK'}],i=0;
   try{var s=localStorage.getItem('pico-mode');if(s!==null){for(var j=0;j<M.length;j++)if(M[j].id===s)i=j;}}catch(e){}
   function ap(){var m=M[i];if(m.id)document.body.dataset.mode=m.id;else document.body.removeAttribute('data-mode');
     b.textContent=m.n;try{localStorage.setItem('pico-mode',m.id);}catch(e){}}
   b.addEventListener('click',function(){i=(i+1)%M.length;ap();});ap();})();
+/* ---- folder tabs: click to switch panels ---- */
+(function(){
+  var tabs=document.querySelectorAll('.tab');
+  function show(name){
+    tabs.forEach(function(t){t.classList.toggle('on',t.dataset.tab===name);});
+    document.querySelectorAll('.tabpanel').forEach(function(p){p.classList.toggle('on',p.dataset.panel===name);});
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.tab);});});
+  window.__picoShowTab=show;
+})();
+/* PRESS START jumps to the GAMES tab, then scrolls to the list */
+(function(){
+  var ps=document.querySelector('.pressstart');
+  if(ps) ps.addEventListener('click',function(){ if(window.__picoShowTab) window.__picoShowTab('games'); });
+})();
 /* dithering field follows the cursor */
 document.addEventListener('mousemove',function(e){
   var r=document.documentElement.style;r.setProperty('--mx',e.clientX+'px');r.setProperty('--my',e.clientY+'px');});

@@ -96,13 +96,19 @@
   @media(max-width:820px){.slogan{justify-content:center}}
   .footicon{width:22px;height:30px;flex:none;background:var(--acc);
     -webkit-mask:var(--foot) center/contain no-repeat;mask:var(--foot) center/contain no-repeat}
-  .microtag{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);display:block;margin-bottom:10px}
-  .bighead{font-family:var(--disp);font-weight:700;font-size:clamp(2.5rem,6.4vw,4.8rem);line-height:1.02;
-    display:flex;align-items:center;gap:16px;flex-wrap:wrap;color:var(--paper)}
-  @media(max-width:820px){.bighead{justify-content:center}}
-  .footicon.big{width:clamp(42px,6vw,66px);height:clamp(56px,8vw,88px)}
-  .mvpn{font-family:var(--disp);font-weight:600;font-size:clamp(1.1rem,2.4vw,1.6rem);color:var(--acc2);
-    margin-top:12px;letter-spacing:.03em}
+  .bighead{font-family:var(--disp);font-weight:800;font-size:clamp(2.7rem,7vw,5.2rem);line-height:1;
+    color:var(--paper);letter-spacing:-.01em}
+  @media(max-width:820px){.bighead{text-align:center}}
+  /* the maple-coloured word */
+  .leafword{background:linear-gradient(100deg,var(--acc2),var(--acc) 45%,var(--cyan));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .mvpn{display:flex;align-items:center;gap:12px;font-family:var(--disp);font-weight:700;
+    font-size:clamp(1.15rem,2.6vw,1.7rem);color:var(--acc2);margin-top:14px;letter-spacing:.02em}
+  @media(max-width:820px){.mvpn{justify-content:center}}
+  .mvpn .footicon{width:clamp(24px,3.2vw,34px);height:clamp(32px,4.4vw,46px)}
+  .mvpn-def{font-family:var(--body);font-size:clamp(.92rem,1.5vw,1.02rem);color:var(--dim);margin-top:10px;max-width:48ch}
+  .mvpn-def b{color:var(--paper);font-weight:600}
+  @media(max-width:820px){.mvpn-def{margin-left:auto;margin-right:auto;text-align:center}}
   .lockup + .status{margin-top:20px}
   /* bigfoot tracks + footprint bullets */
   .tracks{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;opacity:.13}
@@ -245,9 +251,9 @@
       <div class="lockup">
         <img class="biglogo" src="assets/bigfoot-logo.png" alt="BigFoot MVPN" decoding="async">
         <div>
-          <span class="microtag" data-i18n="h_lead">Untraceable by design</span>
-          <h1 class="bighead"><span class="footicon big" aria-hidden="true"></span><span data-i18n="slogan">Leave no footprint.</span></h1>
-          <div class="mvpn" data-i18n="mvpn">Multi-Hop MVPN</div>
+          <h1 class="bighead"><span data-i18n="slogan_a">Leave no</span> <span class="leafword" data-i18n="slogan_b">footprint.</span></h1>
+          <div class="mvpn"><span class="footicon" aria-hidden="true"></span><span data-i18n="mvpn">Multi-Hop MVPN</span></div>
+          <p class="mvpn-def" data-i18n="mvpn_def">An <b>MVPN</b> is a multi-hop VPN — instead of one exit server, it chains your traffic through several IPs, so no single relay ever sees the whole route.</p>
         </div>
       </div>
       <span class="status"><i></i><span data-i18n="statusline">Protected · 3 hops active</span></span>
@@ -391,8 +397,8 @@
 const I18N={
 en:{
  cta:'Get BigFoot', cta2:'How it works', cta3:'See TYPHON',
- statusline:'Protected · 3 hops active', slogan:'Leave no footprint.',
- h_lead:'Untraceable by design', h_lead2:'by design.', mvpn:'Multi-Hop MVPN',
+ statusline:'Protected · 3 hops active', slogan:'Leave no footprint.', slogan_a:'Leave no', slogan_b:'footprint.',
+ mvpn:'Multi-Hop MVPN', mvpn_def:'An <b>MVPN</b> is a multi-hop VPN — instead of one exit server, it chains your traffic through several IPs, so no single relay ever sees the whole route.',
  hero_sub:'Most VPNs wire you to a single exit server. BigFoot bounces your connection through a chain of IPs across the world — the privacy of a proxy chain, in an app as simple as one button.',
  route_top:'Your live route', hop_you:'You', hop_exit:'Exit',
  map_l:'routes established', map_feed:'Global network',
@@ -425,8 +431,8 @@ en:{
 },
 es:{
  cta:'Obtener BigFoot', cta2:'Cómo funciona', cta3:'Ver TYPHON',
- statusline:'Protegido · 3 saltos activos', slogan:'No dejes huella.',
- h_lead:'Imposible de rastrear', h_lead2:'por diseño.', mvpn:'MVPN Multi-Salto',
+ statusline:'Protegido · 3 saltos activos', slogan:'No dejes huella.', slogan_a:'No dejes', slogan_b:'huella.',
+ mvpn:'MVPN Multi-Salto', mvpn_def:'Una <b>MVPN</b> es una VPN multi-salto — en vez de un solo servidor de salida, encadena tu tráfico por varias IPs, así ningún relay ve la ruta completa.',
  hero_sub:'La mayoría de las VPN te conectan a un único servidor de salida. BigFoot rebota tu conexión por una cadena de IPs por todo el mundo — la privacidad de una cadena de proxies, en una app tan simple como un botón.',
  route_top:'Tu ruta en vivo', hop_you:'Tú', hop_exit:'Salida',
  map_l:'rutas establecidas', map_feed:'Red global',
