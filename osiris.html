@@ -18,7 +18,7 @@
     --cyan:#4fd6e0; --red:#ff5c8a; --green:#54e0a0;
     --strong:"Archivo Black",Impact,system-ui,sans-serif;
     --disp:"Chakra Petch",system-ui,sans-serif; --body:"Archivo",system-ui,sans-serif;
-    --mono:"Space Mono",ui-monospace,Consolas,monospace; --maxw:1320px;
+    --mono:"Space Mono",ui-monospace,Consolas,monospace; --maxw:1460px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -68,12 +68,12 @@
     -webkit-mask-image:radial-gradient(135% 92% at 74% 6%,#000 0 32%,transparent 78%);
             mask-image:radial-gradient(135% 92% at 74% 6%,#000 0 32%,transparent 78%)}
   .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:120px;z-index:0;pointer-events:none;background:linear-gradient(180deg,transparent,var(--ink))}
-  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1.05fr;gap:44px;align-items:center}
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.15fr 1fr;gap:44px;align-items:center}
   @media(max-width:920px){.hero-grid{grid-template-columns:1fr;gap:32px}}
-  .olock{display:flex;align-items:center;gap:22px;margin-bottom:2px}
-  @media(max-width:520px){.olock{gap:16px}}
+  .olock{display:flex;align-items:center;gap:30px;margin-bottom:2px}
+  @media(max-width:520px){.olock{gap:18px}}
   .olock .eyebrow{display:block;margin-bottom:8px}
-  .ologo{width:clamp(90px,12vw,146px);height:auto;flex:none;filter:drop-shadow(0 8px 24px rgba(176,107,255,.45))}
+  .ologo{width:clamp(180px,22vw,330px);height:auto;flex:none;filter:drop-shadow(0 10px 30px rgba(176,107,255,.5))}
   .hero h1{font-family:var(--strong);font-weight:400;font-size:clamp(2.9rem,7vw,5.6rem);
     line-height:1;letter-spacing:-.015em;margin:16px 0 0}
   .hero .sub{font-size:clamp(1rem,1.7vw,1.18rem);color:#c9c2da;max-width:56ch;margin-top:20px}

@@ -41,7 +41,10 @@
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{font-family:var(--body);background:var(--bg);color:var(--steel);line-height:1.6;font-size:17px;
-    -webkit-font-smoothing:antialiased;overflow-x:hidden}
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background-image:radial-gradient(rgba(var(--ray),.05) 1px, transparent 1.5px),
+      radial-gradient(1100px 520px at 50% -6%, rgba(var(--ray),.06), transparent 62%);
+    background-size:26px 26px, 100% 100%; background-attachment:fixed}
   a{color:inherit;text-decoration:none}
   h1,h2,h3{font-family:var(--disp);color:var(--paper);text-wrap:balance;line-height:1.08}
   .mono{font-family:var(--mono)}
@@ -94,8 +97,13 @@
   .archwrap{position:absolute;top:0;left:clamp(44px,5vw,78px);right:clamp(44px,5vw,78px);
     height:clamp(96px,13vw,188px);z-index:0;pointer-events:none}
   .archwrap svg{width:100%;height:100%;display:block}
-  .archwrap .wall{fill:#e4dabf}
   .archwrap .inlay{fill:none;stroke:rgba(var(--ray),.6);stroke-width:3}
+  .archwrap .inlay2{fill:none;stroke:rgba(var(--ray),.3);stroke-width:2}
+  .archwrap .kstone{position:absolute;top:1px;left:50%;transform:translateX(-50%);width:46px;height:36px;
+    background:linear-gradient(180deg,#efe7d2,#cec3a7);border:1px solid #b6ab8f;
+    clip-path:polygon(26% 0,74% 0,100% 100%,0 100%);box-shadow:0 3px 5px rgba(0,0,0,.28)}
+  .archwrap .kstone::after{content:"";position:absolute;left:50%;bottom:5px;transform:translateX(-50%);
+    width:9px;height:9px;border-radius:50%;background:radial-gradient(circle,var(--red2),var(--red) 60%,transparent 74%)}
   @media(max-width:720px){.archwrap{display:none}}
   .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;
     padding-top:clamp(66px,10vw,150px)}
@@ -118,22 +126,21 @@
     animation:halospin 150s linear infinite}
   .angel .halo{position:absolute;inset:0;margin:auto;width:min(400px,122%);aspect-ratio:1;border-radius:50%;
     background:radial-gradient(circle, rgba(var(--ray),.24), rgba(var(--glow),.08) 46%, transparent 68%);filter:blur(4px)}
-  /* crossed halo rings + orbiting light (TYPHON-style), all sharing one centre */
-  .angel .haloflat{position:absolute;inset:0;margin:auto;width:min(330px,98%);aspect-ratio:1;border-radius:50%;
-    border:1px solid rgba(var(--ray),.18);z-index:1}
-  .angel .ringx{position:absolute;inset:0;margin:auto;width:min(384px,112%);aspect-ratio:1;border-radius:50%;
-    border:1px solid rgba(var(--ray),.30);transform:rotateY(70deg);z-index:1}
-  .angel .ringtilt{position:absolute;inset:0;margin:auto;width:min(384px,112%);aspect-ratio:1;border-radius:50%;
-    border:1px solid rgba(var(--ray),.50);transform:rotateX(68deg);box-shadow:0 0 22px rgba(var(--ray),.14);z-index:1}
-  .angel .beadring{position:absolute;inset:0;margin:auto;width:min(384px,112%);aspect-ratio:1;transform:rotateX(68deg);
-    z-index:3;animation:orbit 7s linear infinite}
-  .angel .beadring i{position:absolute;top:-6px;left:calc(50% - 6px);width:12px;height:12px;border-radius:50%;
-    background:radial-gradient(circle,#fff,rgba(var(--ray),1) 50%,transparent);box-shadow:0 0 18px 4px rgba(var(--ray),.8)}
-  .angel .beadring i.b2{top:auto;bottom:-6px;width:9px;height:9px;left:calc(50% - 4.5px);opacity:.85}
+  /* angel wheels (Ophanim): tilted rings, each with a bright arc that spins around it */
+  .angel .wheel{position:absolute;inset:0;margin:auto;width:min(360px,108%);aspect-ratio:1;border-radius:50%;
+    border:1px solid rgba(var(--ray),.16);z-index:1}
+  .angel .wheel::before{content:"";position:absolute;inset:-1px;border-radius:50%;
+    background:conic-gradient(from 0deg, transparent 0 58%, rgba(var(--ray),.85) 80%, #fff 89%, rgba(var(--ray),.85) 92%, transparent 100%);
+    -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+            mask:radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+    animation:wheelspin 4.5s linear infinite}
+  .angel .w1{transform:rotateX(66deg)}
+  .angel .w2{width:min(320px,96%);transform:rotateY(66deg);z-index:3}
+  .angel .w2::before{animation-duration:6s;animation-direction:reverse}
   .angel img{width:min(228px,64%);position:relative;z-index:2;
     filter:drop-shadow(0 6px 30px rgba(255,217,122,.35)) drop-shadow(0 0 50px rgba(143,192,245,.2))}
   @keyframes halospin{to{transform:rotate(360deg)}}
-  @keyframes orbit{from{transform:rotateX(68deg) rotate(0)}to{transform:rotateX(68deg) rotate(360deg)}}
+  @keyframes wheelspin{to{transform:rotate(360deg)}}
 
   /* ---------- cathedral flourishes ---------- */
   #overview .body:first-of-type::first-letter{float:left;font-family:var(--disp);font-weight:700;
@@ -294,19 +301,21 @@
 <header class="hero">
   <div class="archwrap" aria-hidden="true">
     <svg viewBox="0 0 1000 200" preserveAspectRatio="none">
-      <path class="wall" fill-rule="evenodd" d="M0,0 H1000 V200 H0 Z M0,200 A500,182 0 0 1 1000,200 Z"/>
-      <path class="inlay" d="M0,200 A500,182 0 0 1 1000,200"/>
+      <defs><linearGradient id="marb" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#efe7d2"/><stop offset="1" stop-color="#d6cbaf"/></linearGradient></defs>
+      <path fill="url(#marb)" fill-rule="evenodd" d="M0,0 H1000 V200 H0 Z M0,200 A500,180 0 0 1 1000,200 Z"/>
+      <path class="inlay" d="M0,200 A500,180 0 0 1 1000,200"/>
+      <path class="inlay2" d="M0,200 A452,150 0 0 1 1000,200"/>
     </svg>
+    <span class="kstone"></span>
   </div>
   <div class="wrap">
     <div class="hero-grid">
       <div class="angel" aria-hidden="true">
         <span class="rays"></span>
         <span class="halo"></span>
-        <span class="haloflat"></span>
-        <span class="ringx"></span>
-        <span class="ringtilt"></span>
-        <span class="beadring"><i></i><i class="b2"></i></span>
+        <span class="wheel w1"></span>
+        <span class="wheel w2"></span>
         <img src="assets/angelcorp.png" alt="ANGELCORP" decoding="async" fetchpriority="high">
       </div>
       <div class="hero-in">
