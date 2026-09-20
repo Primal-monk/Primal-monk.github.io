@@ -6,22 +6,25 @@
 <title>PICODEV — Game Studio</title>
 <link rel="icon" type="image/png" href="assets/picodev.png">
 <meta name="description" content="PICODEV — game studio by PRIMALAPE. Six games in development, all made with Godot.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@400;500;600;700;800&display=swap">
 <style>
   :root{
-    --bg:#0F0A37; --bg2:#171041; --bg3:#1f1652; --bg4:#2a1e6b;
-    --hi:#FBC962; --hi2:#d9a63c; --sec:#C6685C; --sec2:#dd8b80;
-    --paper:#efe6d0; --line:rgba(251,201,98,.28);
+    --bg:#191331; --bg2:#231a42; --bg3:#2e2354; --bg4:#3a2c68;
+    --hi:#ffd23f; --hi2:#e0a800; --sec:#3ddc84; --sec2:#c3ead2;
+    --paper:#f4efe0; --line:rgba(255,210,63,.28);
+    --c-green:#3ddc84; --c-yellow:#ffd23f; --c-red:#ff5a5a; --c-orange:#ff8c3a;
   }
-  body[data-theme="blue"]{--bg:#180F3A;--bg2:#20144a;--bg3:#2a1a5e;--bg4:#382576;
-    --hi:#FF8A3D;--hi2:#d96b22;--sec:#4FD8FF;--sec2:#7ee4ff;--line:rgba(255,138,61,.3)}
-  body[data-theme="green"]{--bg:#0B2418;--bg2:#0f3020;--bg3:#154029;--bg4:#1d5636;
-    --hi:#7BE06A;--hi2:#4faa40;--sec:#C6A05C;--sec2:#dcbb7c;--line:rgba(123,224,106,.3)}
-  body[data-theme="aqua"]{--bg:#0A2436;--bg2:#0e3049;--bg3:#134060;--bg4:#1a5680;
-    --hi:#5FE3D0;--hi2:#34b5a2;--sec:#8FB8D6;--sec2:#b3d3e8;--line:rgba(95,227,208,.3)}
+  /* Super Mario light mode */
+  body[data-mode="light"]{
+    --bg:#eceff4; --bg2:#ffffff; --bg3:#e6eaf1; --bg4:#d9dfe9;
+    --hi:#d38a00; --hi2:#a86e00; --sec:#2fae5f; --sec2:#2b2842;
+    --paper:#171425; --line:rgba(30,20,60,.16);
+  }
 
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;scrollbar-color:var(--hi) var(--bg3);scrollbar-width:auto}
-  body{font-family:"Trebuchet MS","Segoe UI",sans-serif;background:var(--bg);
+  body{font-family:"Outfit",system-ui,sans-serif;background:var(--bg);
     color:var(--sec2);line-height:1.62;padding-top:60px;overflow-x:hidden}
   ::-webkit-scrollbar{width:17px}
   ::-webkit-scrollbar-track{background:var(--bg3);border-left:1px solid var(--line)}
@@ -216,6 +219,79 @@
 .pmark{ font-weight:800; letter-spacing:.06em; }
 .pmark sup{ font-size:.62em; font-weight:800; letter-spacing:.04em;
             vertical-align:super; margin-left:.06em; }
+
+/* =========================================================
+   PICODEV · 8-BIT ARCADE SKIN  (alternate design)
+   ========================================================= */
+body{background:
+  repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 2px, transparent 2px 4px),
+  radial-gradient(1200px 500px at 50% -10%, rgba(58,160,255,.10), transparent 60%),
+  var(--bg);}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:150;
+  background:repeating-linear-gradient(0deg, rgba(0,0,0,.11) 0 1px, transparent 1px 3px);opacity:.45}
+.wrap{position:relative;z-index:2}
+/* pixel type */
+h1{font-family:"Press Start 2P",monospace!important;font-size:clamp(1.5rem,5.2vw,3rem)!important;
+  line-height:1.3!important;letter-spacing:0!important;
+  background:linear-gradient(90deg,#3ddc84,#ffd23f 38%,#ff8c3a 68%,#ff5a5a)!important;
+  -webkit-background-clip:text;background-clip:text;color:transparent!important;
+  filter:drop-shadow(3px 3px 0 #0c0824)}
+.roles{font-family:"Press Start 2P",monospace!important;font-size:.58rem!important;letter-spacing:.02em!important;line-height:2!important;color:var(--sec2)!important}
+h2{font-family:"Press Start 2P",monospace!important;font-size:.74rem!important;letter-spacing:0!important;
+  display:flex;align-items:center;gap:11px;text-transform:none!important}
+h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 #0c0824;background:var(--hi)}
+.wrap section:nth-of-type(1) h2::before{background:var(--c-green)}
+.wrap section:nth-of-type(2) h2::before{background:var(--c-yellow)}
+.wrap section:nth-of-type(3) h2::before{background:var(--c-red)}
+.wrap section:nth-of-type(4) h2::before{background:var(--c-orange)}
+.wrap section:nth-of-type(5) h2::before{background:var(--c-green)}
+.h2row{border-bottom:3px solid var(--hi2)!important}
+/* hard-edged pixel cards */
+.game,.mcard,.advice,.future,.step,.aside{border-radius:0!important;border:3px solid #0c0824!important;
+  box-shadow:6px 6px 0 rgba(0,0,0,.45)!important;transition:transform .1s,box-shadow .1s}
+.game{border-color:#0c0824!important}
+.game:hover,.mcard:hover{transform:translate(-2px,-2px)!important;box-shadow:9px 9px 0 rgba(0,0,0,.45)!important;border-color:var(--hi)!important}
+.game.flag{border-width:4px!important}
+.nm,.flaghead .nm,.gbody .center .nm{font-family:"Press Start 2P",monospace!important;letter-spacing:0!important;
+  line-height:1.5!important;word-break:break-word}
+.game .nm,.mcard .nm{font-size:.66rem!important}
+.flaghead .nm{font-size:.9rem!important}
+.gbody .center .nm{font-size:.8rem!important}
+.gn{font-family:"Outfit",sans-serif;letter-spacing:.04em}
+.chev{font-family:"Press Start 2P",monospace;font-size:.8rem}
+/* pixel buttons / pills */
+.gbtn,.closebtn,.lang,.eta,.soonpill,.godotline,.authorcard,.langwrap,.themebox{border-radius:0!important}
+.gbtn,.closebtn,.eta{font-family:"Press Start 2P",monospace!important;font-size:.52rem!important;line-height:1.6}
+.closebtn{border:2px solid #0c0824!important;box-shadow:3px 3px 0 rgba(0,0,0,.4)!important}
+.lang{font-family:"Press Start 2P",monospace!important;font-size:.5rem!important}
+.pct{font-family:"Press Start 2P",monospace!important;font-size:.5rem!important;border:2px solid #0c0824;border-radius:0!important}
+.pbar{border:2px solid #0c0824;border-radius:0!important;height:12px!important}
+.pbar i{border-radius:0!important}
+/* crisp pixel rendering for game art */
+.ghead img.ico,.flaghead img.ico,.flaghead img.boss,.gbody .center img,.mcard img,.heroswap img{image-rendering:pixelated}
+/* topbar + author */
+.topbar{border-bottom:3px solid var(--hi2)!important}
+.authorcard{border:2px solid #0c0824!important;box-shadow:3px 3px 0 rgba(0,0,0,.4)!important}
+.authorcard .n{font-family:"Press Start 2P",monospace;font-size:.7rem}
+.advice li::before{border-radius:0!important;box-shadow:2px 2px 0 #0c0824}
+/* --- game-menu gamification --- */
+.heroimg{height:240px!important}
+.heroinner{margin-top:-86px!important}
+.heroswap{width:184px!important;height:184px!important}
+.roles{margin-top:8px!important}
+.pressstart{display:inline-block;margin-top:16px;font-family:"Press Start 2P",monospace;font-size:.7rem;
+  color:#0c0824;background:var(--c-yellow);border:3px solid #0c0824;box-shadow:4px 4px 0 rgba(0,0,0,.5);
+  padding:14px 22px;text-decoration:none;animation:blink 1.1s steps(1) infinite}
+.pressstart:hover{background:#fff;transform:translate(-1px,-1px);box-shadow:6px 6px 0 rgba(0,0,0,.5)}
+@keyframes blink{50%{opacity:.6}}
+.ghead,.flaghead{position:relative}
+.game:hover .ghead .nm::before,.game.open .ghead .nm::before{content:"\25B6 ";color:var(--c-yellow)}
+.pad4{display:inline-flex;gap:7px;margin-left:auto}
+.pad4 i{width:15px;height:15px;border-radius:50%;box-shadow:2px 2px 0 #0c0824}
+.pad4 .g{background:var(--c-green)}.pad4 .y{background:var(--c-yellow)}.pad4 .r{background:var(--c-red)}.pad4 .o{background:var(--c-orange)}
+.modebtn{font-family:"Press Start 2P",monospace;font-size:.5rem;color:var(--paper);background:var(--bg4);
+  border:2px solid var(--hi2);padding:8px 10px;cursor:pointer;border-radius:0}
+.modebtn:hover{background:var(--hi);color:var(--bg)}
 </style>
 </head>
 <body data-theme="yellow">
@@ -233,10 +309,7 @@
     </span>
   </a>
   <div class="spacer"></div>
-  <div class="themebox" title="Theme">
-    <i class="sw-yellow" data-theme="yellow"></i><i class="sw-blue" data-theme="blue"></i>
-    <i class="sw-green" data-theme="green"></i><i class="sw-aqua" data-theme="aqua"></i>
-  </div>
+  <button class="modebtn" id="modeBtn" title="Day / Night">DAY</button>
   <div class="langwrap">
     <button class="lang on" data-lang="en">EN</button>
     <button class="lang" data-lang="es">ES</button>
@@ -261,23 +334,24 @@
       <img src="assets/primal.png" alt="">
       <span><span class="l" data-i18n="byline">Founded and made by</span>
       <span class="n"><span class="pmark">PRIMAL<sup>APE</sup></span></span></span></a>
+    <div><a class="pressstart" href="#play">&#9654; PRESS START</a></div>
   </div>
 </div>
 
 <div class="wrap">
 
-  <section>
-    <div class="h2row"><h2 data-i18n="h_about">About</h2></div>
-    <p class="body" data-i18n="p_about"></p>
-    <div class="aside" data-i18n="p_assets"></div>
+  <section id="play">
+    <div class="h2row">
+      <h2 data-i18n="h_games">Select a Game</h2>
+      <div class="godotline"><img src="assets/godot.png" alt=""><span data-i18n="madewith">All made with Godot</span></div>
+      <span class="pad4" aria-hidden="true"><i class="g"></i><i class="y"></i><i class="r"></i><i class="o"></i></span>
+    </div>
+    <div class="games" id="games"></div>
   </section>
 
   <section>
-    <div class="h2row">
-      <h2 data-i18n="h_games">Games in Development</h2>
-      <div class="godotline"><img src="assets/godot.png" alt=""><span data-i18n="madewith">All made with Godot</span></div>
-    </div>
-    <div class="games" id="games"></div>
+    <div class="h2row"><h2 data-i18n="h_about">The Studio</h2></div>
+    <p class="body" data-i18n="p_about"></p>
   </section>
 
   <section>
@@ -303,8 +377,6 @@
 
 <img class="bottomart" src="assets/bottom.png" alt="">
 <footer data-i18n="footer"></footer>
-<div style="text-align:center;padding:0 0 34px"><a href="primal-v2.html" style="color:var(--hi);font-size:.82rem;font-weight:700;letter-spacing:.06em;text-decoration:none">Try the 8-bit arcade version &rarr;</a></div>
-
 <div class="lb" id="lb"><span class="x">&times;</span><img src="" alt=""></div>
 
 <script>
@@ -312,7 +384,7 @@ const I18N={
 en:{
  roles:'Game Studio &bull; Godot',
  byline:'Founded and made by',
- h_about:'About', h_games:'Games in Development', h_mods:'Mod Tools',
+ h_about:'The Studio', h_games:'Select a Game', h_mods:'Mod Tools',
  h_advice:'How I Think You Should Make Games', h_future:'On the Whiteboard',
  h_corp:'Parent Company', madewith:'All made with Godot', soon:'Coming soon',
  p_about:'<b>PICODEV</b> is my game studio. I make games in <b>Godot</b> &mdash; six in development, released as each one is finished. Most are built as <b>.io-style games</b>: quick to join, easy to play with friends, no tutorial needed.',
@@ -332,7 +404,7 @@ en:{
 es:{
  roles:'Estudio de Juegos &bull; Godot',
  byline:'Fundado y hecho por',
- h_about:'Sobre m&iacute;', h_games:'Juegos en Desarrollo', h_mods:'Herramientas de Mods',
+ h_about:'El Estudio', h_games:'Elige un Juego', h_mods:'Herramientas de Mods',
  h_advice:'C&oacute;mo Creo Que Se Deben Hacer Juegos', h_future:'En la Pizarra',
  h_corp:'Empresa Matriz', madewith:'Todo hecho con Godot', soon:'Pr&oacute;ximamente',
  p_about:'<b>PICODEV</b> es mi estudio de juegos. Hago juegos en <b>Godot</b> &mdash; seis en desarrollo, publicados seg&uacute;n los termino. La mayor&iacute;a son <b>juegos tipo .io</b>: f&aacute;ciles de empezar, f&aacute;ciles de jugar con amigos, sin tutorial.',
@@ -539,8 +611,13 @@ function render(){
 }
 document.querySelectorAll('.lang').forEach(function(b){
   b.addEventListener('click',function(){lang=b.dataset.lang;render();});});
-document.querySelectorAll('.themebox i').forEach(function(i){
-  i.addEventListener('click',function(){document.body.dataset.theme=i.dataset.theme;});});
+(function(){var b=document.getElementById('modeBtn');if(!b)return;
+  try{if(localStorage.getItem('pico-mode')==='light')document.body.dataset.mode='light';}catch(e){}
+  function upd(){b.textContent=document.body.dataset.mode==='light'?'NIGHT':'DAY';}
+  b.addEventListener('click',function(){
+    document.body.dataset.mode=document.body.dataset.mode==='light'?'':'light';
+    try{localStorage.setItem('pico-mode',document.body.dataset.mode);}catch(e){}upd();});
+  upd();})();
 document.getElementById('lb').addEventListener('click',function(){this.classList.remove('on');});
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape')document.getElementById('lb').classList.remove('on');});
