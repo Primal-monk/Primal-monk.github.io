@@ -23,23 +23,23 @@
     /* where the blue eye sits inside assets/angelcorp.png (for centering the halo/wheels) */
     --eye-x:50.5%; --eye-y:58%;
   }
+  /* CRIMSON — identical to Sanctum, only the light/accent colour is red */
   body[data-theme="crimson"]{
-    --bg:#0f0708; --bg2:#180c0e; --bg3:#221215; --raise:#2c181b;
-    --line:#3a2226; --line-red:rgba(224,120,90,.26);
-    --red:#d24638; --red2:#f0a07a; --sky:#c98b52; --sky2:#e6c07a;
-    --paper:#f4eae6; --steel:#c1a7a2; --faint:#7a5f5c; --ray:224,120,90; --glow:216,150,90;
+    --line-red:rgba(226,96,74,.26);
+    --red:#e2603c; --red2:#ff9a7a; --sky:#6ea0dd; --sky2:#a9c8f2;
+    --ray:255,122,92; --glow:143,192,245;
+  }
+  /* GOLD — identical to Sanctum, richer true-gold accents */
+  body[data-theme="gold"]{
+    --line-red:rgba(255,198,74,.28);
+    --red:#d9a51c; --red2:#ffd86a; --sky:#6ea0dd; --sky2:#a9c8f2;
+    --paper:#f8f1dc; --ray:255,198,74; --glow:255,224,150;
   }
   body[data-theme="ivory"]{
     --bg:#f4efe2; --bg2:#fbf8f0; --bg3:#efe8d6; --raise:#e7dcc3;
     --line:#e0d5bd; --line-red:rgba(160,120,40,.30);
     --red:#a67c2e; --red2:#7d5c1c; --sky:#5a7ea6; --sky2:#42618a;
     --paper:#221d10; --steel:#5c5340; --faint:#938872; --ray:200,160,80; --glow:150,175,205;
-  }
-  body[data-theme="marble"]{
-    --bg:#eef1f6; --bg2:#ffffff; --bg3:#e6ebf3; --raise:#dbe2ee;
-    --line:#d7deea; --line-red:rgba(70,100,150,.28);
-    --red:#3f6499; --red2:#2f4d7a; --sky:#b8912f; --sky2:#96741f;
-    --paper:#141a24; --steel:#4d566a; --faint:#8b93a6; --ray:120,150,200; --glow:200,175,120;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -48,6 +48,12 @@
     background-image:radial-gradient(rgba(var(--ray),.05) 1px, transparent 1.5px),
       radial-gradient(1100px 520px at 50% -6%, rgba(var(--ray),.06), transparent 62%);
     background-size:26px 26px, 100% 100%; background-attachment:fixed}
+  /* sacred-geometry tessellation behind the whole site (inverted on dark themes
+     so the lines read as light-on-dark; left as-is on Ivory) */
+  .bgpat{position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background-image:url("bg-geo.jpg");background-size:840px auto;background-repeat:repeat;
+    opacity:.085;filter:invert(1) contrast(1.15)}
+  body[data-theme="ivory"] .bgpat{filter:none;opacity:.30}
   a{color:inherit;text-decoration:none}
   h1,h2,h3{font-family:var(--disp);color:var(--paper);text-wrap:balance;line-height:1.08}
   .mono{font-family:var(--mono)}
@@ -83,6 +89,13 @@
   .hero{position:relative;padding-block:clamp(40px,6vw,84px)}
   .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
     background:radial-gradient(60% 46% at 50% 0%, rgba(var(--ray),.14), transparent 66%)}
+  /* damask brocade behind the temple, faded out at the edges */
+  .heropat{position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:url("bg-damask.jpg");background-size:560px auto;background-repeat:repeat;
+    opacity:.12;filter:invert(1) contrast(1.3);
+    -webkit-mask-image:radial-gradient(78% 74% at 50% 42%,#000,transparent 76%);
+            mask-image:radial-gradient(78% 74% at 50% 42%,#000,transparent 76%)}
+  body[data-theme="ivory"] .heropat{filter:none;opacity:.5}
   /* fixed marble columns running down both edges of the whole site */
   .pillar{position:fixed;top:56px;bottom:0;width:clamp(44px,5vw,78px);z-index:3;pointer-events:none;
     background:
@@ -131,11 +144,14 @@
   /* soft medallion behind the eye so the pale logo keeps contrast on light themes */
   .angel .medal{width:150%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);z-index:0;
     background:radial-gradient(circle, rgba(var(--glow),.12), transparent 66%)}
-  .angel .rays{width:210%;aspect-ratio:1;transform:translate(-50%,-50%);z-index:0;
-    background:repeating-conic-gradient(from 0deg, rgba(var(--ray),.10) 0 3deg, transparent 3deg 13deg);
-    -webkit-mask-image:radial-gradient(circle,transparent 20%,#000 36%,transparent 72%);
-            mask-image:radial-gradient(circle,transparent 20%,#000 36%,transparent 72%);
-    animation:halospin 150s linear infinite}
+  /* 12 broad shafts of light that TICK round one notch at a time, like a clock hand */
+  .angel .rays{width:215%;aspect-ratio:1;transform:translate(-50%,-50%);z-index:0;
+    background:repeating-conic-gradient(from 0deg,
+      rgba(var(--ray),.20) 0 4deg, rgba(var(--ray),.13) 4deg 9deg, transparent 9deg 30deg);
+    -webkit-mask-image:radial-gradient(circle,transparent 19%,#000 34%,rgba(0,0,0,.45) 56%,transparent 74%);
+            mask-image:radial-gradient(circle,transparent 19%,#000 34%,rgba(0,0,0,.45) 56%,transparent 74%);
+    animation:raytick 60s steps(60) infinite}
+  @keyframes raytick{to{transform:translate(-50%,-50%) rotate(360deg)}}
   .angel .halo{width:170%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);z-index:0;
     background:radial-gradient(circle, rgba(var(--ray),.26), rgba(var(--glow),.08) 46%, transparent 68%);filter:blur(4px)}
   /* angel wheels (Ophanim): tilted rings, each with a bright arc that spins around the eye */
@@ -151,9 +167,9 @@
   .angel .w2::before{animation-duration:6s;animation-direction:reverse}
   @keyframes halospin{to{transform:translate(-50%,-50%) rotate(360deg)}}
   @keyframes wheelspin{to{transform:rotate(360deg)}}
-  body[data-theme="ivory"] .angel .medal,body[data-theme="marble"] .angel .medal{
+  body[data-theme="ivory"] .angel .medal{
     background:radial-gradient(circle, rgba(30,26,14,.20), rgba(30,26,14,.07) 46%, transparent 70%)}
-  body[data-theme="ivory"] .angel img,body[data-theme="marble"] .angel img{
+  body[data-theme="ivory"] .angel img{
     filter:drop-shadow(0 3px 12px rgba(40,32,10,.42)) drop-shadow(0 0 2px rgba(40,32,10,.35))}
 
   /* ---------- cathedral flourishes ---------- */
@@ -275,18 +291,22 @@
   /* ---------- quiet passcode area (unchanged behaviour) ---------- */
   .quietbox{max-width:var(--maxw);margin:0 auto;padding:36px 22px 24px;text-align:center}
   .quietbox .lbl{color:var(--faint);font-size:.66rem;opacity:.6;letter-spacing:.04em;font-family:var(--mono)}
-  .quietrow{display:inline-flex;gap:7px;margin-top:8px}
-  .quietrow input{background:var(--bg2);border:1px solid var(--line);color:var(--steel);font-family:var(--mono);
-    font-size:.72rem;padding:6px 9px;width:160px;opacity:.7;border-radius:4px}
-  .quietrow input:focus{opacity:1;outline:none;border-color:var(--red)}
-  .quietrow button{background:var(--bg2);border:1px solid var(--line);color:var(--steel);font-family:var(--mono);
-    font-size:.68rem;padding:6px 12px;cursor:pointer;opacity:.7;border-radius:4px}
-  .quietrow button:hover{opacity:1}
+  /* four dots, connected left to right — quiet replacement for the old passcode box */
+  .dotrow{position:relative;display:inline-flex;align-items:center;gap:36px;margin-top:12px;padding:5px 7px}
+  .dotrow::before{content:"";position:absolute;left:13px;right:13px;top:50%;height:1px;background:var(--line)}
+  .dotrow::after{content:"";position:absolute;left:13px;top:50%;height:1px;background:var(--red);
+    width:calc(var(--p,0) * (100% - 26px));transition:width .25s ease}
+  .qdot{position:relative;z-index:1;width:13px;height:13px;border-radius:50%;padding:0;cursor:pointer;
+    border:1px solid var(--line);background:var(--bg2);opacity:.5;transition:opacity .18s,background .18s,border-color .18s,box-shadow .18s}
+  .qdot:hover{opacity:.95;border-color:var(--red)}
+  .qdot.lit{opacity:1;background:var(--red);border-color:var(--red);
+    box-shadow:0 0 0 4px color-mix(in srgb,var(--red) 18%,transparent)}
   .quietmsg{font-family:var(--mono);font-size:.68rem;margin-top:6px;min-height:14px;color:var(--red2)}
   #hiddenDivs{display:none;max-width:var(--maxw);margin:0 auto;padding:0 22px 46px}
 </style>
 </head>
 <body data-mode="dark">
+<span class="bgpat" aria-hidden="true"></span>
 <span class="pillar left" aria-hidden="true"></span>
 <span class="pillar right" aria-hidden="true"></span>
 
@@ -318,6 +338,7 @@
 
 <!-- ===================== HERO ===================== -->
 <header class="hero">
+  <span class="heropat" aria-hidden="true"></span>
   <div class="archwrap" aria-hidden="true">
     <svg viewBox="0 0 1000 200" preserveAspectRatio="none">
       <defs><linearGradient id="marb" x1="0" y1="0" x2="0" y2="1">
@@ -471,10 +492,12 @@
 
 <!-- ===================== QUIET PASSCODE (unchanged) ===================== -->
 <div class="quietbox">
-  <div class="lbl">Password — contact information</div>
-  <div class="quietrow">
-    <input type="password" id="quietPass" autocomplete="off" spellcheck="false">
-    <button id="quietBtn">Enter</button>
+  <div class="lbl">Connect the dots, left to right</div>
+  <div class="dotrow" id="dotrow">
+    <button class="qdot" type="button" aria-label="1"></button>
+    <button class="qdot" type="button" aria-label="2"></button>
+    <button class="qdot" type="button" aria-label="3"></button>
+    <button class="qdot" type="button" aria-label="4"></button>
   </div>
   <div class="quietmsg" id="quietMsg"></div>
 </div>
@@ -523,23 +546,32 @@
 
 <script>
 (function(){
-  // Client-side only, on purpose — hides unfinished notes from a casual visitor,
-  // not real access control. Findable in view-source by anyone who looks; the
-  // point is nobody stumbles onto it by accident.
-  var CODE = "EzikealEye963";
-  document.getElementById('quietBtn').addEventListener('click', reveal);
-  document.getElementById('quietPass').addEventListener('keydown', function(e){
-    if (e.key === 'Enter') reveal();
-  });
-  function reveal(){
-    var v = document.getElementById('quietPass').value;
-    var msg = document.getElementById('quietMsg');
-    if (v === CODE) {
-      document.getElementById('hiddenDivs').style.display = 'block';
-      msg.textContent = '';
-      document.getElementById('hiddenDivs').scrollIntoView({behavior:'smooth'});
-    } else { msg.textContent = 'Not found.'; }
+  // Click the four dots in order, left to right, and the unlisted ventures
+  // appear below. Not access control — just a latch so nobody lands on the
+  // unfinished notes by accident.
+  var row  = document.getElementById('dotrow');
+  var dots = Array.prototype.slice.call(row.querySelectorAll('.qdot'));
+  var msg  = document.getElementById('quietMsg');
+  var next = 0;
+  function reset(){
+    next = 0;
+    dots.forEach(function(d){ d.classList.remove('lit'); });
+    row.style.setProperty('--p', 0);
   }
+  dots.forEach(function(d, i){
+    d.addEventListener('click', function(){
+      if (i !== next) { reset(); return; }          // out of order — start over
+      d.classList.add('lit');
+      next++;
+      row.style.setProperty('--p', (next - 1) / (dots.length - 1));
+      if (next === dots.length) {
+        var h = document.getElementById('hiddenDivs');
+        h.style.display = 'block';
+        msg.textContent = '';
+        h.scrollIntoView({behavior:'smooth'});
+      }
+    });
+  });
 })();
 </script>
 
@@ -673,7 +705,7 @@ function render(){
 document.getElementById('langsel').addEventListener('change',function(e){lang=e.target.value;render();});
 /* ---- theme switcher: Sanctum · Crimson · Ivory · Marble ---- */
 (function(){
-  var THEMES=[{id:'',name:'Sanctum'},{id:'crimson',name:'Crimson'},{id:'ivory',name:'Ivory'},{id:'marble',name:'Marble'}];
+  var THEMES=[{id:'',name:'Sanctum'},{id:'crimson',name:'Crimson'},{id:'gold',name:'Gold'},{id:'ivory',name:'Ivory'}];
   var btn=document.getElementById('themeBtn'), i=0;
   try{ var s=localStorage.getItem('acorp-theme'); if(s!==null){ for(var j=0;j<THEMES.length;j++) if(THEMES[j].id===s) i=j; } }catch(e){}
   function apply(){
