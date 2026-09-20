@@ -20,7 +20,7 @@
     --map-dot:rgba(150,110,70,.30); --map-hub:#f7b24a; --map-arcs:#e8792e,#f7b24a,#c9452b;
     --disp:"Fredoka",system-ui,sans-serif; --body:"Archivo",system-ui,sans-serif;
     --mono:"Space Mono",ui-monospace,Consolas,monospace; --maxw:1280px;
-    --foot:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 56'%3E%3Cellipse cx='20' cy='39' rx='13' ry='16' fill='%23e8792e'/%3E%3Ccircle cx='9' cy='17' r='3.2' fill='%23e8792e'/%3E%3Ccircle cx='16' cy='11' r='3.4' fill='%23e8792e'/%3E%3Ccircle cx='23' cy='10' r='3.4' fill='%23e8792e'/%3E%3Ccircle cx='30' cy='14' r='3.2' fill='%23e8792e'/%3E%3Ccircle cx='35' cy='21' r='2.6' fill='%23e8792e'/%3E%3C/svg%3E");
+    --foot:url("foot.png");
   }
   /* Aurora: the cool teal/green look, switchable */
   body[data-theme="aurora"]{
@@ -91,12 +91,16 @@
   .lockup{display:flex;align-items:center;gap:20px}
   @media(max-width:820px){.lockup{justify-content:center}}
   .biglogo{width:clamp(96px,13vw,146px);height:auto;flex:none;filter:drop-shadow(0 10px 24px rgba(0,0,0,.45))}
-  .slogan{font-family:var(--disp);font-weight:600;font-size:clamp(1.15rem,2.6vw,1.7rem);color:var(--acc2);
-    margin-top:6px;letter-spacing:.01em}
+  .slogan{display:inline-flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:600;
+    font-size:clamp(1.15rem,2.6vw,1.7rem);color:var(--acc2);margin-top:6px;letter-spacing:.01em}
+  @media(max-width:820px){.slogan{justify-content:center}}
+  .footicon{width:22px;height:30px;flex:none;background:var(--acc);
+    -webkit-mask:var(--foot) center/contain no-repeat;mask:var(--foot) center/contain no-repeat}
   .lockup + .status{margin-top:20px}
   /* bigfoot tracks + footprint bullets */
-  .tracks{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;opacity:.12}
-  .pfoot{position:absolute;width:42px;height:58px;background:var(--foot) center/contain no-repeat}
+  .tracks{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;opacity:.13}
+  .pfoot{position:absolute;width:42px;height:58px;background:var(--acc);
+    -webkit-mask:var(--foot) center/contain no-repeat;mask:var(--foot) center/contain no-repeat}
 
   /* route chain */
   .route{margin-top:26px;border:1px solid var(--line);border-radius:10px;background:var(--ink2);padding:16px 18px}
@@ -151,8 +155,8 @@
   .f{background:var(--ink2);border:1px solid var(--line);border-radius:10px;padding:20px;transition:border-color .15s,transform .15s}
   .f:hover{border-color:var(--acc);transform:translateY(-3px)}
   .f h3{font-family:var(--disp);color:var(--paper);font-weight:600;font-size:1.04rem;margin-bottom:6px}
-  .f h3::before{content:"";display:inline-block;width:13px;height:18px;margin-right:10px;vertical-align:-3px;
-    background:var(--foot) center/contain no-repeat}
+  .f h3::before{content:"";display:inline-block;width:14px;height:19px;margin-right:10px;vertical-align:-3px;
+    background:var(--acc);-webkit-mask:var(--foot) center/contain no-repeat;mask:var(--foot) center/contain no-repeat}
   .f p{color:var(--dim);font-size:.9rem}
 
   .cmpwrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
@@ -234,7 +238,7 @@
         <img class="biglogo" src="assets/bigfoot-logo.png" alt="BigFoot VPN" decoding="async">
         <div>
           <h1><span data-i18n="h_lead">Untraceable</span> <span class="gradtext" data-i18n="h_lead2">by design.</span></h1>
-          <div class="slogan" data-i18n="slogan">Leave no footprint.</div>
+          <div class="slogan"><span class="footicon" aria-hidden="true"></span><span data-i18n="slogan">Leave no footprint.</span></div>
         </div>
       </div>
       <span class="status"><i></i><span data-i18n="statusline">Protected · 3 hops active</span></span>
