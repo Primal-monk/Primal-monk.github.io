@@ -13,7 +13,7 @@
   :root{
     --bg:#2b3550; --bg2:#354163; --bg3:#3f4d73; --bg4:#4a5983;
     --hi:#ffd23f; --hi2:#e0a800; --sec:#6fd0ff; --sec2:#e0e6f6;
-    --paper:#eef2fb; --line:rgba(255,255,255,.14); --ink:#161d30; --dev:#93a3ca;
+    --paper:#eef2fb; --line:rgba(255,255,255,.14); --ink:#161d30; --dev:#b2bfe0;
     --sea-ink:8,13,28,0.62; --sea-lit:205,222,255,0.16;
     --c-green:#3ddc84; --c-yellow:#ffd23f; --c-red:#ff5a5a; --c-orange:#ff8c3a;
   }
@@ -21,7 +21,7 @@
   body[data-mode="dark"]{
     --bg:#0c0f16; --bg2:#141926; --bg3:#1c2333; --bg4:#262f44;
     --hi:#ffd23f; --hi2:#c9990f; --sec:#6fd0ff; --sec2:#c6cfe0;
-    --paper:#eef2fb; --line:rgba(255,255,255,.10); --ink:#04060b; --dev:#8090b4;
+    --paper:#eef2fb; --line:rgba(255,255,255,.10); --ink:#04060b; --dev:#9dabd0;
     --sea-ink:0,0,0,0.66; --sea-lit:150,180,240,0.13;
     --c-green:#3ddc84; --c-yellow:#ffd23f; --c-red:#ff5a5a; --c-orange:#ff8c3a;
   }
@@ -248,6 +248,7 @@ body{background-color:var(--bg);
   background-size:4px 4px, 100% 100%}
 .wrap{position:relative;z-index:2}
 .hero{position:relative;z-index:2}
+.bottomart,footer,.pledgebar{position:relative;z-index:2}
 /* ---- pixel-art mouse pointer ---- */
 body{cursor:url("cursor.png") 2 2, auto}
 a,button,summary,select,.ghead,.flaghead,.shots img,.neonlogo,.tab,.ftab,.qdot{
@@ -349,44 +350,42 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
 .heroswap{width:150px!important;height:150px!important}
 .roles{margin-top:8px!important}
 
-/* ---- file-cabinet tabs on the seam between the banner art and the page ----
-   Real folder tabs: leaning trapezoids that OVERLAP, each tucking under the one
-   to its left like files in a drawer. The open folder lifts clear of the rest. */
-.filetabs{position:absolute;left:0;right:0;bottom:0;z-index:6;display:flex;align-items:flex-end;width:100%}
-.ftab{flex:1 1 0;min-width:0;position:relative;height:60px;border:0;padding:0;background:transparent;
-  cursor:pointer;margin-left:-24px;transform:translateY(13px);
-  transition:transform .14s cubic-bezier(.34,1.3,.64,1),filter .14s}
+/* ---- folder tabs on the seam between the banner art and the page ----
+   Soft rounded folders sharing one baseline. The open folder is TALL; the
+   closed ones are short, so the silhouette steps down and each closed tab's
+   header tucks into the space beside the open one — the way files sit in a
+   drawer. Chunky ink outline, no hard diagonal cuts. */
+.filetabs{position:absolute;left:0;right:0;bottom:0;z-index:6;display:flex;align-items:flex-end;
+  width:100%;padding:0 10px}
+.ftab{flex:1 1 0;min-width:0;position:relative;height:40px;cursor:pointer;
+  margin-left:-14px;padding:0;
+  border:3px solid var(--ink);border-bottom:0;border-radius:18px 18px 0 0;
+  background:linear-gradient(180deg,var(--bg3),var(--bg2));
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.10), 0 -3px 9px rgba(0,0,0,.34);
+  transition:height .17s cubic-bezier(.34,1.2,.64,1),filter .15s,background .15s}
 .ftab:first-child{margin-left:0}
-/* stack left-over-right so the leaning edges read as separate files */
+/* left folder over right, so the rounded shoulders overlap cleanly */
 .ftab:nth-child(1){z-index:5}.ftab:nth-child(2){z-index:4}.ftab:nth-child(3){z-index:3}
 .ftab:nth-child(4){z-index:2}.ftab:nth-child(5){z-index:1}
-/* ink outline */
-.ftab::before{content:"";position:absolute;inset:0;background:var(--ink);
-  clip-path:polygon(24px 0, 100% 0, calc(100% - 24px) 100%, 0 100%)}
-/* coloured face, inset so the ink reads as a chunky border */
-.ftab .face{position:absolute;inset:3px 3px 0 3px;display:flex;align-items:center;justify-content:center;
-  gap:9px;padding:0 14px;overflow:hidden;white-space:nowrap;
-  font-family:"Press Start 2P",monospace;font-size:.56rem;letter-spacing:.03em;color:var(--sec2);
-  background:linear-gradient(180deg,var(--bg3),var(--bg2));
-  box-shadow:inset 0 2px 0 rgba(255,255,255,.10);
-  clip-path:polygon(23px 0, 100% 0, calc(100% - 23px) 100%, 0 100%)}
+.ftab .face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  gap:9px;padding:0 14px;overflow:hidden;white-space:nowrap;border-radius:15px 15px 0 0;
+  font-family:"Press Start 2P",monospace;font-size:.54rem;letter-spacing:.03em;color:var(--sec2)}
 .ftab .face .lbl{overflow:hidden;text-overflow:ellipsis}
 .ftab img{width:22px;height:22px;object-fit:contain;image-rendering:pixelated;flex:none}
 .ftab .pin{width:7px;height:7px;border-radius:50%;background:var(--c-red);flex:none;box-shadow:1px 1px 0 var(--ink)}
-/* a closed folder is dimmer and pushed down into the drawer */
-.ftab:not(.on) .face{filter:brightness(.62) saturate(.8)}
-.ftab:not(.on):hover{transform:translateY(6px)}
-.ftab:not(.on):hover .face{filter:brightness(.85)}
-/* the open folder sits proud of the others */
-.ftab.on{z-index:10;transform:translateY(0);filter:drop-shadow(0 -5px 10px rgba(0,0,0,.55))}
-.ftab.on .face{color:var(--hi);background:linear-gradient(180deg,var(--bg2),var(--bg));
-  box-shadow:inset 0 2px 0 rgba(255,255,255,.16)}
+/* closed folders: short, dimmer, sunk into the drawer */
+.ftab:not(.on){filter:brightness(.66) saturate(.85)}
+.ftab:not(.on):hover{height:50px;filter:brightness(.88)}
+/* the open folder stands tall and clear */
+.ftab.on{height:68px;z-index:10;color:var(--hi);
+  background:linear-gradient(180deg,var(--bg2),var(--bg));
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.17), 0 -5px 13px rgba(0,0,0,.5)}
+.ftab.on .face{color:var(--hi);font-size:.58rem}
 .ftab.shake{animation:ftshake .3s}
-@keyframes ftshake{25%{transform:translateY(13px) translateX(-5px)}75%{transform:translateY(13px) translateX(5px)}}
+@keyframes ftshake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 @media(max-width:900px){.ftab .face{font-size:.44rem;gap:6px;padding:0 8px}.ftab img{width:17px;height:17px}
-  .ftab{margin-left:-18px}.ftab::before{clip-path:polygon(18px 0,100% 0,calc(100% - 18px) 100%,0 100%)}
-  .ftab .face{clip-path:polygon(17px 0,100% 0,calc(100% - 17px) 100%,0 100%)}}
-@media(max-width:620px){.ftab .face .lbl{display:none}.ftab{height:46px}}
+  .ftab.on .face{font-size:.46rem}.ftab{margin-left:-12px;border-radius:14px 14px 0 0}}
+@media(max-width:620px){.ftab .face .lbl{display:none}.ftab{height:34px}.ftab.on{height:52px}}
 /* "NOT LOADED YET" toast */
 .ftoast{position:fixed;left:50%;top:74px;z-index:80;pointer-events:none;
   font-family:"Press Start 2P",monospace;font-size:.58rem;line-height:1.7;letter-spacing:.04em;
@@ -436,14 +435,14 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
 <div id="crt" aria-hidden="true"></div>
 
 <div class="topbar">
-  <a class="brand" href="omni.html" title="ALLSEER INDUSTRIES - parent company">
+  <a class="brand" href="omni.html" title="ALLSEER SOFTWARE - parent company">
     <span class="upar">&larr;</span>
     <span class="logoswap">
       <img class="a" src="assets/angelcorp.png" alt="">
       <img class="b" src="assets/angelcorp.png" alt="">
     </span>
     <span>
-      <span class="nm"><span style="color:#fff">ALLSEER</span><span style="color:#e0554f;font-size:.62em;letter-spacing:.14em"> INDUSTRIES</span></span><br>
+      <span class="nm"><span style="color:#fff">ALLSEER</span><span style="color:#e0554f;font-size:.62em;letter-spacing:.14em"> SOFTWARE</span></span><br>
       <span class="by" style="color:#e0554f">parent company</span>
     </span>
   </a>
@@ -530,7 +529,7 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
         <div class="h2row"><h2 data-i18n="h_corp">Parent Company</h2></div>
         <a class="mcard" href="omni.html" style="border-color:#b03a3a">
           <img src="assets/angelcorp.png" alt="">
-          <div class="t"><div class="nm" style="color:#e0554f">ALLSEER<span style="color:#fff;font-size:.68em;letter-spacing:.12em"> INDUSTRIES</span></div>
+          <div class="t"><div class="nm" style="color:#e0554f">ALLSEER<span style="color:#fff;font-size:.68em;letter-spacing:.12em"> SOFTWARE</span></div>
           <p data-i18n="p_corp"></p></div>
         </a>
       </section>
@@ -843,17 +842,24 @@ document.querySelectorAll('.lang').forEach(function(b){
   if(ps) ps.addEventListener('click',function(){ if(window.__picoShowTab) window.__picoShowTab('games'); });
 })();
 /* ---- the dither sea ---------------------------------------------------
-   Renders an ordered (Bayer 8x8) dither of a slowly drifting density field.
-   The canvas holds ONE pixel per dither block and CSS scales it up with
-   image-rendering:pixelated, so the blocks stay big and hard-edged and the
-   whole thing costs almost nothing. Dense areas get dark ink, the sparsest
-   areas pick up light specks, so the screen has real light and dark regions.
-   The cursor just raises the local density — it does not glow. */
+   An ordered (Bayer 8x8) dither of a slow water surface. The canvas holds ONE
+   pixel per dither block and CSS scales it up pixelated, so the blocks stay
+   big and hard-edged and the whole thing is nearly free.
+
+   The surface is three DIRECTIONAL swells rather than separable x/y waves —
+   separable ones interfere into a restless grid, travelling ones read as
+   water. Each swell sin(kx*x + ky*y + p) is expanded with the angle-addition
+   identity so it still comes from per-row/per-column tables: two multiplies a
+   cell instead of a sine.
+
+   Moving the pointer drops stones: each spawns an expanding ring that decays,
+   and the rings sum with the swell, so one movement sets off a spreading
+   chain of ripples. */
 (function(){
   var cv = document.getElementById('sea');
   if (!cv || !cv.getContext) return;
   var ctx = cv.getContext('2d');
-  var CELL = 9;                       // on-screen size of one dither block
+  var CELL = 9;                         // on-screen size of one dither block
   var BAYER = [ 0,32, 8,40, 2,34,10,42, 48,16,56,24,50,18,58,26,
                12,44, 4,36,14,46, 6,38, 60,28,52,20,62,30,54,22,
                 3,35,11,43, 1,33, 9,41, 51,19,59,27,49,17,57,25,
@@ -861,8 +867,14 @@ document.querySelectorAll('.lang').forEach(function(b){
   var TH = new Float32Array(64);
   for (var i = 0; i < 64; i++) TH[i] = (BAYER[i] + 0.5) / 64;
 
-  var cw = 0, ch = 0, img = null, px = null;
-  var sinX = null, sinY = null, sinD = null;
+  // long swells: [kx, ky, speed, amplitude]
+  var W = [ [ 0.030,  0.015, 0.55, 0.26],
+            [-0.012,  0.026, 0.33, 0.20],
+            [ 0.052, -0.068, 0.90, 0.09] ];
+  var NW = W.length;
+
+  var cw = 0, ch = 0, img = null, px = null, field = null;
+  var sA = [], cA = [], sB = [], cB = [];
   var inkR=8, inkG=13, inkB=28, inkA=158, litR=205, litG=222, litB=255, litA=41;
 
   function readInk(){
@@ -876,45 +888,106 @@ document.querySelectorAll('.lang').forEach(function(b){
     cw = Math.max(1, Math.ceil(window.innerWidth  / CELL));
     ch = Math.max(1, Math.ceil(window.innerHeight / CELL));
     cv.width = cw; cv.height = ch;
-    img = ctx.createImageData(cw, ch);
-    px  = img.data;
-    sinX = new Float32Array(cw);
-    sinY = new Float32Array(ch);
-    sinD = new Float32Array(cw + ch + 1);
+    img = ctx.createImageData(cw, ch); px = img.data;
+    field = new Float32Array(cw * ch);
+    sA = []; cA = []; sB = []; cB = [];
+    for (var w = 0; w < NW; w++){
+      sA.push(new Float32Array(cw)); cA.push(new Float32Array(cw));
+      sB.push(new Float32Array(ch)); cB.push(new Float32Array(ch));
+    }
   }
 
-  var mx = -9999, my = -9999;
-  var R = 20, R2 = R * R;             // cursor radius, in blocks
+  /* --- pointer: a hovering bulge plus expanding ripple rings --- */
+  var mx = -9999, my = -9999, lastDropX = -9999, lastDropY = -9999;
+  var drops = [], MAXD = 6;
+  var RING_SPEED = 17;     // blocks per second
+  var RING_W     = 9;      // half-width of a ring crest, in blocks
+  var RING_LIFE  = 2.6;    // seconds
+
   document.addEventListener('mousemove', function(e){
     mx = e.clientX / CELL; my = e.clientY / CELL;
+    var dx = mx - lastDropX, dy = my - lastDropY;
+    if (dx*dx + dy*dy > 90){            // only every ~9 blocks of travel
+      lastDropX = mx; lastDropY = my;
+      drops.push({x:mx, y:my, t:0});
+      if (drops.length > MAXD) drops.shift();
+    }
   }, {passive:true});
   document.addEventListener('mouseleave', function(){ mx = -9999; my = -9999; });
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var t = 0, last = 0, tick = 0;
 
-  function draw(){
-    // per-row / per-column wave tables: 2*(cw+ch) sines a frame instead of one per block
-    var x, y, k;
-    for (x = 0; x < cw; x++) sinX[x] = 0.26 * Math.sin(x * 0.055 + t * 1.10);
-    for (y = 0; y < ch; y++) sinY[y] = 0.20 * Math.sin(y * 0.075 - t * 0.80);
-    for (k = 0; k < sinD.length; k++) sinD[k] = 0.16 * Math.sin(k * 0.035 + t * 1.60);
+  function draw(dt){
+    var x, y, w, o;
 
-    var invH = 1 / ch, o = 0;
+    /* 1. the swell, from per-axis tables */
+    for (w = 0; w < NW; w++){
+      var kx = W[w][0], ky = W[w][1], ph = t * W[w][2];
+      var sAw = sA[w], cAw = cA[w], sBw = sB[w], cBw = cB[w];
+      for (x = 0; x < cw; x++){ var ax = kx * x + ph; sAw[x] = Math.sin(ax); cAw[x] = Math.cos(ax); }
+      for (y = 0; y < ch; y++){ var by = ky * y;      sBw[y] = Math.sin(by); cBw[y] = Math.cos(by); }
+    }
+    var invH = 1 / ch;
     for (y = 0; y < ch; y++){
-      var vert = 0.20 + 0.38 * (1 - y * invH);   // denser toward the top
-      var sy = sinY[y], row = (y & 7) << 3;
-      var dy = y - my, dy2 = dy * dy;
+      var base = 0.20 + 0.36 * (1 - y * invH);      // deeper water toward the top
+      o = y * cw;
       for (x = 0; x < cw; x++){
-        var v = vert + sy + sinX[x] + sinD[x + y];
-        if (dy2 < R2){                            // cursor thickens the dither
-          var dx = x - mx, d2 = dx * dx + dy2;
-          if (d2 < R2) v += 0.42 * (1 - d2 / R2);
+        var v = base;
+        for (w = 0; w < NW; w++) v += W[w][3] * (sA[w][x] * cB[w][y] + cA[w][x] * sB[w][y]);
+        field[o + x] = v;
+      }
+    }
+
+    /* 2. ripple rings — each only touches its own thin annulus */
+    for (var d = drops.length - 1; d >= 0; d--){
+      var dr = drops[d];
+      dr.t += dt;
+      if (dr.t > RING_LIFE){ drops.splice(d, 1); continue; }
+      var r = dr.t * RING_SPEED;
+      var amp = 0.46 * (1 - dr.t / RING_LIFE);
+      amp *= amp;
+      var rO = r + RING_W, rI = r - RING_W; if (rI < 0) rI = 0;
+      var y0 = Math.max(0, (dr.y - rO) | 0), y1 = Math.min(ch - 1, Math.ceil(dr.y + rO));
+      var x0 = Math.max(0, (dr.x - rO) | 0), x1 = Math.min(cw - 1, Math.ceil(dr.x + rO));
+      var rO2 = rO * rO, rI2 = rI * rI;
+      for (y = y0; y <= y1; y++){
+        var ddy = y - dr.y, ddy2 = ddy * ddy;
+        if (ddy2 > rO2) continue;
+        o = y * cw;
+        for (x = x0; x <= x1; x++){
+          var ddx = x - dr.x, d2 = ddx * ddx + ddy2;
+          if (d2 > rO2 || d2 < rI2) continue;
+          var u = (Math.sqrt(d2) - r) / RING_W;      // -1 .. 1 across the crest
+          field[o + x] += amp * (1 - u * u) * Math.cos(u * 3.0);
         }
-        var th = TH[row | (x & 7)];
-        if (v > th){
+      }
+    }
+
+    /* 3. a soft bulge under the pointer so hovering still thickens the dither */
+    if (mx > -9000){
+      var R = 17, R2 = R * R;
+      var by0 = Math.max(0, (my - R) | 0), by1 = Math.min(ch - 1, Math.ceil(my + R));
+      var bx0 = Math.max(0, (mx - R) | 0), bx1 = Math.min(cw - 1, Math.ceil(mx + R));
+      for (y = by0; y <= by1; y++){
+        var qy = y - my, qy2 = qy * qy; if (qy2 > R2) continue;
+        o = y * cw;
+        for (x = bx0; x <= bx1; x++){
+          var qx = x - mx, q2 = qx * qx + qy2;
+          if (q2 < R2) field[o + x] += 0.30 * (1 - q2 / R2);
+        }
+      }
+    }
+
+    /* 4. threshold against the Bayer matrix */
+    o = 0;
+    for (y = 0; y < ch; y++){
+      var row = (y & 7) << 3, f = y * cw;
+      for (x = 0; x < cw; x++){
+        var val = field[f + x], th = TH[row | (x & 7)];
+        if (val > th){
           px[o] = inkR; px[o+1] = inkG; px[o+2] = inkB; px[o+3] = inkA;
-        } else if (th - v > 0.45){                // sparsest water catches light
+        } else if (th - val > 0.45){
           px[o] = litR; px[o+1] = litG; px[o+2] = litB; px[o+3] = litA;
         } else {
           px[o+3] = 0;
@@ -928,18 +1001,20 @@ document.querySelectorAll('.lang').forEach(function(b){
   function frame(now){
     requestAnimationFrame(frame);
     if (document.hidden) return;
-    if (now - last < 66) return;        // ~15fps is plenty for a slow tide
+    var dt = (now - last) / 1000;
+    if (dt < 0.066) return;              // ~15fps is plenty for a slow tide
+    if (dt > 0.25) dt = 0.25;
     last = now;
-    if (!reduce) t += 0.016;
-    if ((tick++ % 30) === 0) readInk(); // pick up a theme change
-    draw();
+    if (!reduce) t += dt * 0.42;         // a slow, unhurried swell
+    if ((tick++ % 30) === 0) readInk();  // pick up a theme change
+    draw(dt);
   }
 
   var rt;
   window.addEventListener('resize', function(){
-    clearTimeout(rt); rt = setTimeout(function(){ resize(); draw(); }, 150);
+    clearTimeout(rt); rt = setTimeout(function(){ resize(); draw(0); }, 150);
   });
-  readInk(); resize(); draw();
+  readInk(); resize(); draw(0);
   requestAnimationFrame(frame);
 })();
 document.getElementById('lb').addEventListener('click',function(){this.classList.remove('on');});

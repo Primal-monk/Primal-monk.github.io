@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ALLSEER INDUSTRIES</title>
+<title>ALLSEER SOFTWARE</title>
 <link rel="icon" type="image/png" href="assets/angelcorp.png">
-<meta name="description" content="ALLSEER INDUSTRIES — a holding company built to give more than it takes. 20% of all gross income is pledged to charity.">
+<meta name="description" content="ALLSEER SOFTWARE — a holding company built to give more than it takes. 20% of all gross income is pledged to charity.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Marcellus+SC&display=swap">
@@ -52,9 +52,8 @@
   html{scroll-behavior:smooth}
   body{font-family:var(--body);font-weight:500;background:var(--bg);color:var(--steel);line-height:1.55;font-size:19px;
     -webkit-font-smoothing:antialiased;overflow-x:hidden;
-    background-image:radial-gradient(rgba(var(--ray),.05) 1px, transparent 1.5px),
-      radial-gradient(1100px 520px at 50% -6%, rgba(var(--ray),.06), transparent 62%);
-    background-size:26px 26px, 100% 100%; background-attachment:fixed}
+    background-image:radial-gradient(1100px 520px at 50% -6%, rgba(var(--ray),.06), transparent 62%);
+    background-attachment:fixed}
   /* ---- swappable background patterns ----
      data-pat on <body> picks the wallpaper. Tiles that are drawn dark-on-light
      get inverted on the dark themes; pat-2 is already light-on-dark so it is
@@ -118,13 +117,6 @@
   .hero{position:relative;padding-block:clamp(40px,6vw,84px)}
   .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
     background:radial-gradient(60% 46% at 50% 0%, rgba(var(--ray),.14), transparent 66%)}
-  /* damask brocade behind the temple, faded out at the edges */
-  .heropat{position:absolute;inset:0;z-index:0;pointer-events:none;
-    background-image:url("bg-damask.jpg");background-size:560px auto;background-repeat:repeat;
-    opacity:.12;filter:invert(1) contrast(1.3);
-    -webkit-mask-image:radial-gradient(78% 74% at 50% 42%,#000,transparent 76%);
-            mask-image:radial-gradient(78% 74% at 50% 42%,#000,transparent 76%)}
-  body[data-theme="ivory"] .heropat,body[data-theme="alabaster"] .heropat{filter:none;opacity:.5}
   /* fixed marble columns running down both edges of the whole site */
   .pillar{position:fixed;top:56px;bottom:0;width:clamp(44px,5vw,78px);z-index:3;pointer-events:none;
     background:
@@ -337,7 +329,7 @@
   #hiddenDivs{display:none;max-width:var(--maxw);margin:0 auto;padding:0 22px 46px}
 </style>
 </head>
-<body data-mode="dark" data-theme="gold">
+<body data-mode="dark" data-theme="gold" data-pat="p4">
 <span class="bgpat" aria-hidden="true"></span>
 <span class="pillar left" aria-hidden="true"></span>
 <span class="pillar right" aria-hidden="true"></span>
@@ -346,8 +338,8 @@
 <nav class="nav">
   <div class="wrap nav-in">
     <a class="brand" href="omni.html">
-      <img src="assets/angelcorp.png" alt="ALLSEER INDUSTRIES">
-      <span class="wm">ALLSEER<b>INDUSTRIES</b></span>
+      <img src="assets/angelcorp.png" alt="ALLSEER SOFTWARE">
+      <span class="wm">ALLSEER<b>SOFTWARE</b></span>
     </a>
     <div class="navlinks">
       <a href="#overview" data-i18n="h_about">Overview</a>
@@ -357,7 +349,7 @@
     <div class="navtools">
       <span class="chip" data-i18n="charitybar"><b>20%</b> pledged to charity</span>
       <button class="modebtn" id="themeBtn" title="Change theme" data-i18n-title="theme">Sanctum</button>
-      <button class="modebtn" id="patBtn" title="Change background pattern">Pattern 1</button>
+      <button class="modebtn" id="patBtn" title="Change background pattern">Mosaic</button>
       <select class="langsel" id="langsel">
         <option value="en">EN</option>
         <option value="es">ES</option>
@@ -371,7 +363,6 @@
 
 <!-- ===================== HERO ===================== -->
 <header class="hero">
-  <span class="heropat" aria-hidden="true"></span>
   <div class="archwrap" aria-hidden="true">
     <svg viewBox="0 0 1000 200" preserveAspectRatio="none">
       <defs><linearGradient id="marb" x1="0" y1="0" x2="0" y2="1">
@@ -391,14 +382,14 @@
           <span class="halo"></span>
           <span class="wheel w1"></span>
           <span class="wheel w2"></span>
-          <img src="assets/angelcorp.png" alt="ALLSEER INDUSTRIES" decoding="async" fetchpriority="high">
+          <img src="assets/angelcorp.png" alt="ALLSEER SOFTWARE" decoding="async" fetchpriority="high">
         </div>
       </div>
       <div class="hero-in">
         <span class="eyebrow"><span data-i18n="tag">Parent Organisation</span> · EST. 2025</span>
-        <h1 class="wordmark">ALLSEER<span class="wm-sub">INDUSTRIES</span></h1>
+        <h1 class="wordmark">ALLSEER<span class="wm-sub">SOFTWARE</span></h1>
         <p class="creed" data-i18n="hero_t">We build companies that <span class="r">give more than they take.</span></p>
-        <p class="sub" data-i18n="hero_s">ALLSEER INDUSTRIES is a holding company for software, security and consumer ventures — bound by one rule: 20% of all gross income is pledged to charity, shown openly, before profit.</p>
+        <p class="sub" data-i18n="hero_s">ALLSEER SOFTWARE is a holding company for software, security and consumer ventures — bound by one rule: 20% of all gross income is pledged to charity, shown openly, before profit.</p>
         <div class="cta">
           <a href="#divisions" class="btn btn-primary" data-i18n="cta_div">Our divisions</a>
           <a href="#giving" class="btn btn-ghost" data-i18n="cta_give">The pledge</a>
@@ -515,7 +506,7 @@
   <div class="wrap foot">
     <div class="l">
       <img src="assets/angelcorp.png" alt="">
-      <div class="x"><b>ALLSEER INDUSTRIES</b><br><span data-i18n="footer">A holding company in formation — divisions active, structure being built.</span></div>
+      <div class="x"><b>ALLSEER SOFTWARE</b><br><span data-i18n="footer">A holding company in formation — divisions active, structure being built.</span></div>
     </div>
     <div class="r" style="font-family:var(--mono);font-size:11px;color:var(--faint);text-align:right">
       <span class="pmark">PRIMAL<sup>APE</sup></span><br>© 2025 · Charitable-first
@@ -613,7 +604,7 @@ const I18N={
 en:{
  charitybar:'<b>20%</b> pledged to charity', tag:'Parent Organisation',
  hero_t:'We build companies that <span class="r">give more than they take.</span>',
- hero_s:'ALLSEER INDUSTRIES is a holding company for software, security and consumer ventures — bound by one rule: 20% of all gross income is pledged to charity, shown openly, before profit.',
+ hero_s:'ALLSEER SOFTWARE is a holding company for software, security and consumer ventures — bound by one rule: 20% of all gross income is pledged to charity, shown openly, before profit.',
  cta_div:'Our divisions', cta_give:'The pledge',
  st_div:'Ventures in group', st_est:'Year founded',
  h_about:'Overview', h_div:'Divisions', h_giving:'Giving', h_rec:'Receipts',
@@ -621,14 +612,14 @@ en:{
  dv_title:'Our companies &amp; products.', dv_sub:'Each operating company below ships its own products. Click any to enter its site.', gv_title:'Charitable first. Every product, every time.',
  rd_title:'2027 — four ventures past concept.',
  s_games:'Games', s_mod:'Modding Software', s_sec:'Offensive Security',
- p_about1:'Every project and every company sits under <b>ALLSEER INDUSTRIES</b> — the first parent company designed to donate <b>20% of all gross income</b> to charity, and to show the total donated openly on the home page.',
+ p_about1:'Every project and every company sits under <b>ALLSEER SOFTWARE</b> — the first parent company designed to donate <b>20% of all gross income</b> to charity, and to show the total donated openly on the home page.',
  p_about2:'That applies to everything, without exception. Every project carries a minimum <b>20% donation</b> — including every game made by <b>PICODEV</b> and every tool made by <b>OSIRIS</b>. Anything done for profit is charitable first.',
- p_about3:'ALLSEER INDUSTRIES is in formation. The divisions below are real and active; the corporate structure around them is being built now — openly, and on the record.',
+ p_about3:'ALLSEER SOFTWARE is in formation. The divisions below are real and active; the corporate structure around them is being built now — openly, and on the record.',
  p_pico:'Six games in development with Godot, mostly .io-style multiplayer.',
  p_osiris:'Modding tools. Home of PHAROAH for Paladins and HORUS for Smite.',
  p_typhon:'An offensive-security workspace for real systems, not just games. The real-world sibling of OSIRIS.',
  p_giving:'A fixed share of income from every project goes to humanitarian aid. The figures here are live and stay honest — nothing is inflated, and nothing is claimed before it happens.',
- p_optional:'Every paid product also carries an optional charity-match: pay the listed price again as a donation instead, and you still get full access — even though ALLSEER INDUSTRIES itself sees none of that second payment. It goes straight to the cause, every time.',
+ p_optional:'Every paid product also carries an optional charity-match: pay the listed price again as a donation instead, and you still get full access — even though ALLSEER SOFTWARE itself sees none of that second payment. It goes straight to the cause, every time.',
  l_pledge:'Of all income', l_raised:'Raised to date', l_goal:'First goal',
  ev_sum:'Evidence — donation receipts', ev_5:'$5 — first community donation', ev_100:'$100 — donated directly',
  footer:'A holding company in formation — divisions active, structure being built.'
@@ -636,7 +627,7 @@ en:{
 es:{
  charitybar:'<b>20%</b> prometido a caridad', tag:'Organización Matriz',
  hero_t:'Creamos empresas que <span class="r">dan más de lo que reciben.</span>',
- hero_s:'ALLSEER INDUSTRIES es una empresa matriz de proyectos de software, seguridad y consumo — con una sola regla: el 20% de todos los ingresos brutos se dona a caridad, mostrado abiertamente, antes de las ganancias.',
+ hero_s:'ALLSEER SOFTWARE es una empresa matriz de proyectos de software, seguridad y consumo — con una sola regla: el 20% de todos los ingresos brutos se dona a caridad, mostrado abiertamente, antes de las ganancias.',
  cta_div:'Nuestras divisiones', cta_give:'El compromiso',
  st_div:'Empresas del grupo', st_est:'Año de fundación',
  h_about:'Resumen', h_div:'Divisiones', h_giving:'Donaciones', h_rec:'Recibos',
@@ -644,14 +635,14 @@ es:{
  dv_title:'Las empresas operativas.', gv_title:'Benéfico primero. Cada producto, siempre.',
  rd_title:'2027 — cuatro proyectos más allá del concepto.',
  s_games:'Juegos', s_mod:'Software de Modding', s_sec:'Seguridad Ofensiva',
- p_about1:'Cada proyecto y cada empresa está bajo <b>ALLSEER INDUSTRIES</b> — la primera matriz diseñada para donar el <b>20% de todos los ingresos brutos</b> a caridad, y mostrar el total donado abiertamente.',
+ p_about1:'Cada proyecto y cada empresa está bajo <b>ALLSEER SOFTWARE</b> — la primera matriz diseñada para donar el <b>20% de todos los ingresos brutos</b> a caridad, y mostrar el total donado abiertamente.',
  p_about2:'Esto se aplica a todo, sin excepciones. Cada proyecto lleva una donación mínima del <b>20%</b> — incluidos todos los juegos de <b>PICODEV</b> y todas las herramientas de <b>OSIRIS</b>. Todo lo que se hace con ánimo de lucro es benéfico primero.',
- p_about3:'ALLSEER INDUSTRIES está en formación. Las divisiones son reales y activas; la estructura corporativa se está construyendo ahora — abiertamente y con registro.',
+ p_about3:'ALLSEER SOFTWARE está en formación. Las divisiones son reales y activas; la estructura corporativa se está construyendo ahora — abiertamente y con registro.',
  p_pico:'Seis juegos en desarrollo con Godot, en su mayoría multijugador tipo .io.',
  p_osiris:'Herramientas de modding. Hogar de PHAROAH para Paladins y HORUS para Smite.',
  p_typhon:'Un espacio de seguridad ofensiva para sistemas reales, no solo juegos. El hermano del mundo real de OSIRIS.',
  p_giving:'Una parte fija de los ingresos de cada proyecto va a ayuda humanitaria. Las cifras son reales y se mantendrán honestas — nada se infla ni se anuncia antes de ocurrir.',
- p_optional:'Cada producto de pago también tiene una opción de igualación benéfica: pagas el mismo precio otra vez como donación en vez de comprarlo, y aún así obtienes acceso completo — aunque ALLSEER INDUSTRIES no reciba nada de ese segundo pago. Va directo a la causa, siempre.',
+ p_optional:'Cada producto de pago también tiene una opción de igualación benéfica: pagas el mismo precio otra vez como donación en vez de comprarlo, y aún así obtienes acceso completo — aunque ALLSEER SOFTWARE no reciba nada de ese segundo pago. Va directo a la causa, siempre.',
  l_pledge:'De los ingresos', l_raised:'Recaudado', l_goal:'Primera meta',
  ev_sum:'Evidencia — recibos de donación', ev_5:'$5 — primera donación de la comunidad', ev_100:'$100 — donado directamente',
  footer:'Una empresa matriz en formación — divisiones activas, estructura en construcción.'
@@ -659,7 +650,7 @@ es:{
 ar:{
  charitybar:'<b>٪20</b> مخصّصة للأعمال الخيرية', tag:'المؤسسة الأم',
  hero_t:'نبني شركات <span class="r">تعطي أكثر مما تأخذ.</span>',
- hero_s:'ALLSEER INDUSTRIES شركة قابضة لمشاريع البرمجيات والأمن والمنتجات — بقاعدة واحدة: يُخصّص ٪20 من إجمالي الدخل للأعمال الخيرية، بشفافية، قبل الربح.',
+ hero_s:'ALLSEER SOFTWARE شركة قابضة لمشاريع البرمجيات والأمن والمنتجات — بقاعدة واحدة: يُخصّص ٪20 من إجمالي الدخل للأعمال الخيرية، بشفافية، قبل الربح.',
  cta_div:'أقسامنا', cta_give:'التعهّد',
  st_div:'الأقسام الفعّالة', st_est:'سنة التأسيس',
  h_about:'نظرة عامة', h_div:'الأقسام', h_giving:'التبرع', h_rec:'الإيصالات',
@@ -667,9 +658,9 @@ ar:{
  dv_title:'الشركات التشغيلية.', gv_title:'الخير أولاً. كل منتج، في كل مرة.',
  rd_title:'2027 — أربعة مشاريع تتجاوز المفهوم.',
  s_games:'ألعاب', s_mod:'برمجيات التعديل', s_sec:'الأمن الهجومي',
- p_about1:'كل مشروع يقع تحت <b>ALLSEER INDUSTRIES</b>. الفكرة هي التبرع بنسبة <b>٪20</b> من إجمالي الدخل للأعمال الخيرية.',
+ p_about1:'كل مشروع يقع تحت <b>ALLSEER SOFTWARE</b>. الفكرة هي التبرع بنسبة <b>٪20</b> من إجمالي الدخل للأعمال الخيرية.',
  p_about2:'ينطبق هذا على كل شيء دون استثناء.',
- p_about3:'ALLSEER INDUSTRIES قيد التأسيس. الأقسام حقيقية وفعّالة، والهيكل يُبنى الآن.',
+ p_about3:'ALLSEER SOFTWARE قيد التأسيس. الأقسام حقيقية وفعّالة، والهيكل يُبنى الآن.',
  p_pico:'ستة ألعاب قيد التطوير باستخدام Godot.',
  p_osiris:'أدوات تعديل: PHAROAH و HORUS.',
  p_typhon:'مساحة أمن هجومي للأنظمة الحقيقية، لا الألعاب فقط.',
@@ -682,7 +673,7 @@ ar:{
 ru:{
  charitybar:'<b>20%</b> на благотворительность', tag:'Головная Организация',
  hero_t:'Мы создаём компании, которые <span class="r">отдают больше, чем берут.</span>',
- hero_s:'ALLSEER INDUSTRIES — холдинг для проектов в сфере ПО, безопасности и потребительских товаров, связанный одним правилом: 20% всего валового дохода идёт на благотворительность, открыто, до прибыли.',
+ hero_s:'ALLSEER SOFTWARE — холдинг для проектов в сфере ПО, безопасности и потребительских товаров, связанный одним правилом: 20% всего валового дохода идёт на благотворительность, открыто, до прибыли.',
  cta_div:'Наши подразделения', cta_give:'Обязательство',
  st_div:'Активных подразделений', st_est:'Год основания',
  h_about:'Обзор', h_div:'Подразделения', h_giving:'Пожертвования', h_rec:'Квитанции',
@@ -690,9 +681,9 @@ ru:{
  dv_title:'Операционные компании.', gv_title:'Сначала благотворительность. Каждый продукт.',
  rd_title:'2027 — четыре проекта дальше концепта.',
  s_games:'Игры', s_mod:'ПО для модов', s_sec:'Наступательная безопасность',
- p_about1:'Каждый проект находится под <b>ALLSEER INDUSTRIES</b>. Цель — жертвовать <b>20%</b> всего валового дохода.',
+ p_about1:'Каждый проект находится под <b>ALLSEER SOFTWARE</b>. Цель — жертвовать <b>20%</b> всего валового дохода.',
  p_about2:'Это касается всего без исключений.',
- p_about3:'ALLSEER INDUSTRIES в стадии становления. Подразделения реальны и активны; структура строится сейчас.',
+ p_about3:'ALLSEER SOFTWARE в стадии становления. Подразделения реальны и активны; структура строится сейчас.',
  p_pico:'Шесть игр на Godot.',
  p_osiris:'Инструменты модов: PHAROAH и HORUS.',
  p_typhon:'Рабочая среда наступательной безопасности для реальных систем, не только игр.',
@@ -705,7 +696,7 @@ ru:{
 tr:{
  charitybar:'<b>%20</b> hayıra taahhüt', tag:'Ana Kuruluş',
  hero_t:'Aldığından <span class="r">fazlasını veren şirketler kuruyoruz.</span>',
- hero_s:'ALLSEER INDUSTRIES; yazılım, güvenlik ve tüketici girişimleri için bir holding — tek kuralı var: tüm brüt gelirin %20’si, kârdan önce ve açıkça, hayıra taahhüt edilir.',
+ hero_s:'ALLSEER SOFTWARE; yazılım, güvenlik ve tüketici girişimleri için bir holding — tek kuralı var: tüm brüt gelirin %20’si, kârdan önce ve açıkça, hayıra taahhüt edilir.',
  cta_div:'Bölümlerimiz', cta_give:'Taahhüt',
  st_div:'Aktif bölüm', st_est:'Kuruluş yılı',
  h_about:'Genel Bakış', h_div:'Bölümler', h_giving:'Bağış', h_rec:'Makbuzlar',
@@ -713,9 +704,9 @@ tr:{
  dv_title:'Faaliyet gösteren şirketler.', gv_title:'Önce hayır. Her ürün, her zaman.',
  rd_title:'2027 — kavramı aşan dört girişim.',
  s_games:'Oyunlar', s_mod:'Mod Yazılımı', s_sec:'Saldırı Güvenliği',
- p_about1:'Her proje <b>ALLSEER INDUSTRIES</b> altında toplanır. Amaç, tüm brüt gelirin <b>%20</b>’sini hayıra bağışlamak.',
+ p_about1:'Her proje <b>ALLSEER SOFTWARE</b> altında toplanır. Amaç, tüm brüt gelirin <b>%20</b>’sini hayıra bağışlamak.',
  p_about2:'Bu istisnasız her şey için geçerlidir.',
- p_about3:'ALLSEER INDUSTRIES kuruluş aşamasında. Bölümler gerçek ve aktif; yapı şimdi inşa ediliyor.',
+ p_about3:'ALLSEER SOFTWARE kuruluş aşamasında. Bölümler gerçek ve aktif; yapı şimdi inşa ediliyor.',
  p_pico:'Godot ile geliştirilen altı oyun.',
  p_osiris:'Mod araçları: PHAROAH ve HORUS.',
  p_typhon:'Gerçek sistemler için bir saldırı güvenliği çalışma alanı, sadece oyunlar değil.',
@@ -752,7 +743,7 @@ document.getElementById('langsel').addEventListener('change',function(e){lang=e.
 })();
 /* ---- background pattern switcher ---- */
 (function(){
-  var PATS=[{id:'',name:'Tessellation'},{id:'p1',name:'Geometric'},{id:'p2',name:'Isometric'},{id:'p3',name:'Facets'},{id:'p4',name:'Mosaic'},{id:'none',name:'Plain'}];
+  var PATS=[{id:'p4',name:'Mosaic'},{id:'p2',name:'Isometric'},{id:'p1',name:'Geometric'},{id:'p3',name:'Facets'},{id:'',name:'Tessellation'},{id:'none',name:'Plain'}];
   var b=document.getElementById('patBtn'), i=0;
   try{ var s=localStorage.getItem('acorp-pat'); if(s!==null){ for(var j=0;j<PATS.length;j++) if(PATS[j].id===s) i=j; } }catch(e){}
   function ap(){
@@ -774,7 +765,7 @@ render();
    page's total, count and gallery update automatically. Sub-project pages can
    read the same file to show only their own. */
 (function(){
-  var FALLBACK = { projects: { angelcorp: { label:"ALLSEER INDUSTRIES", entries:[
+  var FALLBACK = { projects: { angelcorp: { label:"ALLSEER SOFTWARE", entries:[
     {amount:5, image:"assets/donation-5.png", label:"First community donation"},
     {amount:100, image:"assets/donation-100.png", label:"Donated directly"},
     {amount:10.80, image:"assets/donation-10.80.png", label:"Community donation"}
