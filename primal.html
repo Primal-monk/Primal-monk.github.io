@@ -15,7 +15,7 @@
     --hi:#ffd23f; --hi2:#e0a800; --sec:#6fd0ff; --sec2:#e0e6f6;
     --paper:#eef2fb; --line:rgba(255,255,255,.14); --ink:#161d30; --dev:#b2bfe0;
     --sea-ink:8,13,28,0.62; --sea-lit:205,222,255,0.16;
-    --c-green:#3ddc84; --c-yellow:#ffd23f; --c-red:#ff5a5a; --c-orange:#ff8c3a;
+    --c-green:#3ddc84; --c-yellow:#ffd23f; --c-red:#ff5a5a; --c-blue:#4da6ff; --c-orange:#ff8c3a;
   }
   /* DARK: black-plastic cartridge, neon label */
   body[data-mode="dark"]{
@@ -23,9 +23,16 @@
     --hi:#ffd23f; --hi2:#c9990f; --sec:#6fd0ff; --sec2:#c6cfe0;
     --paper:#eef2fb; --line:rgba(255,255,255,.10); --ink:#04060b; --dev:#9dabd0;
     --sea-ink:0,0,0,0.66; --sea-lit:150,180,240,0.13;
-    --c-green:#3ddc84; --c-yellow:#ffd23f; --c-red:#ff5a5a; --c-orange:#ff8c3a;
+    --c-green:#3ddc84; --c-yellow:#ffd23f; --c-red:#ff5a5a; --c-blue:#4da6ff; --c-orange:#ff8c3a;
   }
 
+  /* ---- UI accent, switchable from the topbar (the four PICO brand
+     colours above are deliberately NOT affected) ---- */
+  body[data-acc="orange"]{--hi:#ff9433; --hi2:#d46a12}
+  body[data-acc="green"] {--hi:#3ddc84; --hi2:#20a35c}
+  body[data-acc="cyan"]  {--hi:#4fd6ff; --hi2:#1b9ad0}
+  body[data-acc="red"]   {--hi:#ff6b5a; --hi2:#d13a29}
+  body[data-acc="violet"]{--hi:#b98cff; --hi2:#7f4fd8}
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;scrollbar-color:var(--hi) var(--bg3);scrollbar-width:auto}
   body{font-family:"Outfit",system-ui,sans-serif;background:var(--bg);
@@ -180,6 +187,16 @@
   .lb img{max-width:100%;max-height:100%;border:2px solid var(--hi);border-radius:6px}
   .lb .x{position:absolute;top:18px;right:24px;color:#fff;font-size:2.2rem;font-weight:900;
     cursor:pointer;line-height:1}
+  .lb .lbnav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;
+    background:var(--bg2);color:var(--hi);border:3px solid var(--ink);
+    box-shadow:4px 4px 0 rgba(0,0,0,.5);font-family:"Press Start 2P",monospace;
+    font-size:.8rem;padding:16px 14px;cursor:pointer;line-height:1}
+  .lb .lbnav:hover{background:var(--hi);color:var(--bg)}
+  .lb .lbnav.prev{left:18px} .lb .lbnav.next{right:18px}
+  .lb .lbcount{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);
+    font-family:"Press Start 2P",monospace;font-size:.6rem;color:var(--hi);
+    background:var(--bg2);border:3px solid var(--ink);padding:9px 14px;box-shadow:3px 3px 0 rgba(0,0,0,.5)}
+  @media(max-width:620px){.lb .lbnav{padding:12px 9px;font-size:.66rem}}
 
   .cardrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px}
   .mcard{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--bg3),var(--bg2));
@@ -303,8 +320,8 @@ h1{font-family:"Press Start 2P",monospace!important;font-size:clamp(1.5rem,5.2vw
 h1 .ltr{display:inline-block;text-shadow:3px 3px 0 var(--ink)}
 h1 .ltr:nth-child(4n+1){color:var(--c-green)}
 h1 .ltr:nth-child(4n+2){color:var(--c-yellow)}
-h1 .ltr:nth-child(4n+3){color:var(--c-orange)}
-h1 .ltr:nth-child(4n+4){color:var(--c-red)}
+h1 .ltr:nth-child(4n+3){color:var(--c-red)}
+h1 .ltr:nth-child(4n+4){color:var(--c-blue)}
 h1 .ltr.dev{color:var(--dev)!important}
 .roles{font-family:"Press Start 2P",monospace!important;font-size:.58rem!important;letter-spacing:.02em!important;line-height:2!important;color:var(--sec2)!important}
 h2{font-family:"Press Start 2P",monospace!important;font-size:.74rem!important;letter-spacing:0!important;
@@ -313,7 +330,7 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
 .wrap section:nth-of-type(1) h2::before{background:var(--c-green)}
 .wrap section:nth-of-type(2) h2::before{background:var(--c-yellow)}
 .wrap section:nth-of-type(3) h2::before{background:var(--c-red)}
-.wrap section:nth-of-type(4) h2::before{background:var(--c-orange)}
+.wrap section:nth-of-type(4) h2::before{background:var(--c-blue)}
 .wrap section:nth-of-type(5) h2::before{background:var(--c-green)}
 .h2row{border-bottom:3px solid var(--hi2)!important}
 /* hard-edged pixel cards */
@@ -412,7 +429,7 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
 .game:hover .ghead .nm::before,.game.open .ghead .nm::before{content:"\25B6 ";color:var(--c-yellow)}
 .pad4{display:inline-flex;gap:7px;margin-left:auto}
 .pad4 i{width:15px;height:15px;border-radius:50%;box-shadow:2px 2px 0 var(--ink)}
-.pad4 .g{background:var(--c-green)}.pad4 .y{background:var(--c-yellow)}.pad4 .r{background:var(--c-red)}.pad4 .o{background:var(--c-orange)}
+.pad4 .g{background:var(--c-green)}.pad4 .y{background:var(--c-yellow)}.pad4 .r{background:var(--c-red)}.pad4 .b{background:var(--c-blue)}
 .modebtn{font-family:"Press Start 2P",monospace;font-size:.5rem;color:var(--paper);background:var(--bg4);
   border:2px solid var(--hi2);padding:8px 10px;cursor:pointer;border-radius:0}
 .modebtn:hover{background:var(--hi);color:var(--bg)}
@@ -448,6 +465,7 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
   </a>
   <div class="spacer"></div>
   <button class="modebtn" id="modeBtn" title="Change cartridge">CARTRIDGE</button>
+  <button class="modebtn" id="accBtn" title="Change accent colour">YELLOW</button>
   <div class="langwrap">
     <button class="lang on" data-lang="en">EN</button>
     <button class="lang" data-lang="es">ES</button>
@@ -494,7 +512,7 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
   <div class="tabs" role="tablist">
     <button class="tab on" data-tab="games"><span class="dot" style="background:var(--c-green)"></span><span data-i18n="tab_games">GAMES</span></button>
     <button class="tab" data-tab="studio"><span class="dot" style="background:var(--c-yellow)"></span><span data-i18n="tab_studio">STUDIO</span></button>
-    <button class="tab" data-tab="devlog"><span class="dot" style="background:var(--c-orange)"></span><span data-i18n="tab_devlog">DEVLOG</span> <span class="lock">🔒</span></button>
+    <button class="tab" data-tab="devlog"><span class="dot" style="background:var(--c-blue)"></span><span data-i18n="tab_devlog">DEVLOG</span> <span class="lock">🔒</span></button>
     <button class="tab" data-tab="shop"><span class="dot" style="background:var(--c-red)"></span><span data-i18n="tab_shop">SHOP</span> <span class="lock">🔒</span></button>
   </div>
 
@@ -509,7 +527,7 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
         <div class="h2row">
           <h2 data-i18n="h_games">Select a Game</h2>
           <div class="godotline"><img src="assets/godot.png" alt=""><span data-i18n="madewith">All made with Godot</span></div>
-          <span class="pad4" aria-hidden="true"><i class="g"></i><i class="y"></i><i class="r"></i><i class="o"></i></span>
+          <span class="pad4" aria-hidden="true"><i class="g"></i><i class="y"></i><i class="r"></i><i class="b"></i></span>
         </div>
         <div class="games" id="games"></div>
       </section>
@@ -561,7 +579,13 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
 <img class="bottomart" src="assets/bottom.png" alt="">
 <div class="pledgebar"><a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>an <b>ALLSEER</b> company</a></div>
 <footer data-i18n="footer"></footer>
-<div class="lb" id="lb"><span class="x">&times;</span><img src="" alt=""></div>
+<div class="lb" id="lb">
+  <span class="x" id="lbClose">&times;</span>
+  <button class="lbnav prev" id="lbPrev" type="button" aria-label="Previous">&#9664;</button>
+  <img src="" alt="">
+  <button class="lbnav next" id="lbNext" type="button" aria-label="Next">&#9654;</button>
+  <div class="lbcount" id="lbCount"></div>
+</div>
 
 <script>
 const I18N={
@@ -783,12 +807,10 @@ function buildGames(){
       });
     }
     // lightbox on screenshots
-    card.querySelectorAll('.shots img').forEach(function(im){
+    card.querySelectorAll('.shots img').forEach(function(im,idx){
       im.addEventListener('click',function(e){
         e.stopPropagation();
-        const lb=document.getElementById('lb');
-        lb.querySelector('img').src=im.src;
-        lb.classList.add('on');
+        lbOpen(g.shots, idx);
       });
     });
     box.appendChild(card);
@@ -811,6 +833,13 @@ document.querySelectorAll('.lang').forEach(function(b){
   function ap(){var m=M[i];if(m.id)document.body.dataset.mode=m.id;else document.body.removeAttribute('data-mode');
     b.textContent=m.n;try{localStorage.setItem('pico-mode',m.id);}catch(e){}}
   b.addEventListener('click',function(){i=(i+1)%M.length;ap();});ap();})();
+/* ---- UI accent colour ---- */
+(function(){var b=document.getElementById('accBtn');if(!b)return;
+  var A=[{id:'',n:'YELLOW'},{id:'orange',n:'ORANGE'},{id:'green',n:'GREEN'},{id:'cyan',n:'CYAN'},{id:'red',n:'RED'},{id:'violet',n:'VIOLET'}],i=0;
+  try{var s=localStorage.getItem('pico-acc');if(s!==null){for(var j=0;j<A.length;j++)if(A[j].id===s)i=j;}}catch(e){}
+  function ap(){var a=A[i];if(a.id)document.body.dataset.acc=a.id;else document.body.removeAttribute('data-acc');
+    b.textContent=a.n;try{localStorage.setItem('pico-acc',a.id);}catch(e){}}
+  b.addEventListener('click',function(){i=(i+1)%A.length;ap();});ap();})();
 /* ---- folder tabs: click to switch panels ---- */
 (function(){
   var tabs=document.querySelectorAll('.tab');
@@ -1017,9 +1046,46 @@ document.querySelectorAll('.lang').forEach(function(b){
   readInk(); resize(); draw(0);
   requestAnimationFrame(frame);
 })();
-document.getElementById('lb').addEventListener('click',function(){this.classList.remove('on');});
-document.addEventListener('keydown',function(e){
-  if(e.key==='Escape')document.getElementById('lb').classList.remove('on');});
+/* ---- screenshot lightbox: a browsable gallery, not a dead end ----
+   The old version closed on ANY click inside it, so there was no way to step
+   to the next shot. Now only the backdrop and the X close it; arrows and the
+   left/right keys move through the game's gallery. */
+var LB = {list: [], i: 0};
+function lbEl(id){ return document.getElementById(id); }
+function lbShow(){
+  var lb = lbEl('lb');
+  lb.querySelector('img').src = LB.list[LB.i];
+  var many = LB.list.length > 1;
+  lbEl('lbPrev').style.display  = many ? '' : 'none';
+  lbEl('lbNext').style.display  = many ? '' : 'none';
+  lbEl('lbCount').style.display = many ? '' : 'none';
+  lbEl('lbCount').textContent = (LB.i + 1) + ' / ' + LB.list.length;
+}
+function lbOpen(list, i){
+  LB.list = (list || []).slice();
+  LB.i = i || 0;
+  if (!LB.list.length) return;
+  lbShow();
+  lbEl('lb').classList.add('on');
+}
+function lbClose(){ lbEl('lb').classList.remove('on'); }
+function lbStep(d){
+  if (LB.list.length < 2) return;
+  LB.i = (LB.i + d + LB.list.length) % LB.list.length;
+  lbShow();
+}
+// the backdrop closes; anything interactive inside does not
+lbEl('lb').addEventListener('click', function(e){ if (e.target === this) lbClose(); });
+lbEl('lb').querySelector('img').addEventListener('click', function(e){ e.stopPropagation(); });
+lbEl('lbClose').addEventListener('click', function(e){ e.stopPropagation(); lbClose(); });
+lbEl('lbPrev').addEventListener('click',  function(e){ e.stopPropagation(); lbStep(-1); });
+lbEl('lbNext').addEventListener('click',  function(e){ e.stopPropagation(); lbStep(1); });
+document.addEventListener('keydown', function(e){
+  if (!lbEl('lb').classList.contains('on')) return;
+  if (e.key === 'Escape') lbClose();
+  else if (e.key === 'ArrowRight') lbStep(1);
+  else if (e.key === 'ArrowLeft')  lbStep(-1);
+});
 render();
 </script>
 </body>
