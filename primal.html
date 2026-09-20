@@ -14,7 +14,7 @@
     --bg:#2b3550; --bg2:#354163; --bg3:#3f4d73; --bg4:#4a5983;
     --hi:#ffd23f; --hi2:#e0a800; --sec:#6fd0ff; --sec2:#e0e6f6;
     --paper:#eef2fb; --line:rgba(255,255,255,.14); --ink:#161d30; --dev:#93a3ca;
-    --dither-ink:rgba(10,16,32,.60); --dither-lit:rgba(196,214,255,.14);
+    --sea-ink:8,13,28,0.62; --sea-lit:205,222,255,0.16;
     --c-green:#3ddc84; --c-yellow:#ffd23f; --c-red:#ff5a5a; --c-orange:#ff8c3a;
   }
   /* DARK: black-plastic cartridge, neon label */
@@ -22,7 +22,7 @@
     --bg:#0c0f16; --bg2:#141926; --bg3:#1c2333; --bg4:#262f44;
     --hi:#ffd23f; --hi2:#c9990f; --sec:#6fd0ff; --sec2:#c6cfe0;
     --paper:#eef2fb; --line:rgba(255,255,255,.10); --ink:#04060b; --dev:#8090b4;
-    --dither-ink:rgba(0,0,0,.66); --dither-lit:rgba(150,180,240,.10);
+    --sea-ink:0,0,0,0.66; --sea-lit:150,180,240,0.13;
     --c-green:#3ddc84; --c-yellow:#ffd23f; --c-red:#ff5a5a; --c-orange:#ff8c3a;
   }
 
@@ -231,39 +231,15 @@
    ========================================================= */
 body{background-color:var(--bg);
   background-image:radial-gradient(1200px 560px at 50% -8%, rgba(255,210,63,.07), transparent 60%)}
-/* ---- REAL ordered-dither ramps ----
-   dither-top / dither-bot are Bayer 8x8 dithers of a density ramp, baked as
-   1-bit alpha PNGs. Used as MASKS so the ink colour still comes from the theme:
-   dense dots at the top of the screen thinning out downward, and a second,
-   sparser gathering along the bottom. That gives real light and dark areas
-   instead of one flat mesh. */
-#dither{position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-color:var(--dither-ink,rgba(0,0,0,.55));
-  -webkit-mask-image:url("dither-top.png"),url("dither-bot.png");
-          mask-image:url("dither-top.png"),url("dither-bot.png");
-  -webkit-mask-size:256px 460px, 256px 460px;
-          mask-size:256px 460px, 256px 460px;
-  -webkit-mask-position:top left, bottom left;
-          mask-position:top left, bottom left;
-  -webkit-mask-repeat:repeat-x, repeat-x;
-          mask-repeat:repeat-x, repeat-x}
-/* a second, lighter ramp so the top also picks up a highlight, not just shadow */
-#dither::before{content:"";position:absolute;inset:0;
-  background-color:var(--dither-lit,rgba(255,255,255,.16));
-  -webkit-mask-image:url("dither-bot.png");mask-image:url("dither-bot.png");
-  -webkit-mask-size:256px 380px;mask-size:256px 380px;
-  -webkit-mask-position:top left;mask-position:top left;
-  -webkit-mask-repeat:repeat-x;mask-repeat:repeat-x}
-/* the cursor does not glow — it just makes the dithering denser under it.
-   Two nested masks (radial on the parent, dither tile on the child) so this
-   never depends on mask-composite support. */
-#ditherfield{position:fixed;inset:0;pointer-events:none;z-index:3;
-  -webkit-mask-image:radial-gradient(circle 170px at var(--mx,-600px) var(--my,-600px), #000 0%, rgba(0,0,0,.55) 46%, transparent 74%);
-          mask-image:radial-gradient(circle 170px at var(--mx,-600px) var(--my,-600px), #000 0%, rgba(0,0,0,.55) 46%, transparent 74%)}
-#ditherfield span{position:absolute;inset:0;background-color:var(--dither-ink,rgba(0,0,0,.55));
-  -webkit-mask-image:url("dither-tile.png");mask-image:url("dither-tile.png");
-  -webkit-mask-size:64px 64px;mask-size:64px 64px;
-  -webkit-mask-repeat:repeat;mask-repeat:repeat}
+/* ---- the dither sea ----
+   One canvas pixel per dither block, scaled up with image-rendering:pixelated,
+   so the blocks are big and hard-edged rather than a fine mesh. The density
+   field drifts like water and the cursor thickens the dither around it. It is
+   the page's background, not a film laid over the content. Cheap: the buffer
+   is 1/9th scale, the wave terms are precomputed per row/column, and it
+   repaints at ~15fps. */
+#sea{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;
+  image-rendering:pixelated;image-rendering:crisp-edges}
 /* CRT: soft even scanlines only — no moving glow bar */
 #crt{position:fixed;inset:0;pointer-events:none;z-index:45;
   background-image:
@@ -374,32 +350,43 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
 .roles{margin-top:8px!important}
 
 /* ---- file-cabinet tabs on the seam between the banner art and the page ----
-   Five folders spanning the full width. Each is an angled trapezoid: an ink
-   layer for the outline with the coloured face inset 3px on top of it. */
+   Real folder tabs: leaning trapezoids that OVERLAP, each tucking under the one
+   to its left like files in a drawer. The open folder lifts clear of the rest. */
 .filetabs{position:absolute;left:0;right:0;bottom:0;z-index:6;display:flex;align-items:flex-end;width:100%}
-.ftab{flex:1 1 0;min-width:0;position:relative;height:56px;border:0;padding:0;background:transparent;
-  cursor:pointer;opacity:.5;transform:translateY(11px);
-  filter:drop-shadow(0 -3px 7px rgba(0,0,0,.5));
-  transition:opacity .14s,transform .14s}
+.ftab{flex:1 1 0;min-width:0;position:relative;height:60px;border:0;padding:0;background:transparent;
+  cursor:pointer;margin-left:-24px;transform:translateY(13px);
+  transition:transform .14s cubic-bezier(.34,1.3,.64,1),filter .14s}
+.ftab:first-child{margin-left:0}
+/* stack left-over-right so the leaning edges read as separate files */
+.ftab:nth-child(1){z-index:5}.ftab:nth-child(2){z-index:4}.ftab:nth-child(3){z-index:3}
+.ftab:nth-child(4){z-index:2}.ftab:nth-child(5){z-index:1}
+/* ink outline */
 .ftab::before{content:"";position:absolute;inset:0;background:var(--ink);
-  clip-path:polygon(0 100%, 15px 30%, 32px 0, calc(100% - 32px) 0, calc(100% - 15px) 30%, 100% 100%)}
-.ftab .face{position:absolute;inset:3px 3px 0 3px;display:flex;align-items:center;justify-content:center;gap:9px;
-  padding:0 12px;overflow:hidden;white-space:nowrap;
+  clip-path:polygon(24px 0, 100% 0, calc(100% - 24px) 100%, 0 100%)}
+/* coloured face, inset so the ink reads as a chunky border */
+.ftab .face{position:absolute;inset:3px 3px 0 3px;display:flex;align-items:center;justify-content:center;
+  gap:9px;padding:0 14px;overflow:hidden;white-space:nowrap;
   font-family:"Press Start 2P",monospace;font-size:.56rem;letter-spacing:.03em;color:var(--sec2);
   background:linear-gradient(180deg,var(--bg3),var(--bg2));
-  box-shadow:inset 0 2px 0 rgba(255,255,255,.09);
-  clip-path:polygon(0 100%, 14px 30%, 30px 0, calc(100% - 30px) 0, calc(100% - 14px) 30%, 100% 100%)}
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.10);
+  clip-path:polygon(23px 0, 100% 0, calc(100% - 23px) 100%, 0 100%)}
 .ftab .face .lbl{overflow:hidden;text-overflow:ellipsis}
 .ftab img{width:22px;height:22px;object-fit:contain;image-rendering:pixelated;flex:none}
 .ftab .pin{width:7px;height:7px;border-radius:50%;background:var(--c-red);flex:none;box-shadow:1px 1px 0 var(--ink)}
-.ftab:hover{opacity:.82;transform:translateY(6px)}
-.ftab.on{opacity:1;transform:translateY(0);z-index:3}
-.ftab.on:hover{transform:translateY(0)}
-.ftab.on .face{color:var(--hi);background:linear-gradient(180deg,var(--bg2),var(--bg))}
+/* a closed folder is dimmer and pushed down into the drawer */
+.ftab:not(.on) .face{filter:brightness(.62) saturate(.8)}
+.ftab:not(.on):hover{transform:translateY(6px)}
+.ftab:not(.on):hover .face{filter:brightness(.85)}
+/* the open folder sits proud of the others */
+.ftab.on{z-index:10;transform:translateY(0);filter:drop-shadow(0 -5px 10px rgba(0,0,0,.55))}
+.ftab.on .face{color:var(--hi);background:linear-gradient(180deg,var(--bg2),var(--bg));
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.16)}
 .ftab.shake{animation:ftshake .3s}
-@keyframes ftshake{25%{transform:translateY(11px) translateX(-5px)}75%{transform:translateY(11px) translateX(5px)}}
-@media(max-width:900px){.ftab .face{font-size:.44rem;gap:6px;padding:0 6px}.ftab img{width:17px;height:17px}}
-@media(max-width:620px){.ftab .face .lbl{display:none}.ftab{height:44px}}
+@keyframes ftshake{25%{transform:translateY(13px) translateX(-5px)}75%{transform:translateY(13px) translateX(5px)}}
+@media(max-width:900px){.ftab .face{font-size:.44rem;gap:6px;padding:0 8px}.ftab img{width:17px;height:17px}
+  .ftab{margin-left:-18px}.ftab::before{clip-path:polygon(18px 0,100% 0,calc(100% - 18px) 100%,0 100%)}
+  .ftab .face{clip-path:polygon(17px 0,100% 0,calc(100% - 17px) 100%,0 100%)}}
+@media(max-width:620px){.ftab .face .lbl{display:none}.ftab{height:46px}}
 /* "NOT LOADED YET" toast */
 .ftoast{position:fixed;left:50%;top:74px;z-index:80;pointer-events:none;
   font-family:"Press Start 2P",monospace;font-size:.58rem;line-height:1.7;letter-spacing:.04em;
@@ -435,22 +422,28 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
   padding:6px 10px;margin-top:10px!important;box-shadow:2px 2px 0 rgba(0,0,0,.4);animation:blink 1s steps(1) infinite}
 .neonlogo{cursor:pointer;transition:transform .12s,filter .12s}
 .neonlogo:hover{transform:scale(1.06);filter:drop-shadow(0 0 10px var(--c-yellow))}
+  /* ---- charity pledge: every venture under ALLSEER carries this ---- */
+  .pledgebar{border-top:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.028);
+    padding:15px 22px;text-align:center;font-size:.84rem;line-height:1.6;letter-spacing:.01em}
+  .pledgebar a{display:inline-block;color:inherit;opacity:.82;transition:opacity .15s}
+  .pledgebar a:hover{opacity:1}
+  .pledgebar b{color:#ffd86a;font-weight:700}
+  .pledgebar .sep{opacity:.35;margin:0 .55em}
 </style>
 </head>
 <body>
-<div id="dither" aria-hidden="true"></div>
-<div id="ditherfield" aria-hidden="true"><span></span></div>
+<canvas id="sea" aria-hidden="true"></canvas>
 <div id="crt" aria-hidden="true"></div>
 
 <div class="topbar">
-  <a class="brand" href="omni.html" title="SANCTUM GROUP - parent company">
+  <a class="brand" href="omni.html" title="ALLSEER INDUSTRIES - parent company">
     <span class="upar">&larr;</span>
     <span class="logoswap">
       <img class="a" src="assets/angelcorp.png" alt="">
       <img class="b" src="assets/angelcorp.png" alt="">
     </span>
     <span>
-      <span class="nm"><span style="color:#fff">SANCTUM </span><span style="color:#e0554f">GROUP</span></span><br>
+      <span class="nm"><span style="color:#fff">ALLSEER</span><span style="color:#e0554f;font-size:.62em;letter-spacing:.14em"> INDUSTRIES</span></span><br>
       <span class="by" style="color:#e0554f">parent company</span>
     </span>
   </a>
@@ -537,7 +530,7 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
         <div class="h2row"><h2 data-i18n="h_corp">Parent Company</h2></div>
         <a class="mcard" href="omni.html" style="border-color:#b03a3a">
           <img src="assets/angelcorp.png" alt="">
-          <div class="t"><div class="nm" style="color:#e0554f">SANCTUM <span style="color:#fff">GROUP</span></div>
+          <div class="t"><div class="nm" style="color:#e0554f">ALLSEER<span style="color:#fff;font-size:.68em;letter-spacing:.12em"> INDUSTRIES</span></div>
           <p data-i18n="p_corp"></p></div>
         </a>
       </section>
@@ -567,6 +560,7 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
 </div>
 
 <img class="bottomart" src="assets/bottom.png" alt="">
+<div class="pledgebar"><a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>an <b>ALLSEER</b> company</a></div>
 <footer data-i18n="footer"></footer>
 <div class="lb" id="lb"><span class="x">&times;</span><img src="" alt=""></div>
 
@@ -848,9 +842,106 @@ document.querySelectorAll('.lang').forEach(function(b){
   var ps=document.querySelector('.pressstart');
   if(ps) ps.addEventListener('click',function(){ if(window.__picoShowTab) window.__picoShowTab('games'); });
 })();
-/* dithering field follows the cursor */
-document.addEventListener('mousemove',function(e){
-  var r=document.documentElement.style;r.setProperty('--mx',e.clientX+'px');r.setProperty('--my',e.clientY+'px');});
+/* ---- the dither sea ---------------------------------------------------
+   Renders an ordered (Bayer 8x8) dither of a slowly drifting density field.
+   The canvas holds ONE pixel per dither block and CSS scales it up with
+   image-rendering:pixelated, so the blocks stay big and hard-edged and the
+   whole thing costs almost nothing. Dense areas get dark ink, the sparsest
+   areas pick up light specks, so the screen has real light and dark regions.
+   The cursor just raises the local density — it does not glow. */
+(function(){
+  var cv = document.getElementById('sea');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  var CELL = 9;                       // on-screen size of one dither block
+  var BAYER = [ 0,32, 8,40, 2,34,10,42, 48,16,56,24,50,18,58,26,
+               12,44, 4,36,14,46, 6,38, 60,28,52,20,62,30,54,22,
+                3,35,11,43, 1,33, 9,41, 51,19,59,27,49,17,57,25,
+               15,47, 7,39,13,45, 5,37, 63,31,55,23,61,29,53,21];
+  var TH = new Float32Array(64);
+  for (var i = 0; i < 64; i++) TH[i] = (BAYER[i] + 0.5) / 64;
+
+  var cw = 0, ch = 0, img = null, px = null;
+  var sinX = null, sinY = null, sinD = null;
+  var inkR=8, inkG=13, inkB=28, inkA=158, litR=205, litG=222, litB=255, litA=41;
+
+  function readInk(){
+    var cs = getComputedStyle(document.body);
+    var a = cs.getPropertyValue('--sea-ink').trim().split(',');
+    if (a.length === 4){ inkR=+a[0]; inkG=+a[1]; inkB=+a[2]; inkA=Math.round(parseFloat(a[3])*255); }
+    var b = cs.getPropertyValue('--sea-lit').trim().split(',');
+    if (b.length === 4){ litR=+b[0]; litG=+b[1]; litB=+b[2]; litA=Math.round(parseFloat(b[3])*255); }
+  }
+  function resize(){
+    cw = Math.max(1, Math.ceil(window.innerWidth  / CELL));
+    ch = Math.max(1, Math.ceil(window.innerHeight / CELL));
+    cv.width = cw; cv.height = ch;
+    img = ctx.createImageData(cw, ch);
+    px  = img.data;
+    sinX = new Float32Array(cw);
+    sinY = new Float32Array(ch);
+    sinD = new Float32Array(cw + ch + 1);
+  }
+
+  var mx = -9999, my = -9999;
+  var R = 20, R2 = R * R;             // cursor radius, in blocks
+  document.addEventListener('mousemove', function(e){
+    mx = e.clientX / CELL; my = e.clientY / CELL;
+  }, {passive:true});
+  document.addEventListener('mouseleave', function(){ mx = -9999; my = -9999; });
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var t = 0, last = 0, tick = 0;
+
+  function draw(){
+    // per-row / per-column wave tables: 2*(cw+ch) sines a frame instead of one per block
+    var x, y, k;
+    for (x = 0; x < cw; x++) sinX[x] = 0.26 * Math.sin(x * 0.055 + t * 1.10);
+    for (y = 0; y < ch; y++) sinY[y] = 0.20 * Math.sin(y * 0.075 - t * 0.80);
+    for (k = 0; k < sinD.length; k++) sinD[k] = 0.16 * Math.sin(k * 0.035 + t * 1.60);
+
+    var invH = 1 / ch, o = 0;
+    for (y = 0; y < ch; y++){
+      var vert = 0.20 + 0.38 * (1 - y * invH);   // denser toward the top
+      var sy = sinY[y], row = (y & 7) << 3;
+      var dy = y - my, dy2 = dy * dy;
+      for (x = 0; x < cw; x++){
+        var v = vert + sy + sinX[x] + sinD[x + y];
+        if (dy2 < R2){                            // cursor thickens the dither
+          var dx = x - mx, d2 = dx * dx + dy2;
+          if (d2 < R2) v += 0.42 * (1 - d2 / R2);
+        }
+        var th = TH[row | (x & 7)];
+        if (v > th){
+          px[o] = inkR; px[o+1] = inkG; px[o+2] = inkB; px[o+3] = inkA;
+        } else if (th - v > 0.45){                // sparsest water catches light
+          px[o] = litR; px[o+1] = litG; px[o+2] = litB; px[o+3] = litA;
+        } else {
+          px[o+3] = 0;
+        }
+        o += 4;
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+
+  function frame(now){
+    requestAnimationFrame(frame);
+    if (document.hidden) return;
+    if (now - last < 66) return;        // ~15fps is plenty for a slow tide
+    last = now;
+    if (!reduce) t += 0.016;
+    if ((tick++ % 30) === 0) readInk(); // pick up a theme change
+    draw();
+  }
+
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt); rt = setTimeout(function(){ resize(); draw(); }, 150);
+  });
+  readInk(); resize(); draw();
+  requestAnimationFrame(frame);
+})();
 document.getElementById('lb').addEventListener('click',function(){this.classList.remove('on');});
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape')document.getElementById('lb').classList.remove('on');});
