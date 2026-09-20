@@ -14,6 +14,7 @@
     --bg:#2b3550; --bg2:#354163; --bg3:#3f4d73; --bg4:#4a5983;
     --hi:#ffd23f; --hi2:#e0a800; --sec:#6fd0ff; --sec2:#e0e6f6;
     --paper:#eef2fb; --line:rgba(255,255,255,.14); --ink:#161d30; --dev:#93a3ca;
+    --dither-ink:rgba(10,16,32,.60); --dither-lit:rgba(196,214,255,.14);
     --c-green:#3ddc84; --c-yellow:#ffd23f; --c-red:#ff5a5a; --c-orange:#ff8c3a;
   }
   /* DARK: black-plastic cartridge, neon label */
@@ -21,6 +22,7 @@
     --bg:#0c0f16; --bg2:#141926; --bg3:#1c2333; --bg4:#262f44;
     --hi:#ffd23f; --hi2:#c9990f; --sec:#6fd0ff; --sec2:#c6cfe0;
     --paper:#eef2fb; --line:rgba(255,255,255,.10); --ink:#04060b; --dev:#8090b4;
+    --dither-ink:rgba(0,0,0,.66); --dither-lit:rgba(150,180,240,.10);
     --c-green:#3ddc84; --c-yellow:#ffd23f; --c-red:#ff5a5a; --c-orange:#ff8c3a;
   }
 
@@ -228,36 +230,46 @@
    no grid, a real CRT scanline overlay, folder tabs.
    ========================================================= */
 body{background-color:var(--bg);
-  background-image:radial-gradient(1200px 560px at 50% -8%, rgba(255,210,63,.09), transparent 60%)}
-/* ---- REAL ordered (Bayer) dithering ----
-   Drawn as 8x8 SVG tiles made of hard 2x2 blocks and painted 1:1, so every
-   block lands on whole pixels instead of being a blurry gradient checker. */
-#dither{position:fixed;inset:0;pointer-events:none;z-index:0;image-rendering:pixelated;
-  background-image:
-    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='8'%20height='8'%20fill='%23ffffff'%20fill-opacity='0.07'%3E%3Crect%20x='0'%20y='0'%20width='2'%20height='2'/%3E%3Crect%20x='4'%20y='0'%20width='2'%20height='2'/%3E%3Crect%20x='2'%20y='2'%20width='2'%20height='2'/%3E%3Crect%20x='0'%20y='4'%20width='2'%20height='2'/%3E%3Crect%20x='4'%20y='4'%20width='2'%20height='2'/%3E%3Crect%20x='6'%20y='6'%20width='2'%20height='2'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='8'%20height='8'%20fill='%23000000'%20fill-opacity='0.16'%3E%3Crect%20x='0'%20y='0'%20width='2'%20height='2'/%3E%3Crect%20x='4'%20y='0'%20width='2'%20height='2'/%3E%3Crect%20x='2'%20y='2'%20width='2'%20height='2'/%3E%3Crect%20x='0'%20y='4'%20width='2'%20height='2'/%3E%3Crect%20x='4'%20y='4'%20width='2'%20height='2'/%3E%3Crect%20x='6'%20y='6'%20width='2'%20height='2'/%3E%3C/svg%3E");
-  background-size:8px 8px, 8px 8px;
-  background-position:0 0, 4px 4px}
-/* grey/white dither glow that follows the cursor */
-#ditherfield{position:fixed;inset:0;pointer-events:none;z-index:3;mix-blend-mode:screen;opacity:.85;
-  image-rendering:pixelated;
-  background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='8'%20height='8'%20fill='%23dfe6f2'%20fill-opacity='0.55'%3E%3Crect%20x='0'%20y='0'%20width='2'%20height='2'/%3E%3Crect%20x='4'%20y='0'%20width='2'%20height='2'/%3E%3Crect%20x='2'%20y='2'%20width='2'%20height='2'/%3E%3Crect%20x='0'%20y='4'%20width='2'%20height='2'/%3E%3Crect%20x='4'%20y='4'%20width='2'%20height='2'/%3E%3Crect%20x='6'%20y='6'%20width='2'%20height='2'/%3E%3C/svg%3E");
-  background-size:8px 8px;
-  -webkit-mask:radial-gradient(190px 190px at var(--mx,-600px) var(--my,-600px), #000 0%, rgba(0,0,0,.4) 48%, transparent 72%);
-          mask:radial-gradient(190px 190px at var(--mx,-600px) var(--my,-600px), #000 0%, rgba(0,0,0,.4) 48%, transparent 72%)}
-/* CRT overlay: even 2px-on / 2px-off scanlines (SVG tile = no gaps), vignette, flicker */
+  background-image:radial-gradient(1200px 560px at 50% -8%, rgba(255,210,63,.07), transparent 60%)}
+/* ---- REAL ordered-dither ramps ----
+   dither-top / dither-bot are Bayer 8x8 dithers of a density ramp, baked as
+   1-bit alpha PNGs. Used as MASKS so the ink colour still comes from the theme:
+   dense dots at the top of the screen thinning out downward, and a second,
+   sparser gathering along the bottom. That gives real light and dark areas
+   instead of one flat mesh. */
+#dither{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-color:var(--dither-ink,rgba(0,0,0,.55));
+  -webkit-mask-image:url("dither-top.png"),url("dither-bot.png");
+          mask-image:url("dither-top.png"),url("dither-bot.png");
+  -webkit-mask-size:256px 460px, 256px 460px;
+          mask-size:256px 460px, 256px 460px;
+  -webkit-mask-position:top left, bottom left;
+          mask-position:top left, bottom left;
+  -webkit-mask-repeat:repeat-x, repeat-x;
+          mask-repeat:repeat-x, repeat-x}
+/* a second, lighter ramp so the top also picks up a highlight, not just shadow */
+#dither::before{content:"";position:absolute;inset:0;
+  background-color:var(--dither-lit,rgba(255,255,255,.16));
+  -webkit-mask-image:url("dither-bot.png");mask-image:url("dither-bot.png");
+  -webkit-mask-size:256px 380px;mask-size:256px 380px;
+  -webkit-mask-position:top left;mask-position:top left;
+  -webkit-mask-repeat:repeat-x;mask-repeat:repeat-x}
+/* the cursor does not glow — it just makes the dithering denser under it.
+   Two nested masks (radial on the parent, dither tile on the child) so this
+   never depends on mask-composite support. */
+#ditherfield{position:fixed;inset:0;pointer-events:none;z-index:3;
+  -webkit-mask-image:radial-gradient(circle 170px at var(--mx,-600px) var(--my,-600px), #000 0%, rgba(0,0,0,.55) 46%, transparent 74%);
+          mask-image:radial-gradient(circle 170px at var(--mx,-600px) var(--my,-600px), #000 0%, rgba(0,0,0,.55) 46%, transparent 74%)}
+#ditherfield span{position:absolute;inset:0;background-color:var(--dither-ink,rgba(0,0,0,.55));
+  -webkit-mask-image:url("dither-tile.png");mask-image:url("dither-tile.png");
+  -webkit-mask-size:64px 64px;mask-size:64px 64px;
+  -webkit-mask-repeat:repeat;mask-repeat:repeat}
+/* CRT: soft even scanlines only — no moving glow bar */
 #crt{position:fixed;inset:0;pointer-events:none;z-index:45;
   background-image:
-    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='4'%20height='4'%3E%3Crect%20width='4'%20height='2'%20fill='%23000000'%20fill-opacity='0.26'/%3E%3C/svg%3E"),
-    radial-gradient(130% 120% at 50% 50%, transparent 58%, rgba(0,0,0,.45));
-  background-size:4px 4px, 100% 100%;
-  animation:crtflick 5.5s steps(40) infinite}
-#crt::after{content:"";position:absolute;left:0;right:0;height:140px;top:-140px;
-  background:linear-gradient(180deg,transparent,rgba(255,255,255,.055),transparent);
-  animation:crtscan 7s linear infinite}
-@keyframes crtflick{0%,100%{opacity:1}50%{opacity:.92}}
-@keyframes crtscan{to{transform:translateY(calc(100vh + 280px))}}
-@media(prefers-reduced-motion:reduce){#crt,#crt::after{animation:none}}
+    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='4'%20height='4'%3E%3Crect%20width='4'%20height='2'%20fill='%23000000'%20fill-opacity='0.11'/%3E%3C/svg%3E"),
+    radial-gradient(130% 120% at 50% 50%, transparent 66%, rgba(0,0,0,.28));
+  background-size:4px 4px, 100% 100%}
 .wrap{position:relative;z-index:2}
 .hero{position:relative;z-index:2}
 /* ---- pixel-art mouse pointer ---- */
@@ -361,25 +373,33 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
 .heroswap{width:150px!important;height:150px!important}
 .roles{margin-top:8px!important}
 
-/* ---- file-cabinet tabs sitting on the seam between banner art and page ---- */
-.filetabs{position:absolute;left:50%;transform:translateX(-50%);bottom:0;z-index:6;
-  width:min(1080px,100%);padding:0 22px;display:flex;align-items:flex-end;gap:6px;overflow-x:auto;
-  scrollbar-width:none}
-.filetabs::-webkit-scrollbar{display:none}
-.ftab{flex:none;display:flex;align-items:center;gap:9px;cursor:pointer;
-  font-family:"Press Start 2P",monospace;font-size:.54rem;letter-spacing:.04em;color:var(--sec2);
+/* ---- file-cabinet tabs on the seam between the banner art and the page ----
+   Five folders spanning the full width. Each is an angled trapezoid: an ink
+   layer for the outline with the coloured face inset 3px on top of it. */
+.filetabs{position:absolute;left:0;right:0;bottom:0;z-index:6;display:flex;align-items:flex-end;width:100%}
+.ftab{flex:1 1 0;min-width:0;position:relative;height:56px;border:0;padding:0;background:transparent;
+  cursor:pointer;opacity:.5;transform:translateY(11px);
+  filter:drop-shadow(0 -3px 7px rgba(0,0,0,.5));
+  transition:opacity .14s,transform .14s}
+.ftab::before{content:"";position:absolute;inset:0;background:var(--ink);
+  clip-path:polygon(0 100%, 15px 30%, 32px 0, calc(100% - 32px) 0, calc(100% - 15px) 30%, 100% 100%)}
+.ftab .face{position:absolute;inset:3px 3px 0 3px;display:flex;align-items:center;justify-content:center;gap:9px;
+  padding:0 12px;overflow:hidden;white-space:nowrap;
+  font-family:"Press Start 2P",monospace;font-size:.56rem;letter-spacing:.03em;color:var(--sec2);
   background:linear-gradient(180deg,var(--bg3),var(--bg2));
-  border:3px solid var(--ink);border-bottom:0;border-radius:11px 11px 0 0;
-  padding:11px 15px;opacity:.42;transform:translateY(7px);
-  box-shadow:inset 0 2px 0 rgba(255,255,255,.07), 0 -4px 12px rgba(0,0,0,.45);
-  transition:opacity .13s,transform .13s,color .13s}
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.09);
+  clip-path:polygon(0 100%, 14px 30%, 30px 0, calc(100% - 30px) 0, calc(100% - 14px) 30%, 100% 100%)}
+.ftab .face .lbl{overflow:hidden;text-overflow:ellipsis}
 .ftab img{width:22px;height:22px;object-fit:contain;image-rendering:pixelated;flex:none}
 .ftab .pin{width:7px;height:7px;border-radius:50%;background:var(--c-red);flex:none;box-shadow:1px 1px 0 var(--ink)}
-.ftab:hover{opacity:.78;transform:translateY(4px)}
-.ftab.on{opacity:1;transform:translateY(0);color:var(--hi);z-index:2;
-  background:linear-gradient(180deg,var(--bg2),var(--bg))}
+.ftab:hover{opacity:.82;transform:translateY(6px)}
+.ftab.on{opacity:1;transform:translateY(0);z-index:3}
+.ftab.on:hover{transform:translateY(0)}
+.ftab.on .face{color:var(--hi);background:linear-gradient(180deg,var(--bg2),var(--bg))}
 .ftab.shake{animation:ftshake .3s}
-@keyframes ftshake{25%{transform:translateY(7px) translateX(-4px)}75%{transform:translateY(7px) translateX(4px)}}
+@keyframes ftshake{25%{transform:translateY(11px) translateX(-5px)}75%{transform:translateY(11px) translateX(5px)}}
+@media(max-width:900px){.ftab .face{font-size:.44rem;gap:6px;padding:0 6px}.ftab img{width:17px;height:17px}}
+@media(max-width:620px){.ftab .face .lbl{display:none}.ftab{height:44px}}
 /* "NOT LOADED YET" toast */
 .ftoast{position:fixed;left:50%;top:74px;z-index:80;pointer-events:none;
   font-family:"Press Start 2P",monospace;font-size:.58rem;line-height:1.7;letter-spacing:.04em;
@@ -419,18 +439,18 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
 </head>
 <body>
 <div id="dither" aria-hidden="true"></div>
-<div id="ditherfield" aria-hidden="true"></div>
+<div id="ditherfield" aria-hidden="true"><span></span></div>
 <div id="crt" aria-hidden="true"></div>
 
 <div class="topbar">
-  <a class="brand" href="omni.html" title="ANGELCORP - parent company">
+  <a class="brand" href="omni.html" title="SANCTUM GROUP - parent company">
     <span class="upar">&larr;</span>
     <span class="logoswap">
       <img class="a" src="assets/angelcorp.png" alt="">
       <img class="b" src="assets/angelcorp.png" alt="">
     </span>
     <span>
-      <span class="nm"><span style="color:#fff">ANGEL</span><span style="color:#e0554f">CORP</span></span><br>
+      <span class="nm"><span style="color:#fff">SANCTUM </span><span style="color:#e0554f">GROUP</span></span><br>
       <span class="by" style="color:#e0554f">parent company</span>
     </span>
   </a>
@@ -455,11 +475,11 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
     <img src="assets/banner.png" alt="">
     <!-- file-cabinet tabs: PICODEV is the open folder, the rest are future pages -->
     <div class="filetabs">
-      <button class="ftab on" type="button"><img src="assets/picodev.png" alt=""><span>PICODEV</span></button>
-      <button class="ftab" type="button" data-page="NEON ARSENAL"><span class="pin"></span><span>NEON ARSENAL</span></button>
-      <button class="ftab" type="button" data-page="DREADWARD"><span class="pin"></span><span>DREADWARD</span></button>
-      <button class="ftab" type="button" data-page="DRAWBERRY"><span class="pin"></span><span>DRAWBERRY</span></button>
-      <button class="ftab" type="button" data-page="KILLSHIFT"><span class="pin"></span><span>KILLSHIFT</span></button>
+      <button class="ftab on" type="button"><span class="face"><img src="assets/picodev.png" alt=""><span class="lbl">PICODEV</span></span></button>
+      <button class="ftab" type="button" data-page="NEON ARSENAL"><span class="face"><span class="pin"></span><span class="lbl">NEON ARSENAL</span></span></button>
+      <button class="ftab" type="button" data-page="DREADWARD"><span class="face"><span class="pin"></span><span class="lbl">DREADWARD</span></span></button>
+      <button class="ftab" type="button" data-page="DRAWBERRY"><span class="face"><span class="pin"></span><span class="lbl">DRAWBERRY</span></span></button>
+      <button class="ftab" type="button" data-page="KILLSHIFT"><span class="face"><span class="pin"></span><span class="lbl">KILLSHIFT</span></span></button>
     </div>
   </div>
   <div class="heroinner">
@@ -517,7 +537,7 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
         <div class="h2row"><h2 data-i18n="h_corp">Parent Company</h2></div>
         <a class="mcard" href="omni.html" style="border-color:#b03a3a">
           <img src="assets/angelcorp.png" alt="">
-          <div class="t"><div class="nm" style="color:#e0554f">ANGEL<span style="color:#fff">CORP</span></div>
+          <div class="t"><div class="nm" style="color:#e0554f">SANCTUM <span style="color:#fff">GROUP</span></div>
           <p data-i18n="p_corp"></p></div>
         </a>
       </section>
