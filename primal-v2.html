@@ -7,12 +7,12 @@
 <link rel="icon" type="image/png" href="assets/picodev.png">
 <meta name="description" content="PICODEV — game studio by PRIMALAPE. Six games in development, all made with Godot.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@400;500;600;700;800&display=swap">
 <style>
   :root{
-    --bg:#0d1014; --bg2:#141920; --bg3:#1c232c; --bg4:#26303b;
-    --hi:#5ee0b0; --hi2:#38b98d; --sec:#a78bfa; --sec2:#c4b1ff;
-    --paper:#eef3f5; --line:rgba(94,224,176,.24);
+    --bg:#141033; --bg2:#1e1748; --bg3:#28205f; --bg4:#342a78;
+    --hi:#ffd23f; --hi2:#e0a800; --sec:#3aa0ff; --sec2:#9cc9ff;
+    --paper:#fdf6e3; --line:rgba(255,210,63,.30);
   }
   body[data-theme="blue"]{--bg:#180F3A;--bg2:#20144a;--bg3:#2a1a5e;--bg4:#382576;
     --hi:#FF8A3D;--hi2:#d96b22;--sec:#4FD8FF;--sec2:#7ee4ff;--line:rgba(255,138,61,.3)}
@@ -218,6 +218,59 @@
 .pmark{ font-weight:800; letter-spacing:.06em; }
 .pmark sup{ font-size:.62em; font-weight:800; letter-spacing:.04em;
             vertical-align:super; margin-left:.06em; }
+
+/* =========================================================
+   PICODEV · 8-BIT ARCADE SKIN  (alternate design)
+   ========================================================= */
+body{background:
+  repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 2px, transparent 2px 4px),
+  radial-gradient(1200px 500px at 50% -10%, rgba(58,160,255,.10), transparent 60%),
+  var(--bg);}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:150;
+  background:repeating-linear-gradient(0deg, rgba(0,0,0,.11) 0 1px, transparent 1px 3px);opacity:.45}
+.wrap{position:relative;z-index:2}
+/* pixel type */
+h1{font-family:"Press Start 2P",monospace!important;font-size:clamp(1.5rem,5.2vw,3rem)!important;
+  line-height:1.3!important;letter-spacing:0!important;color:var(--hi)!important;
+  text-shadow:4px 4px 0 #0c0824, -2px -2px 0 rgba(58,160,255,.5)!important}
+.roles{font-family:"Press Start 2P",monospace!important;font-size:.58rem!important;letter-spacing:.02em!important;line-height:2!important;color:var(--sec2)!important}
+h2{font-family:"Press Start 2P",monospace!important;font-size:.74rem!important;letter-spacing:0!important;
+  display:flex;align-items:center;gap:11px;text-transform:none!important}
+h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 #0c0824;background:var(--hi)}
+.wrap section:nth-of-type(1) h2::before{background:#ffd23f}
+.wrap section:nth-of-type(2) h2::before{background:#3ddc84}
+.wrap section:nth-of-type(3) h2::before{background:#3aa0ff}
+.wrap section:nth-of-type(4) h2::before{background:#ff5a5a}
+.wrap section:nth-of-type(5) h2::before{background:#ffd23f}
+.h2row{border-bottom:3px solid var(--hi2)!important}
+/* hard-edged pixel cards */
+.game,.mcard,.advice,.future,.step,.aside{border-radius:0!important;border:3px solid #0c0824!important;
+  box-shadow:6px 6px 0 rgba(0,0,0,.45)!important;transition:transform .1s,box-shadow .1s}
+.game{border-color:#0c0824!important}
+.game:hover,.mcard:hover{transform:translate(-2px,-2px)!important;box-shadow:9px 9px 0 rgba(0,0,0,.45)!important;border-color:var(--hi)!important}
+.game.flag{border-width:4px!important}
+.nm,.flaghead .nm,.gbody .center .nm{font-family:"Press Start 2P",monospace!important;letter-spacing:0!important;
+  line-height:1.5!important;word-break:break-word}
+.game .nm,.mcard .nm{font-size:.66rem!important}
+.flaghead .nm{font-size:.9rem!important}
+.gbody .center .nm{font-size:.8rem!important}
+.gn{font-family:"Outfit",sans-serif;letter-spacing:.04em}
+.chev{font-family:"Press Start 2P",monospace;font-size:.8rem}
+/* pixel buttons / pills */
+.gbtn,.closebtn,.lang,.eta,.soonpill,.godotline,.authorcard,.langwrap,.themebox{border-radius:0!important}
+.gbtn,.closebtn,.eta{font-family:"Press Start 2P",monospace!important;font-size:.52rem!important;line-height:1.6}
+.closebtn{border:2px solid #0c0824!important;box-shadow:3px 3px 0 rgba(0,0,0,.4)!important}
+.lang{font-family:"Press Start 2P",monospace!important;font-size:.5rem!important}
+.pct{font-family:"Press Start 2P",monospace!important;font-size:.5rem!important;border:2px solid #0c0824;border-radius:0!important}
+.pbar{border:2px solid #0c0824;border-radius:0!important;height:12px!important}
+.pbar i{border-radius:0!important}
+/* crisp pixel rendering for game art */
+.ghead img.ico,.flaghead img.ico,.flaghead img.boss,.gbody .center img,.mcard img,.heroswap img{image-rendering:pixelated}
+/* topbar + author */
+.topbar{border-bottom:3px solid var(--hi2)!important}
+.authorcard{border:2px solid #0c0824!important;box-shadow:3px 3px 0 rgba(0,0,0,.4)!important}
+.authorcard .n{font-family:"Press Start 2P",monospace;font-size:.7rem}
+.advice li::before{border-radius:0!important;box-shadow:2px 2px 0 #0c0824}
 </style>
 </head>
 <body data-theme="yellow">
