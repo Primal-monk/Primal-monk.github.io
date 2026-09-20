@@ -83,6 +83,51 @@
     }
 
     var arcs = [], impacts = [], count = 0;
+    // multi-hop route (start -> several hops -> destination) for VPN-style maps
+    var chain = null, chainWait = 50;
+    function spawnChain() {
+      var pool = HUBS.slice(), n = 4 + ((Math.random() * 3) | 0), hops = [];
+      for (var i = 0; i < n && pool.length; i++) hops.push(pool.splice((Math.random() * pool.length) | 0, 1)[0]);
+      chain = { hops: hops, seg: 0, t: 0 };
+      count++;
+      if (counterEl) counterEl.textContent = count.toLocaleString();
+      if (feedEl) {
+        var row = document.createElement('div'); row.className = 'fm-row';
+        row.innerHTML = '<span class="fm-src">' + hops[0][3] + '</span><span class="fm-ar">&rarr;</span>' +
+          '<span class="fm-dst">' + hops[hops.length-1][3] + '</span><span class="fm-t">' + hops.length + ' hops</span>';
+        feedEl.insertBefore(row, feedEl.firstChild);
+        while (feedEl.childNodes.length > 8) feedEl.removeChild(feedEl.lastChild);
+      }
+    }
+    function drawChain() {
+      if (!chain) { if (--chainWait <= 0) spawnChain(); return; }
+      var hops = chain.hops, col = P.arcs[0], acc = P.hub;
+      // full faint path
+      for (var s = 0; s < hops.length - 1; s++) {
+        var pa = project(hops[s][1], hops[s][2]), pb = project(hops[s+1][1], hops[s+1][2]);
+        var cx = (pa[0]+pb[0])/2, cy = (pa[1]+pb[1])/2 - Math.min(Math.hypot(pb[0]-pa[0],pb[1]-pa[1])*0.28,120);
+        ctx.beginPath(); ctx.moveTo(pa[0],pa[1]); ctx.quadraticCurveTo(cx,cy,pb[0],pb[1]);
+        ctx.strokeStyle = s < chain.seg ? hexA(col,.75) : hexA(col,.2); ctx.lineWidth = s < chain.seg ? 2 : 1; ctx.stroke();
+      }
+      // current segment packet
+      var a = project(hops[chain.seg][1], hops[chain.seg][2]), b = project(hops[chain.seg+1][1], hops[chain.seg+1][2]);
+      var mcx = (a[0]+b[0])/2, mcy = (a[1]+b[1])/2 - Math.min(Math.hypot(b[0]-a[0],b[1]-a[1])*0.28,120);
+      if (!reduce) chain.t += 0.02;
+      var tt = Math.min(chain.t, 1), q = bez(a, [mcx,mcy], b, tt);
+      ctx.beginPath(); ctx.moveTo(a[0],a[1]);
+      for (var u = 0; u <= tt; u += 0.03) { var pt = bez(a,[mcx,mcy],b,u); ctx.lineTo(pt[0],pt[1]); }
+      ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.stroke();
+      ctx.beginPath(); ctx.arc(q[0],q[1],3,0,6.283); ctx.fillStyle = '#fff'; ctx.shadowColor = col; ctx.shadowBlur = 10; ctx.fill(); ctx.shadowBlur = 0;
+      // hop nodes
+      for (var n2 = 0; n2 < hops.length; n2++) {
+        var hp = project(hops[n2][1], hops[n2][2]);
+        var lit = n2 <= chain.seg;
+        ctx.beginPath(); ctx.arc(hp[0], hp[1], n2 === 0 || n2 === hops.length-1 ? 4 : 3, 0, 6.283);
+        ctx.fillStyle = lit ? acc : hexA(acc,.35); ctx.fill();
+        if (n2 === 0 || n2 === hops.length-1) { ctx.beginPath(); ctx.arc(hp[0],hp[1],6,0,6.283); ctx.strokeStyle = hexA(acc,.5); ctx.lineWidth = 1; ctx.stroke(); }
+      }
+      if (chain.t >= 1) { chain.seg++; chain.t = 0; if (chain.seg >= hops.length - 1) { chain = null; chainWait = 80; } }
+    }
     function spawn() {
       var a = HUBS[(Math.random()*HUBS.length)|0], b = HUBS[(Math.random()*HUBS.length)|0];
       if (a === b) return;
@@ -106,6 +151,7 @@
         var p = project(HUBS[h][1], HUBS[h][2]);
         ctx.beginPath(); ctx.arc(p[0], p[1], 1.7, 0, 6.283); ctx.fillStyle = hexA(P.hub, .7); ctx.fill();
       }
+      if (opts.route) drawChain();
       for (var k = arcs.length - 1; k >= 0; k--) {
         var ar = arcs[k], pa = project(ar.a[1], ar.a[2]), pb = project(ar.b[1], ar.b[2]);
         var mx = (pa[0]+pb[0])/2, my = (pa[1]+pb[1])/2;
