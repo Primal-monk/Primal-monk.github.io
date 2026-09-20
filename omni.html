@@ -78,9 +78,10 @@
   .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
     background:radial-gradient(60% 46% at 50% 0%, rgba(var(--ray),.14), transparent 66%)}
   /* fixed marble columns running down both edges of the whole site */
-  .pillar{position:fixed;top:0;bottom:0;width:clamp(44px,5vw,78px);z-index:-1;pointer-events:none;
+  .pillar{position:fixed;top:56px;bottom:0;width:clamp(44px,5vw,78px);z-index:3;pointer-events:none;
     background:
       linear-gradient(90deg, rgba(70,54,20,.36) 0, rgba(255,250,235,0) 16%, rgba(255,251,239,.45) 50%, rgba(255,250,235,0) 84%, rgba(70,54,20,.36) 100%),
+      repeating-linear-gradient(180deg, transparent 0 150px, rgba(120,96,40,.20) 150px 153px, rgba(255,255,255,.30) 153px 155px, transparent 155px 160px),
       repeating-linear-gradient(90deg,#e8dec5 0 6px,#d3c6a4 7px,#e8dec5 11px)}
   .pillar.left{left:0;border-right:1px solid #b6ab8f}
   .pillar.right{right:0;border-left:1px solid #b6ab8f}
@@ -91,10 +92,10 @@
   @media(max-width:720px){.pillar{display:none}}
   /* stone arch across the top of the hero, landing on the columns */
   .archwrap{position:absolute;top:0;left:clamp(44px,5vw,78px);right:clamp(44px,5vw,78px);
-    height:clamp(110px,15vw,210px);z-index:0;pointer-events:none}
+    height:clamp(96px,13vw,188px);z-index:0;pointer-events:none}
   .archwrap svg{width:100%;height:100%;display:block}
-  .archwrap .stone{fill:none;stroke:#e4dabf;stroke-width:22;stroke-linecap:butt}
-  .archwrap .inlay{fill:none;stroke:rgba(var(--ray),.65);stroke-width:3}
+  .archwrap .wall{fill:#e4dabf}
+  .archwrap .inlay{fill:none;stroke:rgba(var(--ray),.6);stroke-width:3}
   @media(max-width:720px){.archwrap{display:none}}
   .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;
     padding-top:clamp(66px,10vw,150px)}
@@ -110,22 +111,22 @@
   .hero .cta{margin-top:22px}
   /* holy rotating halo rings */
   .angel{position:relative;display:flex;align-items:center;justify-content:center;min-height:clamp(260px,34vw,400px);perspective:1200px}
-  .angel .rays{position:absolute;width:min(480px,142%);aspect-ratio:1;
+  .angel .rays{position:absolute;inset:0;margin:auto;width:min(480px,142%);aspect-ratio:1;
     background:repeating-conic-gradient(from 0deg, rgba(var(--ray),.08) 0 3deg, transparent 3deg 13deg);
     -webkit-mask-image:radial-gradient(circle,transparent 22%,#000 38%,transparent 74%);
             mask-image:radial-gradient(circle,transparent 22%,#000 38%,transparent 74%);
     animation:halospin 150s linear infinite}
-  .angel .halo{position:absolute;width:min(400px,122%);aspect-ratio:1;border-radius:50%;
+  .angel .halo{position:absolute;inset:0;margin:auto;width:min(400px,122%);aspect-ratio:1;border-radius:50%;
     background:radial-gradient(circle, rgba(var(--ray),.24), rgba(var(--glow),.08) 46%, transparent 68%);filter:blur(4px)}
-  .angel .wheel{position:absolute;width:min(310px,92%);aspect-ratio:1;border-radius:50%;
-    border:2px solid rgba(var(--ray),.62);box-shadow:0 0 24px rgba(var(--ray),.32),inset 0 0 12px rgba(var(--ray),.16);
-    backface-visibility:hidden;-webkit-backface-visibility:hidden;will-change:transform;z-index:1;animation:wheelY 11s linear infinite}
-  .angel .wheel.w2{width:min(384px,110%);border-color:rgba(var(--ray),.42);z-index:3;animation:wheelTilt 18s linear infinite}
-  .angel img{width:min(240px,66%);position:relative;z-index:2;
+  .angel .wheel{position:absolute;inset:0;margin:auto;width:min(300px,90%);aspect-ratio:1;border-radius:50%;
+    border:2px solid rgba(var(--ray),.62);box-shadow:0 0 24px rgba(var(--ray),.3),inset 0 0 12px rgba(var(--ray),.14);
+    z-index:1;animation:wheelY 9s linear infinite}
+  .angel .wheel.w2{width:min(372px,108%);border-color:rgba(var(--ray),.48);z-index:3;animation:wheelX 13s linear infinite}
+  .angel img{width:min(230px,64%);position:relative;z-index:2;
     filter:drop-shadow(0 6px 30px rgba(255,217,122,.35)) drop-shadow(0 0 50px rgba(143,192,245,.2))}
   @keyframes halospin{to{transform:rotate(360deg)}}
   @keyframes wheelY{to{transform:rotateY(360deg)}}
-  @keyframes wheelTilt{from{transform:rotateX(70deg) rotateZ(0)}to{transform:rotateX(70deg) rotateZ(360deg)}}
+  @keyframes wheelX{to{transform:rotateX(360deg)}}
 
   /* ---------- cathedral flourishes ---------- */
   #overview .body:first-of-type::first-letter{float:left;font-family:var(--disp);font-weight:700;
@@ -285,9 +286,9 @@
 <!-- ===================== HERO ===================== -->
 <header class="hero">
   <div class="archwrap" aria-hidden="true">
-    <svg viewBox="0 0 1000 300" preserveAspectRatio="none">
-      <path class="stone" d="M11,300 L11,150 Q11,26 500,26 Q989,26 989,150 L989,300"/>
-      <path class="inlay" d="M11,300 L11,150 Q11,26 500,26 Q989,26 989,150 L989,300"/>
+    <svg viewBox="0 0 1000 200" preserveAspectRatio="none">
+      <path class="wall" fill-rule="evenodd" d="M0,0 H1000 V200 H0 Z M0,200 A500,182 0 0 1 1000,200 Z"/>
+      <path class="inlay" d="M0,200 A500,182 0 0 1 1000,200"/>
     </svg>
   </div>
   <div class="wrap">
