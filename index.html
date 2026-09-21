@@ -468,6 +468,12 @@
       </div>
       <p class="small" data-i18n="nofuss">No installer and nothing to configure.
         Unzip it, run it, press <strong>INSERT</strong>.</p>
+      <!-- Source used to be bundled inside PHAROAH.zip, which made every
+           download 2x+ bigger than the tool itself for everyone, whether
+           they wanted source or not. Split out into its own file so the
+           main download is small - source is still a real, always-available
+           part of this release (LICENSE.txt clause 2), just its own link. -->
+      <p class="small"><a href="PHAROAH_SOURCE.zip" download>Source code (PHAROAH_SOURCE.zip)</a> - required by the licence, kept separate so the main download stays small.</p>
       <button class="sharebig" id="shareBtn2" data-i18n="sharebig">SHARE THIS PAGE</button>
     </div>
   </div>
