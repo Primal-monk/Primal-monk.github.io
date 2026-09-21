@@ -95,7 +95,7 @@
   .heroinner{position:relative;margin-top:-108px;z-index:3}
   .heroswap{position:relative;display:block;width:224px;height:224px;margin:0 auto 10px}
   .heroswap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .2s}
-  .heroswap .b{opacity:0}
+  .heroswap .b{opacity:0;transform:scale(.72);transform-origin:center}
   .heroswap:hover .a{opacity:0}
   .heroswap:hover .b{opacity:1}
   .authorcard{display:inline-flex;align-items:center;gap:11px;margin-top:12px;
@@ -263,9 +263,9 @@ body{background-color:var(--bg);
 /* CRT scanlines — strength driven by --crt so the topbar can scale it */
 #crt{position:fixed;inset:0;pointer-events:none;z-index:45;opacity:var(--crt,1);
   background-image:
-    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='4'%20height='4'%3E%3Crect%20width='4'%20height='2'%20fill='%23000000'%20fill-opacity='0.22'/%3E%3C/svg%3E"),
-    radial-gradient(130% 120% at 50% 50%, transparent 66%, rgba(0,0,0,.30));
-  background-size:4px 4px, 100% 100%}
+    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='6'%20height='6'%3E%3Crect%20width='6'%20height='2'%20fill='%23000000'%20fill-opacity='0.17'/%3E%3C/svg%3E"),
+    radial-gradient(130% 120% at 50% 50%, transparent 74%, rgba(0,0,0,.16));
+  background-size:6px 6px, 100% 100%}
 .wrap{position:relative;z-index:2}
 .hero{position:relative;z-index:2}
 .bottomart,footer,.pledgebar{position:relative;z-index:2}
@@ -479,8 +479,8 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
   <div class="spacer"></div>
   <button class="modebtn" id="modeBtn" title="Change cartridge">CARTRIDGE</button>
   <button class="modebtn" id="accBtn" title="Change accent colour">YELLOW</button>
-  <button class="modebtn" id="seaBtn" title="Background intensity">SEA: SOFT</button>
-  <button class="modebtn" id="crtBtn" title="CRT scanline strength">CRT: 2</button>
+  <button class="modebtn" id="seaBtn" title="Background intensity">SEA: FULL</button>
+  <button class="modebtn" id="crtBtn" title="CRT scanline strength">CRT: OFF</button>
   <div class="langwrap">
     <button class="lang on" data-lang="en">EN</button>
     <button class="lang" data-lang="es">ES</button>
@@ -850,12 +850,12 @@ document.querySelectorAll('.lang').forEach(function(b){
   b.addEventListener('click',function(){i=(i+1)%M.length;ap();});ap();})();
 /* ---- CRT scanline strength: 0 = off, 5 = heaviest ---- */
 (function(){var b=document.getElementById('crtBtn');if(!b)return;
-  var STEPS=[0,0.35,0.6,1,1.5,2.1], i=2;
-  try{var s=localStorage.getItem('pico-crt');if(s!==null){var n=parseInt(s,10);if(n>=0&&n<STEPS.length)i=n;}}catch(e){}
+  var STEPS=[0,0.30,0.55,0.85,1.2,1.7], i=0;
+  try{var s=localStorage.getItem('pico-crt2');if(s!==null){var n=parseInt(s,10);if(n>=0&&n<STEPS.length)i=n;}}catch(e){}
   function ap(){
     document.documentElement.style.setProperty('--crt',STEPS[i]);
     b.textContent = i===0 ? 'CRT: OFF' : 'CRT: '+i;
-    try{localStorage.setItem('pico-crt',i);}catch(e){}
+    try{localStorage.setItem('pico-crt2',i);}catch(e){}
   }
   b.addEventListener('click',function(){i=(i+1)%STEPS.length;ap();});ap();
 })();
@@ -918,8 +918,11 @@ document.querySelectorAll('.lang').forEach(function(b){
   var TH = new Float32Array(64);
   for (var i = 0; i < 64; i++) TH[i] = (BAYER[i] + 0.5) / 64;
 
-  var cw = 0, ch = 0, img = null, px = null, field = null;
+  var cw = 0, ch = 0, img = null, px = null, field = null, dist = null;
   var dx2 = null, prof = null;
+  // the four PICO colours, read from CSS: blue, green, yellow, red
+  var PAL = [77,166,255, 61,220,132, 255,210,63, 255,90,90];
+  var colorMix = 0, colorTarget = 0;
   var inkR=8, inkG=13, inkB=28, inkA=158, litR=205, litG=222, litB=255, litA=41;
 
   /* How loud the sea is. Motion and contrast are what actually grab the eye,
@@ -931,8 +934,8 @@ document.querySelectorAll('.lang').forEach(function(b){
     {id:"full",   n:"SEA: FULL",  amp:1.00, spd:1.00, a:1.00, rip:1.00},
     {id:"off",    n:"SEA: OFF",   amp:0.00, spd:0.00, a:0.00, rip:0.00}
   ];
-  var seaIdx = 0;
-  try{ var _s = localStorage.getItem("pico-sea");
+  var seaIdx = 2;                       // FULL by default
+  try{ var _s = localStorage.getItem("pico-sea2");
     if(_s !== null) for (var _j = 0; _j < SEAS.length; _j++) if (SEAS[_j].id === _s) seaIdx = _j;
   }catch(e){}
   var LV = SEAS[seaIdx];
@@ -943,8 +946,13 @@ document.querySelectorAll('.lang').forEach(function(b){
     var cs = getComputedStyle(document.body);
     var a = cs.getPropertyValue('--sea-ink').trim().split(',');
     if (a.length === 4){ inkR=+a[0]; inkG=+a[1]; inkB=+a[2]; inkA=Math.round(parseFloat(a[3])*255); }
-    var b = cs.getPropertyValue('--sea-lit').trim().split(',');
+    var b = cs.getPropertyValue("--sea-lit").trim().split(",");
     if (b.length === 4){ litR=+b[0]; litG=+b[1]; litB=+b[2]; litA=Math.round(parseFloat(b[3])*255); }
+    ["--c-blue","--c-green","--c-yellow","--c-red"].forEach(function(nm, k){
+      var h = cs.getPropertyValue(nm).trim();
+      var m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(h);
+      if (m){ PAL[k*3] = parseInt(m[1],16); PAL[k*3+1] = parseInt(m[2],16); PAL[k*3+2] = parseInt(m[3],16); }
+    });
   }
   function resize(){
     cw = Math.max(1, Math.ceil(window.innerWidth  / CELL));
@@ -952,6 +960,7 @@ document.querySelectorAll('.lang').forEach(function(b){
     cv.width = cw; cv.height = ch;
     img = ctx.createImageData(cw, ch); px = img.data;
     field = new Float32Array(cw * ch);
+    dist  = new Float32Array(cw * ch);
     dx2   = new Float32Array(cw);
     prof  = new Float32Array(Math.ceil(Math.sqrt(cw*cw + ch*ch)) + 4);
   }
@@ -1009,7 +1018,9 @@ document.querySelectorAll('.lang').forEach(function(b){
       var base = 0.20 + 0.34 * (1 - y * invH);     // a little depth, top to bottom
       o = y * cw;
       for (x = 0; x < cw; x++){
-        field[o + x] = base + prof[Math.sqrt(dx2[x] + gy2) | 0];
+        var dd = Math.sqrt(dx2[x] + gy2);
+        dist[o + x] = dd;
+        field[o + x] = base + prof[dd | 0];
       }
     }
 
@@ -1053,21 +1064,50 @@ document.querySelectorAll('.lang').forEach(function(b){
       }
     }
 
-    /* 4. threshold against the Bayer matrix */
+    /* 4. threshold against the Bayer matrix.
+          While the logo is hovered the ink is replaced by a spiral of the four
+          PICO colours winding out of it: the band index comes from distance
+          plus angle, so the colours sweep outward and around at the same time.
+          atan2 only runs on the hovered frames, so the resting path stays as
+          cheap as before. */
     var iA = inkA * LV.a, lA = litA * LV.a;
+    var cm = colorMix;
     o = 0;
-    for (y = 0; y < ch; y++){
-      var row = (y & 7) << 3, f = y * cw;
-      for (x = 0; x < cw; x++){
-        var val = field[f + x], th = TH[row | (x & 7)];
-        if (val > th){
-          px[o] = inkR; px[o+1] = inkG; px[o+2] = inkB; px[o+3] = iA;
-        } else if (th - val > 0.45){
-          px[o] = litR; px[o+1] = litG; px[o+2] = litB; px[o+3] = lA;
-        } else {
-          px[o+3] = 0;
+    if (cm > 0.01){
+      var aBoost = 1 + 0.45 * cm;
+      for (y = 0; y < ch; y++){
+        var row = (y & 7) << 3, f = y * cw, ay = y - oy;
+        for (x = 0; x < cw; x++){
+          var val = field[f + x], th = TH[row | (x & 7)];
+          if (val > th){
+            var ang = Math.atan2(ay, x - ox);
+            var band = (Math.floor(dist[f + x] * 0.040 + ang * 0.4775 - t * 0.9) & 3) * 3;
+            px[o]   = inkR + (PAL[band]     - inkR) * cm;
+            px[o+1] = inkG + (PAL[band + 1] - inkG) * cm;
+            px[o+2] = inkB + (PAL[band + 2] - inkB) * cm;
+            var aa = iA * aBoost; px[o+3] = aa > 255 ? 255 : aa;
+          } else if (th - val > 0.45){
+            px[o] = litR; px[o+1] = litG; px[o+2] = litB; px[o+3] = lA;
+          } else {
+            px[o+3] = 0;
+          }
+          o += 4;
         }
-        o += 4;
+      }
+    } else {
+      for (y = 0; y < ch; y++){
+        var row2 = (y & 7) << 3, f2 = y * cw;
+        for (x = 0; x < cw; x++){
+          var v2 = field[f2 + x], t2 = TH[row2 | (x & 7)];
+          if (v2 > t2){
+            px[o] = inkR; px[o+1] = inkG; px[o+2] = inkB; px[o+3] = iA;
+          } else if (t2 - v2 > 0.45){
+            px[o] = litR; px[o+1] = litG; px[o+2] = litB; px[o+3] = lA;
+          } else {
+            px[o+3] = 0;
+          }
+          o += 4;
+        }
       }
     }
     ctx.putImageData(img, 0, 0);
@@ -1081,6 +1121,8 @@ document.querySelectorAll('.lang').forEach(function(b){
     if (dt > 0.25) dt = 0.25;
     last = now;
     if (!reduce) t += dt * 0.42 * LV.spd;
+    var k = dt * 5; if (k > 1) k = 1;
+    colorMix += (colorTarget - colorMix) * k;
     if ((tick++ % 30) === 0) readInk();  // pick up a theme change
     draw(dt);
   }
@@ -1099,7 +1141,8 @@ document.querySelectorAll('.lang').forEach(function(b){
       var r = el.getBoundingClientRect();
       splash(r.left + r.width/2, r.top + r.height/2, mult);
     }
-    el.addEventListener('mouseenter', function(){ burst(1.5); });
+    el.addEventListener('mouseenter', function(){ colorTarget = 1; burst(1.5); });
+    el.addEventListener('mouseleave', function(){ colorTarget = 0; });
     el.addEventListener('click',      function(){ burst(2.6); });
   })();
 
@@ -1110,7 +1153,7 @@ document.querySelectorAll('.lang').forEach(function(b){
       LV = SEAS[seaIdx];
       b.textContent = LV.n;
       cv.style.display = (LV.a === 0) ? "none" : "";
-      try{ localStorage.setItem("pico-sea", LV.id); }catch(e){}
+      try{ localStorage.setItem("pico-sea2", LV.id); }catch(e){}
       draw(0);
     }
     b.addEventListener("click", function(){ seaIdx = (seaIdx + 1) % SEAS.length; apply(); });
