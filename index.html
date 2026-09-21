@@ -385,6 +385,26 @@
 }
 .dlbtn:active{ transform:translateY(2px); box-shadow:0 1px 0 #0a3a42; }
 
+/* SOURCE CODE BUTTON - same pill shape/weight as .dlbtn so it reads as an
+   equally real option, gold instead of teal so it's clearly the SECONDARY
+   download, not a second copy of the primary one. Sits on its own row under
+   the blue button rather than beside it - full width reads as deliberate,
+   not squeezed in. */
+.srcbtn{
+  display:block;margin:10px 0 0;
+  background:linear-gradient(180deg,var(--gold),var(--gold-deep)) !important;
+  border:2px solid var(--gold-deep) !important;
+  color:#3a2a08 !important;
+  font-weight:800; letter-spacing:.06em;
+  box-shadow:0 3px 0 #6d5710, 0 6px 14px rgba(0,0,0,.25);
+  cursor:pointer !important;
+}
+.srcbtn:hover{
+  background:linear-gradient(180deg,#e6bd4c,var(--gold)) !important;
+  border-color:#c99a2a !important;
+}
+.srcbtn:active{ transform:translateY(2px); box-shadow:0 1px 0 #6d5710; }
+
 /* DEMO wordmark inside the release box */
 /* Dark brown-black. The orange was far too bright against the sand panel. */
 .demoword{ color:#1a1109 !important; font-weight:900; letter-spacing:.08em;
@@ -471,8 +491,11 @@
            download 2x+ bigger than the tool itself for everyone, whether
            they wanted source or not. Split out into its own file so the
            main download is small - source is still a real, always-available
-           part of this release (LICENSE.txt clause 2), just its own link. -->
-      <p class="small"><a href="PHAROAH_SOURCE.zip" download>Source code (PHAROAH_SOURCE.zip)</a> - required by the licence, kept separate so the main download stays small.</p>
+           part of this release (LICENSE.txt clause 2), now its own gold
+           button instead of a plain inline link, so it reads as a real
+           second option rather than fine print. -->
+      <a class="btn srcbtn" href="PHAROAH_SOURCE.zip" download data-i18n="srcnow">PHAROAH SOURCE CODE</a>
+      <p class="small" data-i18n="srcnote">Required by the licence, kept separate so the main download stays small.</p>
       <button class="sharebig" id="shareBtn2" data-i18n="sharebig">SHARE THIS PAGE</button>
     </div>
   </div>
@@ -594,6 +617,8 @@ const I18N = {
     dlnow:'DOWNLOAD PHAROAH',
     demohead:'DOWNLOAD DEMO PHAROAH',
     nofuss:'No installer and nothing to configure. Unzip it, run it, press <strong>INSERT</strong>.',
+    srcnow:'PHAROAH SOURCE CODE',
+    srcnote:'Required by the licence, kept separate so the main download stays small.',
     h_what:'What PHAROAH is',
     p_what1:'PHAROAH is a <strong>free mod tool</strong> for Paladins, built around one rule: it has to be easy to use. Unzip it, run it, press INSERT. No setup, no config files, no dependencies to hunt down.',
     p_what2:'It began as a way to recover hidden firing modes and grew into a full toolkit — aim assistance, enemy visibility, prediction, cosmetics and quality-of-life features. The SDK and full source are published so anyone can read it, edit it, or build on it.',
@@ -631,6 +656,8 @@ const I18N = {
     dlnow:'DESCARGAR PHAROAH',
     demohead:'DESCARGAR DEMO DE PHAROAH',
     nofuss:'Sin instalador y nada que configurar. Descomprime, ejecuta y pulsa <strong>INSERT</strong>.',
+    srcnow:'CÓDIGO FUENTE DE PHAROAH',
+    srcnote:'Requerido por la licencia, separado para que la descarga principal siga siendo pequeña.',
     h_what:'Qué es PHAROAH',
     p_what1:'PHAROAH es una <strong>herramienta de mods gratuita</strong> para Paladins, creada con una regla: tiene que ser fácil de usar. Descomprime, ejecuta, pulsa INSERT. Sin instalación, sin archivos de configuración, sin dependencias que buscar.',
     p_what2:'Empezó como una forma de recuperar modos de disparo ocultos y creció hasta ser un kit completo — asistencia de puntería, visibilidad de enemigos, predicción, cosméticos y mejoras de calidad de vida. El SDK y el código fuente están publicados para que cualquiera pueda leerlo, editarlo o ampliarlo.',
