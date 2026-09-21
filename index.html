@@ -392,16 +392,17 @@
    not squeezed in. */
 .srcbtn{
   display:block;margin:10px 0 0;
-  background:linear-gradient(180deg,var(--gold),var(--gold-deep)) !important;
-  border:2px solid var(--gold-deep) !important;
-  color:#3a2a08 !important;
+  background:linear-gradient(180deg,#c99a2a,var(--gold-deep)) !important;
+  border:2px solid #8a6a18 !important;
+  color:#ffffff !important;
   font-weight:800; letter-spacing:.06em;
+  text-shadow:0 1px 2px rgba(0,0,0,.45);
   box-shadow:0 3px 0 #6d5710, 0 6px 14px rgba(0,0,0,.25);
   cursor:pointer !important;
 }
 .srcbtn:hover{
-  background:linear-gradient(180deg,#e6bd4c,var(--gold)) !important;
-  border-color:#c99a2a !important;
+  background:linear-gradient(180deg,var(--gold),#c99a2a) !important;
+  border-color:#a8801d !important;
 }
 .srcbtn:active{ transform:translateY(2px); box-shadow:0 1px 0 #6d5710; }
 
@@ -494,7 +495,7 @@
            part of this release (LICENSE.txt clause 2), now its own gold
            button instead of a plain inline link, so it reads as a real
            second option rather than fine print. -->
-      <a class="btn srcbtn" href="PHAROAH_SOURCE.zip" download data-i18n="srcnow">PHAROAH SOURCE CODE</a>
+      <a class="btn srcbtn" href="PHAROAH_SOURCE.zip" download data-i18n="srcnow">DOWNLOAD PHAROAH SOURCE CODE</a>
       <p class="small" data-i18n="srcnote">Required by the licence, kept separate so the main download stays small.</p>
       <button class="sharebig" id="shareBtn2" data-i18n="sharebig">SHARE THIS PAGE</button>
     </div>
@@ -617,7 +618,7 @@ const I18N = {
     dlnow:'DOWNLOAD PHAROAH',
     demohead:'DOWNLOAD DEMO PHAROAH',
     nofuss:'No installer and nothing to configure. Unzip it, run it, press <strong>INSERT</strong>.',
-    srcnow:'PHAROAH SOURCE CODE',
+    srcnow:'DOWNLOAD PHAROAH SOURCE CODE',
     srcnote:'Required by the licence, kept separate so the main download stays small.',
     h_what:'What PHAROAH is',
     p_what1:'PHAROAH is a <strong>free mod tool</strong> for Paladins, built around one rule: it has to be easy to use. Unzip it, run it, press INSERT. No setup, no config files, no dependencies to hunt down.',
@@ -656,7 +657,7 @@ const I18N = {
     dlnow:'DESCARGAR PHAROAH',
     demohead:'DESCARGAR DEMO DE PHAROAH',
     nofuss:'Sin instalador y nada que configurar. Descomprime, ejecuta y pulsa <strong>INSERT</strong>.',
-    srcnow:'CÓDIGO FUENTE DE PHAROAH',
+    srcnow:'DESCARGAR CÓDIGO FUENTE DE PHAROAH',
     srcnote:'Requerido por la licencia, separado para que la descarga principal siga siendo pequeña.',
     h_what:'Qué es PHAROAH',
     p_what1:'PHAROAH es una <strong>herramienta de mods gratuita</strong> para Paladins, creada con una regla: tiene que ser fácil de usar. Descomprime, ejecuta, pulsa INSERT. Sin instalación, sin archivos de configuración, sin dependencias que buscar.',
