@@ -95,7 +95,7 @@
   .heroinner{position:relative;margin-top:-108px;z-index:3}
   .heroswap{position:relative;display:block;width:224px;height:224px;margin:0 auto 10px}
   .heroswap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .2s}
-  .heroswap .b{opacity:0;transform:scale(.72);transform-origin:center}
+  .heroswap .b{opacity:0;transform:scale(.695);transform-origin:center}
   .heroswap:hover .a{opacity:0}
   .heroswap:hover .b{opacity:1}
   .authorcard{display:inline-flex;align-items:center;gap:11px;margin-top:12px;
@@ -923,6 +923,9 @@ document.querySelectorAll('.lang').forEach(function(b){
   // the four PICO colours, read from CSS: blue, green, yellow, red
   var PAL = [77,166,255, 61,220,132, 255,210,63, 255,90,90];
   var colorMix = 0, colorTarget = 0;
+  // exactly four colour arms per turn: atan2 jumps by 4 at its cut, and &3
+  // swallows a jump of 4, so the swirl wraps with no seam down the left
+  var ARMS_K = 2 / Math.PI;
   var inkR=8, inkG=13, inkB=28, inkA=158, litR=205, litG=222, litB=255, litA=41;
 
   /* How loud the sea is. Motion and contrast are what actually grab the eye,
@@ -1079,15 +1082,28 @@ document.querySelectorAll('.lang').forEach(function(b){
         var row = (y & 7) << 3, f = y * cw, ay = y - oy;
         for (x = 0; x < cw; x++){
           var val = field[f + x], th = TH[row | (x & 7)];
-          if (val > th){
+          var isInk = val > th, isLit = !isInk && (th - val > 0.45);
+          if (isInk || isLit){
+            // 2/pi => exactly four bands per turn, so atan2's jump at +/-pi
+            // moves the index by 4 and &3 swallows it: no seam.
             var ang = Math.atan2(ay, x - ox);
-            var band = (Math.floor(dist[f + x] * 0.040 + ang * 0.4775 - t * 0.9) & 3) * 3;
-            px[o]   = inkR + (PAL[band]     - inkR) * cm;
-            px[o+1] = inkG + (PAL[band + 1] - inkG) * cm;
-            px[o+2] = inkB + (PAL[band + 2] - inkB) * cm;
-            var aa = iA * aBoost; px[o+3] = aa > 255 ? 255 : aa;
-          } else if (th - val > 0.45){
-            px[o] = litR; px[o+1] = litG; px[o+2] = litB; px[o+3] = lA;
+            var bi  = Math.floor(dist[f + x] * 0.040 + ang * ARMS_K - t * 0.9) & 3;
+            if (isInk){
+              var b = bi * 3;
+              px[o]   = inkR + (PAL[b]     - inkR) * cm;
+              px[o+1] = inkG + (PAL[b + 1] - inkG) * cm;
+              px[o+2] = inkB + (PAL[b + 2] - inkB) * cm;
+              var aa = iA * aBoost; px[o+3] = aa > 255 ? 255 : aa;
+            } else {
+              // the sparse tone gets its own swirl, two bands out of step and
+              // lifted toward white, so the highlights read as a second
+              // colour dither instead of grey grit over the top
+              var b2 = (((bi + 2) & 3)) * 3;
+              px[o]   = litR + ((PAL[b2]     * 0.55 + 112) - litR) * cm;
+              px[o+1] = litG + ((PAL[b2 + 1] * 0.55 + 112) - litG) * cm;
+              px[o+2] = litB + ((PAL[b2 + 2] * 0.55 + 112) - litB) * cm;
+              var la = lA * (1 + 2.6 * cm); px[o+3] = la > 255 ? 255 : la;
+            }
           } else {
             px[o+3] = 0;
           }
