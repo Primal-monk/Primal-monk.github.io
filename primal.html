@@ -15,6 +15,7 @@
     --hi:#ffd23f; --hi2:#e0a800; --sec:#6fd0ff; --sec2:#e0e6f6;
     --paper:#eef2fb; --line:rgba(255,255,255,.14); --ink:#161d30; --dev:#b2bfe0;
     --sea-ink:8,13,28,0.62; --sea-lit:205,222,255,0.16;
+    --panel:#4a5a85; --panel2:#3d4b70;
     --c-green:#3ddc84; --c-yellow:#ffd23f; --c-red:#ff5a5a; --c-blue:#4da6ff; --c-orange:#ff8c3a;
   }
   /* DARK: black-plastic cartridge, neon label */
@@ -23,6 +24,7 @@
     --hi:#ffd23f; --hi2:#c9990f; --sec:#6fd0ff; --sec2:#c6cfe0;
     --paper:#eef2fb; --line:rgba(255,255,255,.10); --ink:#04060b; --dev:#9dabd0;
     --sea-ink:0,0,0,0.66; --sea-lit:150,180,240,0.13;
+    --panel:#2a3346; --panel2:#1e2634;
     --c-green:#3ddc84; --c-yellow:#ffd23f; --c-red:#ff5a5a; --c-blue:#4da6ff; --c-orange:#ff8c3a;
   }
 
@@ -54,7 +56,7 @@
   @media(max-width:620px){.eta{margin-left:0}}
   .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:60px;background:var(--bg2);
     border-bottom:2px solid var(--hi2);box-shadow:0 2px 12px rgba(0,0,0,.5);
-    display:flex;align-items:center;gap:12px;padding:0 16px}
+    display:flex;align-items:center;gap:9px;padding:0 16px}
   .brand{display:flex;align-items:center;gap:11px;text-decoration:none}
   .brand .upar{color:var(--hi);font-size:1.15rem;font-weight:900}
   .brand .logoswap{position:relative;width:44px;height:44px;flex:none}
@@ -109,7 +111,7 @@
   .byline{margin-top:8px;color:var(--sec2);font-size:.86rem}
   .byline b{color:var(--hi)}
 
-  .wrap{max-width:1080px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
+  .wrap{max-width:1320px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
   section{margin-bottom:34px}
   .h2row{display:flex;align-items:center;gap:14px;border-bottom:2px solid var(--hi2);
     padding-bottom:7px;margin-bottom:15px;flex-wrap:wrap}
@@ -258,10 +260,11 @@ body{background-color:var(--bg);
 #sea{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;
   image-rendering:pixelated;image-rendering:crisp-edges}
 /* CRT: soft even scanlines only — no moving glow bar */
-#crt{position:fixed;inset:0;pointer-events:none;z-index:45;
+/* CRT scanlines — strength driven by --crt so the topbar can scale it */
+#crt{position:fixed;inset:0;pointer-events:none;z-index:45;opacity:var(--crt,1);
   background-image:
-    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='4'%20height='4'%3E%3Crect%20width='4'%20height='2'%20fill='%23000000'%20fill-opacity='0.11'/%3E%3C/svg%3E"),
-    radial-gradient(130% 120% at 50% 50%, transparent 66%, rgba(0,0,0,.28));
+    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='4'%20height='4'%3E%3Crect%20width='4'%20height='2'%20fill='%23000000'%20fill-opacity='0.22'/%3E%3C/svg%3E"),
+    radial-gradient(130% 120% at 50% 50%, transparent 66%, rgba(0,0,0,.30));
   background-size:4px 4px, 100% 100%}
 .wrap{position:relative;z-index:2}
 .hero{position:relative;z-index:2}
@@ -273,10 +276,11 @@ a,button,summary,select,.ghead,.flaghead,.shots img,.neonlogo,.tab,.ftab,.qdot{
 
 /* ---- cartridge shell: the content reads like the back of a game cartridge ---- */
 .cartridge{position:relative;background:
-    linear-gradient(180deg,var(--bg2),var(--bg3));
+    linear-gradient(180deg,var(--panel),var(--panel2));
   border:3px solid var(--ink);border-radius:18px 18px 12px 12px;
-  box-shadow:inset 0 2px 0 rgba(255,255,255,.07), inset 0 -18px 40px rgba(0,0,0,.25), 0 30px 70px -34px #000;
-  padding:26px clamp(16px,3vw,34px) 34px;margin-bottom:34px}
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.22), inset 0 -20px 44px rgba(0,0,0,.14),
+    0 0 0 1px rgba(255,255,255,.07), 0 26px 70px -28px #000, 0 0 70px -12px rgba(255,255,255,.07);
+  padding:32px clamp(20px,3.4vw,44px) 40px;margin-bottom:40px}
 /* the ridged finger-grip strip along the top of the cartridge */
 .cartridge::before{content:"";position:absolute;left:16px;right:16px;top:8px;height:12px;border-radius:6px;
   background:repeating-linear-gradient(90deg, rgba(0,0,0,.28) 0 3px, rgba(255,255,255,.05) 3px 6px);opacity:.8}
@@ -364,7 +368,7 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
 /* --- game-menu gamification --- */
 .heroimg{height:250px!important}
 .heroinner{margin-top:14px!important}
-.heroswap{width:150px!important;height:150px!important}
+.heroswap{width:230px!important;height:230px!important}
 .roles{margin-top:8px!important}
 
 /* ---- cartridge tabs on the seam between the banner art and the page ----
@@ -435,8 +439,12 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
 .pad4{display:inline-flex;gap:7px;margin-left:auto}
 .pad4 i{width:15px;height:15px;border-radius:50%;box-shadow:2px 2px 0 var(--ink)}
 .pad4 .b{background:var(--c-blue)}.pad4 .g{background:var(--c-green)}.pad4 .y{background:var(--c-yellow)}.pad4 .r{background:var(--c-red)}
-.modebtn{font-family:"Press Start 2P",monospace;font-size:.5rem;color:var(--paper);background:var(--bg4);
-  border:2px solid var(--hi2);padding:8px 10px;cursor:pointer;border-radius:0}
+.modebtn{font-family:"Press Start 2P",monospace;font-size:.46rem;color:var(--paper);background:var(--bg4);
+  border:2px solid var(--hi2);padding:8px 9px;cursor:pointer;border-radius:0;white-space:nowrap}
+/* four controls is a lot of bar — drop the optional ones on small screens */
+@media(max-width:1040px){#crtBtn{display:none}}
+@media(max-width:900px) {#seaBtn{display:none}}
+@media(max-width:780px) {#accBtn{display:none}}
 .modebtn:hover{background:var(--hi);color:var(--bg)}
 .swaphint{font-family:"Press Start 2P",monospace!important;font-size:.5rem!important;letter-spacing:1px!important;
   color:var(--ink)!important;background:var(--c-yellow);border:2px solid var(--ink);display:inline-block;
@@ -472,6 +480,7 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
   <button class="modebtn" id="modeBtn" title="Change cartridge">CARTRIDGE</button>
   <button class="modebtn" id="accBtn" title="Change accent colour">YELLOW</button>
   <button class="modebtn" id="seaBtn" title="Background intensity">SEA: SOFT</button>
+  <button class="modebtn" id="crtBtn" title="CRT scanline strength">CRT: 2</button>
   <div class="langwrap">
     <button class="lang on" data-lang="en">EN</button>
     <button class="lang" data-lang="es">ES</button>
@@ -499,7 +508,7 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
     </div>
   </div>
   <div class="heroinner">
-    <span class="heroswap"><img class="a" src="assets/picodev.png" alt="PICODEV"><img class="b" src="assets/picodev-crt.png" alt=""></span>
+    <span class="heroswap"><img class="a" src="assets/picodev.png" alt="PICODEV"><img class="b" src="picodev-crt2.png" alt=""></span>
     <h1><span class="ltr">P</span><span class="ltr">I</span><span class="ltr">C</span><span class="ltr">O</span><span class="ltr dev">D</span><span class="ltr dev">E</span><span class="ltr dev">V</span></h1>
     <div class="roles" data-i18n="roles"></div>
     <div class="herorow">
@@ -839,6 +848,17 @@ document.querySelectorAll('.lang').forEach(function(b){
   function ap(){var m=M[i];if(m.id)document.body.dataset.mode=m.id;else document.body.removeAttribute('data-mode');
     b.textContent=m.n;try{localStorage.setItem('pico-mode',m.id);}catch(e){}}
   b.addEventListener('click',function(){i=(i+1)%M.length;ap();});ap();})();
+/* ---- CRT scanline strength: 0 = off, 5 = heaviest ---- */
+(function(){var b=document.getElementById('crtBtn');if(!b)return;
+  var STEPS=[0,0.35,0.6,1,1.5,2.1], i=2;
+  try{var s=localStorage.getItem('pico-crt');if(s!==null){var n=parseInt(s,10);if(n>=0&&n<STEPS.length)i=n;}}catch(e){}
+  function ap(){
+    document.documentElement.style.setProperty('--crt',STEPS[i]);
+    b.textContent = i===0 ? 'CRT: OFF' : 'CRT: '+i;
+    try{localStorage.setItem('pico-crt',i);}catch(e){}
+  }
+  b.addEventListener('click',function(){i=(i+1)%STEPS.length;ap();});ap();
+})();
 /* ---- UI accent colour ---- */
 (function(){var b=document.getElementById('accBtn');if(!b)return;
   var A=[{id:'',n:'YELLOW'},{id:'orange',n:'ORANGE'},{id:'green',n:'GREEN'},{id:'cyan',n:'CYAN'},{id:'red',n:'RED'},{id:'violet',n:'VIOLET'}],i=0;
@@ -877,19 +897,15 @@ document.querySelectorAll('.lang').forEach(function(b){
   if(ps) ps.addEventListener('click',function(){ if(window.__picoShowTab) window.__picoShowTab('games'); });
 })();
 /* ---- the dither sea ---------------------------------------------------
-   An ordered (Bayer 8x8) dither of a slow water surface. The canvas holds ONE
-   pixel per dither block and CSS scales it up pixelated, so the blocks stay
-   big and hard-edged and the whole thing is nearly free.
+   An ordered (Bayer 8x8) dither of a water surface that radiates OUT OF THE
+   PICODEV LOGO. The canvas holds one pixel per dither block and CSS scales it
+   up pixelated, so the blocks stay big and hard-edged.
 
-   The surface is three DIRECTIONAL swells rather than separable x/y waves —
-   separable ones interfere into a restless grid, travelling ones read as
-   water. Each swell sin(kx*x + ky*y + p) is expanded with the angle-addition
-   identity so it still comes from per-row/per-column tables: two multiplies a
-   cell instead of a sine.
-
-   Moving the pointer drops stones: each spawns an expanding ring that decays,
-   and the rings sum with the swell, so one movement sets off a spreading
-   chain of ripples. */
+   Everything expands from that one origin, which reads far more deliberate
+   than drifting waves: density depends on distance alone, so the whole
+   surface is a single radial profile lookup — one sqrt and one array read per
+   block, cheaper than the directional version it replaces. Touching the logo
+   or moving the pointer drops a stone that sends out its own decaying ring. */
 (function(){
   var cv = document.getElementById('sea');
   if (!cv || !cv.getContext) return;
@@ -902,58 +918,13 @@ document.querySelectorAll('.lang').forEach(function(b){
   var TH = new Float32Array(64);
   for (var i = 0; i < 64; i++) TH[i] = (BAYER[i] + 0.5) / 64;
 
-  // long swells: [kx, ky, speed, amplitude]
-  var W = [ [ 0.030,  0.015, 0.55, 0.26],
-            [-0.012,  0.026, 0.33, 0.20],
-            [ 0.052, -0.068, 0.90, 0.09] ];
-  var NW = W.length;
-
   var cw = 0, ch = 0, img = null, px = null, field = null;
-  var sA = [], cA = [], sB = [], cB = [];
+  var dx2 = null, prof = null;
   var inkR=8, inkG=13, inkB=28, inkA=158, litR=205, litG=222, litB=255, litA=41;
 
-  function readInk(){
-    var cs = getComputedStyle(document.body);
-    var a = cs.getPropertyValue('--sea-ink').trim().split(',');
-    if (a.length === 4){ inkR=+a[0]; inkG=+a[1]; inkB=+a[2]; inkA=Math.round(parseFloat(a[3])*255); }
-    var b = cs.getPropertyValue('--sea-lit').trim().split(',');
-    if (b.length === 4){ litR=+b[0]; litG=+b[1]; litB=+b[2]; litA=Math.round(parseFloat(b[3])*255); }
-  }
-  function resize(){
-    cw = Math.max(1, Math.ceil(window.innerWidth  / CELL));
-    ch = Math.max(1, Math.ceil(window.innerHeight / CELL));
-    cv.width = cw; cv.height = ch;
-    img = ctx.createImageData(cw, ch); px = img.data;
-    field = new Float32Array(cw * ch);
-    sA = []; cA = []; sB = []; cB = [];
-    for (var w = 0; w < NW; w++){
-      sA.push(new Float32Array(cw)); cA.push(new Float32Array(cw));
-      sB.push(new Float32Array(ch)); cB.push(new Float32Array(ch));
-    }
-  }
-
-  /* --- pointer: a hovering bulge plus expanding ripple rings --- */
-  var mx = -9999, my = -9999, lastDropX = -9999, lastDropY = -9999;
-  var drops = [], MAXD = 6;
-  var RING_SPEED = 17;     // blocks per second
-  var RING_W     = 9;      // half-width of a ring crest, in blocks
-  var RING_LIFE  = 2.6;    // seconds
-
-  document.addEventListener('mousemove', function(e){
-    mx = e.clientX / CELL; my = e.clientY / CELL;
-    var dx = mx - lastDropX, dy = my - lastDropY;
-    if (dx*dx + dy*dy > 90){            // only every ~9 blocks of travel
-      lastDropX = mx; lastDropY = my;
-      drops.push({x:mx, y:my, t:0});
-      if (drops.length > MAXD) drops.shift();
-    }
-  }, {passive:true});
-  document.addEventListener('mouseleave', function(){ mx = -9999; my = -9999; });
-
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   /* How loud the sea is. Motion and contrast are what actually grab the eye,
-     so each level scales the swell height, the drift speed, the ink opacity
-     and the ripple strength together. SOFT is the default. */
+     so each level scales wave height, speed, ink opacity and ripple strength
+     together. SOFT is the default. */
   var SEAS = [
     {id:"",       n:"SEA: SOFT",  amp:0.40, spd:0.50, a:0.62, rip:0.85},
     {id:"faint",  n:"SEA: FAINT", amp:0.22, spd:0.34, a:0.42, rip:0.62},
@@ -968,54 +939,106 @@ document.querySelectorAll('.lang').forEach(function(b){
 
   var t = 0, last = 0, tick = 0;
 
+  function readInk(){
+    var cs = getComputedStyle(document.body);
+    var a = cs.getPropertyValue('--sea-ink').trim().split(',');
+    if (a.length === 4){ inkR=+a[0]; inkG=+a[1]; inkB=+a[2]; inkA=Math.round(parseFloat(a[3])*255); }
+    var b = cs.getPropertyValue('--sea-lit').trim().split(',');
+    if (b.length === 4){ litR=+b[0]; litG=+b[1]; litB=+b[2]; litA=Math.round(parseFloat(b[3])*255); }
+  }
+  function resize(){
+    cw = Math.max(1, Math.ceil(window.innerWidth  / CELL));
+    ch = Math.max(1, Math.ceil(window.innerHeight / CELL));
+    cv.width = cw; cv.height = ch;
+    img = ctx.createImageData(cw, ch); px = img.data;
+    field = new Float32Array(cw * ch);
+    dx2   = new Float32Array(cw);
+    prof  = new Float32Array(Math.ceil(Math.sqrt(cw*cw + ch*ch)) + 4);
+  }
+
+  /* --- where the waves come from: the PICODEV logo --- */
+  var logoEl = null;
+  function origin(){
+    if (!logoEl) logoEl = document.querySelector('.heroswap');
+    if (logoEl){
+      var r = logoEl.getBoundingClientRect();
+      if (r.width) return { x:(r.left + r.width/2)/CELL, y:(r.top + r.height/2)/CELL };
+    }
+    return { x: cw/2, y: ch*0.28 };
+  }
+
+  /* --- stones: the pointer, and the logo itself --- */
+  var mx = -9999, my = -9999, lastDropX = -9999, lastDropY = -9999;
+  var drops = [], MAXD = 7;
+  var RING_SPEED = 17, RING_W = 9, RING_LIFE = 2.6;
+
+  function splash(cx, cy, strength){
+    drops.push({ x:cx/CELL, y:cy/CELL, t:0, s:strength || 1 });
+    if (drops.length > MAXD) drops.shift();
+  }
+  document.addEventListener('mousemove', function(e){
+    mx = e.clientX / CELL; my = e.clientY / CELL;
+    var ddx = mx - lastDropX, ddy = my - lastDropY;
+    if (ddx*ddx + ddy*ddy > 90){
+      lastDropX = mx; lastDropY = my;
+      splash(e.clientX, e.clientY, 1);
+    }
+  }, {passive:true});
+  document.addEventListener('mouseleave', function(){ mx = -9999; my = -9999; });
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   function draw(dt){
     if (!img) return;
-    var x, y, w, o;
+    var x, y, o, r;
+    var og = origin(), ox = og.x, oy = og.y;
 
-    /* 1. the swell, from per-axis tables */
-    for (w = 0; w < NW; w++){
-      var kx = W[w][0], ky = W[w][1], ph = t * W[w][2];
-      var sAw = sA[w], cAw = cA[w], sBw = sB[w], cBw = cB[w];
-      for (x = 0; x < cw; x++){ var ax = kx * x + ph; sAw[x] = Math.sin(ax); cAw[x] = Math.cos(ax); }
-      for (y = 0; y < ch; y++){ var by = ky * y;      sBw[y] = Math.sin(by); cBw[y] = Math.cos(by); }
+    /* 1. radial profile for this frame: two rings expanding from the logo.
+          Density depends only on distance, so the entire surface reduces to
+          this one small table. */
+    var nR = prof.length;
+    for (r = 0; r < nR; r++){
+      prof[r] = LV.amp * (0.26 * Math.sin(r * 0.115 - t * 2.0)
+                        + 0.17 * Math.sin(r * 0.045 - t * 0.95));
     }
+    for (x = 0; x < cw; x++){ var gx = x - ox; dx2[x] = gx * gx; }
+
     var invH = 1 / ch;
     for (y = 0; y < ch; y++){
-      var base = 0.20 + 0.36 * (1 - y * invH);      // deeper water toward the top
+      var gy = y - oy, gy2 = gy * gy;
+      var base = 0.20 + 0.34 * (1 - y * invH);     // a little depth, top to bottom
       o = y * cw;
       for (x = 0; x < cw; x++){
-        var v = base;
-        for (w = 0; w < NW; w++) v += LV.amp * W[w][3] * (sA[w][x] * cB[w][y] + cA[w][x] * sB[w][y]);
-        field[o + x] = v;
+        field[o + x] = base + prof[Math.sqrt(dx2[x] + gy2) | 0];
       }
     }
 
-    /* 2. ripple rings — each only touches its own thin annulus */
+    /* 2. stones: each ring only touches its own thin annulus */
     for (var d = drops.length - 1; d >= 0; d--){
       var dr = drops[d];
       dr.t += dt;
       if (dr.t > RING_LIFE){ drops.splice(d, 1); continue; }
-      var r = dr.t * RING_SPEED;
-      var amp = 0.46 * LV.rip * (1 - dr.t / RING_LIFE);
+      var rad = dr.t * RING_SPEED;
+      var amp = 0.46 * LV.rip * dr.s * (1 - dr.t / RING_LIFE);
       amp *= amp;
-      var rO = r + RING_W, rI = r - RING_W; if (rI < 0) rI = 0;
+      var rO = rad + RING_W, rI = rad - RING_W; if (rI < 0) rI = 0;
       var y0 = Math.max(0, (dr.y - rO) | 0), y1 = Math.min(ch - 1, Math.ceil(dr.y + rO));
       var x0 = Math.max(0, (dr.x - rO) | 0), x1 = Math.min(cw - 1, Math.ceil(dr.x + rO));
       var rO2 = rO * rO, rI2 = rI * rI;
       for (y = y0; y <= y1; y++){
-        var ddy = y - dr.y, ddy2 = ddy * ddy;
-        if (ddy2 > rO2) continue;
+        var ey = y - dr.y, ey2 = ey * ey;
+        if (ey2 > rO2) continue;
         o = y * cw;
         for (x = x0; x <= x1; x++){
-          var ddx = x - dr.x, d2 = ddx * ddx + ddy2;
-          if (d2 > rO2 || d2 < rI2) continue;
-          var u = (Math.sqrt(d2) - r) / RING_W;      // -1 .. 1 across the crest
+          var ex = x - dr.x, e2 = ex * ex + ey2;
+          if (e2 > rO2 || e2 < rI2) continue;
+          var u = (Math.sqrt(e2) - rad) / RING_W;
           field[o + x] += amp * (1 - u * u) * Math.cos(u * 3.0);
         }
       }
     }
 
-    /* 3. a soft bulge under the pointer so hovering still thickens the dither */
+    /* 3. a soft bulge under the pointer */
     if (mx > -9000){
       var R = 17, R2 = R * R;
       var by0 = Math.max(0, (my - R) | 0), by1 = Math.min(ch - 1, Math.ceil(my + R));
@@ -1057,7 +1080,7 @@ document.querySelectorAll('.lang').forEach(function(b){
     if (dt < 0.066) return;              // ~15fps is plenty for a slow tide
     if (dt > 0.25) dt = 0.25;
     last = now;
-    if (!reduce) t += dt * 0.42 * LV.spd;   // a slow, unhurried swell
+    if (!reduce) t += dt * 0.42 * LV.spd;
     if ((tick++ % 30) === 0) readInk();  // pick up a theme change
     draw(dt);
   }
@@ -1067,6 +1090,18 @@ document.querySelectorAll('.lang').forEach(function(b){
     clearTimeout(rt); rt = setTimeout(function(){ resize(); draw(0); }, 150);
   });
   readInk(); resize();
+
+  /* the logo throws its own stones when you touch it */
+  (function(){
+    var el = document.querySelector('.heroswap');
+    if (!el) return;
+    function burst(mult){
+      var r = el.getBoundingClientRect();
+      splash(r.left + r.width/2, r.top + r.height/2, mult);
+    }
+    el.addEventListener('mouseenter', function(){ burst(1.5); });
+    el.addEventListener('click',      function(){ burst(2.6); });
+  })();
 
   /* topbar control for how loud the background is */
   (function(){
