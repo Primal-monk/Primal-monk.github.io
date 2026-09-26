@@ -3,259 +3,362 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ALLSEER WIKI — Free Knowledge Base</title>
+<title>ALLSEER WIKI — The Free Knowledge Base</title>
 <link rel="icon" type="image/png" href="assets/angelcorp.png">
-<meta name="description" content="ALLSEER WIKI — a free knowledge base that repackages open-source software and interesting ideas as clean web pages. Everything free first, then monetize later.">
+<meta name="description" content="ALLSEER WIKI — a clearing house for knowledge. Free to access. If you want more, you pay.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap">
 <style>
   :root{
-    --bg:#0b0d13; --bg2:#111520; --bg3:#171c28; --bg4:#1d2330;
-    --accent:#7bc0e8; --accent2:#4a8fb8;
-    --ink:#ece9e0; --sec:#8b93a3; --faint:#4a5260;
-    --line:rgba(123,192,232,.12); --line2:rgba(123,192,232,.06);
-    --corp:"Archivo","Helvetica Neue",Arial,sans-serif;
-    --mono:"Archivo","Courier New",monospace;
-    --maxw:1100px;
+    --bg:#0f111a; --bg2:#151926; --bg3:#1c2230; --bg4:#222938;
+    --line:#2a3240; --line-acc:rgba(120,150,140,.14);
+    --paper:#ece8df; --dim:#9a9888; --faint:#5a5950;
+    --ink:#1a1a1a;
+    --teal:#5fa89c; --teal2:#7dc4b8; --teal3:#a3d8cc;
+    --amber:#c7a96e;
+    --disp:"Lora",system-ui,serif;
+    --body:"Source Sans 3",system-ui,sans-serif;
+    --mono:"Space Mono","Courier New",monospace;
+    --maxw:1360px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:var(--corp);background:var(--bg);color:var(--sec);
-    line-height:1.6;font-size:17px;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-    background-color:var(--bg);
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Crect x='4' y='4' width='24' height='24' rx='1' fill='none' stroke='%237bc0e8' stroke-width='0.8' opacity='0.06'/%3E%3Cline x1='8' y1='10' x2='24' y2='10' stroke='%237bc0e8' stroke-width='0.3' opacity='0.03'/%3E%3Cline x1='8' y1='14' x2='22' y2='14' stroke='%237bc0e8' stroke-width='0.3' opacity='0.03'/%3E%3Cline x1='8' y1='18' x2='20' y2='18' stroke='%237bc0e8' stroke-width='0.3' opacity='0.03'/%3E%3Cline x1='8' y1='22' x2='24' y2='22' stroke='%237bc0e8' stroke-width='0.3' opacity='0.03'/%3E%3C/svg%3E");
-    background-size:32px 32px}
-  ::-webkit-scrollbar{width:10px}
-  ::-webkit-scrollbar-track{background:var(--bg2)}
-  ::-webkit-scrollbar-thumb{background:var(--accent2);border:2px solid var(--bg2);border-radius:6px}
+  body{font-family:var(--body);background:var(--bg);color:var(--paper);line-height:1.7;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background-image:
+      radial-gradient(900px 500px at 84% -8%, rgba(95,168,156,.07), transparent 62%),
+      radial-gradient(700px 400px at -4% 8%, rgba(40,44,52,.06), transparent 60%)}
   a{color:inherit;text-decoration:none}
-  ::selection{background:var(--accent);color:var(--bg)}
-  .mono{font-family:var(--mono);letter-spacing:.04em}
-  .topbar{position:sticky;top:0;z-index:60;height:56px;
-    background:var(--bg2);border-bottom:1px solid var(--line);
-    display:flex;align-items:center;gap:14px;padding:0 24px}
-  .topbar .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-  .topbar .brand img{width:26px;height:26px;object-fit:contain}
-  .topbar .brand .wm{font-family:var(--corp);font-weight:900;font-size:15px;
-    color:var(--ink);letter-spacing:.18em}
-  .topbar .brand .wm small{color:var(--accent);font-weight:700;font-size:.55em;
-    letter-spacing:.2em;margin-left:.5em;vertical-align:super}
-  .topbar .spacer{flex:1}
-  .topbar .back{font-family:var(--mono);font-size:11px;color:var(--accent2);
-    letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:color .15s;padding:6px 0}
-  .topbar .back:hover{color:var(--accent)}
-  .topbar .tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--accent2);border:1px solid var(--line);
-    border-radius:3px;padding:5px 10px;white-space:nowrap}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-  @media(max-width:640px){.wrap{padding:0 18px}}
-  .hero{padding:64px 0 40px;text-align:center;
-    background:linear-gradient(180deg,#101824 0%,var(--bg) 100%);
-    position:relative;overflow:hidden}
-  .hero::before{content:"";position:absolute;top:-100px;left:50%;transform:translateX(-50%);
-    width:600px;height:300px;background:radial-gradient(ellipse,rgba(123,192,232,.09),transparent 70%);
-    pointer-events:none}
-  .hero .logochip{display:inline-flex;align-items:center;justify-content:center;
-    width:56px;height:56px;background:var(--accent);border-radius:10px;
-    font-size:1.6rem;color:var(--bg);margin-bottom:18px;
-    box-shadow:0 0 30px rgba(123,192,232,.22),inset 0 1px 0 rgba(255,255,255,.2);
-    transition:transform .15s}
-  .hero .logochip:hover{transform:scale(1.05)}
-  .hero .pre{font-family:var(--mono);font-size:11px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--accent2);margin-bottom:18px}
-  .hero h1{font-weight:900;font-size:clamp(3rem,8vw,5.4rem);
-    line-height:.92;letter-spacing:-.03em;color:var(--ink);
-    text-shadow:0 2px 0 rgba(0,0,0,.4)}
-  .hero h1 .bar{display:inline-block;width:120px;height:4px;
-    background:linear-gradient(90deg,var(--accent),var(--accent2));
-    border-radius:2px;margin:0 clamp(2vw,5vw,4vw) 0}
-  .hero .tag{font-weight:600;font-size:clamp(1rem,2.2vw,1.25rem);
-    color:var(--sec);margin-top:14px;letter-spacing:.02em;
-    max-width:580px;margin-left:auto;margin-right:auto;line-height:1.4}
-  .hero .tag em{font-style:normal;color:var(--accent);font-weight:700}
-  .hero .meta{margin-top:22px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;font-family:var(--mono)}
-  .hero .meta span{font-size:10px;color:var(--faint);letter-spacing:.16em;
-    text-transform:uppercase;border:1px solid var(--line);border-radius:3px;padding:6px 12px}
-  .hero .meta span b{color:var(--accent);font-weight:700}
-  .draftpill{display:inline-block;margin-top:14px;
-    background:var(--bg3);border:1px solid var(--accent2);border-radius:20px;
-    padding:6px 20px;font-size:.72rem;font-weight:700;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--accent)}
-  .sec{padding:48px 0;border-top:1px solid var(--line2)}
-  .sec:first-of-type{border-top:0}
-  .sec .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;
-    text-transform:uppercase;color:var(--accent2);margin-bottom:12px;display:block}
-  .sec h2{font-weight:900;font-size:clamp(1.5rem,3.4vw,2.1rem);
-    color:var(--ink);letter-spacing:-.01em;line-height:1.04;margin-bottom:10px}
-  .sec h2::after{content:"";display:block;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));
-    width:clamp(60px,12vw,120px);margin-top:10px;border-radius:2px}
-  .sec .lede{color:var(--sec);font-size:1.02rem;max-width:640px;margin:0 auto 24px;line-height:1.6;text-align:center}
-  .sec .lede b{color:var(--ink);font-weight:600}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
-  @media(max-width:640px){.grid{grid-template-columns:1fr}}
-  .cell{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--accent);
-    border-radius:8px;padding:22px;transition:border-color .15s,transform .15s}
-  .cell:hover{border-color:var(--accent);transform:translateY(-2px)}
-  .cell .label{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--accent2);margin-bottom:8px}
-  .cell h3{font-weight:800;font-size:1.04rem;color:var(--ink);letter-spacing:-.01em;margin-bottom:8px}
-  .cell p{color:var(--sec);font-size:.88rem;line-height:1.55;margin-bottom:8px}
-  .cell p b{color:var(--ink);font-weight:600}
-  .cell .tag{font-family:var(--mono);font-size:.6rem;color:var(--faint);
-    letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);
-    border-radius:3px;padding:3px 8px;display:inline-block;margin-top:6px}
-  .model{margin-top:28px;background:var(--bg3);border:1px solid var(--line);
-    border-radius:10px;padding:28px}
-  .model h3{font-weight:900;font-size:1.1rem;color:var(--ink);margin-bottom:14px;letter-spacing:-.01em}
-  .model .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:640px){.model .row{grid-template-columns:1fr}}
-  .model .row .cell{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:18px}
-  .model .row .cell .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--faint);margin-bottom:8px}
-  .model .row .cell .v{font-size:.9rem;color:var(--ink);line-height:1.5;font-weight:600}
-  .model .row .cell .v small{color:var(--sec);font-weight:400;font-size:.82rem;display:block;margin-top:4px}
-  .pledgebar{margin-top:32px;border-top:1px solid rgba(255,255,255,.06);
-    background:color-mix(in srgb,var(--bg2) 80%,transparent);
-    padding:16px 28px;text-align:center;font-size:.86rem;line-height:1.55}
-  .pledgebar a{display:inline-block;color:var(--accent2);opacity:.82;transition:opacity .15s}
-  .pledgebar a:hover{opacity:1}
-  .pledgebar b{color:var(--accent);font-weight:700}
-  .pledgebar .sep{opacity:.35;margin:0 .5em}
-  footer{border-top:1px solid var(--line2);padding:28px 0;
-    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
-    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--faint);
-    text-transform:uppercase}
-  footer .mark{font-family:var(--corp);font-weight:900;color:var(--accent2);
-    letter-spacing:.14em;font-size:12px}
-  footer .mark sup{font-size:.55em;vertical-align:super;margin-left:.06em;color:var(--faint)}
-  footer .right{text-align:right;color:var(--faint)}
-  .ornament{display:flex;align-items:center;justify-content:center;gap:14px;
-    margin:36px 0 0;padding-top:24px;border-top:1px solid var(--line2)}
-  .ornament::before,.ornament::after{content:"";height:1px;width:80px}
-  .ornament::before{background:linear-gradient(90deg,transparent,var(--line))}
-  .ornament::after{background:linear-gradient(90deg,var(--line),transparent)}
-  .ornament span{font-family:var(--mono);font-size:.62rem;color:var(--faint);letter-spacing:.2em}
+  h1,h2,h3,h4{font-family:var(--disp);text-wrap:balance;line-height:1.18}
+  .mono{font-family:var(--mono)}
+  ::selection{background:var(--teal);color:var(--ink)}
+  ::-webkit-scrollbar{width:12px}::-webkit-scrollbar-track{background:var(--bg2)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--teal),#3a5a52);border:3px solid var(--bg2);border-radius:8px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:22px}
+  .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--teal2)}
+  .lead{font-family:var(--disp);font-weight:400;font-size:clamp(1.1rem,1.8vw,1.4rem);line-height:1.45;color:var(--paper);max-width:62ch}
+
+  .nav{position:sticky;top:0;z-index:60;background:rgba(15,17,26,.84);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;gap:18px;height:60px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:28px;height:28px;object-fit:contain}
+  .brand .wm{font-family:var(--disp);font-weight:700;font-size:18px;letter-spacing:.02em}
+  .brand .wm b{color:var(--teal)}
+  .navlinks{display:flex;gap:22px;margin-left:auto}
+  .navlinks a{font-size:13px;color:var(--dim);letter-spacing:.02em;transition:color .15s}
+  .navlinks a:hover{color:var(--paper)}
+  .navtools{display:flex;align-items:center;gap:10px;margin-left:auto}
+  .pill{background:var(--bg3);border:1px solid var(--line-acc);border-radius:4px;color:var(--paper);
+    font-family:var(--mono);font-size:10px;padding:5px 10px;letter-spacing:.08em;text-transform:uppercase}
+  .btn{font-family:var(--disp);font-weight:600;font-size:12.5px;letter-spacing:.02em;padding:10px 18px;border-radius:5px;
+    cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;display:inline-block}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:linear-gradient(135deg,var(--teal),var(--teal2));color:var(--ink)}
+  .btn-primary:hover{filter:brightness(1.06)}
+  .btn-ghost{border-color:var(--line-acc);color:var(--paper)}
+  .btn-ghost:hover{border-color:var(--teal);background:rgba(95,168,156,.05)}
+  @media(max-width:860px){.navlinks{display:none}}
+
+  .strip{background:#0b0c11;border-bottom:1px solid var(--line)}
+  .strip .wrap{display:flex;gap:22px;align-items:center;height:26px;font-family:var(--mono);
+    font-size:9px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;overflow:hidden;white-space:nowrap}
+  .strip .a{color:var(--dim)} .strip .ver{margin-left:auto}
+  .strip .dot{width:5px;height:5px;border-radius:50%;background:var(--teal);animation:pulse 2.5s ease-in-out infinite;flex:none}
+  @keyframes pulse{0%,100%{opacity:.3;box-shadow:0 0 0 0 rgba(95,168,156,.3)}50%{opacity:1;box-shadow:0 0 8px 2px rgba(95,168,156,.15)}}
+
+  .hero{position:relative;padding-block:clamp(38px,5.5vw,60px);border-bottom:1px solid var(--line)}
+  .hero-in{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+  @media(max-width:940px){.hero-in{grid-template-columns:1fr;gap:28px}}
+  .hero h1{font-weight:700;font-size:clamp(2.6rem,6.5vw,4.4rem);margin:14px 0 0;letter-spacing:-.02em}
+  .hero h1 .h1soft{font-family:var(--body);font-weight:300;letter-spacing:.01em;color:var(--dim);font-size:.7em;margin-top:6px;display:block}
+  .hero .sub{font-family:var(--body);color:#c4c0b0;max-width:50ch;margin-top:18px;font-size:clamp(.96rem,1.5vw,1.1rem);font-weight:300}
+  .hero .sub em{color:var(--teal);font-style:normal;font-weight:500}
+  .hero .cta{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+  .hero-meta{display:flex;gap:18px;margin-top:22px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--dim)}
+  .hero-meta span{display:flex;align-items:center;gap:7px}
+  .hero-meta i{width:5px;height:5px;background:var(--teal);transform:rotate(45deg);flex:none}
+  .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(95,168,156,.04) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(95,168,156,.04) 1px,transparent 1px);
+    background-size:40px 40px;
+    -webkit-mask-image:radial-gradient(130% 92% at 70% 6%,#000 0 34%,transparent 78%);
+            mask-image:radial-gradient(130% 92% at 70% 6%,#000 0 34%,transparent 78%)}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:110px;z-index:0;pointer-events:none;
+    background:linear-gradient(180deg,transparent,var(--bg))}
+
+  /* wiki card */
+  .wikicard{border:1px solid var(--line);border-top:2px solid var(--teal);border-radius:6px;
+    padding:18px;background:var(--bg2);position:relative;overflow:hidden}
+  .wikicard::before{content:"";position:absolute;bottom:0;left:0;width:50%;height:2px;background:var(--teal);
+    opacity:.4}
+  .wikicard .wc-num{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;color:var(--teal);margin-bottom:6px}
+  .wikicard h3{font-size:1.02rem;font-weight:600;margin-bottom:6px;line-height:1.25}
+  .wikicard p{color:var(--dim);font-size:.86rem;line-height:1.55;font-style:italic;font-family:var(--disp)}
+  .wikicard .wc-tag{font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;
+    padding:2px 7px;border-radius:2px;border:1px solid var(--line-acc);color:var(--teal2);background:rgba(95,168,156,.05);margin-top:8px;display:inline-block}
+
+  /* knowledge grid */
+  .knowgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+  @media(max-width:760px){.knowgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:500px){.knowgrid{grid-template-columns:1fr}}
+  .knowcat{border:1px solid var(--line);border-radius:6px;padding:16px;background:var(--bg2);transition:border-color .2s,transform .2s}
+  .knowcat:hover{border-color:var(--teal);transform:translateY(-1px)}
+  .knowcat .kc-label{font-family:var(--mono);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal2);margin-bottom:8px}
+  .knowcat h3{font-size:.96rem;font-weight:600;margin-bottom:4px}
+  .knowcat p{font-size:.78rem;color:var(--dim);line-height:1.5;font-style:italic;font-family:var(--disp)}
+  .knowcat .kc-arrow{margin-top:10px;font-family:var(--mono);font-size:.55rem;color:var(--teal);letter-spacing:.08em}
+
+  /* running entry - long-form wiki preview */
+  .entry{margin-top:26px;border-top:1px solid var(--line)}
+  .entry .e-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+  .entry .e-num{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;color:var(--teal);text-transform:uppercase}
+  .entry .e-title{font-family:var(--disp);font-weight:700;font-size:1.5rem;line-height:1.15;max-width:70ch}
+  .entry .e-body{font-family:var(--disp);font-size:1rem;line-height:1.7;color:var(--dim);max-width:68ch;
+    font-style:italic}
+  .entry .e-body p{margin-bottom:10px}
+  .entry .e-body b{font-style:normal;color:var(--paper);font-weight:600}
+  .entry .e-body em{font-style:normal;color:var(--teal);font-weight:500}
+  .entry .e-foot{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
+    font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;color:var(--faint);text-transform:uppercase;display:flex;gap:18px;flex-wrap:wrap}
+  .entry .e-foot span{display:flex;align-items:center;gap:6px}
+  .entry .e-foot i{width:4px;height:4px;background:var(--teal);border-radius:50%;flex:none}
+
+  /* opening quote block */
+  .quoteblock{margin-top:22px;border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:6px;
+    padding:24px 26px;background:var(--bg2);position:relative;overflow:hidden}
+  .quoteblock::before{content:"";position:absolute;top:0;right:0;width:140px;height:140px;
+    background:radial-gradient(circle at top right,rgba(95,168,156,.06),transparent 70%);pointer-events:none}
+  .quoteblock .qb-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+  .quoteblock .qb-text{font-family:var(--disp);font-size:1.15rem;line-height:1.5;font-style:italic;color:var(--paper);
+    max-width:68ch;margin-bottom:10px}
+  .quoteblock .qb-attr{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal2)}
+  .quoteblock .qb-body{font-family:var(--body);color:var(--dim);font-size:.88rem;margin-top:8px;font-weight:300}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:22px}
+  @media(max-width:500px){.stats{grid-template-columns:1fr}}
+  .stats .c{padding:18px 14px;text-align:center;background:var(--bg2)}
+  .stats .n{font-family:var(--disp);font-weight:700;font-size:1.6rem;line-height:1;font-variant-numeric:tabular-nums}
+  .stats .n.t{color:var(--teal)} .stats .n.w{color:var(--paper);font-weight:400;font-size:1.2rem;font-style:italic}
+  .stats .l{font-family:var(--mono);font-size:.62rem;color:var(--faint);letter-spacing:.12em;text-transform:uppercase;margin-top:5px}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+  @media(max-width:640px){.two{grid-template-columns:1fr}}
+  .block{border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--bg2)}
+  .block .bk{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal2);margin-bottom:8px}
+  .block h3{font-size:1.04rem;font-weight:700;margin-bottom:6px}
+  .block p{color:var(--dim);font-size:.88rem;line-height:1.55;font-family:var(--disp);font-style:italic}
+
+  .pl-edge{border-top:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.028);padding:14px 22px;text-align:center;font-size:.84rem;line-height:1.6}
+  .pl-edge a{display:inline-block;color:inherit;opacity:.82;transition:opacity .15s}
+  .pl-edge a:hover{opacity:1}
+  .pl-edge b{color:#ffd86a;font-weight:700}
+  .pl-edge .sep{opacity:.35;margin:0 .55em}
+  footer{border-top:1px solid var(--line);padding-block:30px}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .foot .l{display:flex;align-items:center;gap:11px}
+  .foot .l img{width:24px;height:24px;object-fit:contain}
+  .foot .l .x{font-family:var(--mono);font-size:11px;color:var(--dim);line-height:1.4}
+  .foot .l .x b{font-family:var(--disp);color:var(--paper);letter-spacing:.02em;font-size:.95rem}
+  .foot .r{font-family:var(--mono);font-size:10.5px;color:var(--faint);text-align:right}
+  .pmark{font-family:var(--disp);font-weight:700;color:var(--dim)}
+  .pmark sup{font-size:.62em;vertical-align:super;margin-left:.06em}
 </style>
 </head>
 <body>
 
-<nav class="topbar">
-  <a class="brand" href="omni.html">
-    <img src="assets/angelcorp.png" alt="ALLSEER">
-    <span class="wm">ALLSEER<small>SOFTWARE</small></span>
-  </a>
-  <div class="spacer"></div>
-  <span class="tag">Knowledge Base · Free First</span>
-  <a class="back" href="omni.html">&larr; Back to ALLSEER</a>
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="omni.html">
+      <img src="assets/angelcorp.png" alt="ALLSEER">
+      <span class="wm">ALLSEER <b>SOFTWARE</b></span>
+    </a>
+    <div class="navlinks">
+      <a href="#library">The Library</a>
+      <a href="#how">How It Works</a>
+      <a href="#learn">The Ethos</a>
+    </div>
+    <div class="navtools">
+      <span class="pill">Knowledge · Free Access</span>
+      <a href="#library" class="btn btn-primary">Browse The Library</a>
+    </div>
+  </div>
 </nav>
 
-<div class="wrap">
+<div class="strip">
+  <div class="wrap">
+    <span class="a">ALLSEER WIKI // THE FREE KNOWLEDGE BASE</span>
+    <span class="dot"></span>
+    <span class="ver">CLEARING HOUSE · FREE ACCESS · THEN WE BUILD IT</span>
+  </div>
+</div>
 
 <header class="hero">
-  <div class="logochip">📚</div>
-  <div class="pre">A Division of ALLSEER SOFTWARE</div>
-  <h1>ALLSEER WIKI<span class="bar"></span></h1>
-  <p class="tag">A free knowledge base — <em>everything made free first.</em><br>
-  Then, every month, one of the ideas becomes real.</p>
-  <div class="meta">
-    <span><b>Free First</b> — always</span>
-    <span><b>Open Source</b> — repackaged</span>
-    <span><b>Wiki Format</b> — clean pages</span>
-    <span><b>Concept Draft</b></span>
+  <div class="wrap hero-in">
+    <div>
+      <span class="eyebrow">A Division of ALLSEER SOFTWARE</span>
+      <h1>The <span style="color:var(--teal)">Wiki</span></h1>
+      <p class="sub">A <em>clearing house for knowledge.</em><br>
+      Free to access. If you want more — deeper, premium, or personalized — <em>you pay.</em> Then we learn from what we sell, and give the knowledge <b style="font-family:var(--disp);font-style:italic;color:var(--paper)">back for free.</b></p>
+      <div class="cta">
+        <a href="#library" class="btn btn-primary">Browse The Library</a>
+        <a href="#how" class="btn btn-ghost">How It Works</a>
+      </div>
+      <div class="hero-meta">
+        <span><i></i>Free to access — always</span>
+        <span><i></i>Premium for more — pay what you want</span>
+        <span><i></i>Open source — then we build it</span>
+        <span><i></i>Learn &amp; give back</span>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="wikicard">
+          <div class="wc-num">ENTRY 001</div>
+          <h3>The 16 Adults Archetypes</h3>
+          <p>A framework for understanding adult personality and behavior — drawn from the typology systems used in depth psychology and self-development. Free. The deeper workbook version costs.</p>
+          <span class="wc-tag">Free Entry · Archetypes</span>
+        </div>
+        <div class="wikicard">
+          <div class="wc-num">ENTRY 002</div>
+          <h3>12 Common Logical Fallacies</h3>
+          <p>Learn to spot the arguments that sound right but aren't. Each fallacy, what it looks like, how to counter it. Free. The full course with exercises costs.</p>
+          <span class="wc-tag">Free Entry · Critical Thinking</span>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="draftpill">Knowledge Base · Concept Draft</div>
 </header>
 
-<section class="sec">
-  <span class="kicker">The idea</span>
-  <h2>Make every idea free. Then pick one to make real each month.</h2>
-  <p class="lede">
-    The ALLSEER WIKI is a free knowledge base — a collection of companies, products, and ideas, all made freely available as clean web pages. The idea: take everything we find interesting, document it clearly, and make it free. Then, every month, we pick one of those ideas and <b>make it real</b> — build the product, ship it, turn the wiki page into a real company.
-  </p>
+<section class="band" id="library" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">The Library</span>
+      <h2 class="serif" style="font-size:clamp(1.6rem,3.5vw,2.4rem)">Knowledge, organized. Free to browse.</h2>
+    </div>
+    <div class="knowgrid">
+      <div class="knowcat">
+        <div class="kc-label">Self &amp; Mind</div>
+        <h3>16 Adults Archetypes</h3>
+        <p>Personality frameworks for understanding who you are and who others are.</p>
+        <span class="kc-arrow">→ Free entry available</span>
+      </div>
+      <div class="knowcat">
+        <div class="kc-label">Thinking</div>
+        <h3>Logical Fallacies</h3>
+        <p>Twelve common fallacies — what they look like, how to spot and counter them.</p>
+        <span class="kc-arrow">→ Free entry available</span>
+      </div>
+      <div class="knowcat">
+        <div class="kc-label">History</div>
+        <h3>Korean History Notes</h3>
+        <p>Research notes on Korean history — contexts, timelines, and the things most summaries skip.</p>
+        <span class="kc-arrow">→ In the library</span>
+      </div>
+      <div class="knowcat">
+        <div class="kc-label">Morality</div>
+        <h3>Moral Frameworks</h3>
+        <p>How different traditions reason about right and wrong — and where they disagree.</p>
+        <span class="kc-arrow">→ Premium access</span>
+      </div>
+      <div class="knowcat">
+        <div class="kc-label">Systems</div>
+        <h3>How Things Work</h3>
+        <p>Explanations of the systems people live inside — finance, law, technology, institutions.</p>
+        <span class="kc-arrow">→ Premium access</span>
+      </div>
+      <div class="knowcat">
+        <div class="kc-label">Skills</div>
+        <h3>Practical Know-How</h3>
+        <p>Things that are useful to know how to do — and that most people never learn.</p>
+        <span class="kc-arrow">→ Premium access</span>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="e-head">
+        <span class="e-num">ENTRY · 003</span>
+        <h3 class="e-title">Korean History — What the Notes Say</h3>
+      </div>
+      <div class="e-body">
+        <p><b>Korean history</b> is more than the standard summaries. The research notes in the wiki cover things most people never learn — the contexts, the timelines, the things that get skipped.</p>
+        <p>This is the kind of knowledge ALLSEER WIKI is built for: things worth knowing, things that are useful, things people <em>should</em> know but don't. Free to access. If you want the full research notes, the complete timelines, the deeper context — <b>you pay.</b> Then we learn from what we sell, and give the knowledge <em>back</em> for free.</p>
+      </div>
+      <div class="e-foot">
+        <span><i></i>Topic: History</span>
+        <span><i></i>Status: Open Access</span>
+        <span><i></i>Depth: Research Notes</span>
+        <span><i></i>Premium: Full Archive</span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="sec">
-  <span class="kicker">What's in the wiki</span>
-  <h2>Every idea, repackaged cleanly.</h2>
-  <p class="lede">
-    The wiki covers companies, software, hardware, finance, security — everything in the ALLSEER ecosystem. Each entry is a clean, standalone page: what the idea is, how it works, what it would take to build. Nothing fancy — just clear documentation of everything we're thinking about.
-  </p>
-  <div class="grid">
-    <div class="cell">
-      <div class="label">Category</div>
-      <h3>Software &amp; Apps</h3>
-      <p>Open-source software repackaged as clean products with logos and proper web pages. Desktop apps, browser extensions, web apps — whatever's on GitHub, given a real product presentation.</p>
-      <span class="tag">Open source → product</span>
+<section class="band" id="how" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">How It Works</span>
+      <h2 class="serif" style="font-size:clamp(1.6rem,3.5vw,2.4rem)">Free to access. Pay for more. Then we give it back.</h2>
     </div>
-    <div class="cell">
-      <div class="label">Category</div>
-      <h3>Hardware &amp; Physical</h3>
-      <p>PC conversions, RC toys, robots — physical products documented as clean wiki entries. Dropship-first, with the path to own manufacturing laid out.</p>
-      <span class="tag">Dropship → own products</span>
+    <div class="two">
+      <div class="block">
+        <div class="bk">The Model</div>
+        <h3>A clearing house for knowledge.</h3>
+        <p>ALLSEER WIKI is a clearing house for knowledge — a place where knowledge is gathered, organized, and made available. Free to access. If you want more — deeper entries, premium courses, personalized content — <em>you pay.</em></p>
+      </div>
+      <div class="block">
+        <div class="bk">The Cycle</div>
+        <h3>Learn, then give back.</h3>
+        <p>We sell access to knowledge, then we keep learning — and we give access back to the public for free. Knowledge doesn't stay behind a paywall. It goes free. The paywall is for <em>more</em> — deeper, better, more personalized.</p>
+      </div>
     </div>
-    <div class="cell">
-      <div class="label">Category</div>
-      <h3>Finance &amp; Business</h3>
-      <p>Interest-free banking, AI trading, tax/accounting, debt collection, tax-free LLC setup, AI call center — all the finance and business services documented as clear wiki entries.</p>
-      <span class="tag">Concept → real company</span>
-    </div>
-    <div class="cell">
-      <div class="label">Category</div>
-      <h3>Security &amp; Investigation</h3>
-      <p>Offensive security tools, digital private investigation, OPSEC methods, people-search-style tools — the security and investigation ideas documented clearly.</p>
-      <span class="tag">OPSEC → real services</span>
+    <div class="quoteblock">
+      <div class="qb-label">The Ethos</div>
+      <div class="qb-text">"Then we build it. We give access back to the public for free."</div>
+      <div class="qb-body">ALLSEER WIKI sells knowledge, learns from what it sells, and gives the knowledge <em>back</em> — free, open, available to anyone. That's the model. That's the point.</div>
     </div>
   </div>
 </section>
 
-<section class="sec">
-  <span class="kicker">The model</span>
-  <h2>Free first. Monetize later. Pick one each month.</h2>
-  <p class="lede">
-    The wiki is free — everything in it is accessible without pay. Then, every month, we take one of the wiki entries and <b>make it real</b>. Repackage open-source software on GitHub as a product or app with a logo and clean website. Combine many ideas into a full application. Add MCP tools. The wiki is the backlog; the monthly "make it real" is the product rollout.
-  </p>
-  <div class="model">
-    <h3>The monthly cadence</h3>
-    <div class="row">
-      <div class="cell">
-        <div class="k">Month 1</div>
-        <div class="v">Document the idea<small> — clean wiki page, what it is, how it works</small></div>
+<section class="band" id="learn" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">The Ethos</span>
+      <h2 class="serif" style="font-size:clamp(1.6rem,3.5vw,2.4rem)">Knowledge is meant to be shared.</h2>
+    </div>
+    <div class="entry">
+      <div class="e-head">
+        <span class="e-num">OPENING STATEMENT</span>
+        <h3 class="e-title">What ALLSEER WIKI is for.</h3>
       </div>
-      <div class="cell">
-        <div class="k">Month 2</div>
-        <div class="v">Repackage existing resources<small> — open-source software, GitHub repos, tools</small></div>
+      <div class="e-body">
+        <p>ALLSEER WIKI is a clearing house for knowledge — a place where knowledge is gathered, organized, and made available. Free to access. If you want more — deeper, premium, or personalized — <b>you pay.</b> Then we learn from what we sell, and give the knowledge <em>back</em> for free.</p>
+        <p>The wiki is a small idea that grows — as with all the companies under ALLSEER. It starts with a few entries, a few topics, a few people learning. It grows. It gives back. That's the model.</p>
+        <p>Eventually, <b>open source.</b> Everything we know, free to everyone. That's the goal. That's the point.</p>
       </div>
-      <div class="cell">
-        <div class="k">Month 3</div>
-        <div class="v">Add a logo &amp; clean website<small> — make it look like a real product</small></div>
-      </div>
-      <div class="cell">
-        <div class="k">Month 4+</div>
-        <div class="v">Make it real<small> — ship the product, build the business, or keep it free</small></div>
+      <div class="e-foot">
+        <span><i></i>Status: Growing</span>
+        <span><i></i>Goal: Open Source</span>
+        <span><i></i>Model: Learn · Give Back</span>
       </div>
     </div>
-  </div>
-  <div class="model" style="margin-top:16px">
-    <h3>How ideas get combined</h3>
-    <p style="color:var(--sec);font-size:.9rem;line-height:1.55">
-      Often we can <b>combine many open-source projects into one full application</b> — adding MCP tools, connecting things together, giving it a single brand and a clean website. The wiki entry for that combined idea becomes the landing page for the real product. Nothing new invented — just assembled cleanly.
-    </p>
+    <div class="stats">
+      <div class="c"><div class="n t">Free</div><div class="l">Access · Always</div></div>
+      <div class="c"><div class="n w" style="font-style:normal;font-weight:600">Pay for More</div><div class="l">Premium · Deeper</div></div>
+      <div class="c"><div class="n t">Give Back</div><div class="l">Then We Build It</div></div>
+    </div>
   </div>
 </section>
 
-<div class="pledgebar">
-  <a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>
-  an <b>ALLSEER</b> company<span class="sep">|</span>
-  free knowledge base — concept draft</a>
-</div>
-
+<div class="pl-edge"><a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>an <b>ALLSEER</b> company</a></div>
 <footer>
-  <span class="mark">PRIMAL<sup>APE</sup></span>
-  <span class="right">ALLSEER WIKI — a concept draft. Nothing here is final.<br>
-  Part of the ALLSEER SOFTWARE concept-draft library.</span>
+  <div class="wrap foot">
+    <div class="l"><img src="assets/angelcorp.png" alt=""><div class="x"><b>ALLSEER WIKI</b><br>The free knowledge base · concept draft</div></div>
+    <div class="r"><span class="pmark">PRIMAL<sup>APE</sup></span> · under ALLSEER SOFTWARE</div>
+  </div>
 </footer>
-
-<div class="ornament"><span>CONCEPT DRAFT</span></div>
-
-</div>
 
 </body>
 </html>

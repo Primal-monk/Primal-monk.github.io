@@ -5,339 +5,360 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DownloadHarvester — Freeware Ad Network &amp; Bloatware Middleman</title>
 <link rel="icon" type="image/png" href="assets/angelcorp.png">
-<meta name="description" content="DownloadHarvester — a freeware ad network (like Google AdSense but for software), a bloatware middleman that auto-detects downloads and pays freeware devs per download, and a desktop port of itch.io that re-categorizes and filters games.">
+<meta name="description" content="DownloadHarvester — a freeware ad network, bloatware middleman, and itch.io desktop port.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
   :root{
-    --bg:#0d1117; --bg2:#161b22; --bg3:#21262d; --bg4:#2d333b;
-    --accent:#3fb950; --accent2:#2ea043;
-    --orange:#d29922; --orange2:#bb8009;
-    --ink:#f0f6f8; --sec:#8b949e; --faint:#484f58;
-    --line:rgba(63,185,80,.20); --line2:rgba(63,185,80,.08);
-    --corp:"Archivo","Segoe UI",system-ui,sans-serif;
-    --mono:"Archivo","Courier New",monospace;
-    --maxw:1100px;
+    --bg:#0b1117; --bg2:#111822; --bg3:#18202c; --bg4:#1f2835;
+    --line:#24303d; --line-acc:rgba(63,185,80,.20);
+    --paper:#eef3f7; --dim:#8a9aa8; --faint:#4a5a6a;
+    --accent:#3fb950; --accent2:#2ea043; --accent3:#5dda77;
+    --orange:#d29922; --orange2:#bb8009; --orange3:#e8b84b;
+    --blue:#58a6ff;
+    --disp:"Plus Jakarta Sans",system-ui,sans-serif;
+    --body:"Plus Jakarta Sans",system-ui,sans-serif;
+    --mono:"JetBrains Mono","Consolas",monospace;
+    --maxw:1320px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:var(--corp);background:var(--bg);color:var(--sec);
-    line-height:1.6;font-size:17px;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-    background-color:var(--bg);
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 3 L16 19 M16 19 L10 13 M16 19 L22 13' stroke='%233fb950' stroke-width='1.5' fill='none' opacity='0.07'/%3E%3C/svg%3E");
-    background-size:32px 32px}
-  ::-webkit-scrollbar{width:10px}
-  ::-webkit-scrollbar-track{background:var(--bg2)}
-  ::-webkit-scrollbar-thumb{background:var(--accent2);border:2px solid var(--bg2);border-radius:6px}
+  body{font-family:var(--body);background:var(--bg);color:var(--paper);line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background-image:
+      radial-gradient(900px 500px at 84% -6%, rgba(63,185,80,.08), transparent 62%),
+      radial-gradient(700px 420px at -4% 8%, rgba(210,153,34,.04), transparent 60%)}
   a{color:inherit;text-decoration:none}
-  ::selection{background:var(--accent);color:var(--bg)}
-  .mono{font-family:var(--mono);letter-spacing:.04em}
-  .topbar{position:sticky;top:0;z-index:60;height:56px;
-    background:var(--bg2);border-bottom:1px solid var(--line);
-    display:flex;align-items:center;gap:14px;padding:0 24px}
-  .topbar .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-  .topbar .brand img{width:26px;height:26px;object-fit:contain}
-  .topbar .brand .wm{font-family:var(--corp);font-weight:900;font-size:15px;
-    color:var(--ink);letter-spacing:.18em}
-  .topbar .brand .wm small{color:var(--accent);font-weight:700;font-size:.55em;
-    letter-spacing:.2em;margin-left:.5em;vertical-align:super}
-  .topbar .spacer{flex:1}
-  .topbar .back{font-family:var(--mono);font-size:11px;color:var(--accent2);
-    letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:color .15s;padding:6px 0}
-  .topbar .back:hover{color:var(--accent)}
-  .topbar .tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--accent2);border:1px solid var(--line);
-    border-radius:3px;padding:5px 10px;white-space:nowrap}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-  @media(max-width:640px){.wrap{padding:0 18px}}
-  .hero{padding:64px 0 40px;text-align:center;
-    background:linear-gradient(180deg,#111c14 0%,var(--bg) 100%);
-    position:relative;overflow:hidden}
-  .hero::before{content:"";position:absolute;top:-100px;left:50%;transform:translateX(-50%);
-    width:600px;height:300px;background:radial-gradient(ellipse,rgba(63,185,80,.08),transparent 70%);
-    pointer-events:none}
-  .hero .logochip{display:inline-flex;align-items:center;justify-content:center;
-    width:56px;height:56px;background:var(--accent);border-radius:10px;
-    font-size:1.6rem;color:var(--bg);margin-bottom:18px;
-    box-shadow:0 0 30px rgba(63,185,80,.22),inset 0 1px 0 rgba(255,255,255,.2);
-    transition:transform .15s}
-  .hero .logochip:hover{transform:scale(1.05)}
-  .hero .pre{font-family:var(--mono);font-size:11px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--accent2);margin-bottom:18px}
-  .hero h1{font-weight:900;font-size:clamp(3rem,8vw,5.4rem);
-    line-height:.92;letter-spacing:-.03em;color:var(--ink);
-    text-shadow:0 2px 0 rgba(0,0,0,.4)}
-  .hero h1 .bar{display:inline-block;width:120px;height:4px;
-    background:linear-gradient(90deg,var(--accent),var(--accent2));
-    border-radius:2px;margin:0 clamp(2vw,5vw,4vw) 0}
-  .hero .tag{font-weight:600;font-size:clamp(1rem,2.2vw,1.25rem);
-    color:var(--sec);margin-top:14px;letter-spacing:.02em;
-    max-width:580px;margin-left:auto;margin-right:auto;line-height:1.4}
-  .hero .tag em{font-style:normal;color:var(--accent);font-weight:700}
-  .hero .tag em.orange{font-style:normal;color:var(--orange);font-weight:700}
-  .hero .meta{margin-top:22px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;font-family:var(--mono)}
-  .hero .meta span{font-size:10px;color:var(--faint);letter-spacing:.16em;
-    text-transform:uppercase;border:1px solid var(--line);border-radius:3px;padding:6px 12px}
-  .hero .meta span b{color:var(--accent);font-weight:700}
-  .hero .meta span b.orange{color:var(--orange);font-weight:700}
-  .draftpill{display:inline-block;margin-top:14px;
-    background:var(--bg3);border:1px solid var(--accent2);border-radius:20px;
-    padding:6px 20px;font-size:.72rem;font-weight:700;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--accent)}
-  .sec{padding:48px 0;border-top:1px solid var(--line2)}
-  .sec:first-of-type{border-top:0}
-  .sec .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;
-    text-transform:uppercase;color:var(--accent2);margin-bottom:12px;display:block}
-  .sec h2{font-weight:900;font-size:clamp(1.5rem,3.4vw,2.1rem);
-    color:var(--ink);letter-spacing:-.01em;line-height:1.04;margin-bottom:10px}
-  .sec h2::after{content:"";display:block;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));
-    width:clamp(60px,12vw,120px);margin-top:10px;border-radius:2px}
-  .sec .lede{color:var(--sec);font-size:1.02rem;max-width:640px;margin:0 auto 24px;line-height:1.6;text-align:center}
-  .sec .lede b{color:var(--ink);font-weight:600}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
-  @media(max-width:640px){.grid{grid-template-columns:1fr}}
-  .card{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--accent);
-    border-radius:8px;padding:22px;transition:border-color .15s,transform .15s}
-  .card:hover{border-color:var(--accent);transform:translateY(-2px)}
-  .card.orange{border-left-color:var(--orange)}
-  .card.orange:hover{border-color:var(--orange)}
-  .card .label{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--accent2);margin-bottom:8px}
-  .card.orange .label{color:var(--orange)}
-  .card h3{font-weight:800;font-size:1.06rem;color:var(--ink);letter-spacing:-.01em;margin-bottom:8px}
-  .card p{color:var(--sec);font-size:.88rem;line-height:1.55;margin-bottom:8px}
-  .card p b{color:var(--ink);font-weight:600}
-  .card .metarow{display:flex;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
-  .card .metarow .m{flex:1}
-  .card .metarow .n{font-size:1.2rem;font-weight:800;color:var(--accent);line-height:1;
-    font-family:var(--corp);letter-spacing:-.02em}
-  .card .metarow .n.green{color:var(--accent)}
-  .card .metarow .n.orange{color:var(--orange)}
-  .card .metarow .l{font-size:.64rem;color:var(--faint);letter-spacing:.1em;
-    text-transform:uppercase;margin-top:4px;font-weight:600}
-  .card .tag{font-family:var(--mono);font-size:.6rem;color:var(--faint);
-    letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);
-    border-radius:3px;padding:3px 8px;display:inline-block;margin-top:6px}
-  .card.orange .tag{color:var(--orange);border-color:rgba(210,153,34,.2)}
-  .flowbar{margin-top:28px;background:var(--bg3);border:1px solid var(--line);
-    border-radius:10px;padding:24px}
-  .flowbar::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
-    background:linear-gradient(90deg,transparent,var(--accent),transparent)}
-  .flowbar h3{font-weight:900;font-size:1rem;color:var(--ink);margin-bottom:18px;letter-spacing:-.01em}
-  .flow{display:flex;gap:0;align-items:stretch}
-  .flow .step{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:6px;
-    padding:16px;position:relative;display:flex;flex-direction:column;justify-content:center;min-width:0}
-  .flow .step .num{font-family:var(--mono);font-size:.62rem;color:var(--accent);
-    letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
-  .flow .step .title{color:var(--ink);font-weight:700;font-size:.9rem;margin-bottom:4px}
-  .flow .step .desc{color:var(--sec);font-size:.78rem;line-height:1.4}
-  .flow .arrow{position:absolute;right:-14px;top:50%;transform:translateY(-50%);
-    color:var(--accent);font-size:1.2rem;font-weight:900;opacity:.5}
-  @media(max-width:640px){
-    .flow{gap:8px;flex-wrap:nowrap}
-    .flow .arrow{display:none}
-    .flow .step{flex:1 1 100%;margin-bottom:8px}
-  }
-  .statrow{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
-    border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:28px}
-  @media(max-width:640px){.statrow{grid-template-columns:repeat(2,1fr)}}
-  .statrow .cell{background:var(--bg2);padding:18px 14px;text-align:center}
-  .statrow .cell .n{font-size:1.5rem;font-weight:900;color:var(--ink);line-height:1;
-    font-family:var(--corp);letter-spacing:-.02em}
-  .statrow .cell .n.green{color:var(--accent)}
-  .statrow .cell .n.orange{color:var(--orange)}
-  .statrow .cell .l{font-size:.64rem;color:var(--sec);letter-spacing:.1em;
-    text-transform:uppercase;margin-top:5px;font-weight:600}
-  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
-  @media(max-width:640px){.twocol{grid-template-columns:1fr}}
-  .pledgebar{margin-top:32px;border-top:1px solid rgba(255,255,255,.06);
-    background:color-mix(in srgb,var(--bg2) 80%,transparent);
-    padding:16px 28px;text-align:center;font-size:.86rem;line-height:1.55}
-  .pledgebar a{display:inline-block;color:var(--accent2);opacity:.82;transition:opacity .15s}
-  .pledgebar a:hover{opacity:1}
-  .pledgebar b{color:var(--accent);font-weight:700}
-  .pledgebar .sep{opacity:.35;margin:0 .5em}
-  footer{border-top:1px solid var(--line2);padding:28px 0;
-    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
-    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--faint);
-    text-transform:uppercase}
-  footer .mark{font-family:var(--corp);font-weight:900;color:var(--accent2);
-    letter-spacing:.14em;font-size:12px}
-  footer .mark sup{font-size:.55em;vertical-align:super;margin-left:.06em;color:var(--faint)}
-  footer .right{text-align:right;color:var(--faint)}
-  .ornament{display:flex;align-items:center;justify-content:center;gap:14px;
-    margin:36px 0 0;padding-top:24px;border-top:1px solid var(--line2)}
-  .ornament::before,.ornament::after{content:"";height:1px;width:80px}
-  .ornament::before{background:linear-gradient(90deg,transparent,var(--line))}
-  .ornament::after{background:linear-gradient(90deg,var(--line),transparent)}
-  .ornament span{font-family:var(--mono);font-size:.62rem;color:var(--faint);letter-spacing:.2em}
+  h1,h2,h3,h4{font-family:var(--disp);text-wrap:balance;line-height:1.1}
+  .mono{font-family:var(--mono)}
+  ::selection{background:var(--accent);color:#0b1117}
+  ::-webkit-scrollbar{width:12px}::-webkit-scrollbar-track{background:var(--bg2)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--accent),var(--accent2));border:3px solid var(--bg2);border-radius:8px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:22px}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
+
+  .nav{position:sticky;top:0;z-index:60;background:rgba(11,17,23,.84);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;gap:18px;height:60px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:28px;height:28px;object-fit:contain}
+  .brand .wm{font-family:var(--disp);font-weight:800;font-size:17px;letter-spacing:.04em}
+  .brand .wm b{color:var(--accent)}
+  .navlinks{display:flex;gap:22px;margin-left:auto}
+  .navlinks a{font-size:13px;color:var(--dim);letter-spacing:.01em;transition:color .15s}
+  .navlinks a:hover{color:var(--paper)}
+  .navtools{display:flex;align-items:center;gap:10px;margin-left:auto}
+  .pill{background:var(--bg3);border:1px solid var(--line-acc);border-radius:4px;color:var(--paper);
+    font-family:var(--mono);font-size:10.5px;padding:5px 10px}
+  .btn{font-family:var(--disp);font-weight:700;font-size:12.5px;letter-spacing:.02em;padding:10px 18px;border-radius:6px;
+    cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;display:inline-block}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:linear-gradient(96deg,var(--accent),var(--accent2));color:#0b1117}
+  .btn-primary:hover{filter:brightness(1.07)}
+  .btn-ghost{border-color:var(--line-acc);color:var(--paper)}
+  .btn-ghost:hover{border-color:var(--accent);background:rgba(63,185,80,.06)}
+  @media(max-width:860px){.navlinks{display:none}}
+
+  .strip{background:#080d12;border-bottom:1px solid var(--line)}
+  .strip .wrap{display:flex;gap:22px;align-items:center;height:26px;font-family:var(--mono);
+    font-size:9.5px;letter-spacing:.16em;color:var(--faint);text-transform:uppercase;overflow:hidden;white-space:nowrap}
+  .strip .a{color:var(--dim)} .strip .ver{margin-left:auto}
+  .strip .pulse{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite;flex:none}
+  @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+  .hero{position:relative;padding-block:clamp(38px,5.5vw,64px)}
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:.95fr 1.05fr;gap:42px;align-items:center}
+  @media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:30px}}
+  .hero h1{font-weight:800;font-size:clamp(2.6rem,6.5vw,4.8rem);margin:14px 0 0;letter-spacing:-.015em}
+  .hero .sub{font-size:clamp(.96rem,1.5vw,1.1rem);color:#c5d0dc;max-width:52ch;margin-top:16px}
+  .hero .sub b{color:var(--paper);font-weight:600}
+  .hero .sub .grn{color:var(--accent);font-weight:700}
+  .hero .sub .org{color:var(--orange);font-weight:700}
+  .hero .cta{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+  .hero .meta{display:flex;gap:18px;margin-top:22px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--dim)}
+  .hero .meta span{display:flex;align-items:center;gap:7px}
+  .hero .meta i{width:5px;height:5px;background:var(--accent);transform:rotate(45deg);flex:none}
+  .hero .meta i.ora{background:var(--orange)}
+  .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      radial-gradient(600px 300px at 74% 6%, rgba(63,185,80,.07), transparent 70%),
+      linear-gradient(rgba(63,185,80,.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(63,185,80,.05) 1px,transparent 1px);
+    background-size:100% 100%,36px 36px,36px 36px;
+    -webkit-mask-image:radial-gradient(130% 92% at 74% 6%,#000 0 34%,transparent 78%);
+            mask-image:radial-gradient(130% 92% at 74% 6%,#000 0 34%,transparent 78%)}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:100px;z-index:0;pointer-events:none;
+    background:linear-gradient(180deg,transparent,var(--bg))}
+
+  .arch{border:1px solid var(--line);border-radius:10px;background:var(--bg2);padding:24px;
+    box-shadow:0 40px 90px -50px rgba(0,0,0,.9),0 0 0 1px rgba(63,185,80,.04) inset}
+  .arch h3{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:18px}
+  .arch-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .arch-node{flex:1;background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:120px}
+  .arch-node.dev{border-color:var(--line-acc);border-left:3px solid var(--accent)}
+  .arch-node.ads{border-color:rgba(88,166,255,.2);border-left:3px solid var(--blue)}
+  .arch-node.bloat{border-color:rgba(210,153,34,.2);border-left:3px solid var(--orange)}
+  .arch-node .t{font-family:var(--disp);font-weight:700;font-size:.92rem;color:var(--paper);margin-bottom:3px}
+  .arch-node .s{font-family:var(--mono);font-size:.72rem;color:var(--dim);line-height:1.4}
+  .arch-node .tag{display:inline-block;margin-top:7px;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px}
+  .arch-node.dev .tag{background:rgba(63,185,80,.12);color:var(--accent);border:1px solid rgba(63,185,80,.2)}
+  .arch-node.ads .tag{background:rgba(88,166,255,.12);color:var(--blue);border:1px solid rgba(88,166,255,.2)}
+  .arch-node.bloat .tag{background:rgba(210,153,34,.12);color:var(--orange);border:1px solid rgba(210,153,34,.2)}
+  .arch-arrow{flex:none;font-family:var(--mono);color:var(--accent);font-size:.8rem;letter-spacing:.1em}
+
+  .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:22px}
+  @media(max-width:720px){.tiles{grid-template-columns:1fr}}
+  .tile{background:var(--bg2);padding:22px 22px 20px}
+  .tile .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase}
+  .tile.dev .k{color:var(--accent)} .tile.ads .k{color:var(--blue)} .tile.bloat .k{color:var(--orange)}
+  .tile h3{font-size:1.06rem;font-weight:700;margin:10px 0 7px}
+  .tile p{color:var(--dim);font-size:.88rem;line-height:1.55}
+  .tile .metarow{display:flex;gap:14px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+  .tile .metarow .m{flex:1}
+  .tile .metarow .n{font-family:var(--disp);font-weight:800;font-size:1.1rem;line-height:1}
+  .tile.dev .metarow .n{color:var(--accent)} .tile.ads .metarow .n{color:var(--blue)} .tile.bloat .metarow .n{color:var(--orange)}
+  .tile .metarow .l{font-family:var(--mono);font-size:.6rem;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+  .tile .tag{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px}
+  .tile.dev .tag{color:var(--accent);border:1px solid rgba(63,185,80,.2);background:rgba(63,185,80,.06)}
+  .tile.ads .tag{color:var(--blue);border:1px solid rgba(88,166,255,.2);background:rgba(88,166,255,.06)}
+  .tile.bloat .tag{color:var(--orange);border:1px solid rgba(210,153,34,.2);background:rgba(210,153,34,.06)}
+
+  .flowwrap{margin-top:22px}
+  .flowwrap h3{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+  .flow{display:flex;align-items:stretch;gap:0}
+  .flow .step{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:14px;position:relative;min-width:0}
+  .flow .step .num{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .flow .step.ads .num{color:var(--blue)} .flow .step.bloat .num{color:var(--orange)}
+  .flow .step .t{font-family:var(--disp);font-weight:700;font-size:.88rem;color:var(--paper);margin-bottom:3px}
+  .flow .step .d{font-family:var(--mono);font-size:.74rem;color:var(--dim);line-height:1.4}
+  .flow .arr{position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:var(--accent);font-size:.9rem;font-weight:900}
+  .flow .step.ads .arr{color:var(--blue)} .flow .step.bloat .arr{color:var(--orange)}
+  @media(max-width:600px){.flow{gap:6px}.flow .arr{display:none}.flow .step{flex:1 1 100%;margin-bottom:6px}}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:22px}
+  @media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stats .c{padding:18px 14px;text-align:center;background:var(--bg2)}
+  .stats .n{font-family:var(--disp);font-weight:800;font-size:1.5rem;line-height:1;font-variant-numeric:tabular-nums}
+  .stats .n.grn{color:var(--accent)} .stats .n.ora{color:var(--orange)} .stats .n.blu{color:var(--blue)}
+  .stats .l{font-family:var(--mono);font-size:.62rem;color:var(--faint);letter-spacing:.12em;text-transform:uppercase;margin-top:5px}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+  @media(max-width:640px){.two{grid-template-columns:1fr}}
+  .block{border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--bg2)}
+  .block h3{font-size:1.04rem;font-weight:700;margin-bottom:8px}
+  .block p{color:var(--dim);font-size:.88rem;line-height:1.5}
+  .block .tag{display:inline-block;margin-bottom:8px;font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:2px 7px;border-radius:3px}
+  .block.dev .tag{background:rgba(63,185,80,.1);color:var(--accent);border:1px solid rgba(63,185,80,.2)}
+  .block.bloat .tag{background:rgba(210,153,34,.1);color:var(--orange);border:1px solid rgba(210,153,34,.2)}
+
+  .pl-edge{border-top:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.028);padding:14px 22px;text-align:center;font-size:.84rem;line-height:1.6}
+  .pl-edge a{display:inline-block;color:inherit;opacity:.82;transition:opacity .15s}
+  .pl-edge a:hover{opacity:1}
+  .pl-edge b{color:#ffd86a;font-weight:700}
+  .pl-edge .sep{opacity:.35;margin:0 .55em}
+  footer{border-top:1px solid var(--line);padding-block:30px}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .foot .l{display:flex;align-items:center;gap:11px}
+  .foot .l img{width:24px;height:24px;object-fit:contain}
+  .foot .l .x{font-family:var(--mono);font-size:11px;color:var(--dim);line-height:1.4}
+  .foot .l .x b{font-family:var(--disp);color:var(--paper);letter-spacing:.04em;font-size:.95rem}
+  .foot .r{font-family:var(--mono);font-size:10.5px;color:var(--faint);text-align:right}
+  .pmark{font-family:var(--disp);font-weight:800;color:var(--dim)}
+  .pmark sup{font-size:.62em;vertical-align:super;margin-left:.06em}
 </style>
 </head>
 <body>
 
-<nav class="topbar">
-  <a class="brand" href="omni.html">
-    <img src="assets/angelcorp.png" alt="ALLSEER">
-    <span class="wm">ALLSEER<small>SOFTWARE</small></span>
-  </a>
-  <div class="spacer"></div>
-  <span class="tag">Software Platform · Freeware Tools</span>
-  <a class="back" href="omni.html">&larr; Back to ALLSEER</a>
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="omni.html">
+      <img src="assets/angelcorp.png" alt="ALLSEER">
+      <span class="wm">ALLSEER <b>SOFTWARE</b></span>
+    </a>
+    <div class="navlinks">
+      <a href="#platform">The Platform</a>
+      <a href="#how">How It Works</a>
+      <a href="#why">Why It Exists</a>
+    </div>
+    <div class="navtools">
+      <span class="pill">Software Platform</span>
+      <a href="#platform" class="btn btn-primary">See the Platform</a>
+    </div>
+  </div>
 </nav>
 
-<div class="wrap">
+<div class="strip">
+  <div class="wrap">
+    <span class="a">DOWNLOADHARVESTER // ADSENSE FOR SOFTWARE</span>
+    <span class="pulse"></span>
+    <span class="ver">THREE PRODUCTS · ONE PLATFORM</span>
+  </div>
+</div>
 
 <header class="hero">
-  <div class="logochip">⬇️</div>
-  <div class="pre">A Software Platform Concept</div>
-  <h1>DOWNLOADHARVESTER<span class="bar"></span></h1>
-  <p class="tag">Freeware Ad Network <em>&amp;</em> Bloatware Middleman<br>
-  Think <em>Google AdSense</em> — but for software. Auto-detects downloads. Pays devs per download. Zero work on their end.</p>
-  <div class="meta">
-    <span><b class="green">Ad Network</b> — AdSense for software</span>
-    <span><b class="green">Auto-Pay</b> — per download</span>
-    <span><b class="orange">Middleman</b> — bloatware bridge</span>
-    <span><b>Concept Draft</b></span>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">A Software Platform Concept</span>
+      <h1>DOWNLOADHARVESTER</h1>
+      <p class="sub">Freeware Ad Network <span class="grn">&amp;</span> Bloatware Middleman<br>
+      Think <b>Google AdSense</b> — but for software. Auto-detects downloads. Pays devs per download. Zero work on their end.</p>
+      <div class="cta">
+        <a href="#platform" class="btn btn-primary">See the Platform</a>
+        <a href="#how" class="btn btn-ghost">How the Middleman Works</a>
+      </div>
+      <div class="meta">
+        <span><i></i><span class="grn">Ad Network</span> — AdSense for software</span>
+        <span><i class="ora"></i><span class="org">Auto-Pay</span> — per download, zero dev work</span>
+        <span><i class="ora"></i><span class="org">Middleman</span> — bloatware bridge</span>
+        <span><i></i><span class="grn">Itch.io Port</span> — filter slop, host ads</span>
+      </div>
+    </div>
+    <div>
+      <div class="arch">
+        <h3>Platform Architecture</h3>
+        <div class="arch-row">
+          <div class="arch-node dev">
+            <div class="t">Freeware Developers</div>
+            <div class="s">10,000+ devs package once,<br>get paid per download.<br>Zero work. Zero contracts.</div>
+            <span class="tag">Sensors auto-pay</span>
+          </div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node ads">
+            <div class="t">Ad Network</div>
+            <div class="s">Hundreds of sponsors plug in.<br>Ads run across the software.<br>Devs and sponsors, connected.</div>
+            <span class="tag">AdSense for software</span>
+          </div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node bloat">
+            <div class="t">Bloatware Middleman</div>
+            <div class="s">Auto-detects downloads.<br>Pays devs per download.<br>Bloatware companies pay for reach.</div>
+            <span class="tag">Sensors · auto-pay</span>
+          </div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node dev" style="border-left-color:var(--orange)">
+            <div class="t" style="color:var(--orange)">Itch.io Desktop Port</div>
+            <div class="s" style="color:var(--orange)">Re-categorized games.<br>Slop filtered out.<br>Carries ads + bloatware.</div>
+            <span class="tag" style="background:rgba(210,153,34,.12);color:var(--orange);border:1px solid rgba(210,153,34,.2)">Distribution layer</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="draftpill">Software Platform · Concept Draft</div>
 </header>
 
-<section class="sec">
-  <span class="kicker">Three products. One platform.</span>
-  <h2>Everything feeds into everything.</h2>
-  <p class="lede">
-    DownloadHarvester is a software platform with three distinct products that all feed into each other. The <b>freeware ad network</b> is like Google AdSense but for software. The <b>bloatware middleman</b> automates the deal between bloatware companies and freeware devs. The <b>itch.io desktop port</b> re-categorizes and filters games.
-  </p>
-  <div class="grid">
-    <div class="card">
-      <div class="label">Product 01</div>
-      <h3>Freeware Ad Network</h3>
-      <p>Think <b>Google AdSense</b> — but for software. Any game or app can put ads through this network. 10,000 developers join your network, and hundreds of sponsors plug in. Devs get paid. Sponsors get reach. You run the network between them.</p>
-      <div class="metarow">
-        <div class="m"><div class="n green">Ad Network</div><div class="l">Core Product</div></div>
-        <div class="m"><div class="n">10K+</div><div class="l">Developer Target</div></div>
-      </div>
-      <span class="tag">AdSense for software</span>
+<section class="band" id="platform">
+  <div class="wrap">
+    <div class="head" style="margin-bottom:8px">
+      <span class="eyebrow">Three Products · One Platform</span>
+      <h2>Everything feeds into everything.</h2>
     </div>
-    <div class="card orange">
-      <div class="label">Product 02</div>
-      <h3>Bloatware Middleman</h3>
-      <p>A service between <b>bloatware companies</b> and <b>freeware developers</b>. Auto-detects when a download happens and pays the freeware dev per download automatically. Bloatware companies pay for the service. Devs package their software once and get paid — <b>no action, no work, no contract to manage</b>. Sensors handle it all.</p>
-      <div class="metarow">
-        <div class="m"><div class="n orange">$0</div><div class="l">Work for Devs</div></div>
-        <div class="m"><div class="n">Per-DL</div><div class="l">Auto-Pay</div></div>
+    <p style="color:var(--dim);max-width:60ch;margin-bottom:18px">DownloadHarvester is a software platform with three distinct products that all feed into each other. The <b style="color:var(--paper)">freeware ad network</b> is like Google AdSense but for software. The <b style="color:var(--paper)">bloatware middleman</b> automates the deal between bloatware companies and freeware devs. The <b style="color:var(--paper)">itch.io desktop port</b> re-categorizes and filters games.</p>
+    <div class="tiles">
+      <div class="tile dev">
+        <div class="k">Product 01 · Ad Network</div>
+        <h3>Freeware Ad Network</h3>
+        <p>Think <b>Google AdSense</b> — but for software. Any game or app can put ads through this network. 10,000 developers join your network, and hundreds of sponsors plug in. Devs get paid. Sponsors get reach. You run the network between them.</p>
+        <div class="metarow">
+          <div class="m"><div class="n grn">Ad Network</div><div class="l">Core Product</div></div>
+          <div class="m"><div class="n">10K+</div><div class="l">Developer Target</div></div>
+        </div>
+        <span class="tag">AdSense for software</span>
       </div>
-      <span class="tag">Sensors · Auto-pay · Zero dev work</span>
-    </div>
-    <div class="card orange">
-      <div class="label">Product 03</div>
-      <h3>Desktop Port of itch.io</h3>
-      <p>A desktop app that re-categorizes games from itch.io and <b>heavily filters slop games</b>. Unofficial but real — download it and get a cleaned-up, re-organized view of itch.io's library. Comes with a video on why itch.io slop is a problem. Can carry ads or bloatware from the network too.</p>
-      <div class="metarow">
-        <div class="m"><div class="n orange">Filter</div><div class="l">Slop Removal</div></div>
-        <div class="m"><div class="n">Desktop</div><div class="l">App Port</div></div>
+      <div class="tile bloat">
+        <div class="k">Product 02 · Middleman</div>
+        <h3>Bloatware Middleman</h3>
+        <p>A service between <b>bloatware companies</b> and <b>freeware developers</b>. Auto-detects downloads and pays the freeware dev per download automatically. Bloatware companies pay for the service. Devs package once and get paid — <b>no action, no work, no contract to manage</b>. Sensors handle it all.</p>
+        <div class="metarow">
+          <div class="m"><div class="n ora">$0</div><div class="l">Work for Devs</div></div>
+          <div class="m"><div class="n">Per-DL</div><div class="l">Auto-Pay</div></div>
+        </div>
+        <span class="tag">Sensors · auto-pay · zero dev work</span>
       </div>
-      <span class="tag">Cleaned-up itch.io · Ad &amp; bloatware host</span>
-    </div>
-    <div class="card">
-      <div class="label">The Link</div>
-      <h3>How They Connect</h3>
-      <p>The bloatware middleman and the ad network run alongside the itch.io desktop port. The port is the distribution layer — it surfaces filtered, re-categorized games and can carry ads or bloatware from the network. 10,000 developers → your network → hundreds of sponsors. They all plug into the same platform.</p>
-      <div class="metarow">
-        <div class="m"><div class="n">Platform</div><div class="l">All 3 Products</div></div>
-        <div class="m"><div class="n green">Network</div><div class="l">Effects</div></div>
-      </div>
-      <span class="tag">One platform, three products, one network</span>
-    </div>
-  </div>
-</section>
-
-<section class="sec">
-  <span class="kicker">How the bloatware middleman works</span>
-  <h2>End to end — sensors that pay.</h2>
-  <div class="flowbar">
-    <h3>The bloatware middleman — a download happens, everyone gets paid</h3>
-    <div class="flow">
-      <div class="step">
-        <div class="num">Step 1</div>
-        <div class="title">Dev packages their software</div>
-        <div class="desc">Using the official DownloadHarvester packaging method. One-time setup. Works with any software.</div>
-      </div>
-      <div class="arrow">→</div>
-      <div class="step">
-        <div class="num">Step 2</div>
-        <div class="title">A download happens</div>
-        <div class="desc">Someone downloads the freeware. The DownloadHarvester sensor detects the download automatically.</div>
-      </div>
-      <div class="arrow">→</div>
-      <div class="step">
-        <div class="num">Step 3</div>
-        <div class="title">Bloatware company pays</div>
-        <div class="desc">Bloatware companies pay for the service. They want the downloads, the reach, the exposure.</div>
-      </div>
-      <div class="arrow">→</div>
-      <div class="step">
-        <div class="num">Step 4</div>
-        <div class="title">Dev gets paid</div>
-        <div class="desc">The freeware dev is paid automatically per download. No action. No work. Sensors handle it all.</div>
+      <div class="tile ads">
+        <div class="k">Product 03 · Distribution</div>
+        <h3>Desktop Port of itch.io</h3>
+        <p>A desktop app that re-categorizes games from itch.io and <b>heavily filters slop games</b>. Unofficial but real — download it and get a cleaned-up, re-organized view of itch.io's library. Can carry ads or bloatware from the network too.</p>
+        <div class="metarow">
+          <div class="m"><div class="n ora">Filter</div><div class="l">Slop Removal</div></div>
+          <div class="m"><div class="n">Desktop</div><div class="l">App Port</div></div>
+        </div>
+        <span class="tag">Cleaned-up itch.io · ad &amp; bloatware host</span>
       </div>
     </div>
   </div>
 </section>
 
-<section class="sec">
-  <span class="kicker">Why this exists</span>
-  <h2>For developers. For bloatware companies.</h2>
-  <div class="twocol">
-    <div class="card" style="margin-top:0">
-      <div class="label">For Freeware Developers</div>
-      <h3>A third option — get paid without the bloat.</h3>
-      <p>Freeware devs currently have two bad options: give their software away for nothing, or bundle bloatware themselves and deal with the contracts directly. DownloadHarvester gives them a third option — package it once, get paid per download automatically. No bloatware contracts. No work. Just sensors that pay you when people download your software.</p>
+<section class="band" id="how">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">How the Bloatware Middleman Works</span>
+      <h2>End to end — sensors that pay.</h2>
     </div>
-    <div class="card orange" style="margin-top:0">
-      <div class="label">For Bloatware Companies</div>
-      <h3>Downloads without the hassle.</h3>
-      <p>Bloatware companies want downloads. They want reach. They want exposure. DownloadHarvester gives them a clean way to pay for that — through the middleman — without having to contract with every freeware dev individually. They pay the service, the service pays the devs per download, everyone wins.</p>
-    </div>
-  </div>
-</section>
-
-<section class="sec">
-  <span class="kicker">The numbers</span>
-  <h2>What the platform looks like.</h2>
-  <div class="statrow">
-    <div class="cell">
-      <div class="n green">10,000</div>
-      <div class="l">Developers in Network</div>
-    </div>
-    <div class="cell">
-      <div class="n green">Per-DL</div>
-      <div class="l">Auto-Pay Model</div>
-    </div>
-    <div class="cell">
-      <div class="n" style="color:var(--orange)">$0</div>
-      <div class="l">Work for Freeware Devs</div>
-    </div>
-    <div class="cell">
-      <div class="n" style="color:var(--orange)">100%</div>
-      <div class="l">Slop Filtered (itch.io port)</div>
+    <div class="flowwrap">
+      <h3>A download happens, everyone gets paid</h3>
+      <div class="flow">
+        <div class="step dev">
+          <div class="num">Step 1</div>
+          <div class="t">Dev packages their software</div>
+          <div class="d">Using the official DownloadHarvester packaging method. One-time setup. Works with any software.</div>
+        </div>
+        <div class="arr">→</div>
+        <div class="step">
+          <div class="num">Step 2</div>
+          <div class="t">A download happens</div>
+          <div class="d">Someone downloads the freeware. The DownloadHarvester sensor detects the download automatically.</div>
+        </div>
+        <div class="arr">→</div>
+        <div class="step bloat">
+          <div class="num">Step 3</div>
+          <div class="t">Bloatware company pays</div>
+          <div class="d">Bloatware companies pay for the service. They want the downloads, the reach, the exposure.</div>
+        </div>
+        <div class="arr">→</div>
+        <div class="step dev" style="border-left-color:var(--orange)">
+          <div class="num" style="color:var(--orange)">Step 4</div>
+          <div class="t" style="color:var(--orange)">Dev gets paid</div>
+          <div class="d" style="color:var(--orange)">The freeware dev is paid automatically per download. No action. No work. Sensors handle it all.</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="pledgebar">
-  <a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>
-  an <b>ALLSEER</b> company<span class="sep">|</span>
-  freeware ad network &amp; bloatware middleman — concept draft</a>
-</div>
+<section class="band" id="why">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Why This Exists</span>
+      <h2>For developers. For bloatware companies.</h2>
+    </div>
+    <div class="two">
+      <div class="block dev">
+        <div class="tag">For Freeware Developers</div>
+        <h3>A third option — get paid without the bloat.</h3>
+        <p>Freeware devs currently have two bad options: give their software away for nothing, or bundle bloatware themselves and deal with the contracts directly. DownloadHarvester gives them a third option — package it once, get paid per download automatically. No bloatware contracts. No work. Just sensors that pay you when people download your software.</p>
+      </div>
+      <div class="block bloat">
+        <div class="tag">For Bloatware Companies</div>
+        <h3>Downloads without the hassle.</h3>
+        <p>Bloatware companies want downloads. They want reach. They want exposure. DownloadHarvester gives them a clean way to pay for that — through the middleman — without having to contract with every freeware dev individually. They pay the service, the service pays the devs per download, everyone wins.</p>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="c"><div class="n grn">10,000</div><div class="l">Developers in Network</div></div>
+      <div class="c"><div class="n grn">Per-DL</div><div class="l">Auto-Pay Model</div></div>
+      <div class="c"><div class="n ora">$0</div><div class="l">Work for Freeware Devs</div></div>
+      <div class="c"><div class="n ora">100%</div><div class="l">Slop Filtered (itch.io port)</div></div>
+    </div>
+  </div>
+</section>
 
+<div class="pl-edge"><a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>an <b>ALLSEER</b> company</a></div>
 <footer>
-  <span class="mark">PRIMAL<sup>APE</sup></span>
-  <span class="right">DOWNLOADHARVESTER — a concept draft. Nothing here is final.<br>
-  Part of the ALLSEER SOFTWARE concept-draft library.</span>
+  <div class="wrap foot">
+    <div class="l"><img src="assets/angelcorp.png" alt=""><div class="x"><b>DOWNLOADHARVESTER</b><br>Software platform · concept draft</div></div>
+    <div class="r"><span class="pmark">PRIMAL<sup>APE</sup></span> · under ALLSEER SOFTWARE</div>
+  </div>
 </footer>
-
-<div class="ornament"><span>CONCEPT DRAFT</span></div>
-
-</div>
 
 </body>
 </html>

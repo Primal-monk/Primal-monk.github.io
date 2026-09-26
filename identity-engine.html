@@ -5,312 +5,327 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IdentityEngine — Digital Private Investigation &amp; OPSEC</title>
 <link rel="icon" type="image/png" href="assets/angelcorp.png">
-<meta name="description" content="IdentityEngine — a fully digital private investigator service. OPSEC tools to legally find information on a suspect. AI-assisted: social media image scanning, metadata extraction, profile building, alt-account discovery, writing-style correlation. Red-team cybersecurity available.">
+<meta name="description" content="IdentityEngine — a fully digital private investigator service. OPSEC tools, AI-assisted investigation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
   :root{
-    --bg:#0b0e14; --bg2:#10141c; --bg3:#181e28; --bg4:#202835;
-    --accent:#4a8fb8; --accent2:#356e94;
-    --red:#b8432a;
-    --ink:#e8e6e0; --sec:#7a8593; --faint:#46505f;
-    --line:rgba(74,143,184,.16); --line2:rgba(74,143,184,.06);
-    --corp:"Archivo","Segoe UI",system-ui,sans-serif;
-    --mono:"Archivo","Courier New",monospace;
-    --maxw:1100px;
+    --bg:#080b10; --bg2:#0e1218; --bg3:#151b24; --bg4:#1c2430;
+    --line:#253040; --line-acc:rgba(212,175,55,.18);
+    --paper:#e8e4dc; --dim:#7a8294; --faint:#45505f;
+    --amber:#d4af37; --amber2:#e8c84a; --amber3:#f0d86a;
+    --steel:#6b8a9e; --steel2:#8aa8c0;
+    --red:#c4453a;
+    --disp:"Sora",system-ui,sans-serif;
+    --body:"Lexend",system-ui,sans-serif;
+    --mono:"JetBrains Mono","Consolas",monospace;
+    --maxw:1340px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:var(--corp);background:var(--bg);color:var(--sec);
-    line-height:1.6;font-size:17px;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-    background-color:var(--bg);
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%234a8fb8' opacity='0.12'/%3E%3Ccircle cx='40' cy='15' r='1.5' fill='%234a8fb8' opacity='0.12'/%3E%3Ccircle cx='25' cy='40' r='1.5' fill='%234a8fb8' opacity='0.12'/%3E%3Ccircle cx='50' cy='45' r='1.5' fill='%234a8fb8' opacity='0.12'/%3E%3Ccircle cx='15' cy='50' r='1.5' fill='%234a8fb8' opacity='0.12'/%3E%3Cline x1='10' y1='10' x2='40' y2='15' stroke='%234a8fb8' stroke-width='0.5' opacity='0.06'/%3E%3Cline x1='40' y1='15' x2='25' y2='40' stroke='%234a8fb8' stroke-width='0.5' opacity='0.06'/%3E%3Cline x1='25' y1='40' x2='50' y2='45' stroke='%234a8fb8' stroke-width='0.5' opacity='0.06'/%3E%3Cline x1='25' y1='40' x2='15' y2='50' stroke='%234a8fb8' stroke-width='0.5' opacity='0.06'/%3E%3C/svg%3E");
-    background-size:60px 60px}
-  ::-webkit-scrollbar{width:10px}
-  ::-webkit-scrollbar-track{background:var(--bg2)}
-  ::-webkit-scrollbar-thumb{background:var(--accent2);border:2px solid var(--bg2);border-radius:6px}
+  body{font-family:var(--body);background:var(--bg);color:var(--paper);line-height:1.65;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background-image:
+      radial-gradient(900px 500px at 84% -8%, rgba(212,175,55,.07), transparent 62%),
+      radial-gradient(700px 400px at -4% 8%, rgba(107,138,158,.05), transparent 60%)}
   a{color:inherit;text-decoration:none}
-  ::selection{background:var(--accent);color:var(--bg)}
-  .mono{font-family:var(--mono);letter-spacing:.04em}
-  .topbar{position:sticky;top:0;z-index:60;height:56px;
-    background:var(--bg2);border-bottom:1px solid var(--line);
-    display:flex;align-items:center;gap:14px;padding:0 24px}
-  .topbar .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-  .topbar .brand img{width:26px;height:26px;object-fit:contain}
-  .topbar .brand .wm{font-family:var(--corp);font-weight:900;font-size:15px;
-    color:var(--ink);letter-spacing:.18em}
-  .topbar .brand .wm small{color:var(--accent);font-weight:700;font-size:.55em;
-    letter-spacing:.2em;margin-left:.5em;vertical-align:super}
-  .topbar .spacer{flex:1}
-  .topbar .back{font-family:var(--mono);font-size:11px;color:var(--accent2);
-    letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:color .15s;padding:6px 0}
-  .topbar .back:hover{color:var(--accent)}
-  .topbar .tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--accent2);border:1px solid var(--line);
-    border-radius:3px;padding:5px 10px;white-space:nowrap}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-  @media(max-width:640px){.wrap{padding:0 18px}}
-  .hero{padding:64px 0 40px;text-align:center;
-    background:linear-gradient(180deg,#101a26 0%,var(--bg) 100%);
-    position:relative;overflow:hidden}
-  .hero::before{content:"";position:absolute;top:-100px;left:50%;transform:translateX(-50%);
-    width:600px;height:300px;background:radial-gradient(ellipse,rgba(74,143,184,.09),transparent 70%);
-    pointer-events:none}
-  .hero .logochip{display:inline-flex;align-items:center;justify-content:center;
-    width:56px;height:56px;background:var(--accent);border-radius:10px;
-    font-size:1.6rem;color:var(--bg);margin-bottom:18px;
-    box-shadow:0 0 30px rgba(74,143,184,.22),inset 0 1px 0 rgba(255,255,255,.2);
-    transition:transform .15s}
-  .hero .logochip:hover{transform:scale(1.05)}
-  .hero .pre{font-family:var(--mono);font-size:11px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--accent2);margin-bottom:18px}
-  .hero h1{font-weight:900;font-size:clamp(3rem,8vw,5.4rem);
-    line-height:.92;letter-spacing:-.03em;color:var(--ink);
-    text-shadow:0 2px 0 rgba(0,0,0,.4)}
-  .hero h1 .bar{display:inline-block;width:120px;height:4px;
-    background:linear-gradient(90deg,var(--accent),var(--accent2));
-    border-radius:2px;margin:0 clamp(2vw,5vw,4vw) 0}
-  .hero .tag{font-weight:600;font-size:clamp(1rem,2.2vw,1.25rem);
-    color:var(--sec);margin-top:14px;letter-spacing:.02em;
-    max-width:580px;margin-left:auto;margin-right:auto;line-height:1.4}
-  .hero .tag em{font-style:normal;color:var(--accent);font-weight:700}
-  .hero .meta{margin-top:22px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;font-family:var(--mono)}
-  .hero .meta span{font-size:10px;color:var(--faint);letter-spacing:.16em;
-    text-transform:uppercase;border:1px solid var(--line);border-radius:3px;padding:6px 12px}
-  .hero .meta span b{color:var(--accent);font-weight:700}
-  .draftpill{display:inline-block;margin-top:14px;
-    background:var(--bg3);border:1px solid var(--accent2);border-radius:20px;
-    padding:6px 20px;font-size:.72rem;font-weight:700;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--accent)}
-  .sec{padding:48px 0;border-top:1px solid var(--line2)}
-  .sec:first-of-type{border-top:0}
-  .sec .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;
-    text-transform:uppercase;color:var(--accent2);margin-bottom:12px;display:block}
-  .sec h2{font-weight:900;font-size:clamp(1.5rem,3.4vw,2.1rem);
-    color:var(--ink);letter-spacing:-.01em;line-height:1.04;margin-bottom:10px}
-  .sec h2::after{content:"";display:block;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));
-    width:clamp(60px,12vw,120px);margin-top:10px;border-radius:2px}
-  .sec .lede{color:var(--sec);font-size:1.02rem;max-width:640px;margin:0 auto 24px;line-height:1.6;text-align:center}
-  .sec .lede b{color:var(--ink);font-weight:600}
-  .capgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
-  @media(max-width:640px){.capgrid{grid-template-columns:1fr}}
-  .cap{background:var(--bg2);border:1px solid var(--line);border-top:2px solid var(--accent);
-    border-radius:8px;padding:18px;transition:border-color .15s}
-  .cap:hover{border-color:var(--accent)}
-  .cap .ic{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--accent);margin-bottom:8px}
-  .cap h3{font-weight:800;font-size:.98rem;color:var(--ink);letter-spacing:-.01em;margin-bottom:6px}
-  .cap p{color:var(--sec);font-size:.84rem;line-height:1.5}
-  .cap p b{color:var(--ink);font-weight:600}
-  .cap .tag{font-family:var(--mono);font-size:.58rem;color:var(--faint);
-    letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);
-    border-radius:3px;padding:2px 7px;display:inline-block}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
-  @media(max-width:640px){.grid{grid-template-columns:1fr}}
-  .cell{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:22px}
-  .cell .label{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--accent2);margin-bottom:8px}
-  .cell h3{font-weight:800;font-size:1.04rem;color:var(--ink);letter-spacing:-.01em;margin-bottom:8px}
-  .cell p{color:var(--sec);font-size:.88rem;line-height:1.55;margin-bottom:8px}
-  .cell p b{color:var(--ink);font-weight:600}
-  .cell .tag{font-family:var(--mono);font-size:.6rem;color:var(--faint);
-    letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);
-    border-radius:3px;padding:3px 8px;display:inline-block}
-  .callout{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:20px;margin-top:16px}
-  .callout .label{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--accent2);margin-bottom:8px}
-  .callout p{color:var(--sec);font-size:.88rem;line-height:1.55;margin:0}
-  .callout p b{color:var(--ink);font-weight:600}
-  .callout p a{color:var(--accent);font-weight:600}
-  .missionbar{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);
-    margin-top:24px;border-radius:8px;overflow:hidden}
-  @media(max-width:640px){.missionbar{grid-template-columns:1fr}}
-  .missionbar div{padding:20px;border-right:1px solid var(--line)}
-  .missionbar div:last-child{border-right:0}
-  .missionbar .n{color:var(--accent);font-size:.66rem;letter-spacing:.14em;
-    text-transform:uppercase;font-weight:700;margin-bottom:6px}
-  .missionbar p{color:var(--ink);font-size:.84rem;margin:0;line-height:1.45}
-  .pledgebar{margin-top:32px;border-top:1px solid rgba(255,255,255,.06);
-    background:color-mix(in srgb,var(--bg2) 80%,transparent);
-    padding:16px 28px;text-align:center;font-size:.86rem;line-height:1.55}
-  .pledgebar a{display:inline-block;color:var(--accent2);opacity:.82;transition:opacity .15s}
-  .pledgebar a:hover{opacity:1}
-  .pledgebar b{color:var(--accent);font-weight:700}
-  .pledgebar .sep{opacity:.35;margin:0 .5em}
-  footer{border-top:1px solid var(--line2);padding:28px 0;
-    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
-    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--faint);
-    text-transform:uppercase}
-  footer .mark{font-family:var(--corp);font-weight:900;color:var(--accent2);
-    letter-spacing:.14em;font-size:12px}
-  footer .mark sup{font-size:.55em;vertical-align:super;margin-left:.06em;color:var(--faint)}
-  footer .right{text-align:right;color:var(--faint)}
-  .ornament{display:flex;align-items:center;justify-content:center;gap:14px;
-    margin:36px 0 0;padding-top:24px;border-top:1px solid var(--line2)}
-  .ornament::before,.ornament::after{content:"";height:1px;width:80px}
-  .ornament::before{background:linear-gradient(90deg,transparent,var(--line))}
-  .ornament::after{background:linear-gradient(90deg,var(--line),transparent)}
-  .ornament span{font-family:var(--mono);font-size:.62rem;color:var(--faint);letter-spacing:.2em}
+  h1,h2,h3,h4{font-family:var(--disp);text-wrap:balance;line-height:1.1}
+  .mono{font-family:var(--mono)}
+  ::selection{background:var(--amber);color:#080b10}
+  ::-webkit-scrollbar{width:12px}::-webkit-scrollbar-track{background:var(--bg2)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--amber),var(--steel));border:3px solid var(--bg2);border-radius:8px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:22px}
+  .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--amber2)}
+  .crosshair{position:relative}
+  .crosshair::before{content:"";position:absolute;left:50%;top:50%;width:40px;height:1px;background:var(--amber);
+    transform:translate(-50%,-50%);opacity:.3}
+  .crosshair::after{content:"";position:absolute;left:50%;top:50%;width:1px;height:40px;background:var(--amber);
+    transform:translate(-50%,-50%);opacity:.3}
+
+  .nav{position:sticky;top:0;z-index:60;background:rgba(8,11,16,.84);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;gap:18px;height:60px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:28px;height:28px;object-fit:contain}
+  .brand .wm{font-family:var(--disp);font-weight:700;font-size:17px;letter-spacing:.08em}
+  .brand .wm b{color:var(--amber)}
+  .navlinks{display:flex;gap:22px;margin-left:auto}
+  .navlinks a{font-size:13px;color:var(--dim);letter-spacing:.02em;transition:color .15s}
+  .navlinks a:hover{color:var(--paper)}
+  .navtools{display:flex;align-items:center;gap:10px;margin-left:auto}
+  .pill{background:var(--bg3);border:1px solid var(--line-acc);border-radius:4px;color:var(--paper);
+    font-family:var(--mono);font-size:10px;padding:5px 10px;letter-spacing:.08em;text-transform:uppercase}
+  .btn{font-family:var(--disp);font-weight:600;font-size:12.5px;letter-spacing:.04em;padding:10px 18px;border-radius:5px;
+    cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;display:inline-block}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:linear-gradient(96deg,var(--amber),var(--amber2));color:#080b10}
+  .btn-primary:hover{filter:brightness(1.07)}
+  .btn-ghost{border-color:var(--line-acc);color:var(--paper)}
+  .btn-ghost:hover{border-color:var(--amber);background:rgba(212,175,55,.06)}
+  @media(max-width:880px){.navlinks{display:none}}
+
+  .strip{background:#05080c;border-bottom:1px solid var(--line)}
+  .strip .wrap{display:flex;gap:22px;align-items:center;height:26px;font-family:var(--mono);
+    font-size:9px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;overflow:hidden;white-space:nowrap}
+  .strip .a{color:var(--dim)} .strip .ver{margin-left:auto}
+  .strip .dot{width:5px;height:5px;border-radius:50%;background:var(--amber);animation:pulse 2.5s ease-in-out infinite;flex:none}
+  @keyframes pulse{0%,100%{opacity:.3;box-shadow:0 0 0 0 rgba(212,175,55,.3)}50%{opacity:1;box-shadow:0 0 8px 2px rgba(212,175,55,.15)}}
+
+  .hero{position:relative;padding-block:clamp(40px,6vw,74px)}
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+  @media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:32px}}
+  .hero h1{font-weight:700;font-size:clamp(2.8rem,7vw,5.2rem);margin:14px 0 0;letter-spacing:-.02em}
+  .hero .sub{font-size:clamp(.98rem,1.6vw,1.14rem);color:#c4beb6;max-width:52ch;margin-top:16px}
+  .hero .sub em{color:var(--amber);font-style:normal;font-weight:600}
+  .hero .cta{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+  .hero .meta{display:flex;gap:18px;margin-top:24px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--dim)}
+  .hero .meta span{display:flex;align-items:center;gap:7px}
+  .hero .meta i{width:5px;height:5px;background:var(--amber);transform:rotate(45deg);flex:none}
+  .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(212,175,55,.04) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(212,175,55,.04) 1px,transparent 1px);
+    background-size:40px 40px;
+    -webkit-mask-image:radial-gradient(135% 92% at 70% 8%,#000 0 34%,transparent 78%);
+            mask-image:radial-gradient(135% 92% at 70% 8%,#000 0 34%,transparent 78%)}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:110px;z-index:0;pointer-events:none;
+    background:linear-gradient(180deg,transparent,var(--bg))}
+
+  /* case file card */
+  .casefile{border:1px solid var(--line);border-radius:6px;background:var(--bg2);padding:0;overflow:hidden;
+    box-shadow:0 8px 24px -12px rgba(0,0,0,.6)}
+  .casefile .cf-head{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);
+    background:#0c1016}
+  .casefile .cf-num{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);flex:none}
+  .casefile .cf-classification{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+    padding:3px 8px;border:1px solid var(--amber);color:var(--amber);border-radius:2px;flex:none;margin-left:auto}
+  .casefile .cf-body{padding:14px 14px 16px}
+  .casefile .cf-body .cf-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--faint);margin-bottom:6px}
+  .casefile .cf-body h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+  .casefile .cf-body p{color:var(--dim);font-size:.88rem;line-height:1.55;margin:0}
+  .casefile .cf-body .cf-tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+  .casefile .cf-body .cf-tag{font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;
+    padding:2px 7px;border-radius:2px;border:1px solid var(--line-acc);color:var(--steel2);background:rgba(107,138,158,.06)}
+
+  .casegrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+  @media(max-width:640px){.casegrid{grid-template-columns:1fr}}
+
+  /* investigation flow */
+  .invflow{margin-top:24px}
+  .invflow .if-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+  .if-step{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+  .if-step:last-child{border-bottom:0}
+  .if-step .if-stamp{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:4px;min-width:60px}
+  .if-step .if-content h4{font-size:1rem;font-weight:700;margin-bottom:3px}
+  .if-step .if-content p{color:var(--dim);font-size:.88rem;line-height:1.5}
+
+  .pl-edge{border-top:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.028);padding:14px 22px;text-align:center;font-size:.84rem;line-height:1.6}
+  .pl-edge a{display:inline-block;color:inherit;opacity:.82;transition:opacity .15s}
+  .pl-edge a:hover{opacity:1}
+  .pl-edge b{color:#ffd86a;font-weight:700}
+  .pl-edge .sep{opacity:.35;margin:0 .55em}
+  footer{border-top:1px solid var(--line);padding-block:30px}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .foot .l{display:flex;align-items:center;gap:11px}
+  .foot .l img{width:24px;height:24px;object-fit:contain}
+  .foot .l .x{font-family:var(--mono);font-size:11px;color:var(--dim);line-height:1.4}
+  .foot .l .x b{font-family:var(--disp);color:var(--paper);letter-spacing:.08em;font-size:.95rem}
+  .foot .r{font-family:var(--mono);font-size:10.5px;color:var(--faint);text-align:right}
+  .pmark{font-family:var(--disp);font-weight:700;color:var(--dim)}
+  .pmark sup{font-size:.62em;vertical-align:super;margin-left:.06em}
 </style>
 </head>
 <body>
 
-<nav class="topbar">
-  <a class="brand" href="omni.html">
-    <img src="assets/angelcorp.png" alt="ALLSEER">
-    <span class="wm">ALLSEER<small>SOFTWARE</small></span>
-  </a>
-  <div class="spacer"></div>
-  <span class="tag">Digital Investigation · OPSEC</span>
-  <a class="back" href="omni.html">&larr; Back to ALLSEER</a>
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="omni.html">
+      <img src="assets/angelcorp.png" alt="ALLSEER">
+      <span class="wm">ALLSEER <b>SOFTWARE</b></span>
+    </a>
+    <div class="navlinks">
+      <a href="#capabilities">Capabilities</a>
+      <a href="#approach">The Approach</a>
+      <a href="#services">Services</a>
+    </div>
+    <div class="navtools">
+      <span class="pill">Digital Investigation</span>
+      <a href="#capabilities" class="btn btn-primary">See Capabilities</a>
+    </div>
+  </div>
 </nav>
 
-<div class="wrap">
+<div class="strip">
+  <div class="wrap">
+    <span class="a">IDENTITYENGINE // DIGITAL PRIVATE INVESTIGATION</span>
+    <span class="dot"></span>
+    <span class="ver">OPSEC · LEGAL · AI-ASSISTED</span>
+  </div>
+</div>
 
 <header class="hero">
-  <div class="logochip">🔎</div>
-  <div class="pre">A Division of ALLSEER SOFTWARE</div>
-  <h1>IDENTITYENGINE<span class="bar"></span></h1>
-  <p class="tag">A fully <em>digital</em> private investigator.<br>
-  OPSEC tools to legally find information on anyone. AI-assisted. No physical presence required.</p>
-  <div class="meta">
-    <span><b>Digital PI</b> — fully remote</span>
-    <span><b>OPSEC</b> — legal methods only</span>
-    <span><b>AI-Assisted</b> — automated investigation</span>
-    <span><b>Red-Team</b> — available</span>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">A Division of ALLSEER SOFTWARE</span>
+      <h1>IDENTITYENGINE</h1>
+      <p class="sub">A fully <em>digital</em> private investigator.<br>
+      OPSEC tools to legally find information on anyone. <em>AI-assisted.</em> No physical presence required.</p>
+      <div class="cta">
+        <a href="#capabilities" class="btn btn-primary">See the Capabilities</a>
+        <a href="#approach" class="btn btn-ghost">The Approach</a>
+      </div>
+      <div class="meta">
+        <span><i></i>Digital PI — fully remote</span>
+        <span><i></i>OPSEC — legal methods only</span>
+        <span><i></i>AI-Assisted — automated investigation</span>
+        <span><i></i>Red-Team — available</span>
+      </div>
+    </div>
+    <div>
+      <div style="position:relative">
+        <div style="position:absolute;inset:-20px;background:radial-gradient(ellipse at center,rgba(212,175,55,.08),transparent 70%);pointer-events:none"></div>
+        <div class="casefile">
+          <div class="cf-head">
+            <span class="cf-num">CASE FILE · 001</span>
+            <span class="cf-classification">ACTIVE INVESTIGATION</span>
+          </div>
+          <div class="cf-body">
+            <div class="cf-label">Subject</div>
+            <h3>Digital footprint analysis</h3>
+            <p>Open-source intelligence aggregation across public records, social media presence, and digital artifacts. AI-assisted correlation across 47 data points.</p>
+            <div class="cf-tags">
+              <span class="cf-tag">OSINT</span>
+              <span class="cf-tag">Social Media</span>
+              <span class="cf-tag">Metadata</span>
+              <span class="cf-tag">AI Profile</span>
+            </div>
+          </div>
+        </div>
+        <div class="casefile" style="margin-top:10px">
+          <div class="cf-head">
+            <span class="cf-num">CASE FILE · 002</span>
+            <span class="cf-classification">FINDINGS</span>
+          </div>
+          <div class="cf-body">
+            <div class="cf-label">Connected Nodes</div>
+            <h3>Network mapping complete</h3>
+            <p>3 related accounts identified. 2 verified as same operator via writing-style correlation. Full report generated with sourced evidence chain.</p>
+            <div class="cf-tags">
+              <span class="cf-tag">Network Map</span>
+              <span class="cf-tag">Stylometry</span>
+              <span class="cf-tag">Alt-Accounts</span>
+              <span class="cf-tag">Report</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="draftpill">Digital Investigation · Concept Draft</div>
 </header>
 
-<section class="sec">
-  <span class="kicker">The idea</span>
-  <h2>Find anyone. Legally. Without leaving your desk.</h2>
-  <p class="lede">
-    IdentityEngine is a fully digital private investigator — a service that uses OPSEC methods to legally find information on a suspect, without any physical presence required. It starts with the basics: people-search-style tools, social media scanning, metadata extraction. Then it goes deeper: AI builds a full profile, finds related nodes, discovers alt-accounts, and correlates accounts by writing style.
-  </p>
-</section>
-
-<section class="sec">
-  <span class="kicker">The approach</span>
-  <h2>OPSEC methods. Legal. AI-assisted. Automated.</h2>
-  <p class="lede">
-    The basic premise: an online investigation company that runs OPSEC to find information. Use people-search tools. Find all images on social media and auto-scan them for metadata with AI. Have AI build a full profile on the individual of interest. Investigate nodes it suspects are related to the suspect. Build a full report. Find alt-accounts using writing-style analysis — the same method as the referenced video, where AI sees someone's writing style and filters correlated accounts with the same style.
-  </p>
-  <div class="capgrid">
-    <div class="cap">
-      <div class="ic">Capability 01</div>
-      <h3>People-Search Tools</h3>
-      <p>Start with the basics: people-search-style tools that aggregate publicly available information on a subject. Name, address history, phone numbers, known associates — the standard open-source intelligence stack.</p>
-      <span class="tag">OSINT</span>
+<section class="band" id="capabilities" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head" style="margin-bottom:8px">
+      <span class="eyebrow">Capabilities</span>
+      <h2>Six tools. One investigation.</h2>
     </div>
-    <div class="cap">
-      <div class="ic">Capability 02</div>
-      <h3>Social Media Image Scanning</h3>
-      <p>Find all images on a subject's social media and auto-scan them for metadata with AI. EXIF data, geolocation hints, device fingerprints, timestamps — everything the images reveal that isn't visible on the surface.</p>
-      <span class="tag">AI + Metadata</span>
-    </div>
-    <div class="cap">
-      <div class="ic">Capability 03</div>
-      <h3>Full Profile Building</h3>
-      <p>AI takes all the gathered data and builds a full profile on the individual of interest. Connections, habits, locations, accounts, timeline — a structured report that puts the whole picture together.</p>
-      <span class="tag">AI Profile</span>
-    </div>
-    <div class="cap">
-      <div class="ic">Capability 04</div>
-      <h3>Node Investigation</h3>
-      <p>Investigate nodes the AI suspects are related to the suspect. Follow the connections. Map the network. Each related node gets checked, and the results feed back into the profile.</p>
-      <span class="tag">Network Mapping</span>
-    </div>
-    <div class="cap">
-      <div class="ic">Capability 05</div>
-      <h3>Alt-Account Discovery</h3>
-      <p>Find alt-accounts using writing-style analysis. AI sees someone's writing style and filters for correlated accounts with the same style — the same method referenced in the source video. One person, many accounts, all identified.</p>
-      <span class="tag">Stylometry</span>
-    </div>
-    <div class="cap">
-      <div class="ic">Capability 06</div>
-      <h3>Full Report Generation</h3>
-      <p>Everything comes together in a full report on the individual of interest. Structured, sourced, and ready to use. The final output of the investigation — a document that says what was found, how, and where it came from.</p>
-      <span class="tag">Report</span>
+    <p style="color:var(--dim);max-width:60ch;margin-bottom:18px">IdentityEngine runs OPSEC methods to legally find information. Start with people-search tools. Find all images on social media and auto-scan them for metadata with AI. Build a full profile. Investigate related nodes. Discover alt-accounts by writing style. Generate a full report.</p>
+    <div class="casegrid">
+      <div class="casefile">
+        <div class="cf-head"><span class="cf-num">CAP 01</span><span class="cf-classification">OSINT</span></div>
+        <div class="cf-body"><div class="cf-label">People-Search Tools</div><h3>Aggregate public information</h3><p>Name, address history, phone numbers, known associates — the standard open-source intelligence stack, gathered and structured.</p><div class="cf-tags"><span class="cf-tag">Public Records</span><span class="cf-tag">Address History</span><span class="cf-tag">Associates</span></div></div>
+      </div>
+      <div class="casefile">
+        <div class="cf-head"><span class="cf-num">CAP 02</span><span class="cf-classification">AI + METADATA</span></div>
+        <div class="cf-body"><div class="cf-label">Social Media Image Scanning</div><h3>Auto-scan every image</h3><p>Find all images on a subject's social media and auto-scan them for metadata with AI. EXIF data, geolocation hints, device fingerprints, timestamps.</p><div class="cf-tags"><span class="cf-tag">EXIF</span><span class="cf-tag">Geolocation</span><span class="cf-tag">Device ID</span></div></div>
+      </div>
+      <div class="casefile">
+        <div class="cf-head"><span class="cf-num">CAP 03</span><span class="cf-classification">AI PROFILE</span></div>
+        <div class="cf-body"><div class="cf-label">Full Profile Building</div><h3>AI assembles the picture</h3><p>AI takes all the gathered data and builds a full profile on the individual of interest. Connections, habits, locations, accounts, timeline — a structured report.</p><div class="cf-tags"><span class="cf-tag">Connections</span><span class="cf-tag">Timeline</span><span class="cf-tag">Structured</span></div></div>
+      </div>
+      <div class="casefile">
+        <div class="cf-head"><span class="cf-num">CAP 04</span><span class="cf-classification">NETWORK MAPPING</span></div>
+        <div class="cf-body"><div class="cf-label">Node Investigation</div><h3>Follow the connections</h3><p>Investigate nodes the AI suspects are related to the suspect. Follow the connections. Map the network. Each related node gets checked, results feed back into the profile.</p><div class="cf-tags"><span class="cf-tag">Graph</span><span class="cf-tag">Cross-Check</span><span class="cf-tag">Recursive</span></div></div>
+      </div>
+      <div class="casefile">
+        <div class="cf-head"><span class="cf-num">CAP 05</span><span class="cf-classification">STYLOMETRY</span></div>
+        <div class="cf-body"><div class="cf-label">Alt-Account Discovery</div><h3>Find them by how they write</h3><p>Find alt-accounts using writing-style analysis. AI sees someone's writing style and filters for correlated accounts with the same style — one person, many accounts, all identified.</p><div class="cf-tags"><span class="cf-tag">Writing Style</span><span class="cf-tag">Correlation</span><span class="cf-tag">Filtering</span></div></div>
+      </div>
+      <div class="casefile">
+        <div class="cf-head"><span class="cf-num">CAP 06</span><span class="cf-classification">REPORT</span></div>
+        <div class="cf-body"><div class="cf-label">Full Report Generation</div><h3>Everything documented</h3><p>Everything comes together in a full report on the individual of interest. Structured, sourced, and ready to use. What was found, how, and where it came from.</p><div class="cf-tags"><span class="cf-tag">Sourced</span><span class="cf-tag">Actionable</span><span class="cf-tag">Standard Format</span></div></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="sec">
-  <span class="kicker">The software</span>
-  <h2>Need the source. May partner or replicate.</h2>
-  <p class="lede">
-    The investigation method referenced in the source video uses AI to see someone's writing style and filter correlated accounts with the same writing style. IdentityEngine needs that software as a starting point — either by partnering with the people who made it, or by replicating it ourselves. No matter what, we need it. It's the core of the alt-account discovery capability.
-  </p>
-  <div class="callout">
-    <div class="label">Reference</div>
-    <p>
-      The writing-style correlation method — AI identifies a person's writing style and finds other accounts that match it. Referenced in <a href="https://www.youtube.com/watch?v=F6fMyMS-D-U" target="_blank" rel="noopener">this video</a>. IdentityEngine either partners with the creators or replicates the software. No matter what, it's needed as a starting point.
-    </p>
-  </div>
-</section>
-
-<section class="sec">
-  <span class="kicker">Services</span>
-  <h2>What IdentityEngine offers.</h2>
-  <div class="grid">
-    <div class="cell">
-      <div class="label">Core Service</div>
-      <h3>Digital Private Investigation</h3>
-      <p>The main thing. A client comes with a suspect or a subject. IdentityEngine runs OPSEC methods to legally find information on them — people-search, social media scanning, metadata extraction, profile building, alt-account discovery, and a full report. AI filters for real requests first.</p>
-      <span class="tag">Primary</span>
+<section class="band" id="approach" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">The Approach</span>
+      <h2>OPSEC methods. Legal. AI-assisted. Automated.</h2>
     </div>
-    <div class="cell">
-      <div class="label">Expansion</div>
-      <h3>Red-Team Cybersecurity</h3>
-      <p>As the service expands, offer red-team cybersecurity — AI-assisted, to help investigate criminal acts. Get authorization from legal courts or assist authorities. Same OPSEC backbone, different application. Starts as a small idea/service and expands, same as everything else.</p>
-      <span class="tag">Future</span>
-    </div>
-    <div class="cell">
-      <div class="label">Mission</div>
-      <h3>Fill the world with justice.</h3>
-      <p>Everything IdentityEngine does is legal. OPSEC methods, publicly available information, authorized investigation. The digital PI starts small and expands — as with all the companies under ALLSEER. Eventually partner with or assist authorities.</p>
-      <span class="tag">OPSEC · Legal</span>
+    <div class="invflow">
+      <div class="if-step">
+        <div class="if-stamp">PHASE 01</div>
+        <div class="if-content"><h4>Gather the surface</h4><p>Start with people-search-style tools — publicly available information on the subject. Name, address history, phone numbers, known associates. The standard OSINT stack, gathered first.</p></div>
+      </div>
+      <div class="if-step">
+        <div class="if-stamp">PHASE 02</div>
+        <div class="if-content"><h4>Scan the images</h4><p>Find all images on the subject's social media and auto-scan them for metadata with AI. EXIF data, geolocation hints, device fingerprints, timestamps — everything the images reveal that isn't visible on the surface.</p></div>
+      </div>
+      <div class="if-step">
+        <div class="if-stamp">PHASE 03</div>
+        <div class="if-content"><h4>Build the profile</h4><p>AI takes all the gathered data and builds a full profile on the individual of interest. Connections, habits, locations, accounts, timeline — a structured report that puts the whole picture together.</p></div>
+      </div>
+      <div class="if-step">
+        <div class="if-stamp">PHASE 04</div>
+        <div class="if-content"><h4>Map the network</h4><p>Investigate nodes the AI suspects are related to the suspect. Follow the connections. Map the network. Each related node gets checked, and the results feed back into the profile.</p></div>
+      </div>
+      <div class="if-step">
+        <div class="if-stamp">PHASE 05</div>
+        <div class="if-content"><h4>Find the hidden accounts</h4><p>Find alt-accounts using writing-style analysis — the same method referenced in the source video, where AI sees someone's writing style and filters correlated accounts with the same style. One person, many accounts, all identified.</p></div>
+      </div>
+      <div class="if-step">
+        <div class="if-stamp">PHASE 06</div>
+        <div class="if-content"><h4>Deliver the report</h4><p>Everything comes together in a full report on the individual of interest. Structured, sourced, and ready to use. The final output of the investigation — a document that says what was found, how, and where it came from.</p></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="sec">
-  <span class="kicker">The mission</span>
-  <h2>Fill the world with justice and fairness.</h2>
-  <div class="missionbar">
-    <div>
-      <div class="n">Find</div>
-      <p>Use OPSEC and open-source intelligence to find information on anyone — legally, digitally, without physical presence.</p>
+<section class="band" id="services" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Services</span>
+      <h2>What IdentityEngine offers.</h2>
     </div>
-    <div>
-      <div class="n">Verify</div>
-      <p>AI filters for real requests. Every investigation is legitimate. Every method is legal. Every result is sourced.</p>
-    </div>
-    <div>
-      <div class="n">Report</div>
-      <p>Full reports on individuals of interest. Structured, sourced, actionable. The same standard, every time.</p>
+    <div class="casegrid">
+      <div class="casefile">
+        <div class="cf-head"><span class="cf-num">SERVICE 01</span><span class="cf-classification">PRIMARY</span></div>
+        <div class="cf-body"><div class="cf-label">Core Service</div><h3>Digital Private Investigation</h3><p>A client comes with a suspect or a subject. IdentityEngine runs OPSEC methods to legally find information on them — people-search, social media scanning, metadata extraction, profile building, alt-account discovery, and a full report. AI filters for real requests first.</p><div class="cf-tags"><span class="cf-tag">Full Investigation</span><span class="cf-tag">All 6 Capabilities</span><span class="cf-tag">Sourced Report</span></div></div>
+      </div>
+      <div class="casefile">
+        <div class="cf-head"><span class="cf-num">SERVICE 02</span><span class="cf-classification">FUTURE</span></div>
+        <div class="cf-body"><div class="cf-label">Expansion</div><h3>Red-Team Cybersecurity</h3><p>As the service expands, offer red-team cybersecurity — AI-assisted, to help investigate criminal acts. Get authorization from legal courts or assist authorities. Same OPSEC backbone, different application. Starts as a small idea and expands, same as everything else.</p><div class="cf-tags"><span class="cf-tag">Red Team</span><span class="cf-tag">AI-Assisted</span><span class="cf-tag">Authorized</span></div></div>
+      </div>
+      <div class="casefile" style="grid-column:1/-1">
+        <div class="cf-head"><span class="cf-num">MISSION</span><span class="cf-classification">GUIDING PRINCIPLE</span></div>
+        <div class="cf-body"><div class="cf-label">Positioning</div><h3>Everything legal. Everything sourced.</h3><p>Everything IdentityEngine does is legal. OPSEC methods, publicly available information, authorized investigation. The digital PI starts small and expands — as with all the companies under ALLSEER. Eventually partner with or assist authorities.</p>
+          <p style="margin-top:8px;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)">"We must fill the world with justice and fairness as it was filled with injustice and oppression."</p></div>
+      </div>
     </div>
   </div>
-  <p style="color:var(--faint);font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;
-    text-transform:uppercase;margin-top:14px;text-align:center">
-    "We must fill the world with justice and fairness as it was filled with injustice and oppression."
-  </p>
 </section>
 
-<div class="pledgebar">
-  <a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>
-  an <b>ALLSEER</b> company<span class="sep">|</span>
-  digital investigation &amp; OPSEC — concept draft</a>
-</div>
-
+<div class="pl-edge"><a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>an <b>ALLSEER</b> company</a></div>
 <footer>
-  <span class="mark">PRIMAL<sup>APE</sup></span>
-  <span class="right">IDENTITYENGINE — a concept draft. Nothing here is final.<br>
-  Part of the ALLSEER SOFTWARE concept-draft library.</span>
+  <div class="wrap foot">
+    <div class="l"><img src="assets/angelcorp.png" alt=""><div class="x"><b>IDENTITYENGINE</b><br>Digital investigation &amp; OPSEC · concept draft</div></div>
+    <div class="r"><span class="pmark">PRIMAL<sup>APE</sup></span> · under ALLSEER SOFTWARE</div>
+  </div>
 </footer>
-
-<div class="ornament"><span>CONCEPT DRAFT</span></div>
-
-</div>
 
 </body>
 </html>

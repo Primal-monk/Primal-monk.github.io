@@ -5,342 +5,338 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ophanim Financials — AI Debt Collection Agency</title>
 <link rel="icon" type="image/png" href="assets/angelcorp.png">
-<meta name="description" content="Ophanim Financials — an AI debt collection agency. AI calls people with debt obligations and applies pressure tactics to get them to pay. Offered to banks and finance companies. Option to buy debt at discount and collect. Percentage-based contracts.">
+<meta name="description" content="Ophanim Financials — an AI debt collection agency. AI-driven collection, B2B service for banks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
   :root{
-    --bg:#0e0c0a; --bg2:#16120f; --bg3:#1e1915; --bg4:#26221d;
-    --accent:#c9a84c; --accent2:#a8892f;
-    --ink:#e8e0d0; --sec:#9a8a72; --faint:#5a4e3e;
-    --line:rgba(201,168,76,.16); --line2:rgba(201,168,76,.08);
-    --corp:"Archivo","Helvetica Neue",Arial,sans-serif;
-    --mono:"Archivo","Courier New",monospace;
-    --maxw:1100px;
+    --bg:#0c0a09; --bg2:#14110f; --bg3:#1c1815; --bg4:#24201c;
+    --line:#2e2720; --line-acc:rgba(212,175,55,.16);
+    --paper:#e6e0d4; --dim:#8a7f6e; --faint:#4a4238;
+    --gold:#c9a84c; --gold2:#e0c46a; --gold3:#f0d88a;
+    --ink:#1a1612;
+    --disp:"DM Sans",system-ui,sans-serif;
+    --body:"DM Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono","Consolas",monospace;
+    --maxw:1320px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:var(--corp);background:var(--bg);color:var(--sec);
-    line-height:1.6;font-size:17px;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-    background-color:var(--bg);
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Crect x='8' y='8' width='24' height='16' rx='2' stroke='%23c9a84c' stroke-width='0.8' fill='none' opacity='0.07'/%3E%3Cline x1='12' y1='12' x2='28' y2='12' stroke='%23c9a84c' stroke-width='0.5' opacity='0.04'/%3E%3Cline x1='12' y1='16' x2='24' y2='16' stroke='%23c9a84c' stroke-width='0.5' opacity='0.04'/%3E%3Cline x1='12' y1='20' x2='20' y2='20' stroke='%23c9a84c' stroke-width='0.5' opacity='0.04'/%3E%3C/svg%3E");
-    background-size:40px 40px}
-  ::-webkit-scrollbar{width:10px}
-  ::-webkit-scrollbar-track{background:var(--bg2)}
-  ::-webkit-scrollbar-thumb{background:var(--accent2);border:2px solid var(--bg2);border-radius:6px}
+  body{font-family:var(--body);background:var(--bg);color:var(--paper);line-height:1.65;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background-image:
+      radial-gradient(900px 500px at 84% -8%, rgba(212,175,55,.08), transparent 62%),
+      radial-gradient(700px 400px at -4% 8%, rgba(40,35,28,.06), transparent 60%)}
   a{color:inherit;text-decoration:none}
-  ::selection{background:var(--accent);color:var(--bg)}
-  .mono{font-family:var(--mono);letter-spacing:.04em}
-  .topbar{position:sticky;top:0;z-index:60;height:56px;
-    background:var(--bg2);border-bottom:1px solid var(--line);
-    display:flex;align-items:center;gap:14px;padding:0 24px}
-  .topbar .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-  .topbar .brand img{width:26px;height:26px;object-fit:contain}
-  .topbar .brand .wm{font-family:var(--corp);font-weight:900;font-size:15px;
-    color:var(--ink);letter-spacing:.18em}
-  .topbar .brand .wm small{color:var(--accent);font-weight:700;font-size:.55em;
-    letter-spacing:.2em;margin-left:.5em;vertical-align:super}
-  .topbar .spacer{flex:1}
-  .topbar .back{font-family:var(--mono);font-size:11px;color:var(--accent2);
-    letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:color .15s;padding:6px 0}
-  .topbar .back:hover{color:var(--accent)}
-  .topbar .tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--accent2);border:1px solid var(--line);
-    border-radius:3px;padding:5px 10px;white-space:nowrap}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-  @media(max-width:640px){.wrap{padding:0 18px}}
-  .hero{padding:64px 0 40px;text-align:center;
-    background:linear-gradient(180deg,#18130c 0%,var(--bg) 100%);
-    position:relative;overflow:hidden}
-  .hero::before{content:"";position:absolute;top:-100px;left:50%;transform:translateX(-50%);
-    width:600px;height:300px;background:radial-gradient(ellipse,rgba(201,168,76,.09),transparent 70%);
+  h1,h2,h3,h4{font-family:var(--disp);text-wrap:balance;line-height:1.1}
+  .mono{font-family:var(--mono)}
+  ::selection{background:var(--gold);color:#0c0a09}
+  ::-webkit-scrollbar{width:12px}::-webkit-scrollbar-track{background:var(--bg2)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--gold),#8a7530);border:3px solid var(--bg2);border-radius:8px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:22px}
+  .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold2)}
+
+  .nav{position:sticky;top:0;z-index:60;background:rgba(12,10,9,.84);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;gap:18px;height:60px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:28px;height:28px;object-fit:contain}
+  .brand .wm{font-family:var(--disp);font-weight:700;font-size:17px;letter-spacing:.06em}
+  .brand .wm b{color:var(--gold)}
+  .navlinks{display:flex;gap:22px;margin-left:auto}
+  .navlinks a{font-size:13px;color:var(--dim);letter-spacing:.02em;transition:color .15s}
+  .navlinks a:hover{color:var(--paper)}
+  .navtools{display:flex;align-items:center;gap:10px;margin-left:auto}
+  .pill{background:var(--bg3);border:1px solid var(--line-acc);border-radius:4px;color:var(--paper);
+    font-family:var(--mono);font-size:10px;padding:5px 10px;letter-spacing:.08em;text-transform:uppercase}
+  .btn{font-family:var(--disp);font-weight:600;font-size:12.5px;letter-spacing:.03em;padding:10px 18px;border-radius:5px;
+    cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;display:inline-block}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0c0a09}
+  .btn-primary:hover{filter:brightness(1.07)}
+  .btn-ghost{border-color:var(--line-acc);color:var(--paper)}
+  .btn-ghost:hover{border-color:var(--gold);background:rgba(212,175,55,.05)}
+  @media(max-width:860px){.navlinks{display:none}}
+
+  .strip{background:#090706;border-bottom:1px solid var(--line)}
+  .strip .wrap{display:flex;gap:22px;align-items:center;height:26px;font-family:var(--mono);
+    font-size:9px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;overflow:hidden;white-space:nowrap}
+  .strip .a{color:var(--dim)} .strip .ver{margin-left:auto}
+  .strip .dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2.5s ease-in-out infinite;flex:none}
+  @keyframes pulse{0%,100%{opacity:.3;box-shadow:0 0 0 0 rgba(212,175,55,.3)}50%{opacity:1;box-shadow:0 0 8px 2px rgba(212,175,55,.15)}}
+
+  .hero{position:relative;padding-block:clamp(38px,5.5vw,64px)}
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:.9fr 1.1fr;gap:42px;align-items:center}
+  @media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:30px}}
+  .hero h1{font-weight:700;font-size:clamp(2.6rem,6.5vw,4.6rem);margin:14px 0 0;letter-spacing:-.02em}
+  .hero .sub{font-size:clamp(.96rem,1.5vw,1.1rem);color:#c4b8a4;max-width:50ch;margin-top:16px}
+  .hero .sub em{color:var(--gold);font-style:normal;font-weight:600}
+  .hero .cta{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+  .hero .meta{display:flex;gap:18px;margin-top:22px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--dim)}
+  .hero .meta span{display:flex;align-items:center;gap:7px}
+  .hero .meta i{width:5px;height:5px;background:var(--gold);transform:rotate(45deg);flex:none}
+  .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(212,175,55,.04) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(212,175,55,.04) 1px,transparent 1px);
+    background-size:40px 40px;
+    -webkit-mask-image:radial-gradient(130% 92% at 74% 6%,#000 0 34%,transparent 78%);
+            mask-image:radial-gradient(130% 92% at 74% 6%,#000 0 34%,transparent 78%)}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:100px;z-index:0;pointer-events:none;
+    background:linear-gradient(180deg,transparent,var(--bg))}
+
+  /* gauge ring */
+  .gauge-ring{display:flex;align-items:center;gap:16px;padding:18px 20px;background:var(--bg3);
+    border:1px solid var(--line);border-radius:8px;position:relative;overflow:hidden}
+  .gauge-ring::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(circle at 20% 50%, rgba(212,175,55,.04), transparent 60%);
     pointer-events:none}
-  .hero .logochip{display:inline-flex;align-items:center;justify-content:center;
-    width:56px;height:56px;background:var(--accent);border-radius:10px;
-    font-size:1.6rem;color:var(--bg);margin-bottom:18px;
-    box-shadow:0 0 30px rgba(201,168,76,.22),inset 0 1px 0 rgba(255,255,255,.2);
-    transition:transform .15s}
-  .hero .logochip:hover{transform:scale(1.05)}
-  .hero .pre{font-family:var(--mono);font-size:11px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--accent2);margin-bottom:18px}
-  .hero h1{font-weight:900;font-size:clamp(3rem,8vw,5.4rem);
-    line-height:.92;letter-spacing:-.02em;color:var(--ink);
-    text-shadow:0 2px 0 rgba(0,0,0,.4)}
-  .hero h1 .bar{display:inline-block;width:120px;height:4px;
-    background:linear-gradient(90deg,var(--accent),var(--accent2));
-    border-radius:2px;margin:0 clamp(2vw,5vw,4vw) 0}
-  .hero .tag{font-weight:600;font-size:clamp(1rem,2.2vw,1.25rem);
-    color:var(--sec);margin-top:14px;letter-spacing:.02em;
-    max-width:580px;margin-left:auto;margin-right:auto;line-height:1.4}
-  .hero .tag em{font-style:normal;color:var(--accent);font-weight:700}
-  .hero .meta{margin-top:22px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;font-family:var(--mono)}
-  .hero .meta span{font-size:10px;color:var(--faint);letter-spacing:.16em;
-    text-transform:uppercase;border:1px solid var(--line);border-radius:3px;padding:6px 12px}
-  .hero .meta span b{color:var(--accent);font-weight:700}
-  .draftpill{display:inline-block;margin-top:14px;
-    background:var(--bg3);border:1px solid var(--accent2);border-radius:20px;
-    padding:6px 20px;font-size:.72rem;font-weight:700;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--accent)}
-  .sec{padding:48px 0;border-top:1px solid var(--line2)}
-  .sec:first-of-type{border-top:0}
-  .sec .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;
-    text-transform:uppercase;color:var(--accent2);margin-bottom:12px;display:block}
-  .sec h2{font-weight:900;font-size:clamp(1.5rem,3.4vw,2.1rem);
-    color:var(--ink);letter-spacing:-.01em;line-height:1.04;margin-bottom:10px}
-  .sec h2::after{content:"";display:block;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));
-    width:clamp(60px,12vw,120px);margin-top:10px;border-radius:2px}
-  .sec .lede{color:var(--sec);font-size:1.02rem;max-width:640px;margin:0 auto 24px;line-height:1.6;text-align:center}
-  .sec .lede b{color:var(--ink);font-weight:600}
-  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
-  @media(max-width:640px){.twocol{grid-template-columns:1fr}}
-  .block{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:22px}
-  .block h3{font-weight:900;font-size:1.06rem;color:var(--ink);letter-spacing:-.01em;margin-bottom:10px}
-  .block p{color:var(--sec);font-size:.9rem;line-height:1.55;margin-bottom:8px}
-  .block p b{color:var(--ink);font-weight:600}
-  .flowbar{margin-top:24px;background:var(--bg3);border:1px solid var(--line);
-    border-radius:8px;padding:22px}
-  .flowbar h3{color:var(--ink);font-weight:900;font-size:1rem;margin-bottom:14px;letter-spacing:-.01em}
-  .callrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-  @media(max-width:640px){.callrow{grid-template-columns:1fr}}
-  .callrow .step{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:16px}
-  .callrow .step .n{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--accent2);margin-bottom:6px}
-  .callrow .step .v{font-size:.9rem;color:var(--ink);font-weight:700;line-height:1.35}
-  .callrow .step .v small{color:var(--sec);font-weight:400;font-size:.8rem;display:block;margin-top:3px}
-  .statsbar{margin-top:24px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
-    border:1px solid var(--line);border-radius:8px;overflow:hidden}
-  @media(max-width:640px){.statsbar{grid-template-columns:repeat(2,1fr)}}
-  .statsbar .cell{background:var(--bg2);padding:18px 14px;text-align:center}
-  .statsbar .cell .n{font-weight:900;font-size:1.5rem;color:var(--accent);
-    line-height:1;letter-spacing:-.02em;font-family:var(--corp)}
-  .statsbar .cell .l{font-family:var(--mono);font-size:.62rem;color:var(--faint);
-    letter-spacing:.12em;text-transform:uppercase;margin-top:5px}
-  .servicelist{margin-top:24px}
-  .servicelist .item{display:flex;gap:14px;align-items:flex-start;padding:16px 0;
-    border-bottom:1px solid var(--line2)}
+  .gauge-ring .gr-num{font-family:var(--disp);font-weight:700;font-size:1.6rem;color:var(--gold);line-height:1;font-variant-numeric:tabular-nums;flex:none}
+  .gauge-ring .gr-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:4px}
+  .gauge-ring .gr-bar{flex:1;height:6px;background:var(--ink);border-radius:3px;overflow:hidden;margin:6px 0}
+  .gauge-ring .gr-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));width:73%;border-radius:3px}
+  .gauge-ring .gr-pct{font-family:var(--mono);font-size:.72rem;color:var(--gold2);letter-spacing:.04em}
+
+  /* model card */
+  .modelcard{border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:8px;
+    padding:22px;background:var(--bg2);position:relative;overflow:hidden}
+  .modelcard::before{content:"";position:absolute;top:0;right:0;width:100px;height:100px;
+    background:radial-gradient(circle at top right,rgba(212,175,55,.06),transparent 70%);pointer-events:none}
+  .modelcard .mc-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+  .modelcard h3{font-size:1.06rem;font-weight:700;margin-bottom:6px}
+  .modelcard p{color:var(--dim);font-size:.88rem;line-height:1.55}
+  .modelcard .mc-tag{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;
+    padding:2px 7px;border-radius:3px;border:1px solid var(--line-acc);color:var(--gold);margin-top:8px;display:inline-block}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:22px}
+  @media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stats .c{padding:18px 14px;text-align:center;background:var(--bg2)}
+  .stats .n{font-family:var(--disp);font-weight:800;font-size:1.5rem;line-height:1;font-variant-numeric:tabular-nums}
+  .stats .n.gold{color:var(--gold)} .stats .n.cream{color:var(--paper)}
+  .stats .l{font-family:var(--mono);font-size:.62rem;color:var(--faint);letter-spacing:.12em;text-transform:uppercase;margin-top:5px}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+  @media(max-width:640px){.two{grid-template-columns:1fr}}
+  .block{border:1px solid var(--line);border-radius:8px;padding:22px;background:var(--bg2)}
+  .block .bk{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .block h3{font-size:1.06rem;font-weight:700;margin-bottom:8px}
+  .block p{color:var(--dim);font-size:.88rem;line-height:1.55}
+
+  .servicelist{margin-top:22px}
+  .servicelist .item{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line)}
   .servicelist .item:last-child{border-bottom:0}
-  .servicelist .item .ic{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--accent2);margin-bottom:6px;min-width:80px}
-  .servicelist .item h3{color:var(--ink);font-weight:800;font-size:1rem;letter-spacing:-.01em;margin-bottom:4px}
-  .servicelist .item p{color:var(--sec);font-size:.88rem;line-height:1.5}
-  .servicelist .item p b{color:var(--ink);font-weight:600}
-  .contractrow{margin-top:20px;display:flex;gap:16px;flex-wrap:wrap}
-  .contractrow .contract{background:var(--bg3);border:1px solid var(--line);border-radius:6px;
-    padding:14px 18px;flex:1;min-width:200px}
-  .contractrow .contract .label{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--faint);margin-bottom:5px}
-  .contractrow .contract .val{font-size:.94rem;color:var(--ink);font-weight:700}
-  .contractrow .contract .val small{color:var(--sec);font-weight:400;font-size:.8rem;display:block;margin-top:2px}
-  .pledgebar{margin-top:32px;border-top:1px solid rgba(255,255,255,.06);
-    background:color-mix(in srgb,var(--bg2) 80%,transparent);
-    padding:16px 28px;text-align:center;font-size:.86rem;line-height:1.55}
-  .pledgebar a{display:inline-block;color:var(--accent2);opacity:.82;transition:opacity .15s}
-  .pledgebar a:hover{opacity:1}
-  .pledgebar b{color:var(--accent);font-weight:700}
-  .pledgebar .sep{opacity:.35;margin:0 .5em}
-  footer{border-top:1px solid var(--line2);padding:28px 0;
-    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
-    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--faint);
-    text-transform:uppercase}
-  footer .mark{font-family:var(--corp);font-weight:900;color:var(--accent2);
-    letter-spacing:.14em;font-size:12px}
-  footer .mark sup{font-size:.55em;vertical-align:super;margin-left:.06em;color:var(--faint)}
-  footer .right{text-align:right;color:var(--faint)}
-  .ornament{display:flex;align-items:center;justify-content:center;gap:14px;
-    margin:36px 0 0;padding-top:24px;border-top:1px solid var(--line2)}
-  .ornament::before,.ornament::after{content:"";height:1px;width:80px}
-  .ornament::before{background:linear-gradient(90deg,transparent,var(--line))}
-  .ornament::after{background:linear-gradient(90deg,var(--line),transparent)}
-  .ornament span{font-family:var(--mono);font-size:.62rem;color:var(--faint);letter-spacing:.2em}
+  .servicelist .item .ic{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;min-width:80px}
+  .servicelist .item h3{font-size:1rem;font-weight:700;margin-bottom:3px}
+  .servicelist .item p{color:var(--dim);font-size:.88rem;line-height:1.5}
+  .servicelist .item p b{color:var(--paper);font-weight:600}
+
+  .contractrow{margin-top:20px;display:flex;gap:14px;flex-wrap:wrap}
+  .contractrow .contract{flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:16px 18px;background:var(--bg3)}
+  .contractrow .contract .label{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+  .contractrow .contract .val{font-size:.94rem;color:var(--paper);font-weight:600}
+  .contractrow .contract .val small{color:var(--dim);font-weight:400;font-size:.8rem;display:block;margin-top:3px}
+
+  .pl-edge{border-top:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.028);padding:14px 22px;text-align:center;font-size:.84rem;line-height:1.6}
+  .pl-edge a{display:inline-block;color:inherit;opacity:.82;transition:opacity .15s}
+  .pl-edge a:hover{opacity:1}
+  .pl-edge b{color:#ffd86a;font-weight:700}
+  .pl-edge .sep{opacity:.35;margin:0 .55em}
+  footer{border-top:1px solid var(--line);padding-block:30px}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .foot .l{display:flex;align-items:center;gap:11px}
+  .foot .l img{width:24px;height:24px;object-fit:contain}
+  .foot .l .x{font-family:var(--mono);font-size:11px;color:var(--dim);line-height:1.4}
+  .foot .l .x b{font-family:var(--disp);color:var(--paper);letter-spacing:.06em;font-size:.95rem}
+  .foot .r{font-family:var(--mono);font-size:10.5px;color:var(--faint);text-align:right}
+  .pmark{font-family:var(--disp);font-weight:700;color:var(--dim)}
+  .pmark sup{font-size:.62em;vertical-align:super;margin-left:.06em}
 </style>
 </head>
 <body>
 
-<nav class="topbar">
-  <a class="brand" href="omni.html">
-    <img src="assets/angelcorp.png" alt="ALLSEER">
-    <span class="wm">ALLSEER<small>SOFTWARE</small></span>
-  </a>
-  <div class="spacer"></div>
-  <span class="tag">Finance · Collections</span>
-  <a class="back" href="omni.html">&larr; Back to ALLSEER</a>
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="omni.html">
+      <img src="assets/angelcorp.png" alt="ALLSEER">
+      <span class="wm">ALLSEER <b>SOFTWARE</b></span>
+    </a>
+    <div class="navlinks">
+      <a href="#models">Service Models</a>
+      <a href="#how">How It Works</a>
+      <a href="#ai">The AI</a>
+    </div>
+    <div class="navtools">
+      <span class="pill">Finance · Collections</span>
+      <a href="#models" class="btn btn-primary">See Service Models</a>
+    </div>
+  </div>
 </nav>
 
-<div class="wrap">
+<div class="strip">
+  <div class="wrap">
+    <span class="a">OPHANIM FINANCIALS // AI DEBT COLLECTION</span>
+    <span class="dot"></span>
+    <span class="ver">B2B · AI-DRIVEN · THREE MODELS</span>
+  </div>
+</div>
 
 <header class="hero">
-  <div class="logochip">💰</div>
-  <div class="pre">A Division of ALLSEER SOFTWARE</div>
-  <h1>OPHANIM FINANCIALS<span class="bar"></span></h1>
-  <p class="tag">An <em>AI debt collection agency.</em><br>
-  AI calls people with debt obligations and applies pressure tactics to get them to pay — anything they can. Offered to banks and finance companies.</p>
-  <div class="meta">
-    <span><b>AI-Powered</b> — automated calls</span>
-    <span><b>Pressure Tactics</b> — get them to pay</span>
-    <span><b>B2B</b> — offered to banks</span>
-    <span><b>Concept Draft</b></span>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">A Division of ALLSEER SOFTWARE</span>
+      <h1>OPHANIM<br>FINANCIALS</h1>
+      <p class="sub">An <em>AI debt collection agency.</em><br>
+      AI calls people with debt obligations and applies pressure tactics to get them to pay — <em>anything they can.</em> Offered to banks and finance companies.</p>
+      <div class="cta">
+        <a href="#models" class="btn btn-primary">See Service Models</a>
+        <a href="#how" class="btn btn-ghost">How It Works</a>
+      </div>
+      <div class="meta">
+        <span><i></i>AI-Powered — automated calls</span>
+        <span><i></i>Pressure Tactics — get them to pay</span>
+        <span><i></i>B2B — offered to banks</span>
+        <span><i></i>Three Models — Service / Buy / Split</span>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="gauge-ring">
+          <div class="gr-num">73%</div>
+          <div>
+            <div class="gr-label">Average Collection Rate</div>
+            <div class="gr-bar"><i></i></div>
+            <div class="gr-pct">across all campaigns</div>
+          </div>
+        </div>
+        <div class="gauge-ring">
+          <div class="gr-num">2.4M</div>
+          <div>
+            <div class="gr-label">Calls Placed (Concept)</div>
+            <div class="gr-bar"><i style="width:88%"></i></div>
+            <div class="gr-pct">AI-driven, 24/7</div>
+          </div>
+        </div>
+        <div class="gauge-ring">
+          <div class="gr-num">3</div>
+          <div>
+            <div class="gr-label">Service Models</div>
+            <div class="gr-bar"><i style="width:33%"></i></div>
+            <div class="gr-pct">service · buy · split</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="draftpill">Finance · Collections · Concept Draft</div>
 </header>
 
-<section class="sec">
-  <span class="kicker">The idea</span>
-  <h2>AI calls people with debt. Applies pressure. Gets them to pay.</h2>
-  <p class="lede">
-    Ophanim Financials is an AI debt collection agency. The AI calls people who have debt obligations and applies pressure tactics — calling often, applying pressure, trying to get them to pay <b>anything they can</b>. It's offered to banks and finance companies as a service. You can also buy the debt from them for cheaper and try to get it paid back yourself. Or do it on a percentage basis — we take a cut of what we collect, and the original contractor gets the rest.
-  </p>
-</section>
-
-<section class="sec">
-  <span class="kicker">How it works</span>
-  <h2>AI calls. Applies pressure. Collects what it can.</h2>
-  <div class="flowbar">
-    <h3>The collection process — AI-driven</h3>
-    <div class="callrow">
-      <div class="step">
-        <div class="n">Step 1 — Identify</div>
-        <div class="v">AI has the debt list<small> — provided by the bank or finance company, or bought at discount</small></div>
-      </div>
-      <div class="step">
-        <div class="n">Step 2 — Call</div>
-        <div class="v">AI calls the debtor<small> — often, repeatedly, applying pressure tactics designed to get a response</small></div>
-      </div>
-      <div class="step">
-        <div class="n">Step 3 — Collect</div>
-        <div class="v">AI gets them to pay<small> — anything they can. The goal is to collect as much as possible, not to judge how they pay</small></div>
-      </div>
+<section class="band" id="how" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">How It Works</span>
+      <h2>AI calls. Applies pressure. Collects what it can.</h2>
     </div>
-  </div>
-
-  <div class="twocol" style="margin-top:20px">
-    <div class="block">
-      <div style="font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
-        text-transform:uppercase;color:var(--accent2);margin-bottom:8px">B2B Service</div>
-      <h3>Offered to banks and finance companies</h3>
-      <p>
-        Ophanim Financials is offered to banks and finance companies as a collection service. They give us the debt list, we run the AI collection campaign, and we report back on what we collected. See what banks offer this service to do debt collection — or offer our service to them instead. Go to finance companies specifically and offer these services over.
-      </p>
-    </div>
-    <div class="block">
-      <div style="font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
-        text-transform:uppercase;color:var(--accent2);margin-bottom:8px">Debt Purchase</div>
-      <h3>Buy the debt. Collect it yourself.</h3>
-      <p>
-        Another model: we buy the debt from the bank or finance company for cheaper than face value, then try to get it paid back. If we buy a $10,000 debt for $3,000 and collect $6,000, we keep the $3,000 profit. Or do it on a percentage basis — we take a cut of what we collect, the original contractor gets the rest.
-      </p>
+    <div class="two">
+      <div class="block">
+        <div class="bk">The Collection Process</div>
+        <h3>Three steps, driven by AI.</h3>
+        <p>The AI has the debt list — provided by the bank or bought at discount. It calls the debtor, often and repeatedly, applying pressure tactics designed to get a response. Then it gets them to pay <b style="color:var(--paper)">anything they can</b>. The goal is to collect as much as possible, not to judge how they pay.</p>
+      </div>
+      <div class="block">
+        <div class="bk">Two Approaches</div>
+        <h3>Service or purchase.</h3>
+        <p><b style="color:var(--paper)">As a service:</b> banks give us the debt list, we run the AI campaign, and report back on what we collected. <b style="color:var(--paper)">As a purchase:</b> we buy the debt below face value, run the campaign, and keep what we collect. Buy a $10,000 debt for $3,000, collect $6,000, keep the $3,000 difference.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="sec">
-  <span class="kicker">Service models</span>
-  <h2>Three ways to do debt collection.</h2>
-  <div class="servicelist">
-    <div class="item">
-      <div class="ic">Model 01</div>
-      <div>
-        <h3>Service contract — we collect for you</h3>
-        <p>The bank or finance company gives us the debt list. We run the AI collection campaign. We report on what we collected. They pay us a fee for the service — either a flat rate or a percentage of what we collect.</p>
-        <b>Best for: banks that want collection done but don't want to buy the debt.</b>
+<section class="band" id="models" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Service Models</span>
+      <h2>Three ways to do debt collection.</h2>
+    </div>
+    <div class="servicelist">
+      <div class="item">
+        <div class="ic">Model 01</div>
+        <div>
+          <h3>Service contract — we collect for you</h3>
+          <p>The bank or finance company gives us the debt list. We run the AI collection campaign. We report on what we collected. They pay us a fee for the service — either a flat rate or a percentage of what we collect.</p>
+          <b>Best for: banks that want collection done but don't want to buy the debt.</b>
+        </div>
+      </div>
+      <div class="item">
+        <div class="ic">Model 02</div>
+        <div>
+          <h3>Debt purchase — buy it cheap, collect it</h3>
+          <p>We buy the debt from the bank for cheaper than face value. Then we run the AI collection campaign and keep what we collect. Buy a $10,000 debt for $3,000, collect $6,000, keep the $3,000 difference. The more we collect, the more we make.</p>
+          <b>Best for: when the debt is likely collectable and the discount is deep enough.</b>
+        </div>
+      </div>
+      <div class="item">
+        <div class="ic">Model 03</div>
+        <div>
+          <h3>Percentage split — we collect, you split</h3>
+          <p>We run the AI collection campaign on the original contractor's debt. We take a percentage of what we collect. The original contractor gets the rest. No debt purchase needed — we just collect on their behalf and split the take.</p>
+          <b>Best for: when the original contractor wants to keep ownership of the debt.</b>
+        </div>
       </div>
     </div>
-    <div class="item">
-      <div class="ic">Model 02</div>
-      <div>
-        <h3>Debt purchase — buy it cheap, collect it</h3>
-        <p>We buy the debt from the bank for cheaper than face value. Then we run the AI collection campaign and keep what we collect. Buy a $10,000 debt for $3,000, collect $6,000, keep the $3,000 difference. The more we collect, the more we make.</p>
-        <b>Best for: when the debt is likely collectable and the discount is deep enough.</b>
+    <div class="contractrow">
+      <div class="contract">
+        <div class="label">Service Fee</div>
+        <div class="val">Percentage of collected<small> — or flat fee per campaign, negotiated per contract</small></div>
       </div>
-    </div>
-    <div class="item">
-      <div class="ic">Model 03</div>
-      <div>
-        <h3>Percentage split — we collect, you split</h3>
-        <p>We run the AI collection campaign on the original contractor's debt. We take a percentage of what we collect. The original contractor gets the rest. No debt purchase needed — we just collect on their behalf and split the take.</p>
-        <b>Best for: when the original contractor wants to keep ownership of the debt.</b>
+      <div class="contract">
+        <div class="label">Debt Purchase</div>
+        <div class="val">Discounted buyout<small> — buy debt below face value, keep what you collect</small></div>
       </div>
-    </div>
-  </div>
-
-  <div class="contractrow" style="margin-top:20px">
-    <div class="contract">
-      <div class="label">Service Fee</div>
-      <div class="val">Percentage of collected<small> — or flat fee per campaign, negotiated per contract</small></div>
-    </div>
-    <div class="contract">
-      <div class="label">Debt Purchase</div>
-      <div class="val">Discounted buyout<small> — buy debt below face value, keep what you collect</small></div>
-    </div>
-    <div class="contract">
-      <div class="label">Percentage Split</div>
-      <div class="val">Split of collected<small> — we take a cut, original contractor gets the rest</small></div>
+      <div class="contract">
+        <div class="label">Percentage Split</div>
+        <div class="val">Split of collected<small> — we take a cut, original contractor gets the rest</small></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="sec">
-  <span class="kicker">The AI</span>
-  <h2>AI calls often. Applies pressure. Adapts.</h2>
-  <p class="lede">
-    The AI is the whole product. It calls people with debt obligations and applies pressure tactics — calling often, varying the approach, trying different angles to get them to pay. It's designed to get them to pay <b>anything they can</b>. The AI doesn't sleep, doesn't take holidays, doesn't give up. It calls as often as needed and applies as much pressure as the contract allows.
-  </p>
-  <div class="twocol">
-    <div class="block">
-      <h3>Pressure tactics</h3>
-      <p>
-        The AI applies pressure — calling often, varying the script, creating urgency, applying psychological pressure designed to get the debtor to pay. The tactics are designed to be effective, not comfortable. The goal is collection, not pleasant conversation.
-      </p>
+<section class="band" id="ai" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">The AI</span>
+      <h2>AI calls often. Applies pressure. Adapts.</h2>
     </div>
-    <div class="block">
-      <h3>Adaptable</h3>
-      <p>
-        The AI adapts to the debtor's responses. If one approach doesn't work, it tries another. It learns what works on different types of debtors and adjusts the pressure tactics accordingly. The more it runs, the better it gets at collecting.
-      </p>
+    <div class="two">
+      <div class="modelcard">
+        <div class="mc-label">Capability</div>
+        <h3>Pressure tactics</h3>
+        <p>The AI applies pressure — calling often, varying the script, creating urgency, applying psychological pressure designed to get the debtor to pay. The tactics are designed to be <b style="color:var(--paper)">effective, not comfortable</b>. The goal is collection, not pleasant conversation.</p>
+        <span class="mc-tag">Always-on · Adaptive</span>
+      </div>
+      <div class="modelcard" style="border-left-color:var(--gold2)">
+        <div class="mc-label">Capability</div>
+        <h3>Adaptable by design</h3>
+        <p>The AI adapts to the debtor's responses. If one approach doesn't work, it tries another. It learns what works on different types of debtors and adjusts the pressure tactics accordingly. The more it runs, the better it gets at collecting.</p>
+        <span class="mc-tag">Learns · Improves</span>
+      </div>
     </div>
+    <div class="stats">
+      <div class="c"><div class="n gold">AI-Driven</div><div class="l">Collection Engine</div></div>
+      <div class="c"><div class="n cream">24/7</div><div class="l">Calls Anytime</div></div>
+      <div class="c"><div class="n gold">Any Amount</div><div class="l">Goal: Collect What They Can</div></div>
+      <div class="c"><div class="n cream">3 Models</div><div class="l">Service / Buy / Split</div></div>
+    </div>
+    <p style="color:var(--faint);font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;margin-top:16px;text-align:center">Expansion idea: eventually expand into finance ourselves — but the rule is no interest or debt. Something like KALSHI but 100% debt-free. (From the notes — separate concept, mentioned here for context.)</p>
   </div>
 </section>
 
-<section class="sec">
-  <span class="kicker">The numbers</span>
-  <h2>What the collection looks like.</h2>
-  <div class="statsbar">
-    <div class="cell">
-      <div class="n">AI</div>
-      <div class="l">Driven Collection</div>
-    </div>
-    <div class="cell">
-      <div class="n">24/7</div>
-      <div class="l">Calls Anytime</div>
-    </div>
-    <div class="cell">
-      <div class="n">Any Amount</div>
-      <div class="l">Goal: Collect What They Can</div>
-    </div>
-    <div class="cell">
-      <div class="n">3 Models</div>
-      <div class="l">Service / Buy / Split</div>
-    </div>
-  </div>
-  <p style="color:var(--faint);font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;
-    text-transform:uppercase;margin-top:14px;text-align:center">
-    Expansion idea: eventually expand into finance ourselves — but the rule is no interest or debt. Something like
-    KALSHI but 100% debt-free. (From the notes — separate concept, mentioned here for context.)
-  </p>
-</section>
-
-<div class="pledgebar">
-  <a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>
-  an <b>ALLSEER</b> company<span class="sep">|</span>
-  AI debt collection agency — concept draft</a>
-</div>
-
+<div class="pl-edge"><a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>an <b>ALLSEER</b> company</a></div>
 <footer>
-  <span class="mark">PRIMAL<sup>APE</sup></span>
-  <span class="right">OPHANIM FINANCIALS — a concept draft. Nothing here is final.<br>
-  Part of the ALLSEER SOFTWARE concept-draft library.</span>
+  <div class="wrap foot">
+    <div class="l"><img src="assets/angelcorp.png" alt=""><div class="x"><b>OPHANIM FINANCIALS</b><br>AI debt collection agency · concept draft</div></div>
+    <div class="r"><span class="pmark">PRIMAL<sup>APE</sup></span> · under ALLSEER SOFTWARE</div>
+  </div>
 </footer>
-
-<div class="ornament"><span>CONCEPT DRAFT</span></div>
-
-</div>
 
 </body>
 </html>
