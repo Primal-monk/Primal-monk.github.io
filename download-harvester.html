@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DownloadHarvester — Freeware Ad Network &amp; Bloatware Middleman</title>
+<link rel="icon" type="image/png" href="assets/angelcorp.png">
+<meta name="description" content="DownloadHarvester — a freeware ad network (like Google AdSense but for software), a bloatware middleman that auto-detects downloads and pays freeware devs per download, and a desktop port of itch.io that re-categorizes and filters games.">
+<style>
+  :root{
+    --bg:#0d1117; --bg2:#141b24; --bg3:#1c2533; --bg4:#243040;
+    --hi:#58a6ff; --hi2:#3880c0; --paper:#e6edf3; --sec:#8b949e;
+    --line:rgba(88,166,255,.22);
+    --green:#3fb950; --green2:#2ea043;
+    --orange:#d29922; --orange2:#bb8009;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scrollbar-color:var(--hi) var(--bg3);scrollbar-width:auto}
+  body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--sec);
+    line-height:1.62;padding-top:56px}
+  ::-webkit-scrollbar{width:16px}
+  ::-webkit-scrollbar-track{background:var(--bg3)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--hi),var(--hi2));
+    border:2px solid var(--bg3);border-radius:10px}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--hi);color:#0d1117}
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:56px;background:var(--bg2);
+    border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:0 16px}
+  .topbar .who{display:flex;align-items:center;gap:9px;text-decoration:none}
+  .topbar .who img{width:30px;height:30px;object-fit:contain;border-radius:7px}
+  .topbar .who span{font-size:.86rem;color:var(--paper);font-weight:700}
+  .topbar .back{color:var(--paper);font-size:1.1rem;font-weight:900;cursor:pointer;opacity:.7}
+  .topbar .back:hover{opacity:1}
+  .topbar .spacer{flex:1}
+  .topbar .tag{font-family:"Segoe UI",system-ui,sans-serif;font-size:.72rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--sec);border:1px solid var(--line);border-radius:3px;
+    padding:5px 12px}
+  .wrap{max-width:960px;margin:0 auto;padding:0 22px}
+  header{text-align:center;padding:40px 0 28px}
+  .logochip{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+  .logochip .logo{width:52px;height:52px;background:var(--bg3);border:1px solid var(--line);
+    border-radius:10px;display:grid;place-items:center;font-size:1.4rem;color:var(--hi);font-weight:900;
+    letter-spacing:.06em;font-family:"Segoe UI",system-ui,sans-serif}
+  .logochip .name{color:var(--paper);font-weight:900;font-size:1.3rem;letter-spacing:.04em}
+  h1{font-size:clamp(2.2rem,6.5vw,3.2rem);letter-spacing:.06em;font-weight:900;color:var(--paper);
+    text-transform:uppercase}
+  .tag{margin-top:10px;color:var(--sec);letter-spacing:.06em;font-size:.92rem;max-width:560px;margin-left:auto;margin-right:auto}
+  .tag em{font-style:normal;color:var(--hi)}
+  .draftpill{display:inline-block;margin-top:14px;background:var(--bg3);border:1px solid var(--hi2);
+    border-radius:20px;padding:6px 20px;font-size:.72rem;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--hi)}
+  section{margin-bottom:36px}
+  h2{color:var(--hi);font-size:.9rem;letter-spacing:.18em;text-transform:uppercase;
+    padding-bottom:8px;margin-bottom:16px;border-bottom:2px solid var(--hi2)}
+  p.body{color:var(--paper);margin-bottom:12px;font-size:.94rem}
+  p.body b{color:var(--paper);font-weight:600}
+  .productgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+  @media(max-width:720px){.productgrid{grid-template-columns:1fr}}
+  .prodcard{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:22px;
+    position:relative;overflow:hidden;transition:transform .16s,border-color .16s}
+  .prodcard:hover{transform:translateY(-3px);border-color:var(--hi)}
+  .prodcard .accent{position:absolute;left:0;top:0;bottom:0;width:3px}
+  .prodcard .accent.blue{background:var(--hi)}
+  .prodcard .accent.green{background:var(--green)}
+  .prodcard .accent.orange{background:var(--orange)}
+  .prodcard .label{font-family:"Segoe UI",system-ui,sans-serif;font-size:.64rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--sec);margin-bottom:8px}
+  .prodcard h3{font-size:1.08rem;font-weight:800;color:var(--paper);margin-bottom:8px;letter-spacing:.02em}
+  .prodcard p{font-size:.86rem;color:var(--sec);line-height:1.55;margin-bottom:10px}
+  .prodcard p b{color:var(--paper);font-weight:600}
+  .prodcard .metric{display:flex;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+  .prodcard .metric .m{flex:1}
+  .prodcard .metric .n{font-size:1.3rem;font-weight:800;color:var(--hi);line-height:1;font-family:"Segoe UI",system-ui,sans-serif}
+  .prodcard .metric .n.green{color:var(--green)}
+  .prodcard .metric .n.orange{color:var(--orange)}
+  .prodcard .metric .l{font-size:.64rem;color:var(--sec);letter-spacing:.1em;text-transform:uppercase;margin-top:4px;font-weight:600}
+  .prodcard .tag{font-family:"Segoe UI",system-ui,sans-serif;font-size:.6rem;color:var(--sec);
+    letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);border-radius:3px;
+    padding:3px 8px;display:inline-block;margin-top:6px}
+  .flowbar{margin-top:26px;background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:22px}
+  .flowbar h3{color:var(--paper);font-weight:800;font-size:1rem;margin-bottom:14px;letter-spacing:.02em}
+  .flow{display:flex;gap:0;align-items:stretch;margin-top:0}
+  .flow .step{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:14px;
+    position:relative;display:flex;flex-direction:column;justify-content:center;min-width:0}
+  .flow .step .num{font-family:"Segoe UI",system-ui,sans-serif;font-size:.62rem;color:var(--hi);
+    letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+  .flow .step .title{color:var(--paper);font-weight:700;font-size:.86rem;margin-bottom:4px}
+  .flow .step .desc{color:var(--sec);font-size:.76rem;line-height:1.4}
+  .flow .arrow{position:absolute;right:-14px;top:50%;transform:translateY(-50%);
+    color:var(--hi);font-size:1.2rem;font-weight:900;opacity:.5}
+  @media(max-width:600px){
+    .flow{gap:8px;flex-wrap:nowrap}.flow .arrow{display:none}
+    .flow .step{flex:1 1 100%;margin-bottom:8px}
+  }
+  .statsrow{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:20px}
+  @media(max-width:600px){.statsrow{grid-template-columns:repeat(2,1fr)}}
+  .statsrow .cell{background:var(--bg2);padding:16px 14px;text-align:center}
+  .statsrow .cell .n{font-size:1.5rem;font-weight:900;color:var(--paper);line-height:1;font-family:"Segoe UI",system-ui,sans-serif}
+  .statsrow .cell .n.blue{color:var(--hi)}
+  .statsrow .cell .n.green{color:var(--green)}
+  .statsrow .cell .l{font-size:.64rem;color:var(--sec);letter-spacing:.1em;text-transform:uppercase;
+    margin-top:5px;font-weight:600}
+  .pledgebar{border-top:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.028);
+    padding:15px 22px;text-align:center;font-size:.84rem;line-height:1.6;letter-spacing:.01em}
+  .pledgebar a{display:inline-block;color:inherit;opacity:.82;transition:opacity .15s}
+  .pledgebar a:hover{opacity:1}
+  .pledgebar b{color:#ffd86a;font-weight:700}
+  .pledgebar .sep{opacity:.35;margin:0 .55em}
+  footer{border-top:1px solid var(--line);padding:28px 0;text-align:center;
+    font-family:"Segoe UI",system-ui,sans-serif;font-size:10.5px;color:var(--faint);letter-spacing:.06em}
+  footer .mark{font-weight:900;color:var(--sec);letter-spacing:.1em;font-size:11px}
+  footer .mark sup{font-size:.55em;vertical-align:super;margin-left:.06em}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a class="who" href="omni.html">
+    <span class="back">&larr;</span>
+    <img src="assets/angelcorp.png" alt="">
+    <span>ALLSEER SOFTWARE</span>
+  </a>
+  <div class="spacer"></div>
+  <span class="tag">Software Platform · Freeware Tools</span>
+</nav>
+
+<div class="wrap">
+
+<header>
+  <div class="logochip">
+    <div class="logo">DH</div>
+    <div class="name">DOWNLOADHARVESTER</div>
+  </div>
+  <h1>Freeware Ad Network &amp; Bloatware Middleman</h1>
+  <div class="tag">Think <em>Google AdSense</em> — but for software. A middleman between bloatware companies and freeware developers. Auto-detects downloads. Pays devs per download. Zero work on their end.</div>
+  <div class="draftpill">Software Platform · Concept Draft</div>
+</header>
+
+<div class="statsrow">
+  <div class="cell"><div class="n blue">3</div><div class="l">Products in One</div></div>
+  <div class="cell"><div class="n">10,000</div><div class="l">Developers</div></div>
+  <div class="cell"><div class="n green">Per-Dl</div><div class="l">Auto-Pay Model</div></div>
+  <div class="cell"><div class="n orange">$0</div><div class="l">Work for Devs</div></div>
+</div>
+
+<section>
+  <h2>Three Products. One Platform.</h2>
+  <p class="body">
+    DownloadHarvester is a software platform with three distinct products that all feed into each other. The
+    <b>freeware ad network</b> is like Google AdSense but for software — any game or app can have ads through it.
+    The <b>bloatware middleman</b> automates the deal between bloatware companies and freeware devs. The
+    <b>itch.io desktop port</b> re-categorizes and filters games, cutting the slop.
+  </p>
+</section>
+
+<section class="productgrid">
+
+  <div class="prodcard">
+    <div class="accent blue"></div>
+    <div class="label">Product 01</div>
+    <h3>Freeware Ad Network</h3>
+    <p>
+      Think <b>Google AdSense</b> — but for software. Any game or app can put ads through this network. 10,000
+      developers join your network, and hundreds of sponsors plug in. Devs get paid. Sponsors get reach. You run
+      the network between them.
+    </p>
+    <div class="metric">
+      <div class="m"><div class="n blue">Ad Network</div><div class="l">Core Product</div></div>
+      <div class="m"><div class="n">10,000+</div><div class="l">Developer Target</div></div>
+    </div>
+    <span class="tag">AdSense for software</span>
+  </div>
+
+  <div class="prodcard">
+    <div class="accent green"></div>
+    <div class="label">Product 02</div>
+    <h3>Bloatware Middleman</h3>
+    <p>
+      A service between <b>bloatware companies</b> and <b>freeware developers</b>. Auto-detects when a download
+      happens and automatically pays the freeware dev per download. Bloatware companies pay for the service. Devs
+      package their software using an official method and get paid automatically — <b>no action, no work, no
+      anything on their end</b>. It has sensors so to speak.
+    </p>
+    <div class="metric">
+      <div class="m"><div class="n green">$0</div><div class="l">Work for Devs</div></div>
+      <div class="m"><div class="n">Auto-Pay</div><div class="l">Per Download</div></div>
+    </div>
+    <span class="tag">Sensors. Auto-pay. Zero dev work.</span>
+  </div>
+
+  <div class="prodcard">
+    <div class="accent orange"></div>
+    <div class="label">Product 03</div>
+    <h3>Desktop Port of itch.io</h3>
+    <p>
+      A desktop app that re-categorizes games from itch.io and <b>heavily filters slop games</b> from it. Unofficial
+      but still exists — download it, and it gives you a cleaned-up, re-organized view of itch.io's library. Comes
+      with a video on <b>why itch.io slop is a problem</b>. 10,000 developers → your network → hundreds of sponsors
+      — they can put ads or extra bloatware through this too.
+    </p>
+    <div class="metric">
+      <div class="m"><div class="n orange">Filter</div><div class="l">Slop Removal</div></div>
+      <div class="m"><div class="n">Desktop</div><div class="l">App Port</div></div>
+    </div>
+    <span class="tag">Cleaned-up itch.io · Ad &amp; bloatware host</span>
+  </div>
+
+</section>
+
+<section>
+  <h2>How It Works</h2>
+  <div class="flowbar">
+    <h3>The bloatware middleman — end to end</h3>
+    <div class="flow">
+      <div class="step">
+        <div class="num">Step 1</div>
+        <div class="title">Freeware dev packages their software</div>
+        <div class="desc">Using the official DownloadHarvester packaging method. One-time setup. Works with any software, no matter what it is.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step">
+        <div class="num">Step 2</div>
+        <div class="title">Download happens</div>
+        <div class="desc">Someone downloads the freeware. The DownloadHarvester sensor detects the download automatically.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step">
+        <div class="num">Step 3</div>
+        <div class="title">Bloatware company pays</div>
+        <div class="desc">Bloatware companies pay for the service. They want the downloads, the reach, the exposure.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step">
+        <div class="num">Step 4</div>
+        <div class="title">Dev gets paid</div>
+        <div class="desc">The freeware dev is paid automatically per download. No action. No work. No contract they have to manage. Sensors handle it all.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:18px">
+    <p class="body">
+      The freeware ad network works the same way in reverse — developers join the network, sponsors plug in, and
+      ads run across the software. 10,000 developers in the network means hundreds of sponsors can reach them.
+    </p>
+    <p class="body">
+      The itch.io desktop port is a separate product that runs alongside — it re-categorizes and filters games, and
+      it can carry ads or bloatware from the network too. It's the distribution layer.
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>The Numbers</h2>
+  <div class="statsrow">
+    <div class="cell"><div class="n blue">10,000</div><div class="l">Developers in Network</div></div>
+    <div class="cell"><div class="n green">Per-DL</div><div class="l">Auto-Pay Model</div></div>
+    <div class="cell"><div class="n">$0</div><div class="l">Work for Freeware Devs</div></div>
+    <div class="cell"><div class="n orange">100%</div><div class="l">Slop Filtered (itch.io port)</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Why This Exists</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div class="flowbar" style="margin-top:0">
+      <h3>For freeware developers</h3>
+      <p class="body" style="margin-bottom:0">
+        Freeware devs currently have two bad options: give their software away for nothing, or bundle bloatware
+        themselves and deal with the contracts directly. DownloadHarvester gives them a third option — package it
+        once with the official method, and get paid per download automatically. No bloatware contracts. No work.
+        Just sensors that pay you when people download your software.
+      </p>
+    </div>
+    <div class="flowbar" style="margin-top:0">
+      <h3>For bloatware companies</h3>
+      <p class="body" style="margin-bottom:0">
+        Bloatware companies want downloads. They want reach. They want exposure. DownloadHarvester gives them a
+        clean way to pay for that — through the middleman — without having to contract with every freeware dev
+        individually. They pay the service, the service pays the devs per download, everyone wins.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="pledgebar">
+  <a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>
+  an <b>ALLSEER</b> company<span class="sep">|</span>
+  software platform concept</a>
+</div>
+
+<footer>
+  <span class="mark">PRIMAL<sup>APE</sup></span>
+  <br>© 2025 · Charitable-first · Concept draft — not a real platform
+</footer>
+
+</body>
+</html>
