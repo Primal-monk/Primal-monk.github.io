@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ORPHANIM — Interest-Free Banking for Businesses</title>
+<title>ORPHANIM — Interest-Free Bank for Businesses</title>
 <link rel="icon" type="image/png" href="assets/angelcorp.png">
-<meta name="description" content="ORPHANIM — an interest-free bank for businesses. 3% equity, 0% interest loans. AI trading, tax/accounting, debt collection, tax-free LLC setup. Concept draft under ALLSEER SOFTWARE.">
+<meta name="description" content="ORPHANIM — an interest-free bank for businesses. 0% APR, 3% equity model. AI-powered trading on the spread. Tax, accounting, debt collection, and LLC setup — all in one place. Concept draft.">
 <style>
   :root{
-    --bg:#0a0c14; --bg2:#111526; --bg3:#181e30; --bg4:#1f2540;
-    --gold:#c9a84c; --gold2:#e8c46a; --gold-dim:#8a7530;
-    --ink:#ece9e0; --sec:#8b93a3; --faint:#4a5260;
-    --line:rgba(201,168,76,.16); --line2:rgba(201,168,76,.08);
-    --corp:"Archivo","Helvetica Neue",Arial,sans-serif;
-    --serif:"Cormorant Garamond",Georgia,serif;
+    --bg:#081428; --bg2:#0d1d35; --bg3:#142748; --bg4:#1b3260;
+    --accent:#00d4ff; --accent2:#0099cc;
+    --ink:#e6f3ff; --sec:#8aa8c8; --faint:#4a6580;
+    --line:rgba(0,212,255,.16); --line2:rgba(0,212,255,.06);
+    --gold:#ffd86a;
+    --corp:"Archivo","Segoe UI",system-ui,sans-serif;
     --mono:"Archivo","Courier New",monospace;
     --maxw:1100px;
   }
@@ -21,126 +21,130 @@
   html{scroll-behavior:smooth}
   body{font-family:var(--corp);background:var(--bg);color:var(--sec);
     line-height:1.6;font-size:17px;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-    background-image:radial-gradient(900px 400px at 50% -10%,rgba(201,168,76,.05),transparent 60%),
-      radial-gradient(700px 500px at 90% 90%,rgba(31,37,64,.18),transparent 60%)}
+    background-color:var(--bg);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Crect x='6' y='6' width='6' height='36' rx='1' fill='none' stroke='%2300d4ff' stroke-width='0.8' opacity='0.08'/%3E%3Crect x='18' y='6' width='6' height='36' rx='1' fill='none' stroke='%2300d4ff' stroke-width='0.8' opacity='0.08'/%3E%3Crect x='30' y='6' width='6' height='36' rx='1' fill='none' stroke='%2300d4ff' stroke-width='0.8' opacity='0.08'/%3E%3Cline x1='6' y1='18' x2='36' y2='18' stroke='%2300d4ff' stroke-width='0.5' opacity='0.04'/%3E%3Cline x1='6' y1='30' x2='36' y2='30' stroke='%2300d4ff' stroke-width='0.5' opacity='0.04'/%3E%3C/svg%3E");
+    background-size:48px 48px}
   ::-webkit-scrollbar{width:10px}
   ::-webkit-scrollbar-track{background:var(--bg2)}
-  ::-webkit-scrollbar-thumb{background:var(--gold-dim);border:2px solid var(--bg2);border-radius:6px}
+  ::-webkit-scrollbar-thumb{background:var(--accent2);border:2px solid var(--bg2);border-radius:6px}
   a{color:inherit;text-decoration:none}
-  ::selection{background:var(--gold);color:var(--bg)}
+  ::selection{background:var(--accent);color:var(--bg)}
   .mono{font-family:var(--mono);letter-spacing:.04em}
   .topbar{position:sticky;top:0;z-index:60;height:56px;
-    background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line2);display:flex;align-items:center;gap:14px;padding:0 24px}
+    background:var(--bg2);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:14px;padding:0 24px}
   .topbar .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
   .topbar .brand img{width:26px;height:26px;object-fit:contain}
-  .topbar .brand .wm{font-family:var(--corp);font-weight:900;font-size:15px;color:var(--ink);letter-spacing:.18em}
-  .topbar .brand .wm small{color:var(--gold2);font-weight:700;font-size:.55em;letter-spacing:.2em;margin-left:.5em;vertical-align:super}
+  .topbar .brand .wm{font-family:var(--corp);font-weight:900;font-size:15px;
+    color:var(--ink);letter-spacing:.18em}
+  .topbar .brand .wm small{color:var(--accent);font-weight:700;font-size:.55em;
+    letter-spacing:.2em;margin-left:.5em;vertical-align:super}
   .topbar .spacer{flex:1}
-  .topbar .back{font-family:var(--mono);font-size:11px;color:var(--gold-dim);letter-spacing:.12em;
-    text-transform:uppercase;cursor:pointer;transition:color .15s;padding:6px 0}
-  .topbar .back:hover{color:var(--gold)}
-  .topbar .tag{
-    font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--gold-dim);border:1px solid var(--line);border-radius:3px;padding:5px 10px;white-space:nowrap;
-  }
+  .topbar .back{font-family:var(--mono);font-size:11px;color:var(--accent2);
+    letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:color .15s;padding:6px 0}
+  .topbar .back:hover{color:var(--accent)}
+  .topbar .tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent2);border:1px solid var(--line);
+    border-radius:3px;padding:5px 10px;white-space:nowrap}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
   @media(max-width:640px){.wrap{padding:0 18px}}
-  .hero{padding:76px 0 48px;text-align:center}
+  .hero{padding:64px 0 40px;text-align:center;
+    background:linear-gradient(180deg,#0a1d38 0%,var(--bg) 100%);
+    position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+    width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,212,255,.09),transparent 70%);
+    pointer-events:none}
+  .hero .logochip{display:inline-flex;align-items:center;justify-content:center;
+    width:56px;height:56px;background:var(--accent);border-radius:10px;
+    font-size:1.6rem;color:var(--bg);margin-bottom:18px;
+    box-shadow:0 0 30px rgba(0,212,255,.22),inset 0 1px 0 rgba(255,255,255,.2);
+    transition:transform .15s}
+  .hero .logochip:hover{transform:scale(1.05)}
   .hero .pre{font-family:var(--mono);font-size:11px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--gold-dim);margin-bottom:22px}
-  .hero h1{font-family:var(--serif);font-weight:900;font-size:clamp(3.5rem,9vw,6.5rem);
-    line-height:.92;letter-spacing:-.02em;color:var(--ink);text-shadow:0 2px 0 rgba(0,0,0,.4)}
-  .hero h1 .bar{display:inline-block;width:120px;height:4px;margin:0 clamp(2vw,5vw,4vw) 0;
-    background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:2px}
-  .hero .tag{font-family:var(--corp);font-weight:600;font-size:clamp(1rem,2.2vw,1.3rem);
-    color:var(--gold2);margin-top:14px;letter-spacing:.02em;max-width:660px;margin-left:auto;margin-right:auto}
-  .hero .tag em{font-style:normal;color:var(--gold);font-weight:700}
-  .hero .meta{margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;font-family:var(--mono)}
-  .hero .meta span{font-size:10.5px;color:var(--faint);letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent2);margin-bottom:18px}
+  .hero h1{font-weight:900;font-size:clamp(3rem,8vw,5.4rem);
+    line-height:.92;letter-spacing:-.02em;color:var(--ink);
+    text-shadow:0 2px 0 rgba(0,0,0,.4)}
+  .hero h1 .bar{display:inline-block;width:120px;height:4px;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    border-radius:2px;margin:0 clamp(2vw,5vw,4vw) 0}
+  .hero .tag{font-weight:600;font-size:clamp(1rem,2.2vw,1.25rem);
+    color:var(--sec);margin-top:14px;letter-spacing:.02em;
+    max-width:580px;margin-left:auto;margin-right:auto;line-height:1.4}
+  .hero .tag em{font-style:normal;color:var(--accent);font-weight:700}
+  .hero .meta{margin-top:22px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;font-family:var(--mono)}
+  .hero .meta span{font-size:10px;color:var(--faint);letter-spacing:.16em;
     text-transform:uppercase;border:1px solid var(--line);border-radius:3px;padding:6px 12px}
-  .hero .meta span b{color:var(--gold2);font-weight:700}
-  .sec{padding:56px 0;border-top:1px solid var(--line2)}
+  .hero .meta span b{color:var(--accent);font-weight:700}
+  .draftpill{display:inline-block;margin-top:14px;
+    background:var(--bg3);border:1px solid var(--accent2);border-radius:20px;
+    padding:6px 20px;font-size:.72rem;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--accent)}
+  .sec{padding:48px 0;border-top:1px solid var(--line2)}
   .sec:first-of-type{border-top:0}
   .sec .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;
-    text-transform:uppercase;color:var(--gold-dim);margin-bottom:14px;display:block}
-  .sec h2{font-family:var(--serif);font-weight:900;font-size:clamp(1.5rem,3.2vw,2.2rem);
-    color:var(--ink);letter-spacing:-.01em;line-height:1.04;margin-bottom:12px}
-  .sec .lede{color:var(--sec);font-size:1.02rem;max-width:660px;margin:0 auto;line-height:1.6}
+    text-transform:uppercase;color:var(--accent2);margin-bottom:12px;display:block}
+  .sec h2{font-weight:900;font-size:clamp(1.5rem,3.4vw,2.1rem);
+    color:var(--ink);letter-spacing:-.01em;line-height:1.04;margin-bottom:10px}
+  .sec h2::after{content:"";display:block;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));
+    width:clamp(60px,12vw,120px);margin-top:10px;border-radius:2px}
+  .sec .lede{color:var(--sec);font-size:1.02rem;max-width:640px;margin:0 auto 24px;line-height:1.6;text-align:center}
   .sec .lede b{color:var(--ink);font-weight:600}
-  .svcgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
-  @media(max-width:640px){.svcgrid{grid-template-columns:1fr}}
-  .svc{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--gold);
-    border-radius:8px;padding:24px;position:relative}
-  .svc .ico{font-family:var(--mono);font-size:10px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--gold-dim);margin-bottom:10px}
-  .svc h3{font-family:var(--corp);font-weight:900;font-size:1.15rem;color:var(--ink);
-    letter-spacing:-.01em;margin-bottom:8px}
-  .svc p{color:var(--sec);font-size:.92rem;line-height:1.55}
-  .svc p b{color:var(--ink);font-weight:600}
-  .svc .price{margin-top:14px;font-family:var(--mono);font-size:.72rem;color:var(--faint);
-    letter-spacing:.1em;text-transform:uppercase;border-top:1px solid var(--line2);padding-top:12px}
-  .svc .price b{color:var(--gold2);font-size:.82rem;font-weight:700}
-  .mech{margin-top:32px;background:var(--bg2);border:1px solid var(--line);
-    border-radius:10px;padding:28px}
-  .mech h3{font-family:var(--corp);font-weight:900;font-size:1.1rem;color:var(--ink);
-    margin-bottom:16px;letter-spacing:-.01em}
-  .mech .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:640px){.mech .row{grid-template-columns:1fr}}
-  .mech .cell{background:var(--bg3);border:1px solid var(--line);border-radius:6px;padding:18px}
-  .mech .cell .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--faint);margin-bottom:8px}
-  .mech .cell .v{font-size:.92rem;color:var(--ink);font-weight:600;line-height:1.4}
-  .mech .cell .v small{color:var(--sec);font-weight:400;font-size:.82rem}
-  .statstrip{margin-top:32px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
-    background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
-  @media(max-width:640px){.statstrip{grid-template-columns:repeat(2,1fr)}}
-  .statstrip .cell{background:var(--bg2);padding:20px 18px;text-align:center}
-  .statstrip .cell .n{font-family:var(--serif);font-weight:900;font-size:1.8rem;color:var(--gold);
-    line-height:1;letter-spacing:-.02em}
-  .statstrip .cell .l{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--faint);margin-top:6px}
-  .pitch{margin-top:32px;background:var(--bg3);border:1px solid var(--line);
-    border-radius:10px;padding:32px;display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center}
-  @media(max-width:640px){.pitch{grid-template-columns:1fr}}
-  .pitch .head h3{font-family:var(--corp);font-weight:900;font-size:1.3rem;color:var(--ink);
-    margin-bottom:10px;letter-spacing:-.01em}
-  .pitch .head p{color:var(--sec);font-size:.94rem;line-height:1.6}
-  .pitch .head p b{color:var(--ink);font-weight:600}
-  .pitch .quote{font-family:var(--serif);font-style:italic;font-size:1.4rem;color:var(--gold2);
-    line-height:1.4;border-left:3px solid var(--gold);padding-left:18px;background:var(--bg2);
-    border-radius:0 8px 8px 0}
-  .pitch .quote small{display:block;font-style:normal;font-family:var(--mono);
-    font-size:.66rem;color:var(--faint);letter-spacing:.12em;
-    text-transform:uppercase;margin-top:10px}
-  .timeline{margin-top:32px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  @media(max-width:640px){.timeline{grid-template-columns:1fr}}
-  .timeline .step{background:var(--bg2);border:1px solid var(--line);border-radius:8px;
-    padding:22px;position:relative}
-  .timeline .step::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
-    background:var(--gold);border-radius:0 2px 2px 0}
-  .timeline .step .n{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;
-    color:var(--gold-dim);text-transform:uppercase;margin-bottom:10px}
-  .timeline .step h4{font-family:var(--corp);font-weight:900;font-size:1rem;color:var(--ink);
-    margin-bottom:6px;letter-spacing:-.01em}
-  .timeline .step p{color:var(--sec);font-size:.88rem;line-height:1.5}
-  .pledgebar{margin-top:40px;border-top:1px solid rgba(255,255,255,.06);
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--accent);
+    border-radius:8px;padding:22px;transition:border-color .15s,transform .15s}
+  .card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .card .label{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent2);margin-bottom:8px}
+  .card h3{font-weight:800;font-size:1.06rem;color:var(--ink);letter-spacing:-.01em;margin-bottom:8px}
+  .card p{color:var(--sec);font-size:.88rem;line-height:1.55;margin-bottom:8px}
+  .card p b{color:var(--ink);font-weight:600}
+  .card .tag{font-family:var(--mono);font-size:.6rem;color:var(--faint);
+    letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);
+    border-radius:3px;padding:3px 8px;display:inline-block;margin-top:6px}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+  @media(max-width:640px){.twocol{grid-template-columns:1fr}}
+  .block{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:22px}
+  .block .label{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent2);margin-bottom:8px}
+  .block h3{font-weight:900;font-size:1.06rem;color:var(--ink);letter-spacing:-.01em;margin-bottom:10px}
+  .block p{color:var(--sec);font-size:.9rem;line-height:1.55;margin-bottom:8px}
+  .block p b{color:var(--ink);font-weight:600}
+  .statsbar{margin-top:24px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  @media(max-width:640px){.statsbar{grid-template-columns:repeat(2,1fr)}}
+  .statsbar .cell{background:var(--bg2);padding:18px 14px;text-align:center}
+  .statsbar .cell .n{font-weight:900;font-size:1.5rem;color:var(--accent);
+    line-height:1;letter-spacing:-.02em;font-family:var(--corp)}
+  .statsbar .cell .l{font-family:var(--mono);font-size:.62rem;color:var(--faint);
+    letter-spacing:.12em;text-transform:uppercase;margin-top:5px}
+  .servicelist{margin-top:24px}
+  .servicelist .item{display:flex;gap:14px;align-items:flex-start;padding:16px 0;
+    border-bottom:1px solid var(--line2)}
+  .servicelist .item:last-child{border-bottom:0}
+  .servicelist .item .ic{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent2);margin-bottom:6px;min-width:80px}
+  .servicelist .item h3{color:var(--ink);font-weight:800;font-size:1rem;letter-spacing:-.01em;margin-bottom:4px}
+  .servicelist .item p{color:var(--sec);font-size:.88rem;line-height:1.5}
+  .servicelist .item p b{color:var(--ink);font-weight:600}
+  .pledgebar{margin-top:32px;border-top:1px solid rgba(255,255,255,.06);
     background:color-mix(in srgb,var(--bg2) 80%,transparent);
     padding:16px 28px;text-align:center;font-size:.86rem;line-height:1.55}
-  .pledgebar a{display:inline-block;color:var(--gold-dim);opacity:.82;transition:opacity .15s}
+  .pledgebar a{display:inline-block;color:var(--accent2);opacity:.82;transition:opacity .15s}
   .pledgebar a:hover{opacity:1}
-  .pledgebar b{color:var(--gold2);font-weight:700}
+  .pledgebar b{color:var(--gold);font-weight:700}
   .pledgebar .sep{opacity:.35;margin:0 .5em}
-  footer{border-top:1px solid var(--line2);padding:28px;display:flex;
-    justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  footer{border-top:1px solid var(--line2);padding:28px 0;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
     font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--faint);
     text-transform:uppercase}
-  footer .mark{font-family:var(--corp);font-weight:900;color:var(--gold-dim);
+  footer .mark{font-family:var(--corp);font-weight:900;color:var(--accent2);
     letter-spacing:.14em;font-size:12px}
   footer .mark sup{font-size:.55em;vertical-align:super;margin-left:.06em;color:var(--faint)}
   footer .right{text-align:right;color:var(--faint)}
   .ornament{display:flex;align-items:center;justify-content:center;gap:14px;
-    margin:36px 0 0;padding-top:28px;border-top:1px solid var(--line2)}
+    margin:36px 0 0;padding-top:24px;border-top:1px solid var(--line2)}
   .ornament::before,.ornament::after{content:"";height:1px;width:80px}
   .ornament::before{background:linear-gradient(90deg,transparent,var(--line))}
   .ornament::after{background:linear-gradient(90deg,var(--line),transparent)}
@@ -155,201 +159,147 @@
     <span class="wm">ALLSEER<small>SOFTWARE</small></span>
   </a>
   <div class="spacer"></div>
-  <span class="tag">Finance &amp; Business Services</span>
+  <span class="tag">Finance · Banking</span>
   <a class="back" href="omni.html">&larr; Back to ALLSEER</a>
 </nav>
 
 <div class="wrap">
 
 <header class="hero">
-  <span class="pre">A division of ALLSEER SOFTWARE</span>
+  <div class="logochip">🏦</div>
+  <div class="pre">A Division of ALLSEER SOFTWARE</div>
   <h1>ORPHANIM<span class="bar"></span></h1>
-  <p class="tag">An <em>interest-free bank</em> for businesses.<br>We take 3% of your company and loan you what you need — no interest, no debt, ever.</p>
+  <p class="tag">An <em>interest-free bank for businesses.</em><br>
+  We lend to businesses that can't get traditional financing. <b>3% equity. 0% interest.</b> AI trading on the spread. Tax, accounting, debt collection, and LLC setup — all under one roof.</p>
   <div class="meta">
-    <span><b>Interest-Free</b> — always</span>
-    <span><b>3% Equity</b> — max take</span>
-    <span><b>AI-Powered</b> — trading &amp; accounting</span>
-    <span><b>Concept Draft</b></span>
+    <span><b>Interest-Free</b> — 0% APR</span>
+    <span><b>3% Equity</b> — the deal</span>
+    <span><b>AI-Powered</b> — trading on the spread</span>
+    <span><b>All-in-One</b> — finance, tax, legal</span>
   </div>
+  <div class="draftpill">Finance · Banking · Concept Draft</div>
 </header>
 
 <section class="sec">
   <span class="kicker">The idea</span>
-  <h2>Banks charge 30% interest and gut you when you can't pay. We don't.</h2>
+  <h2>Finance for businesses banks won't touch.</h2>
   <p class="lede">
-    Business expansion loans from traditional banks are <b>brutal</b> — interest rates as high as 30%, and if you
-    can't pay, they take your entire company and gut it. ORPHANIM does the opposite: we take a small <b>3% equity
-    stake</b> in your company, and in exchange you get an <b>interest-free loan</b> backed by that equity. No interest
-    payments. No debt. Just a percentage of your company, and cash you can use to grow.
+    ORPHANIM is an interest-free bank for businesses — built for companies that can't get traditional financing. We lend to businesses that banks reject: startups, small businesses, companies with unconventional models, international businesses, anyone shut out of the traditional banking system. Our model: <b>3% equity, 0% interest</b>. We don't profit from interest — we profit from AI trading on the spread between what's lent and what's collected. The business keeps its cash flow. We take a small piece of ownership.
   </p>
 </section>
 
 <section class="sec">
-  <span class="kicker">How it works</span>
-  <h2>The loan is backed by your company — not by you personally.</h2>
-  <p class="lede">
-    You don't personally guarantee the loan. Your company does — through the 3% equity stake we hold. If the company
-    succeeds, you pay back on your terms and can buy back the equity anytime. If it fails, we take 10% of the company
-    to cover the loan, and sell off the assets to turn a profit. Either way, we're fine — and so are you for having
-    tried to grow.
-  </p>
-  <div class="mech">
-    <h3>The loan mechanics</h3>
-    <div class="row">
-      <div class="cell">
-        <div class="k">Equity taken</div>
-        <div class="v">3% of your company<small> — the only thing we keep, always</small></div>
-      </div>
-      <div class="cell">
-        <div class="k">Loan amount</div>
-        <div class="v">Based on valuation vs. net profit<small> — e.g. $1M company → $100K loan</small></div>
-      </div>
-      <div class="cell">
-        <div class="k">Interest</div>
-        <div class="v">0% — always<small> — no interest, ever, on anything</small></div>
-      </div>
-      <div class="cell">
-        <div class="k">Repayment</div>
-        <div class="v">On your terms<small> — pay it back whenever you can</small></div>
-      </div>
-      <div class="cell">
-        <div class="k">Buy back equity</div>
-        <div class="v">Anytime, at any time<small> — you can buy back our 3% whenever you want</small></div>
-      </div>
-      <div class="cell">
-        <div class="k">If company fails</div>
-        <div class="v">10% of company compensates<small> — then we sell the assets</small></div>
-      </div>
+  <span class="kicker">What ORPHANIM does</span>
+  <h2>Everything a business needs. One place.</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="label">Core Service</div>
+      <h3>Interest-Free Business Loans</h3>
+      <p>Lend to businesses that can't get traditional financing. <b>3% equity, 0% interest.</b> No APR. No monthly interest payments. The business keeps its cash flow. ORPHANIM takes a small piece of ownership instead — enough to make the lending sustainable, not enough to control the business.</p>
+      <span class="tag">3% Equity · 0% APR</span>
+    </div>
+    <div class="card">
+      <div class="label">The Engine</div>
+      <h3>AI Trading on the Spread</h3>
+      <p>The profit doesn't come from interest — it comes from AI trading. Automated trading strategies run on the spread between what's lent and what's collected, generating returns from market movement. This is what allows 0% interest — the profit comes from trading, not from charging businesses.</p>
+      <span class="tag">Automated · Market-Based</span>
+    </div>
+    <div class="card">
+      <div class="label">Built-In</div>
+      <h3>Tax &amp; Accounting</h3>
+      <p>Tax and accounting built into the same platform. Businesses that borrow from ORPHANIM get their tax and accounting handled through the same system — clean, integrated, no separate providers needed.</p>
+      <span class="tag">Integrated · One Platform</span>
+    </div>
+    <div class="card">
+      <div class="label">Internal</div>
+      <h3>Debt Collection — In-House</h3>
+      <p>When a business can't pay, ORPHANIM handles its own debt internally. This is separate from the AI debt collection agency (Ophanim Financials) offered to banks. ORPHANIM collects its own bad debt — using the same AI, the same pressure tactics, but on its own book, not as a service to third parties.</p>
+      <span class="tag">Internal Only · Same AI</span>
+    </div>
+    <div class="card">
+      <div class="label">Setup</div>
+      <h3>Tax-Free LLC Setup</h3>
+      <p>Handle tax-free LLC setup for clients. Help businesses set up in the right jurisdiction, with the right structure, to minimize their tax burden legally. Part of the all-in-one financial service ORPHANIM provides.</p>
+      <span class="tag">Jurisdiction · Structure</span>
+    </div>
+    <div class="card">
+      <div class="label">Outreach</div>
+      <h3>AI Call Center</h3>
+      <p>AI call center for lead generation and outreach — reaching businesses that might need ORPHANIM's services. This is a separate function from debt collection: it's about finding and connecting with potential clients, not collecting from debtors.</p>
+      <span class="tag">Lead Gen · Outreach</span>
     </div>
   </div>
-  <div class="pitch">
-    <div class="head">
-      <h3>Why we ask for so little</h3>
+</section>
+
+<section class="sec">
+  <span class="kicker">How lending works</span>
+  <h2>The deal: 3% equity. 0% interest.</h2>
+  <div class="twocol">
+    <div class="block">
+      <div class="label">The Deal</div>
+      <h3>3% equity. 0% interest. AI trading on the spread.</h3>
       <p>
-        Traditional private equity groups ask for <b>10–15%</b> of your company and go after a few big targets.
-        We ask for <b>3%</b> and go after <b>many small ones</b>. The 3% is the only part you can't buy back — the
-        rest, you can always buy back if you choose. We always say yes. So you're not selling your company — you're
-        using a small piece of it as collateral for an interest-free loan. When you pay it back, you're good. When
-        you don't want the equity anymore, you buy it back. It's completely fair to you.
+        ORPHANIM lends to a business. The business gets the cash it needs. <b>No interest payments.</b> The business keeps its cash flow. In exchange, ORPHANIM takes <b>3% equity</b> in the business. That's the deal. The 3% is enough to make the lending worth it — ORPHANIM can trade on the spread and profit from market movement — but not enough to control the business. The business owner keeps 97%.
       </p>
     </div>
-    <div class="quote">
-      "You take a loan ensured by a percentage of your company. Pay it off and you're good. You may also choose on
-      purpose to sell a percentage of your company for that loan — basically getting it free, as if we were buying
-      your stock."
-      <small>— ORPHANIM pitch</small>
+    <div class="block">
+      <div class="label">Why 3%</div>
+      <h3>Enough to make it worth it. Not predatory.</h3>
+      <p>
+        3% equity is the sweet spot. It's enough to make the lending sustainable — ORPHANIM can profit from AI trading on the spread, and the 3% equity gives upside if the business succeeds. It's not predatory — the business isn't crushed by interest payments it can't afford. It keeps its cash flow. It keeps control. It just gives up 3%.
+      </p>
     </div>
   </div>
 </section>
 
 <section class="sec">
-  <span class="kicker">What we do</span>
-  <h2>It's not just the bank. It's everything a business needs to grow.</h2>
-  <p class="lede">
-    ORPHANIM isn't one product — it's a stack of business services that all feed into each other. The bank gets you
-    capital. The trading arm grows it. The accounting keeps it clean. The debt collection gets you paid. The tax setup
-    keeps it efficient. The call center sells it all. And the whole meta-model is: we help you build companies, then
-    we sell them for you. That's the product.
-  </p>
-  <div class="svcgrid">
-    <div class="svc">
-      <div class="ico">Core Product</div>
-      <h3>Interest-Free Business Loans</h3>
-      <p>Take an interest-free loan backed by a 3% equity stake in your company. No personal guarantees. No interest.
-      Repay on your terms. Buy back the equity anytime. This is the flagship — the thing everything else feeds into.</p>
-      <div class="price">The main product — <b>3% equity, 0% interest</b></div>
+  <span class="kicker">AI trading</span>
+  <h2>The profit doesn't come from interest.</h2>
+  <div class="twocol">
+    <div class="block">
+      <div class="label">The Engine</div>
+      <h3>Automated trading on the spread.</h3>
+      <p>
+        AI trading strategies run on the spread between what's lent and what's collected. The AI watches the market, makes trades, generates returns from market movement — not from charging interest to businesses. This is what makes 0% interest possible: the profit comes from trading, not from the borrower.
+      </p>
     </div>
-    <div class="svc">
-      <div class="ico">Investment Arm</div>
-      <h3>AI Trading &amp; Investment Bank</h3>
-      <p>An AI that watches social media and Reddit to gauge market sentiment and make trading decisions. Options
-      strategies, shorting, or safe long-term investing — your call. We also offer a <b>debit card</b> where your
-      money is always invested but instantly spendable. Pixel-art AI branding, desktop + phone + web.</p>
-      <div class="price">Consumer banking — <b>invest + spend, same account</b></div>
-    </div>
-    <div class="svc">
-      <div class="ico">Accounting</div>
-      <h3>Tax &amp; Accounting Services</h3>
-      <p>QuickBooks + Intuit tools + AI on our end. Companies pay us to do their accounting and taxes. We use existing
-      software — no custom build needed — and add AI to handle the heavy lifting. Can also offer law services as an
-      upsell.</p>
-      <div class="price">B2B service — <b>monthly retainer, per client</b></div>
-    </div>
-    <div class="svc">
-      <div class="ico">Collections</div>
-      <h3>Debt Collection Agency</h3>
-      <p>AI calls people with debt obligations, applies pressure tactics, and tries to get them to pay anything they
-      can. Offer the service to banks and finance companies. Option to buy the debt at a discount and collect on it
-      ourselves. Percentage-based contracts.</p>
-      <div class="price">B2B service — <b>percentage of recovered debt</b></div>
-    </div>
-    <div class="svc">
-      <div class="ico">Setup Service</div>
-      <h3>Tax-Free Parent Company Setup</h3>
-      <p>File a company under us and get it tax-free through offshore structures or legal loopholes. You sign up, we
-      set up the parent company, you get the tax benefits. We "loan" you money or use your company account as
-      collateral — you never really need to pay it back. Max tax-free loopholes, available to everyone.</p>
-      <div class="price">Setup service — <b>per company, call to price</b></div>
-    </div>
-    <div class="svc">
-      <div class="ico">Sales Engine</div>
-      <h3>AI Call Center &amp; Lead Gen</h3>
-      <p>Collect phone numbers, have AI categorize people by what we can most likely sell them, and run a pay-to-buy
-      call center. Any company can use it to sell their product. We find people most likely to be interested. This is
-      also how ORPHANIM sells itself — the sales engine for the whole stack.</p>
-      <div class="price">Pay-to-buy — <b>per lead, or monthly</b></div>
+    <div class="block">
+      <div class="label">Why It Matters</div>
+      <h3>0% interest is possible because of trading.</h3>
+      <p>
+        Traditional lenders charge interest because that's how they make money. ORPHANIM doesn't need to — the AI trading engine generates returns from the spread. The business gets the cash it needs without interest payments. ORPHANIM makes its money from trading, plus the 3% equity upside. Everyone wins.
+      </p>
     </div>
   </div>
 </section>
 
 <section class="sec">
-  <span class="kicker">The bigger model</span>
-  <h2>We build companies. Then we sell them. That's the product.</h2>
+  <span class="kicker">Debt collection — internal</span>
+  <h2>ORPHANIM collects its own debts.</h2>
   <p class="lede">
-    The entire ORPHANIM team's job is to help build companies, market the founder, and manage everything. We take a
-    business idea, execute enough to make people see potential, then sell it. The parent company is never sold — only
-    the daughter companies. This is how we scale: build, grow, sell, repeat. Some companies go public. Some get sold
-    to other businesses. The parent always stays 100% owned.
+    When a business can't pay what it owes ORPHANIM, the same AI that powers Ophanim Financials (the AI debt collection agency offered to banks) collects ORPHANIM's own bad debt. This is internal — it's about collecting on ORPHANIM's own book, not offering a service to third parties. The AI, the pressure tactics, the collection process — same engine, different application. This keeps ORPHANIM's lending book clean and recovers what it can when businesses fall behind.
   </p>
-  <div class="timeline">
-    <div class="step">
-      <div class="n">Step 1</div>
-      <h4>Take a business idea</h4>
-      <p>Anything — a game studio, a hardware company, a software product. We find the idea, or it comes to us.</p>
-    </div>
-    <div class="step">
-      <div class="n">Step 2</div>
-      <h4>Execute enough to show potential</h4>
-      <p>Build the MVP, get the first customers, make it look real. Enough that people see what it could be.</p>
-    </div>
-    <div class="step">
-      <div class="n">Step 3</div>
-      <h4>Sell it or take it public</h4>
-      <p>List it at a price with what comes with it. Others can buy it. Or take it public. The parent company never
-      sells — only daughter companies move.</p>
-    </div>
-  </div>
 </section>
 
 <section class="sec">
   <span class="kicker">The numbers</span>
-  <h2>What we're building toward</h2>
-  <div class="statstrip">
-    <div class="cell">
-      <div class="n">3%</div>
-      <div class="l">Max equity take per company</div>
-    </div>
+  <h2>What ORPHANIM looks like.</h2>
+  <div class="statsbar">
     <div class="cell">
       <div class="n">0%</div>
-      <div class="l">Interest — always, on anything</div>
+      <div class="l">APR — No Interest</div>
     </div>
     <div class="cell">
-      <div class="n">10–15%</div>
-      <div class="l">What traditional PE asks for — we don't</div>
+      <div class="n">3%</div>
+      <div class="l">Equity — The Deal</div>
     </div>
     <div class="cell">
-      <div class="n">$100K</div>
-      <div class="l">Sample loan for $1M company</div>
+      <div class="n">AI</div>
+      <div class="l">Powered Trading</div>
+    </div>
+    <div class="cell">
+      <div class="n">All-In-One</div>
+      <div class="l">Finance, Tax, Legal</div>
     </div>
   </div>
 </section>
@@ -357,8 +307,7 @@
 <div class="pledgebar">
   <a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>
   an <b>ALLSEER</b> company<span class="sep">|</span>
-  interest-free bank for businesses<span class="sep">|</span>
-  concept draft — not real yet</a>
+  interest-free bank for businesses — concept draft</a>
 </div>
 
 <footer>

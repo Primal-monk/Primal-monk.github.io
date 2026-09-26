@@ -3,422 +3,362 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Unlist — See What YouTube Doesn't Show You</title>
+<title>UNLIST — See What YouTube Doesn't Show You</title>
 <link rel="icon" type="image/png" href="assets/angelcorp.png">
-<meta name="description" content="Unlist — a Chrome extension that scans YouTube for unlisted videos and channels for unlisted videos, so you can access them. Discover the hidden layer of YouTube.">
+<meta name="description" content="UNLIST — a Chrome extension that scans YouTube channels for unlisted videos and searches for hidden content by keyword. Concept draft.">
 <style>
   :root{
-    --bg:#0a1420; --bg2:#0f1e2e; --bg3:#15293d; --bg4:#1d364e;
-    --hi:#4a9eff; --hi2:#2f7ad4; --paper:#e4edf5; --sec:#8fa8c0;
-    --line:rgba(74,158,255,.28);
+    --bg:#0a0e17; --bg2:#111827; --bg3:#1a2235; --bg4:#232d44;
+    --accent:#ff3333; --accent2:#cc0000;
+    --ink:#f0f4f8; --sec:#94a3b8; --faint:#475569;
+    --line:rgba(255,51,51,.20); --line2:rgba(255,51,51,.08);
+    --corp:"Archivo","Segoe UI",system-ui,sans-serif;
+    --mono:"Archivo","Courier New",monospace;
+    --maxw:1100px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth;scrollbar-color:var(--hi) var(--bg3);scrollbar-width:auto}
-  body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--sec);
-    line-height:1.62;padding-top:56px}
-  ::-webkit-scrollbar{width:16px}
-  ::-webkit-scrollbar-track{background:var(--bg3)}
-  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--hi),var(--hi2));
-    border:2px solid var(--bg3);border-radius:10px}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--corp);background:var(--bg);color:var(--sec);
+    line-height:1.6;font-size:17px;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+    background-color:var(--bg);
+    background-image:
+      radial-gradient(circle at 1px 1px,rgba(255,51,51,.12) 1px,transparent 1px),
+      linear-gradient(rgba(255,51,51,.04) 1px,transparent 1px);
+    background-size:28px 28px,100% 3px}
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-track{background:var(--bg2)}
+  ::-webkit-scrollbar-thumb{background:var(--accent2);border:2px solid var(--bg2);border-radius:6px}
   a{color:inherit;text-decoration:none}
-  ::selection{background:var(--hi);color:#06131f}
-  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:56px;background:var(--bg2);
-    border-bottom:2px solid var(--hi2);display:flex;align-items:center;gap:12px;padding:0 16px}
-  .topbar .who{display:flex;align-items:center;gap:9px;text-decoration:none}
-  .topbar .who img{width:30px;height:30px;object-fit:contain;border-radius:7px}
-  .topbar .who span{font-size:.86rem;color:var(--hi);font-weight:700}
-  .topbar .back{color:var(--hi);font-size:1.1rem;font-weight:900;cursor:pointer}
+  ::selection{background:var(--accent);color:var(--bg)}
+  .mono{font-family:var(--mono);letter-spacing:.04em}
+  .topbar{position:sticky;top:0;z-index:60;height:56px;
+    background:var(--bg2);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:14px;padding:0 24px}
+  .topbar .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .topbar .brand img{width:26px;height:26px;object-fit:contain}
+  .topbar .brand .wm{font-family:var(--corp);font-weight:900;font-size:15px;
+    color:var(--ink);letter-spacing:.18em}
+  .topbar .brand .wm small{color:var(--accent);font-weight:700;font-size:.55em;
+    letter-spacing:.2em;margin-left:.5em;vertical-align:super}
   .topbar .spacer{flex:1}
-  .topbar .tag{font-family:"Segoe UI",system-ui,sans-serif;font-size:.72rem;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--sec);border:1px solid var(--line);border-radius:3px;
-    padding:5px 12px}
-  .wrap{max-width:920px;margin:0 auto;padding:0 22px}
-  header{text-align:center;padding:44px 0 28px}
-  .logo{width:130px;height:130px;object-fit:contain;display:block;margin:0 auto 14px;
-    filter:drop-shadow(0 6px 16px rgba(0,0,0,.5));position:relative}
-  .logo .box{position:absolute;inset:0}
-  .logo .box::before{content:"";position:absolute;inset:8px;border:2px solid var(--hi);
-    border-radius:12px;opacity:.3}
-  .logo .box::after{content:"";position:absolute;inset:16px;border:1px solid var(--hi2);
-    border-radius:8px;opacity:.15}
-  .logo svg{position:absolute;inset:0;width:100%;height:100%}
-  h1{font-size:clamp(2.4rem,7vw,3.6rem);letter-spacing:.12em;font-weight:900;color:var(--hi);
-    text-transform:uppercase}
-  .tag{margin-top:10px;color:var(--paper);letter-spacing:.08em;font-size:.94rem;max-width:540px;margin-left:auto;margin-right:auto}
-  .tag em{font-style:normal;color:var(--hi)}
-  .draftpill{display:inline-block;margin-top:16px;background:var(--bg3);border:1px solid var(--hi2);
-    border-radius:20px;padding:6px 20px;font-size:.72rem;font-weight:700;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--hi)}
-  section{margin-bottom:36px}
-  h2{color:var(--hi);font-size:.9rem;letter-spacing:.18em;text-transform:uppercase;
-    padding-bottom:8px;margin-bottom:16px;border-bottom:2px solid var(--hi2)}
-  p.body{color:var(--paper);margin-bottom:12px;font-size:.94rem}
-  p.body b{color:var(--hi)}
-  .demo{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:22px}
-  .modes{display:flex;gap:10px;margin-bottom:18px}
-  .modebtn{flex:1;background:var(--bg3);border:1px solid var(--line);border-radius:7px;
-    padding:12px 16px;text-align:center;color:var(--sec);font-weight:700;font-size:.84rem;cursor:pointer;
-    font-family:"Segoe UI",system-ui,sans-serif;transition:all .15s}
-  .modebtn:hover{border-color:var(--hi)}
-  .modebtn.on{background:var(--hi);color:#06131f;border-color:var(--hi)}
-  .modebtn .shortcut{display:block;font-size:.6rem;color:var(--faint);margin-top:4px;letter-spacing:.06em}
-  .modebtn.on .shortcut{color:rgba(6,19,31,.5)}
-  .pinlbl{color:var(--sec);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
-    font-weight:700;margin-bottom:8px;font-family:"Segoe UI",system-ui,sans-serif}
-  .searchwrap{position:relative}
-  #channelSearch{width:100%;background:var(--bg3);border:1px solid var(--line);border-radius:7px;
-    padding:12px 14px;color:var(--paper);font-size:.88rem;font-family:"Segoe UI",system-ui,sans-serif}
-  #channelSearch:focus{outline:none;border-color:var(--hi)}
-  .searchdrop{display:none;position:absolute;left:0;right:0;top:calc(100% + 4px);
-    background:var(--bg3);border:1px solid var(--line);border-radius:7px;max-height:240px;
-    overflow-y:auto;z-index:20;box-shadow:0 10px 30px rgba(0,0,0,.5)}
-  .searchdrop.open{display:block}
-  .searchdrop .opt{padding:9px 14px;font-size:.86rem;color:var(--paper);cursor:pointer;
-    display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line2)}
-  .searchdrop .opt:last-child{border-bottom:0}
-  .searchdrop .opt:hover{background:var(--bg4)}
-  .searchdrop .opt .thumb{width:32px;height:32px;border-radius:4px;object-fit:cover;
-    background:var(--bg4);flex:none}
-  .searchdrop .opt .info{flex:1;min-width:0}
-  .searchdrop .opt .info .title{color:var(--paper);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .searchdrop .opt .info .meta{color:var(--sec);font-size:.72rem;margin-top:2px}
-  .searchdrop .opt .unlistedbadge{font-family:"Segoe UI",system-ui,sans-serif;font-size:.6rem;
-    background:var(--hi);color:#06131f;border-radius:3px;padding:2px 6px;font-weight:700;
-    letter-spacing:.06em;text-transform:uppercase;flex:none}
-  .searchdrop .none{padding:14px;color:var(--sec);font-size:.82rem;font-style:italic}
-  .demo .result{background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:14px 16px;
-    font-size:.84rem;color:var(--paper);margin-top:14px;line-height:1.5}
-  .demo .result b{color:var(--hi)}
-  .demo .result .mockrow{display:flex;gap:10px;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid var(--line2)}
-  .demo .result .mockrow .thumb{width:40px;height:40px;border-radius:4px;object-fit:cover;
-    background:linear-gradient(135deg,#1d364e,#2a4a6a);flex:none}
-  .demo .result .mockrow .info{flex:1}
-  .demo .result .mockrow .info .title{color:var(--paper);font-weight:600;font-size:.86rem}
-  .demo .result .mockrow .info .meta{color:var(--sec);font-size:.72rem}
-  .demo .result .mockrow .unlisted{font-family:"Segoe UI",system-ui,sans-serif;font-size:.6rem;
-    background:var(--hi);color:#06131f;border-radius:3px;padding:3px 7px;font-weight:700;
-    letter-spacing:.06em;text-transform:uppercase;flex:none}
-  .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-  .f{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--hi);
-    border-radius:7px;padding:18px}
-  .f .ic{font-family:"Segoe UI",system-ui,sans-serif;font-size:.62rem;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--hi);margin-bottom:6px}
-  .f h3{color:var(--paper);font-weight:700;font-size:.92rem;margin-bottom:6px}
-  .f p{color:var(--sec);font-size:.82rem;line-height:1.5;font-family:"Segoe UI",system-ui,sans-serif}
-  .screenshots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
-  @media(max-width:600px){.screenshots{grid-template-columns:1fr}}
-  .screenshots .ss{aspect-ratio:16/9;border:1px solid var(--line);border-radius:6px;
-    overflow:hidden;background:var(--bg3);position:relative}
-  .screenshots .ss img{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0}
-  .screenshots .ss .overlay{position:absolute;inset:0;background:rgba(10,20,32,.6);
-    display:flex;align-items:center;justify-content:center;font-family:"Segoe UI",system-ui,sans-serif;
-    font-size:.66rem;color:var(--sec);letter-spacing:.1em;text-transform:uppercase}
-  .installmock{background:var(--bg3);border:1px solid var(--line);border-radius:8px;
-    padding:18px 20px;margin-top:18px;display:flex;align-items:center;gap:14px}
-  .installmock .icon{width:52px;height:52px;background:var(--bg4);border:1px solid var(--line);
-    border-radius:10px;display:grid;place-items:center;font-size:1.5rem;color:var(--hi);
-    font-weight:900;letter-spacing:.06em;font-family:"Segoe UI",system-ui,sans-serif}
-  .installmock .info{flex:1}
-  .installmock .info .nm{color:var(--paper);font-weight:700;font-size:.94rem}
-  .installmock .info .sub{color:var(--sec);font-size:.78rem;margin-top:3px}
-  .installmock .btn{background:var(--hi);color:#06131f;border:0;border-radius:6px;
-    padding:10px 20px;font-weight:700;font-size:.84rem;cursor:not-allowed;
-    font-family:"Segoe UI",system-ui,sans-serif;letter-spacing:.04em}
-  .installmock .price{color:var(--sec);font-size:.78rem;margin-top:4px}
-  .pledgebar{border-top:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.028);
-    padding:15px 22px;text-align:center;font-size:.84rem;line-height:1.6;letter-spacing:.01em}
-  .pledgebar a{display:inline-block;color:inherit;opacity:.82;transition:opacity .15s}
+  .topbar .back{font-family:var(--mono);font-size:11px;color:var(--accent2);
+    letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:color .15s;padding:6px 0}
+  .topbar .back:hover{color:var(--accent)}
+  .topbar .tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent2);border:1px solid var(--line);
+    border-radius:3px;padding:5px 10px;white-space:nowrap}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  @media(max-width:640px){.wrap{padding:0 18px}}
+  .hero{padding:64px 0 40px;text-align:center;
+    background:linear-gradient(180deg,#0f1729 0%,var(--bg) 100%);
+    position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+    width:600px;height:300px;background:radial-gradient(ellipse,rgba(255,51,51,.08),transparent 70%);
+    pointer-events:none}
+  .hero .logochip{display:inline-flex;align-items:center;justify-content:center;
+    width:56px;height:56px;background:var(--accent);border-radius:10px;
+    font-size:1.6rem;color:var(--bg);margin-bottom:18px;
+    box-shadow:0 0 30px rgba(255,51,51,.25),inset 0 1px 0 rgba(255,255,255,.2);
+    transition:transform .15s}
+  .hero .logochip:hover{transform:scale(1.05)}
+  .hero .pre{font-family:var(--mono);font-size:11px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--accent2);margin-bottom:18px}
+  .hero h1{font-weight:900;font-size:clamp(3rem,8vw,5.4rem);
+    line-height:.92;letter-spacing:-.03em;color:var(--ink);
+    text-shadow:0 2px 0 rgba(0,0,0,.4)}
+  .hero h1 .bar{display:inline-block;width:120px;height:4px;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    border-radius:2px;margin:0 clamp(2vw,5vw,4vw) 0}
+  .hero .tag{font-weight:600;font-size:clamp(1rem,2.2vw,1.25rem);
+    color:var(--sec);margin-top:14px;letter-spacing:.02em;
+    max-width:580px;margin-left:auto;margin-right:auto;line-height:1.4}
+  .hero .tag em{font-style:normal;color:var(--accent);font-weight:700}
+  .hero .meta{margin-top:22px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;font-family:var(--mono)}
+  .hero .meta span{font-size:10px;color:var(--faint);letter-spacing:.16em;
+    text-transform:uppercase;border:1px solid var(--line);border-radius:3px;padding:6px 12px}
+  .hero .meta span b{color:var(--accent);font-weight:700}
+  .draftpill{display:inline-block;margin-top:14px;
+    background:var(--bg3);border:1px solid var(--accent2);border-radius:20px;
+    padding:6px 20px;font-size:.72rem;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--accent)}
+  .sec{padding:48px 0;border-top:1px solid var(--line2)}
+  .sec:first-of-type{border-top:0}
+  .sec .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--accent2);margin-bottom:12px;display:block}
+  .sec h2{font-weight:900;font-size:clamp(1.5rem,3.4vw,2.1rem);
+    color:var(--ink);letter-spacing:-.01em;line-height:1.04;margin-bottom:10px}
+  .sec h2::after{content:"";display:block;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));
+    width:clamp(60px,12vw,120px);margin-top:10px;border-radius:2px}
+  .sec .lede{color:var(--sec);font-size:1.02rem;max-width:640px;margin:0 auto 24px;line-height:1.6;text-align:center}
+  .sec .lede b{color:var(--ink);font-weight:600}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--accent);
+    border-radius:8px;padding:22px;transition:border-color .15s,transform .15s}
+  .card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .card .label{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent2);margin-bottom:8px}
+  .card h3{font-weight:800;font-size:1.06rem;color:var(--ink);letter-spacing:-.01em;margin-bottom:8px}
+  .card p{color:var(--sec);font-size:.88rem;line-height:1.55;margin-bottom:8px}
+  .card p b{color:var(--ink);font-weight:600}
+  .card .metarow{display:flex;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+  .card .metarow .m{flex:1}
+  .card .metarow .n{font-size:1.2rem;font-weight:800;color:var(--accent);line-height:1;
+    font-family:var(--corp);letter-spacing:-.02em}
+  .card .metarow .l{font-size:.64rem;color:var(--faint);letter-spacing:.1em;
+    text-transform:uppercase;margin-top:4px;font-weight:600}
+  .demobox{margin-top:28px;background:var(--bg2);border:1px solid var(--line);
+    border-radius:10px;padding:24px;position:relative;overflow:hidden}
+  .demobox::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+  .demobox h3{font-weight:900;font-size:1rem;color:var(--ink);margin-bottom:18px;letter-spacing:-.01em}
+  .demorow{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+  .demorow input{flex:1;min-width:200px;background:var(--bg3);border:1px solid var(--line);
+    border-radius:6px;padding:12px 16px;color:var(--ink);font-family:var(--corp);font-size:.92rem;
+    outline:none;transition:border-color .15s}
+  .demorow input:focus{border-color:var(--accent)}
+  .demorow input::placeholder{color:var(--faint)}
+  .demorow button{background:var(--accent);color:var(--bg);border:none;border-radius:6px;
+    padding:12px 22px;font-family:var(--corp);font-weight:800;font-size:.86rem;
+    letter-spacing:.04em;cursor:pointer;transition:background .15s;white-space:nowrap}
+  .demorow button:hover{background:var(--accent2)}
+  .demorow .mode{display:flex;gap:4px;background:var(--bg3);border-radius:6px;padding:4px}
+  .demorow .mode button{flex:1;background:transparent;color:var(--sec);
+    border:none;border-radius:4px;padding:8px 12px;font-family:var(--mono);
+    font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+    transition:all .15s}
+  .demorow .mode button.active{background:var(--accent);color:var(--bg);font-weight:700}
+  .resultbox{background:var(--bg3);border:1px solid var(--line);border-radius:6px;
+    padding:14px;margin-top:14px;display:none}
+  .resultbox.show{display:block}
+  .resultbox .ritem{display:flex;gap:12px;align-items:flex-start;padding:8px 0;
+    border-bottom:1px solid var(--line2)}
+  .resultbox .ritem:last-child{border-bottom:0}
+  .resultbox .ritem .ri{background:var(--accent);color:var(--bg);border-radius:50%;
+    width:28px;height:28px;display:grid;place-items:center;font-size:.7rem;font-weight:900;
+    flex:none}
+  .resultbox .ritem .rt{flex:1}
+  .resultbox .ritem .rt b{color:var(--ink);font-size:.9rem;display:block;font-weight:700}
+  .resultbox .ritem .rt span{color:var(--sec);font-size:.78rem}
+  .resultbox .ritem .rt span small{display:block;color:var(--faint);font-size:.7rem;margin-top:2px}
+  .statrow{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:28px}
+  @media(max-width:640px){.statrow{grid-template-columns:repeat(2,1fr)}}
+  .statrow .cell{background:var(--bg2);padding:18px 14px;text-align:center}
+  .statrow .cell .n{font-size:1.5rem;font-weight:900;color:var(--ink);line-height:1;
+    font-family:var(--corp);letter-spacing:-.02em}
+  .statrow .cell .n.red{color:var(--accent)}
+  .statrow .cell .l{font-size:.64rem;color:var(--sec);letter-spacing:.1em;
+    text-transform:uppercase;margin-top:5px;font-weight:600}
+  .pledgebar{margin-top:32px;border-top:1px solid rgba(255,255,255,.06);
+    background:color-mix(in srgb,var(--bg2) 80%,transparent);
+    padding:16px 28px;text-align:center;font-size:.86rem;line-height:1.55}
+  .pledgebar a{display:inline-block;color:var(--accent2);opacity:.82;transition:opacity .15s}
   .pledgebar a:hover{opacity:1}
-  .pledgebar b{color:#ffd86a;font-weight:700}
-  .pledgebar .sep{opacity:.35;margin:0 .55em}
-  footer{border-top:1px solid var(--line);padding:28px 0;text-align:center;
-    font-family:"Segoe UI",system-ui,sans-serif;font-size:10.5px;color:var(--faint);letter-spacing:.06em}
-  footer .mark{font-weight:900;color:var(--sec);letter-spacing:.1em;font-size:11px}
-  footer .mark sup{font-size:.55em;vertical-align:super;margin-left:.06em}
-  .statsrow{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
-    border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:20px}
-  @media(max-width:600px){.statsrow{grid-template-columns:repeat(2,1fr)}}
-  .statsrow .cell{background:var(--bg2);padding:16px 14px;text-align:center}
-  .statsrow .cell .n{font-size:1.6rem;font-weight:900;color:var(--hi);line-height:1;font-family:"Segoe UI",system-ui,sans-serif}
-  .statsrow .cell .l{font-size:.64rem;color:var(--sec);letter-spacing:.1em;text-transform:uppercase;
-    margin-top:5px;font-weight:600}
+  .pledgebar b{color:var(--accent);font-weight:700}
+  .pledgebar .sep{opacity:.35;margin:0 .5em}
+  footer{border-top:1px solid var(--line2);padding:28px 0;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--faint);
+    text-transform:uppercase}
+  footer .mark{font-family:var(--corp);font-weight:900;color:var(--accent2);
+    letter-spacing:.14em;font-size:12px}
+  footer .mark sup{font-size:.55em;vertical-align:super;margin-left:.06em;color:var(--faint)}
+  footer .right{text-align:right;color:var(--faint)}
+  .ornament{display:flex;align-items:center;justify-content:center;gap:14px;
+    margin:36px 0 0;padding-top:24px;border-top:1px solid var(--line2)}
+  .ornament::before,.ornament::after{content:"";height:1px;width:80px}
+  .ornament::before{background:linear-gradient(90deg,transparent,var(--line))}
+  .ornament::after{background:linear-gradient(90deg,var(--line),transparent)}
+  .ornament span{font-family:var(--mono);font-size:.62rem;color:var(--faint);letter-spacing:.2em}
 </style>
 </head>
 <body>
 
 <nav class="topbar">
-  <a class="who" href="omni.html">
-    <span class="back">&larr;</span>
-    <img src="assets/angelcorp.png" alt="">
-    <span>ALLSEER SOFTWARE</span>
+  <a class="brand" href="omni.html">
+    <img src="assets/angelcorp.png" alt="ALLSEER">
+    <span class="wm">ALLSEER<small>SOFTWARE</small></span>
   </a>
   <div class="spacer"></div>
-  <span class="tag">Browser Extension</span>
+  <span class="tag">Extension · YouTube Tools</span>
+  <a class="back" href="omni.html">&larr; Back to ALLSEER</a>
 </nav>
 
 <div class="wrap">
 
-<header>
-  <div class="logo">
-    <img src="assets/angelcorp.png" alt="Unlist">
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(74,158,255,.15)" stroke-width="1"/>
-      <path d="M30 50 Q50 20 70 50 Q50 80 30 50 Z" fill="none" stroke="rgba(74,158,255,.25)" stroke-width="1.5"/>
-      <circle cx="50" cy="50" r="8" fill="rgba(74,158,255,.4)"/>
-    </svg>
+<header class="hero">
+  <div class="logochip">🔍</div>
+  <div class="pre">A Chrome Extension Concept</div>
+  <h1>UNLIST<span class="bar"></span></h1>
+  <p class="tag">See what <em>YouTube doesn't show you.</em><br>Scan channels for unlisted videos. Search for hidden content by keyword.</p>
+  <div class="meta">
+    <span><b>Channel Scan</b> — find unlisted uploads</span>
+    <span><b>Keyword Search</b> — hidden content by topic</span>
+    <span><b>Filter &amp; Export</b> — sort results</span>
+    <span><b>Concept Draft</b></span>
   </div>
-  <h1>UNLIST</h1>
-  <div class="tag">The hidden layer of <em>YouTube.</em> Scan channels and search for unlisted videos — content that's there but not shown.</div>
   <div class="draftpill">Chrome Extension · Concept Draft</div>
 </header>
 
-<div class="statsrow">
-  <div class="cell"><div class="n">2</div><div class="l">Scan Modes</div></div>
-  <div class="cell"><div class="n">∞</div><div class="l">Unlisted Videos</div></div>
-  <div class="cell"><div class="n">1</div><div class="l">Click to Open</div></div>
-  <div class="cell"><div class="n">$0</div><div class="l">Free to Use</div></div>
-</div>
-
-<section>
-  <h2>What It Does</h2>
-  <p class="body">
-    YouTube has a whole layer of content that's <b>there but not shown</b> — unlisted videos. They don't appear in
-    search, they don't show up on the channel's public listing, but they're still accessible if you have the link.
-    <b>Unlist</b> is a Chrome extension that finds them.
+<section class="sec">
+  <span class="kicker">The idea</span>
+  <h2>Find hidden YouTube content.</h2>
+  <p class="lede">
+    UNLIST is a Chrome extension that finds unlisted YouTube videos — the stuff that doesn't show up in search, doesn't appear on channel pages, but exists. Creators use unlisted for drafts, WIPs, private shares, behind-the-scenes. UNLIST finds it all.
   </p>
-  <p class="body">
-    Point it at any channel and it scans for every unlisted video on that channel. Search by keyword and it finds
-    unlisted videos across YouTube that match. Every result is a direct link — one click and you're watching.
+  <div class="grid">
+    <div class="card">
+      <div class="label">Feature 01</div>
+      <h3>Scan a channel</h3>
+      <p>Enter any YouTube channel URL and UNLIST scans every video on that channel — including unlisted ones that don't appear publicly. Get a full list of everything uploaded, public or hidden.</p>
+      <div class="metarow">
+        <div class="m"><div class="n">Full</div><div class="l">Channel Scan</div></div>
+        <div class="m"><div class="n">Unlisted</div><div class="l">Included</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label">Feature 02</div>
+      <h3>Search by keyword</h3>
+      <p>Search for unlisted content by keyword across YouTube. UNLIST finds unlisted videos that match your search terms — content that would never show up in normal search results.</p>
+      <div class="metarow">
+        <div class="m"><div class="n">Keyword</div><div class="l">Search</div></div>
+        <div class="m"><div class="n">Unlisted</div><div class="l">Only</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label">Feature 03</div>
+      <h3>Filter &amp; sort results</h3>
+      <p>Sort results by date, video length, or upload order. Filter to show only unlisted, only public, or both. Find exactly the hidden content you're looking for.</p>
+      <div class="metarow">
+        <div class="m"><div class="n">Date</div><div class="l">Length</div></div>
+        <div class="m"><div class="n">Public</div><div class="l">Unlisted</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label">Feature 04</div>
+      <h3>Direct access &amp; export</h3>
+      <p>Every result is a direct link — click to open the unlisted video immediately. Export your results as a CSV for tracking, research, or analysis. Everything you find, saved.</p>
+      <div class="metarow">
+        <div class="m"><div class="n">Direct</div><div class="l">Links</div></div>
+        <div class="m"><div class="n">CSV</div><div class="l">Export</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <span class="kicker">Live demo</span>
+  <h2>Try the concept</h2>
+  <div class="demobox">
+    <h3>UNLIST — demo interface</h3>
+    <div class="demorow">
+      <div class="mode">
+        <button type="button" id="modeChannel" class="active" onclick="setMode('channel')">Channel Scan</button>
+        <button type="button" id="modeKeyword" onclick="setMode('keyword')">Keyword Search</button>
+      </div>
+      <input type="text" id="scanInput" placeholder="Paste a YouTube channel URL or enter a keyword..." id="scanInputEl">
+      <button type="button" onclick="runScan()">Scan</button>
+    </div>
+    <div class="resultbox" id="resultBox">
+      <div class="ritem">
+        <div class="ri">▶</div>
+        <div class="rt">
+          <b>Draft: Q3 Update V3 (Unlisted)</b>
+          <span>Channel: TechReviewPro · 3 weeks ago · 14:22</span>
+          <small>Unlisted — not visible on channel page</small>
+        </div>
+      </div>
+      <div class="ritem">
+        <div class="ri">▶</div>
+        <div class="rt">
+          <b>Behind the Scenes: Studio Setup (Unlisted)</b>
+          <span>Channel: TechReviewPro · 2 months ago · 8:05</span>
+          <small>Unlisted — private share link</small>
+        </div>
+      </div>
+      <div class="ritem">
+        <div class="ri">▶</div>
+        <div class="rt">
+          <b>Work in Progress: New Microphone Test (Unlisted)</b>
+          <span>Channel: TechReviewPro · 5 months ago · 5:33</span>
+          <small>Unlisted — draft / WIP</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p style="color:var(--faint);font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;
+    text-transform:uppercase;margin-top:14px;text-align:center">Demo — fake results showing the concept. Real extension would scan live YouTube data.</p>
+</section>
+
+<section class="sec">
+  <span class="kicker">Why it matters</span>
+  <h2>Unlisted doesn't mean private.</h2>
+  <p class="lede">
+    Unlisted videos don't appear in YouTube search and don't show up on a channel's public video list — but anyone with the link can watch them. Creators use unlisted for drafts, WIPs, private share links, behind-the-scenes content. UNLIST finds that content.
   </p>
-</section>
-
-<section>
-  <h2>How It Works</h2>
-  <div class="demo">
-    <div class="modes">
-      <button class="modebtn on" data-mode="channel">
-        Scan a Channel
-        <span class="shortcut">Alt + 1</span>
-      </button>
-      <button class="modebtn" data-mode="search">
-        Search Unlisted
-        <span class="shortcut">Alt + 2</span>
-      </button>
+  <div class="statrow">
+    <div class="cell">
+      <div class="n red">Unlisted ≠ Private</div>
+      <div class="l">Anyone with the link can watch</div>
     </div>
-
-    <div id="modeChannel">
-      <div class="pinlbl">Channel URL or handle</div>
-      <div class="searchwrap">
-        <input type="text" id="channelSearch" placeholder="@primalmonke  or  https://youtube.com/@channelName">
-        <div class="searchdrop" id="channelDrop">
-          <div class="none">Type a YouTube channel handle or URL above.</div>
-        </div>
-      </div>
-      <div style="margin-top:14px">
-        <button id="scanChannelBtn" style="background:var(--hi);color:#06131f;border:0;border-radius:6px;
-          padding:11px 20px;font-weight:700;font-size:.84rem;cursor:pointer;width:100%;
-          font-family:'Segoe UI',system-ui,sans-serif;letter-spacing:.04em">Scan Channel for Unlisted</button>
-      </div>
+    <div class="cell">
+      <div class="n red">Hidden from Search</div>
+      <div class="l">Doesn't appear in YouTube search</div>
     </div>
-
-    <div id="modeSearch" style="display:none">
-      <div class="pinlbl">Keyword or topic</div>
-      <div class="searchwrap">
-        <input type="text" id="searchInput" placeholder="e.g. hidden tutorial, draft video, unlisted review...">
-        <div class="searchdrop" id="searchDrop">
-          <div class="none">Type a keyword to search for unlisted videos.</div>
-        </div>
-      </div>
-      <div style="margin-top:14px">
-        <button id="searchBtn" style="background:var(--hi);color:#06131f;border:0;border-radius:6px;
-          padding:11px 20px;font-weight:700;font-size:.84rem;cursor:pointer;width:100%;
-          font-family:'Segoe UI',system-ui,sans-serif;letter-spacing:.04em">Search Unlisted Videos</button>
-      </div>
+    <div class="cell">
+      <div class="n red">Not on Channel Page</div>
+      <div class="l">Hidden from public video list</div>
     </div>
-
-    <div id="resultArea" style="margin-top:18px">
-      <div class="result">
-        <b>Live result panel — demo view.</b> The extension would show real unlisted video results here with thumbnails,
-        titles, view counts, and direct links. Below is a mock of what a result row looks like.
-        <div class="mockrow">
-          <div class="thumb"></div>
-          <div class="info">
-            <div class="title">How to build a PC — full guide (unlisted draft)</div>
-            <div class="meta">12,400 views · Uploaded 3 months ago</div>
-          </div>
-          <div class="unlisted">Unlisted</div>
-        </div>
-        <div class="mockrow">
-          <div class="thumb"></div>
-          <div class="info">
-            <div class="title">Product review — prototype testing (unlisted)</div>
-            <div class="meta">3,800 views · Uploaded 2 weeks ago</div>
-          </div>
-          <div class="unlisted">Unlisted</div>
-        </div>
-        <div class="mockrow">
-          <div class="thumb"></div>
-          <div class="info">
-            <div class="title">Q&A — community questions answered (unlisted)</div>
-            <div class="meta">8,200 views · Uploaded 1 month ago</div>
-          </div>
-          <div class="unlisted">Unlisted</div>
-        </div>
-        <p style="margin-top:12px;color:var(--sec);font-size:.78rem;border-top:1px solid var(--line2);padding-top:10px">
-          <b>Concept draft.</b> No real scanning in this prototype. In practice, the extension queries YouTube's API
-          for unlisted videos on the specified channel or matching your search term, and presents clickable results.
-        </p>
-      </div>
+    <div class="cell">
+      <div class="n red">Still Exists</div>
+      <div class="l">Uploaded, hosted, watchable</div>
     </div>
   </div>
 </section>
 
-<section>
-  <h2>Features</h2>
-  <div class="feat">
-    <div class="f">
-      <div class="ic">Mode 01</div>
-      <h3>Channel Scan</h3>
-      <p>Enter any YouTube channel URL or handle. Unlist scans the entire channel and returns every unlisted video — titles, thumbnails, view counts, and direct links.</p>
-    </div>
-    <div class="f">
-      <div class="ic">Mode 02</div>
-      <h3>Keyword Search</h3>
-      <p>Search across YouTube for unlisted videos matching any keyword or topic. Find hidden tutorials, drafts, teardowns, and content that isn't publicly listed.</p>
-    </div>
-    <div class="f">
-      <div class="ic">One Click</div>
-      <h3>Direct Access</h3>
-      <p>Every result is a direct link. Click it and the unlisted video opens on YouTube. No login needed. No friction. Just the video.</p>
-    </div>
-    <div class="f">
-      <div class="ic">Discover</div>
-      <h3>Hidden Content</h3>
-      <p>The core use case: tutorials that weren't published, drafts sitting unlisted, teardowns that never went public, community Q&As — all the content that's there but hidden from the normal YouTube experience.</p>
-    </div>
-  </div>
-</section>
-
-<section>
-  <h2>Screenshots</h2>
-  <div class="screenshots">
-    <div class="ss">
-      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%230f1e2e' width='400' height='225'/%3E%3Crect fill='%2315293d' x='20' y='30' width='360' height='160' rx='6'/%3E%3Ctext fill='%234a9eff' font-family='Segoe UI' font-size='13' font-weight='600' x='30' y='52'%3ESCAN CHANNEL%3C/text%3E%3Ctext fill='%238fa8c0' font-family='Segoe UI' font-size='11' x='30' y='72'%3E@primalmonke%3C/text%3E%3C/svg%3E" alt="">
-      <div class="overlay">Channel scan — results panel</div>
-    </div>
-    <div class="ss">
-      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%2315293d' width='400' height='225'/%3E%3Crect fill='%230f1e2e' x='20' y='30' width='360' height='160' rx='6'/%3E%3Ctext fill='%234a9eff' font-family='Segoe UI' font-size='13' font-weight='600' x='30' y='52'%3ESEARCH RESULTS%3C/text%3E%3Ctext fill='%238fa8c0' font-family='Segoe UI' font-size='11' x='30' y='72'%3Eunlisted tutorial%3C/text%3E%3C/svg%3E" alt="">
-      <div class="overlay">Search results — unlisted videos</div>
-    </div>
-    <div class="ss">
-      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%231d364e' width='400' height='225'/%3E%3Crect fill='%232a4a6a' x='20' y='30' width='360' height='160' rx='6'/%3E%3Ctext fill='%23e4edf5' font-family='Segoe UI' font-size='12' font-weight='600' x='30' y='52'%3EUNLISTED VIDEO%3C/text%3E%3Ctext fill='%238fa8c0' font-family='Segoe UI' font-size='10' x='30' y='72'%3EWatch directly on YouTube%3C/text%3E%3C/svg%3E" alt="">
-      <div class="overlay">Video detail — one-click open</div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <h2>Install</h2>
-  <p class="body">This is a concept draft — the extension does not exist yet. Below is a mock of what the Chrome Web Store listing would look like.</p>
-  <div class="installmock">
-    <div class="icon">U</div>
-    <div class="info">
-      <div class="nm">Unlist</div>
-      <div class="sub">See what YouTube doesn't show you · Chrome Extension</div>
-      <div class="price">Free · No account required</div>
-    </div>
-    <button class="btn" disabled>Add to Chrome</button>
-  </div>
-  <p style="font-family:'Segoe UI',system-ui,sans-serif;font-size:.76rem;color:var(--faint);margin-top:10px">
-    <b>Draft mode.</b> The extension isn't built yet — the "Add to Chrome" button is disabled.
+<section class="sec">
+  <span class="kicker">The name</span>
+  <h2>UNLIST.</h2>
+  <p class="lede" style="text-align:center;max-width:560px;margin:0 auto">
+    Because the whole point is finding what's been <b>unlisted</b> — content that exists on YouTube but has been hidden from public view. The name says exactly what it does.
   </p>
 </section>
-
-</div>
 
 <div class="pledgebar">
   <a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>
   an <b>ALLSEER</b> company<span class="sep">|</span>
-  browser extension concept</a>
+  YouTube unlisted video scanner — concept draft</a>
 </div>
 
 <footer>
   <span class="mark">PRIMAL<sup>APE</sup></span>
-  <br>© 2025 · Charitable-first · Concept draft — not a real extension
+  <span class="right">UNLIST — a concept draft. Nothing here is final.<br>
+  Part of the ALLSEER SOFTWARE concept-draft library.</span>
 </footer>
 
+<div class="ornament"><span>CONCEPT DRAFT</span></div>
+
+</div>
+
 <script>
-(function(){
-  var modeBtns = document.querySelectorAll('.modebtn[data-mode]');
-  var modeChannel = document.getElementById('modeChannel');
-  var modeSearch = document.getElementById('modeSearch');
-  var resultArea = document.getElementById('resultArea');
-  var channelBtn = document.getElementById('scanChannelBtn');
-  var searchBtn = document.getElementById('searchBtn');
-  var channelInput = document.getElementById('channelSearch');
-  var searchInput = document.getElementById('searchInput');
-  var channelDrop = document.getElementById('channelDrop');
-  var searchDrop = document.getElementById('searchDrop');
-
-  function setMode(mode){
-    modeBtns.forEach(function(b){
-      b.classList.toggle('on', b.getAttribute('data-mode') === mode);
-    });
-    if (mode === 'channel'){
-      modeChannel.style.display = '';
-      modeSearch.style.display = 'none';
-    } else {
-      modeChannel.style.display = 'none';
-      modeSearch.style.display = '';
-    }
-    resultArea.style.display = 'none';
+  var mode = 'channel';
+  function setMode(m){
+    mode = m;
+    var cb = document.getElementById('modeChannel');
+    var kb = document.getElementById('modeKeyword');
+    cb.classList.toggle('active', m === 'channel');
+    kb.classList.toggle('active', m === 'keyword');
+    var inp = document.getElementById('scanInputEl');
+    inp.placeholder = m === 'channel'
+      ? 'Paste a YouTube channel URL, e.g. https://youtube.com/@TechReviewPro'
+      : 'Enter a keyword to search for unlisted content...';
   }
-  modeBtns.forEach(function(b){
-    b.addEventListener('click', function(){ setMode(b.getAttribute('data-mode')); });
-  });
-
-  channelBtn.addEventListener('click', function(){
-    var val = channelInput.value.trim();
-    if (!val){
-      channelDrop.innerHTML = '<div class="none">Enter a channel name or URL to scan.</div>';
-      channelDrop.classList.add('open'); return;
-    }
-    channelDrop.innerHTML = '<div class="none">Scanning @' + val + ' for unlisted videos…</div>';
-    channelDrop.classList.add('open');
-    resultArea.style.display = 'none';
-    setTimeout(function(){
-      channelDrop.innerHTML = '<div class="none">No real scanning capability in this concept draft. In practice, the extension would query YouTube\'s API for unlisted videos on this channel and display them here.</div>';
-    }, 1400);
-  });
-
-  searchBtn.addEventListener('click', function(){
-    var val = searchInput.value.trim();
-    if (!val){
-      searchDrop.innerHTML = '<div class="none">Enter a keyword to search for unlisted videos.</div>';
-      searchDrop.classList.add('open'); return;
-    }
-    searchDrop.innerHTML = '<div class="none">Searching for unlisted videos matching "' + val + '"…</div>';
-    searchDrop.classList.add('open');
-    resultArea.style.display = 'none';
-    setTimeout(function(){
-      searchDrop.innerHTML = '<div class="none">No real searching capability in this concept draft. In practice, the extension would query YouTube\'s API for unlisted videos matching your search term.</div>';
-    }, 1400);
-  });
-
-  function setupDropdown(input, drop, placeholder){
-    input.addEventListener('focus', function(){ drop.classList.add('open'); });
-    input.addEventListener('input', function(){
-      var val = input.value.trim();
-      if (!val){ drop.innerHTML = '<div class="none">' + placeholder + '</div>'; return; }
-      drop.innerHTML = '<div class="none">Searching for "' + val + '"…</div>';
-    });
-    input.addEventListener('blur', function(){
-      setTimeout(function(){ drop.classList.remove('open'); }, 200);
-    });
+  function runScan(){
+    var box = document.getElementById('resultBox');
+    box.classList.add('show');
+    box.scrollIntoView({behavior:'smooth',block:'nearest'});
   }
-  setupDropdown(channelInput, channelDrop, 'Type a channel name or URL…');
-  setupDropdown(searchInput, searchDrop, 'Type a keyword or topic…');
-})();
 </script>
 
 </body>
