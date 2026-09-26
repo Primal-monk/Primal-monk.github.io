@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unlisted Videos Scanner — Chrome Extension</title>
+<link rel="icon" type="image/png" href="assets/angelcorp.png">
+<meta name="description" content="Unlisted Videos Scanner — a Chrome extension concept that scans YouTube for unlisted videos and channels for unlisted videos, so you can access them. Discover hidden content on YouTube.">
+<style>
+  :root{
+    --bg:#0a1420; --bg2:#0f1e2e; --bg3:#15293d; --bg4:#1d364e;
+    --hi:#4a9eff; --hi2:#2f7ad4; --paper:#e4edf5; --sec:#8fa8c0;
+    --line:rgba(74,158,255,.28);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scrollbar-color:var(--hi) var(--bg3);scrollbar-width:auto}
+  body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--sec);
+    line-height:1.62;padding-top:56px}
+  ::-webkit-scrollbar{width:16px}
+  ::-webkit-scrollbar-track{background:var(--bg3)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--hi),var(--hi2));
+    border:2px solid var(--bg3);border-radius:10px}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--hi);color:#06131f}
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:56px;background:var(--bg2);
+    border-bottom:2px solid var(--hi2);display:flex;align-items:center;gap:12px;padding:0 16px}
+  .topbar .who{display:flex;align-items:center;gap:9px;text-decoration:none}
+  .topbar .who img{width:30px;height:30px;object-fit:contain;border-radius:7px}
+  .topbar .who span{font-size:.86rem;color:var(--hi);font-weight:700}
+  .topbar .back{color:var(--hi);font-size:1.1rem;font-weight:900}
+  .topbar .spacer{flex:1}
+  .topbar .tag{font-family:"Segoe UI",system-ui,sans-serif;font-size:.72rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--sec);border:1px solid var(--line);border-radius:3px;
+    padding:5px 12px}
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px}
+  header{text-align:center;padding:44px 0 28px}
+  .logo{width:120px;height:120px;object-fit:contain;display:block;margin:0 auto 14px;
+    filter:drop-shadow(0 6px 16px rgba(0,0,0,.5))}
+  h1{font-size:clamp(2.2rem,7vw,3.4rem);letter-spacing:.08em;font-weight:900;color:var(--hi)}
+  .tag{margin-top:8px;color:var(--paper);letter-spacing:.1em;font-size:.9rem}
+  .draftpill{display:inline-block;margin-top:14px;background:var(--bg3);border:1px solid var(--hi2);
+    border-radius:20px;padding:6px 20px;font-size:.72rem;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--hi)}
+  section{margin-bottom:36px}
+  h2{color:var(--hi);font-size:.9rem;letter-spacing:.18em;text-transform:uppercase;
+    padding-bottom:8px;margin-bottom:16px;border-bottom:2px solid var(--hi2)}
+  p.body{color:var(--paper);margin-bottom:12px;font-size:.94rem}
+  p.body b{color:var(--hi)}
+  .demo{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:22px}
+  .modes{display:flex;gap:10px;margin-bottom:16px}
+  .modebtn{flex:1;background:var(--bg3);border:1px solid var(--line);border-radius:7px;
+    padding:12px;text-align:center;color:var(--sec);font-weight:700;font-size:.84rem;cursor:pointer}
+  .modebtn.on{background:var(--hi);color:#06131f;border-color:var(--hi)}
+  .chiprow{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .chip{background:var(--bg4);border:1px solid var(--line);border-radius:20px;padding:7px 16px;
+    font-size:.82rem;color:var(--paper);cursor:pointer;user-select:none}
+  .chip.on{background:var(--hi);color:#06131f;border-color:var(--hi);font-weight:700}
+  .chip .x{margin-left:8px;opacity:.7;font-weight:900}
+  .pinlbl{color:var(--sec);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+    font-weight:700;margin-bottom:8px}
+  .searchwrap{position:relative}
+  #channelSearch{width:100%;background:var(--bg3);border:1px solid var(--line);border-radius:7px;
+    padding:12px 14px;color:var(--paper);font-size:.88rem;font-family:inherit}
+  #channelSearch:focus{outline:none;border-color:var(--hi)}
+  .searchdrop{display:none;position:absolute;left:0;right:0;top:calc(100% + 4px);
+    background:var(--bg3);border:1px solid var(--line);border-radius:7px;max-height:260px;
+    overflow-y:auto;z-index:20;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+  .searchdrop.open{display:block}
+  .searchdrop .opt{padding:9px 14px;font-size:.86rem;color:var(--paper);cursor:pointer;
+    display:flex;align-items:center;gap:10px}
+  .searchdrop .opt:hover{background:var(--bg4)}
+  .searchdrop .opt.taken{opacity:.4;cursor:default}
+  .searchdrop .none{padding:12px 14px;color:var(--sec);font-size:.82rem;font-style:italic}
+  .demo .result{background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:14px 16px;
+    font-size:.84rem;color:var(--paper);margin-top:14px}
+  .demo .result b{color:var(--hi)}
+  .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .f{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--hi);
+    border-radius:7px;padding:18px}
+  .f .ic{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--hi);margin-bottom:6px}
+  .f h3{color:var(--paper);font-weight:700;font-size:.92rem;margin-bottom:6px}
+  .f p{color:var(--sec);font-size:.82rem;line-height:1.5}
+  .screenshots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+  @media(max-width:600px){.screenshots{grid-template-columns:1fr}}
+  .screenshots .ss{aspect-ratio:16/9;background:var(--bg3);border:1px solid var(--line);
+    border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);
+    font-size:.66rem;color:var(--faint);letter-spacing:.1em;text-transform:uppercase;overflow:hidden}
+  .screenshots .ss img{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0}
+  .screenshots .ss span{position:relative;z-index:1}
+  .pledgebar{border-top:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.028);
+    padding:15px 22px;text-align:center;font-size:.84rem;line-height:1.6;letter-spacing:.01em}
+  .pledgebar a{display:inline-block;color:inherit;opacity:.82;transition:opacity .15s}
+  .pledgebar a:hover{opacity:1}
+  .pledgebar b{color:#ffd86a;font-weight:700}
+  .pledgebar .sep{opacity:.35;margin:0 .55em}
+  footer{border-top:1px solid var(--line);padding:28px 0;text-align:center;
+    font-family:"Segoe UI",system-ui,sans-serif;font-size:10.5px;color:var(--faint);letter-spacing:.06em}
+  footer .mark{font-weight:900;color:var(--sec);letter-spacing:.1em;font-size:11px}
+  footer .mark sup{font-size:.55em;vertical-align:super;margin-left:.06em}
+  .installmock{background:var(--bg3);border:1px solid var(--line);border-radius:8px;
+    padding:16px 20px;margin-top:18px;display:flex;align-items:center;gap:14px}
+  .installmock .icon{width:48px;height:48px;background:var(--bg4);border:1px solid var(--line);
+    border-radius:8px;display:grid;place-items:center;font-size:1.4rem;color:var(--hi)}
+  .installmock .info{flex:1}
+  .installmock .info .nm{color:var(--paper);font-weight:700;font-size:.9rem}
+  .installmock .info .sub{color:var(--sec);font-size:.78rem;margin-top:2px}
+  .installmock .btn{background:var(--hi);color:#06131f;border:0;border-radius:5px;
+    padding:9px 18px;font-weight:700;font-size:.82rem;cursor:pointer;font-family:"Segoe UI",system-ui,sans-serif}
+  .installmock .btn:hover{filter:brightness(1.1)}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a class="who" href="omni.html">
+    <span class="back">&larr;</span>
+    <img src="assets/angelcorp.png" alt="">
+    <span>ALLSEER SOFTWARE</span>
+  </a>
+  <div class="spacer"></div>
+  <span class="tag">Browser Extension · Security Tool</span>
+</nav>
+
+<div class="wrap">
+
+<header>
+  <img class="logo" src="assets/angelcorp.png" alt="Unlisted Videos Scanner">
+  <h1>UNLISTED VIDEOS SCANNER</h1>
+  <div class="tag">Discover the hidden content on YouTube.</div>
+  <div class="draftpill">Chrome Extension Concept · Not Live</div>
+</header>
+
+<section>
+  <h2>What It Does</h2>
+  <p class="body">
+    YouTube has a lot of <b>unlisted videos</b> — videos that aren't publicly listed on a channel but are still
+    accessible if you have the link. The Unlisted Videos Scanner is a Chrome extension that <b>scans YouTube for
+    unlisted videos</b> and <b>scans channels for their unlisted videos</b>, so you can discover and access that
+    hidden content.
+  </p>
+  <p class="body">
+    It's a simple idea with a clear use case: there's a whole layer of YouTube content that's not publicly visible
+    but is still there. This extension gives you a window into it.
+  </p>
+</section>
+
+<section>
+  <h2>How It Works</h2>
+  <div class="demo">
+    <div class="modes">
+      <button class="modebtn on" data-mode="channel">Scan a Channel</button>
+      <button class="modebtn" data-mode="search">Search Unlisted</button>
+    </div>
+
+    <div id="modeChannel">
+      <div class="pinlbl">Enter a YouTube channel URL or handle</div>
+      <div class="searchwrap">
+        <input type="text" id="channelSearch" placeholder="@primalmonke  or  https://youtube.com/@channel">
+        <div class="searchdrop" id="channelDrop">
+          <div class="none">No channels found — type a channel name or URL above.</div>
+        </div>
+      </div>
+      <div style="margin-top:14px">
+        <button class="modebtn" id="scanChannelBtn" style="width:100%">Scan Channel</button>
+      </div>
+    </div>
+
+    <div id="modeSearch" style="display:none">
+      <div class="pinlbl">Search for unlisted videos</div>
+      <div class="searchwrap">
+        <input type="text" id="searchInput" placeholder="Keyword or topic...">
+        <div class="searchdrop" id="searchDrop">
+          <div class="none">Type a search term above to find unlisted videos.</div>
+        </div>
+      </div>
+      <div style="margin-top:14px">
+        <button class="modebtn" id="searchBtn" style="width:100%">Search</button>
+      </div>
+    </div>
+
+    <div id="resultArea" style="margin-top:18px;display:none">
+      <div class="result">
+        <b>Demo result:</b> No real scanning capability in this concept draft. The extension would, in practice,
+        query YouTube's API for unlisted videos on the specified channel or matching the search term, and present
+        a list of results with titles, thumbnail URLs, and direct links. <b>This is a concept — not a live extension.</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="screenshots">
+    <div class="ss" style="background:linear-gradient(135deg,#0f1e2e,#15293d)">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%2315293d' width='400' height='225'/%3E%3Ctext fill='%234a9eff' font-family='Segoe UI' font-size='14' x='20' y='120' opacity='.6'%3ESCAN CHANNEL%3C/text%3E%3C/svg%3E" alt="">
+      <span>Channel scan view</span>
+    </div>
+    <div class="ss" style="background:linear-gradient(135deg,#15293d,#0f1e2e)">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%231d364e' width='400' height='225'/%3E%3Ctext fill='%238fa8c0' font-family='Segoe UI' font-size='14' x='20' y='120' opacity='.6'%3ESEARCH RESULTS%3C/text%3E%3C/svg%3E" alt="">
+      <span>Unlisted search results</span>
+    </div>
+    <div class="ss" style="background:linear-gradient(135deg,#0f1e2e,#15293d)">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%2315293d' width='400' height='225'/%3E%3Crect fill='%234a9eff' opacity='.1' x='50' y='40' width='300' height='140' rx='4'/%3E%3Ctext fill='%23e4edf5' font-family='Segoe UI' font-size='13' x='60' y='110' opacity='.8'%3EUNLISTED VIDEO%3C/text%3E%3C/svg%3E" alt="">
+      <span>Video detail panel</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Features</h2>
+  <div class="feat">
+    <div class="f">
+      <div class="ic">Feature 01</div>
+      <h3>Channel Scanning</h3>
+      <p>Enter any YouTube channel URL or handle, and the extension scans that channel for all unlisted videos — presenting a list of titles, thumbnails, and direct links.</p>
+    </div>
+    <div class="f">
+      <div class="ic">Feature 02</div>
+      <h3>Keyword Search</h3>
+      <p>Search for unlisted videos by keyword or topic. The extension queries across YouTube for unlisted content matching your search term.</p>
+    </div>
+    <div class="f">
+      <div class="ic">Feature 03</div>
+      <h3>Direct Access</h3>
+      <p>Every result includes a direct link — click to open the unlisted video on YouTube. No login required, just the extension and the link.</p>
+    </div>
+    <div class="f">
+      <div class="ic">Feature 04</div>
+      <h3>Discover Hidden Content</h3>
+      <p>The core use case: there's a whole layer of YouTube content that's not publicly visible but is still there. This gives you a window into it — tutorials, drafts, deleted-but-unlisted content, and more.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Install (Concept)</h2>
+  <p class="body">This is a concept draft — the extension does not exist yet. Below is a mock of what the Chrome Web Store listing would look like.</p>
+  <div class="installmock">
+    <div class="icon">▶</div>
+    <div class="info">
+      <div class="nm">Unlisted Videos Scanner</div>
+      <div class="sub">Discover hidden content on YouTube · Chrome Extension</div>
+    </div>
+    <button class="btn" disabled>Add to Chrome — $0.00</button>
+  </div>
+  <p style="font-family:'Segoe UI',system-ui,sans-serif;font-size:.76rem;color:var(--faint);margin-top:10px">
+    <b>Draft mode.</b> The "Add to Chrome" button is disabled — this extension is not built yet.
+  </p>
+</section>
+
+</div>
+
+<div class="pledgebar">
+  <a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>
+  an <b>ALLSEER</b> company<span class="sep">|</span>
+  browser extension concept</a>
+</div>
+
+<footer>
+  <span class="mark">PRIMAL<sup>APE</sup></span>
+  <br>© 2025 · Charitable-first · Concept draft — not a real extension
+</footer>
+
+<script>
+(function(){
+  var modeBtns = document.querySelectorAll('.modebtn[data-mode]');
+  var modeChannel = document.getElementById('modeChannel');
+  var modeSearch = document.getElementById('modeSearch');
+  var resultArea = document.getElementById('resultArea');
+
+  function setMode(mode){
+    modeBtns.forEach(function(b){
+      b.classList.toggle('on', b.getAttribute('data-mode') === mode);
+    });
+    if (mode === 'channel'){
+      modeChannel.style.display = '';
+      modeSearch.style.display = 'none';
+    } else {
+      modeChannel.style.display = 'none';
+      modeSearch.style.display = '';
+    }
+    resultArea.style.display = 'none';
+  }
+
+  modeBtns.forEach(function(b){
+    b.addEventListener('click', function(){ setMode(b.getAttribute('data-mode')); });
+  });
+
+  var channelBtn = document.getElementById('scanChannelBtn');
+  var searchBtn = document.getElementById('searchBtn');
+  var channelInput = document.getElementById('channelSearch');
+  var searchInput = document.getElementById('searchInput');
+  var channelDrop = document.getElementById('channelDrop');
+  var searchDrop = document.getElementById('searchDrop');
+
+  channelBtn.addEventListener('click', function(){
+    var val = channelInput.value.trim();
+    if (!val){ channelDrop.innerHTML = '<div class="none">Enter a channel name or URL to scan.</div>';
+      channelDrop.classList.add('open'); return; }
+    channelDrop.innerHTML = '<div class="none">Scanning channel "' + val + '" for unlisted videos…</div>';
+    channelDrop.classList.add('open');
+    resultArea.style.display = 'none';
+    setTimeout(function(){
+      channelDrop.innerHTML = '<div class="none">No real scanning capability in this concept draft. In practice, the extension would query YouTube\'s API for unlisted videos on this channel.</div>';
+    }, 1200);
+  });
+
+  channelInput.addEventListener('focus', function(){ channelDrop.classList.add('open'); });
+  channelInput.addEventListener('input', function(){
+    var val = channelInput.value.trim();
+    if (!val){ channelDrop.innerHTML = '<div class="none">Type a channel name or URL…</div>'; return; }
+    channelDrop.innerHTML = '<div class="none">Searching for channel "' + val + '"…</div>';
+  });
+  channelInput.addEventListener('blur', function(){
+    setTimeout(function(){ channelDrop.classList.remove('open'); }, 200);
+  });
+
+  searchBtn.addEventListener('click', function(){
+    var val = searchInput.value.trim();
+    if (!val){ searchDrop.innerHTML = '<div class="none">Enter a search term to find unlisted videos.</div>';
+      searchDrop.classList.add('open'); return; }
+    searchDrop.innerHTML = '<div class="none">Searching for unlisted videos matching "' + val + '"…</div>';
+    searchDrop.classList.add('open');
+    resultArea.style.display = 'none';
+    setTimeout(function(){
+      searchDrop.innerHTML = '<div class="none">No real searching capability in this concept draft. In practice, the extension would query YouTube\'s API for unlisted videos matching your search term.</div>';
+    }, 1200);
+  });
+
+  searchInput.addEventListener('focus', function(){ searchDrop.classList.add('open'); });
+  searchInput.addEventListener('input', function(){
+    var val = searchInput.value.trim();
+    if (!val){ searchDrop.innerHTML = '<div class="none">Type a keyword or topic…</div>'; return; }
+    searchDrop.innerHTML = '<div class="none">Searching for "' + val + '"…</div>';
+  });
+  searchInput.addEventListener('blur', function(){
+    setTimeout(function(){ searchDrop.classList.remove('open'); }, 200);
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ALLSEER HARDWARE — Physical Products, Dropship-First</title>
+<link rel="icon" type="image/png" href="assets/angelcorp.png">
+<meta name="description" content="ALLSEER HARDWARE — PC-to-gaming-PC conversion, RC toy/robot redesign, and multi-business warehouse sharing. Dropship-first, building toward own manufacturing.">
+<style>
+  :root{
+    --bg:#0c0e14; --bg2:#12161f; --bg3:#181e28; --bg4:#1e2532;
+    --ink:#ece9e0; --sec:#8b93a3; --faint:#4a5260;
+    --line:rgba(184,194,204,.12); --line2:rgba(184,194,204,.06);
+    --accent:#c4a46a; --accent2:#8a7544;
+    --corp:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --mono:"Archivo","Courier New",monospace;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--corp);background:var(--bg);color:var(--sec);
+    line-height:1.6;font-size:17px;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(900px 400px at 50% -10%,rgba(196,164,106,.05),transparent 60%),
+      radial-gradient(700px 500px at 90% 90%,rgba(30,37,50,.18),transparent 60%)}
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-track{background:var(--bg2)}
+  ::-webkit-scrollbar-thumb{background:var(--accent2);border:2px solid var(--bg2);border-radius:6px}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:var(--bg)}
+  .mono{font-family:var(--mono);letter-spacing:.04em}
+  .topbar{position:sticky;top:0;z-index:60;height:56px;
+    background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line2);display:flex;align-items:center;gap:14px;padding:0 24px}
+  .topbar .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .topbar .brand img{width:26px;height:26px;object-fit:contain}
+  .topbar .brand .wm{font-family:var(--corp);font-weight:900;font-size:15px;
+    color:var(--ink);letter-spacing:.18em}
+  .topbar .brand .wm small{color:var(--accent2);font-weight:700;font-size:.55em;
+    letter-spacing:.2em;margin-left:.5em;vertical-align:super}
+  .topbar .spacer{flex:1}
+  .topbar .back{font-family:var(--mono);font-size:11px;color:var(--accent2);
+    letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:color .15s;padding:6px 0}
+  .topbar .back:hover{color:var(--accent)}
+  .topbar .tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent2);border:1px solid var(--line);
+    border-radius:3px;padding:5px 10px;white-space:nowrap}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  @media(max-width:640px){.wrap{padding:0 18px}}
+  .hero{padding:64px 0 40px;text-align:center}
+  .hero .pre{font-family:var(--mono);font-size:11px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--accent2);margin-bottom:18px}
+  .hero h1{font-family:var(--corp);font-weight:900;font-size:clamp(3.2rem,9vw,5.8rem);
+    line-height:.9;letter-spacing:-.03em;color:var(--ink);text-shadow:0 2px 0 rgba(0,0,0,.4)}
+  .hero h1 .bar{display:inline-block;width:120px;height:5px;background:linear-gradient(90deg,var(--accent),var(--accent2));
+    border-radius:2px;margin:0 clamp(2vw,5vw,4vw) 0}
+  .hero .tag{font-family:var(--corp);font-weight:600;font-size:clamp(1rem,2.2vw,1.3rem);
+    color:var(--accent);margin-top:14px;letter-spacing:.02em;max-width:620px;margin-left:auto;margin-right:auto}
+  .hero .meta{margin-top:24px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;font-family:var(--mono)}
+  .hero .meta span{font-size:10px;color:var(--faint);letter-spacing:.16em;
+    text-transform:uppercase;border:1px solid var(--line);border-radius:3px;padding:6px 12px}
+  .hero .meta span b{color:var(--accent);font-weight:700}
+  .sec{padding:48px 0;border-top:1px solid var(--line2)}
+  .sec:first-of-type{border-top:0}
+  .sec .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--accent2);margin-bottom:12px;display:block}
+  .sec h2{font-family:var(--corp);font-weight:900;font-size:clamp(1.5rem,3.4vw,2.2rem);
+    color:var(--ink);letter-spacing:-.01em;line-height:1.04;margin-bottom:10px}
+  .sec .lede{color:var(--sec);font-size:1.02rem;max-width:640px;margin:0 auto 24px;line-height:1.6}
+  .sec .lede b{color:var(--ink);font-weight:600}
+  .prodgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px}
+  @media(max-width:640px){.prodgrid{grid-template-columns:1fr}}
+  .prodcard{background:var(--bg2);border:1px solid var(--line);border-radius:10px;
+    padding:26px;position:relative;overflow:hidden;transition:transform .16s,border-color .16s}
+  .prodcard:hover{transform:translateY(-3px);border-color:var(--accent)}
+  .prodcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:linear-gradient(180deg,var(--accent),var(--accent2))}
+  .prodcard .label{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent2);margin-bottom:8px}
+  .prodcard h3{font-family:var(--corp);font-weight:900;font-size:1.2rem;
+    color:var(--ink);letter-spacing:-.01em;margin-bottom:10px}
+  .prodcard p{color:var(--sec);font-size:.92rem;line-height:1.55;margin-bottom:10px}
+  .prodcard p b{color:var(--ink);font-weight:600}
+  .prodcard .specs{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:14px;
+    padding-top:14px;border-top:1px solid var(--line2)}
+  .prodcard .specs .k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--faint)}
+  .prodcard .specs .v{font-size:.88rem;color:var(--ink);font-weight:600}
+  .prodcard .specs .v small{color:var(--sec);font-weight:400;font-size:.78rem}
+  .prodcard .price{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .prodcard .price .amt{font-family:var(--corp);font-weight:900;font-size:1.4rem;color:var(--ink);
+    letter-spacing:-.01em}
+  .prodcard .price .amt small{font-size:.45em;color:var(--faint);font-family:var(--mono);
+    letter-spacing:.06em;vertical-align:super;margin-right:.08em}
+  .prodcard .price .tag{font-family:var(--mono);font-size:.62rem;color:var(--faint);
+    letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);
+    border-radius:3px;padding:4px 10px}
+  .prodcard .droptag{font-family:var(--mono);font-size:.62rem;color:var(--faint);
+    letter-spacing:.1em;text-transform:uppercase;border:1px dashed var(--line);
+    border-radius:3px;padding:3px 8px;display:inline-block;margin-bottom:10px}
+  .prodcard .droptag b{color:var(--accent)}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px}
+  @media(max-width:640px){.twocol{grid-template-columns:1fr}}
+  .block{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:22px}
+  .block h3{font-family:var(--corp);font-weight:900;font-size:1rem;color:var(--ink);
+    margin-bottom:10px;letter-spacing:-.01em}
+  .block p{color:var(--sec);font-size:.9rem;line-height:1.55}
+  .block p b{color:var(--ink);font-weight:600}
+  .mechbar{margin-top:24px;background:var(--bg3);border:1px solid var(--line);
+    border-radius:8px;padding:20px 22px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .mechbar .ic{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+  .mechbar .cell{flex:1;min-width:140px}
+  .mechbar .cell .v{font-family:var(--corp);font-weight:900;font-size:1.5rem;color:var(--ink);
+    letter-spacing:-.01em;line-height:1}
+  .mechbar .cell .v small{font-size:.4em;color:var(--faint);font-family:var(--mono);
+    letter-spacing:.06em;vertical-align:super;margin-right:.06em}
+  .mechbar .cell .l{font-family:var(--mono);font-size:.66rem;color:var(--faint);
+    letter-spacing:.12em;text-transform:uppercase;margin-top:6px}
+  .pledgebar{margin-top:32px;border-top:1px solid rgba(255,255,255,.06);
+    background:color-mix(in srgb,var(--bg2) 80%,transparent);
+    padding:16px 28px;text-align:center;font-size:.86rem;line-height:1.55}
+  .pledgebar a{display:inline-block;color:var(--accent2);opacity:.82;transition:opacity .15s}
+  .pledgebar a:hover{opacity:1}
+  .pledgebar b{color:var(--accent);font-weight:700}
+  .pledgebar .sep{opacity:.35;margin:0 .5em}
+  footer{border-top:1px solid var(--line2);padding:28px 0;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--faint);
+    text-transform:uppercase}
+  footer .mark{font-family:var(--corp);font-weight:900;color:var(--accent2);
+    letter-spacing:.14em;font-size:12px}
+  footer .mark sup{font-size:.55em;vertical-align:super;margin-left:.06em;color:var(--faint)}
+  footer .right{text-align:right;color:var(--faint)}
+  .ornament{display:flex;align-items:center;justify-content:center;gap:14px;
+    margin:36px 0 0;padding-top:24px;border-top:1px solid var(--line2)}
+  .ornament::before,.ornament::after{content:"";height:1px;width:80px}
+  .ornament::before{background:linear-gradient(90deg,transparent,var(--line))}
+  .ornament::after{background:linear-gradient(90deg,var(--line),transparent)}
+  .ornament span{font-family:var(--mono);font-size:.62rem;color:var(--faint);letter-spacing:.2em}
+  .trustrow{margin-top:20px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  .trustrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);opacity:.5}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a class="brand" href="omni.html">
+    <img src="assets/angelcorp.png" alt="ALLSEER">
+    <span class="wm">ALLSEER<small>SOFTWARE</small></span>
+  </a>
+  <div class="spacer"></div>
+  <span class="tag">Hardware · Dropship-First</span>
+  <a class="back" href="omni.html">&larr; Back to ALLSEER</a>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <span class="pre">A division of ALLSEER SOFTWARE</span>
+  <h1>ALLSEER HARDWARE<span class="bar"></span></h1>
+  <p class="tag">Physical products — <em>dropship first, own manufacturing later.</em><br>PC-to-gaming-PC conversions, RC toys and robots, and the multi-business warehouse-sharing concept.</p>
+  <div class="meta">
+    <span><b>PC Conversions</b> — shipped assembled</span>
+    <span><b>RC Toys &amp; Robots</b> — redesigned</span>
+    <span><b>Dropship-First</b> — real inventory later</span>
+  </div>
+</header>
+
+<section class="sec">
+  <span class="kicker">The approach</span>
+  <h2>Dropship first. Own manufacturing later. Same as everything else.</h2>
+  <p class="lede">
+    ALLSEER HARDWARE follows the same playbook as every other dropship-first venture under ALLSEER: start with a
+    real product from existing supply chains, brand it cleanly, build the pitch, get it in front of customers, and
+    <b>then</b> move to own manufacturing. The page and the brand need to look indistinguishable from a real hardware
+    company from day one — that's the whole point.
+  </p>
+</section>
+
+<section class="sec">
+  <span class="kicker">Product Lines</span>
+  <h2>Two hardware lines. One warehouse-sharing concept.</h2>
+  <p class="lede">
+    The initial product lines are physical — something you can hold, ship, and sell. The PC conversion service is
+    the flagship: a real service with a clear product. The RC toy/robot line is the side play: take hobbyist designs
+    and recharacterize them as "robots" and RC products. The warehouse-sharing concept is the logistics layer that
+    could run both.
+  </p>
+
+  <div class="prodgrid">
+
+    <div class="prodcard">
+      <div class="droptag"><b>DROPSHIP-FIRST</b> — ships from existing stock</div>
+      <div class="label">Flagship Product</div>
+      <h3>Work-PC → Gaming-PC Conversion</h3>
+      <p>
+        Take a work PC and convert it into a gaming PC — mostly a <b>new case/rebuild</b>. We get the parts, put it
+        together, and ship it assembled. It's a secondary business that can run alongside the main software companies,
+        sold on Amazon.
+      </p>
+      <div class="specs">
+        <div class="cell"><div class="k">What it is</div><div class="v">PC case conversion<small> — rebuild, not new build</small></div></div>
+        <div class="cell"><div class="k">Form</div><div class="v">Shipped assembled<small> — customer receives a finished PC</small></div></div>
+        <div class="cell"><div class="k">Sales channel</div><div class="v">Amazon<small> — plus direct later</small></div></div>
+        <div class="cell"><div class="k">Partnerships</div><div class="v">Furniture store chains<small> — multi-business model</small></div></div>
+        <div class="cell"><div class="k">Model</div><div class="v">Open-source factory<small> — people put it together, we ship</small></div></div>
+        <div class="cell"><div class="k">Inventory</div><div class="v">Dropship from existing supply<small> — own manufacturing later</small></div></div>
+      </div>
+      <div class="price">
+        <span class="amt"><small>EST.</small> $299<small>+</small></span>
+        <span class="tag">Per conversion · varies by spec</span>
+      </div>
+    </div>
+
+    <div class="prodcard">
+      <div class="droptag"><b>DROPSHIP-FIRST</b> — recharacterized products</div>
+      <div class="label">Side Line</div>
+      <h3>RC Toys &amp; Robot Redesign</h3>
+      <p>
+        Take hobbyist designs and redesign them into <b>RC toys and "robots"</b> — recharacterize existing products
+        under the ALLSEER HARDWARE brand. Some drop-shipped, some recharacterized. The goal is a product line that
+        looks like a real robot/RC company, built on top of existing supply.
+      </p>
+      <div class="specs">
+        <div class="cell"><div class="k">What it is</div><div class="v">RC toys &amp; robot redesign<small> — hobbyist → branded</small></div></div>
+        <div class="cell"><div class="k">Form</div><div class="v">Drop-shipped or recharacterized<small> — both approaches</small></div></div>
+        <div class="cell"><div class="k">Branding</div><div class="v">ALLSEER HARDWARE<small> — clean, professional product line</small></div></div>
+        <div class="cell"><div class="k">Sourcing</div><div class="v">Existing hobbyist/RC supply<small> — redesign the branding</small></div></div>
+        <div class="cell"><div class="k">Future</div><div class="v">Own designs &amp; manufacturing<small> — after the dropship proves the market</small></div></div>
+        <div class="cell"><div class="k">Model</div><div class="v">Dropship → own products<small> — same playbook as everything else</small></div></div>
+      </div>
+      <div class="price">
+        <span class="amt"><small>EST.</small> $24<small>–</small>$89</span>
+        <span class="tag">Per product · varies by type</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="trustrow">
+    <div style="display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.7rem;color:var(--faint);letter-spacing:.1em;text-transform:uppercase">
+      <div class="dot"></div> Dropship-first model
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.7rem;color:var(--faint);letter-spacing:.1em;text-transform:uppercase">
+      <div class="dot"></div> Clean brand from day one
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.7rem;color:var(--faint);letter-spacing:.1em;text-transform:uppercase">
+      <div class="dot"></div> Own manufacturing later
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.7rem;color:var(--faint);letter-spacing:.1em;text-transform:uppercase">
+      <div class="dot"></div> Amazon + direct sales
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <span class="kicker">The logistics layer</span>
+  <h2>Multi-Business Warehouse Sharing</h2>
+  <p class="lede">
+    If you're a store with less activity, you can give us access to your warehouse for dropshipping or other products.
+    We're the middleman that organizes multi-business logistics — existing businesses give us warehouse access, we use
+    it to dropship products across our hardware lines and whatever else we're running. The warehouse is the shared
+    infrastructure; the products are whatever we're selling at the time.
+  </p>
+  <div class="twocol">
+    <div class="block">
+      <h3>How it works</h3>
+      <p>
+        A store or warehouse operator with low activity gives ALLSEER HARDWARE access to their warehouse space. We
+        use it as a dropshipping hub — products come in, get stored, get shipped to customers. The warehouse owner
+        gets utilization; we get a logistics backbone without building our own.
+      </p>
+    </div>
+    <div class="block">
+      <h3>Why it matters</h3>
+      <p>
+        This is the logistics layer that lets the dropship model actually scale. You don't need your own warehouse
+        to run a dropship hardware company — you can take over someone else's underutilized space and use it as your
+        distribution backbone. Same model, applied to physical logistics.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="pledgebar">
+  <a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>
+  an <b>ALLSEER</b> company<span class="sep">|</span>
+  hardware &amp; physical products<span class="sep">|</span>
+  dropship-first — concept draft</a>
+</div>
+
+<footer>
+  <span class="mark">PRIMAL<sup>APE</sup></span>
+  <span class="right">ALLSEER HARDWARE — a concept draft. Nothing here is final.<br>
+  Part of the ALLSEER SOFTWARE concept-draft library.</span>
+</footer>
+
+<div class="ornament"><span>CONCEPT DRAFT</span></div>
+
+</div>
+
+</body>
+</html>

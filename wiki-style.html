@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ALLSEER WIKI — Free Knowledge Base</title>
+<link rel="icon" type="image/png" href="assets/angelcorp.png">
+<meta name="description" content="ALLSEER WIKI — a free knowledge base that repackages open-source software and interesting ideas as clean web pages. Everything free first, then monetize later.">
+<style>
+  :root{
+    --bg:#0b0d13; --bg2:#111520; --bg3:#171c28; --bg4:#1d2330;
+    --ink:#ece9e0; --sec:#8b93a3; --faint:#4a5260;
+    --line:rgba(184,194,204,.12); --line2:rgba(184,194,204,.06);
+    --accent:#7bc0e8; --accent2:#4a8fb8;
+    --corp:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --mono:"Archivo","Courier New",monospace;
+    --maxw:1100px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--corp);background:var(--bg);color:var(--sec);
+    line-height:1.6;font-size:17px;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(900px 400px at 50% -10%,rgba(123,192,232,.05),transparent 60%),
+      radial-gradient(700px 500px at 90% 90%,rgba(29,35,48,.18),transparent 60%)}
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-track{background:var(--bg2)}
+  ::-webkit-scrollbar-thumb{background:var(--accent2);border:2px solid var(--bg2);border-radius:6px}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:var(--bg)}
+  .mono{font-family:var(--mono);letter-spacing:.04em}
+  .topbar{position:sticky;top:0;z-index:60;height:56px;
+    background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line2);display:flex;align-items:center;gap:14px;padding:0 24px}
+  .topbar .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .topbar .brand img{width:26px;height:26px;object-fit:contain}
+  .topbar .brand .wm{font-family:var(--corp);font-weight:900;font-size:15px;
+    color:var(--ink);letter-spacing:.18em}
+  .topbar .brand .wm small{color:var(--accent);font-weight:700;font-size:.55em;
+    letter-spacing:.2em;margin-left:.5em;vertical-align:super}
+  .topbar .spacer{flex:1}
+  .topbar .back{font-family:var(--mono);font-size:11px;color:var(--accent2);
+    letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:color .15s;padding:6px 0}
+  .topbar .back:hover{color:var(--accent)}
+  .topbar .tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent2);border:1px solid var(--line);
+    border-radius:3px;padding:5px 10px;white-space:nowrap}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  @media(max-width:640px){.wrap{padding:0 18px}}
+  .hero{padding:64px 0 40px;text-align:center}
+  .hero .pre{font-family:var(--mono);font-size:11px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--accent2);margin-bottom:18px}
+  .hero h1{font-family:var(--corp);font-weight:900;font-size:clamp(3rem,8vw,5.4rem);
+    line-height:.92;letter-spacing:-.03em;color:var(--ink);text-shadow:0 2px 0 rgba(0,0,0,.4)}
+  .hero h1 .bar{display:inline-block;width:120px;height:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));
+    border-radius:2px;margin:0 clamp(2vw,5vw,4vw) 0}
+  .hero .tag{font-family:var(--corp);font-weight:600;font-size:clamp(1rem,2.2vw,1.25rem);
+    color:var(--sec);margin-top:14px;letter-spacing:.02em;max-width:640px;margin-left:auto;margin-right:auto}
+  .hero .tag em{font-style:normal;color:var(--accent);font-weight:700}
+  .hero .meta{margin-top:22px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;font-family:var(--mono)}
+  .hero .meta span{font-size:10px;color:var(--faint);letter-spacing:.16em;
+    text-transform:uppercase;border:1px solid var(--line);border-radius:3px;padding:6px 12px}
+  .hero .meta span b{color:var(--accent);font-weight:700}
+  .sec{padding:48px 0;border-top:1px solid var(--line2)}
+  .sec:first-of-type{border-top:0}
+  .sec .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--accent2);margin-bottom:12px;display:block}
+  .sec h2{font-family:var(--corp);font-weight:900;font-size:clamp(1.5rem,3.4vw,2.1rem);
+    color:var(--ink);letter-spacing:-.01em;line-height:1.04;margin-bottom:10px}
+  .sec .lede{color:var(--sec);font-size:1.02rem;max-width:640px;margin:0 auto 24px;line-height:1.6}
+  .sec .lede b{color:var(--ink);font-weight:600}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .cell{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:20px}
+  .cell .label{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent2);margin-bottom:8px}
+  .cell h3{font-family:var(--corp);font-weight:800;font-size:1.04rem;color:var(--ink);
+    letter-spacing:-.01em;margin-bottom:8px}
+  .cell p{color:var(--sec);font-size:.88rem;line-height:1.55;margin-bottom:8px}
+  .cell p b{color:var(--ink);font-weight:600}
+  .cell .tag{font-family:var(--mono);font-size:.6rem;color:var(--faint);
+    letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);
+    border-radius:3px;padding:3px 8px;display:inline-block}
+  .model{margin-top:28px;background:var(--bg3);border:1px solid var(--line);
+    border-radius:10px;padding:28px}
+  .model h3{font-family:var(--corp);font-weight:900;font-size:1.1rem;color:var(--ink);
+    margin-bottom:14px;letter-spacing:-.01em}
+  .model .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:640px){.model .row{grid-template-columns:1fr}}
+  .model .cell{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:18px}
+  .model .cell .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+  .model .cell .v{font-size:.9rem;color:var(--ink);line-height:1.5;font-weight:600}
+  .model .cell .v small{color:var(--sec);font-weight:400;font-size:.82rem;display:block;margin-top:4px}
+  .pledgebar{margin-top:32px;border-top:1px solid rgba(255,255,255,.06);
+    background:color-mix(in srgb,var(--bg2) 80%,transparent);
+    padding:16px 28px;text-align:center;font-size:.86rem;line-height:1.55}
+  .pledgebar a{display:inline-block;color:var(--accent2);opacity:.82;transition:opacity .15s}
+  .pledgebar a:hover{opacity:1}
+  .pledgebar b{color:var(--accent);font-weight:700}
+  .pledgebar .sep{opacity:.35;margin:0 .5em}
+  footer{border-top:1px solid var(--line2);padding:28px 0;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--faint);
+    text-transform:uppercase}
+  footer .mark{font-family:var(--corp);font-weight:900;color:var(--accent2);
+    letter-spacing:.14em;font-size:12px}
+  footer .mark sup{font-size:.55em;vertical-align:super;margin-left:.06em;color:var(--faint)}
+  footer .right{text-align:right;color:var(--faint)}
+  .ornament{display:flex;align-items:center;justify-content:center;gap:14px;
+    margin:36px 0 0;padding-top:24px;border-top:1px solid var(--line2)}
+  .ornament::before,.ornament::after{content:"";height:1px;width:80px}
+  .ornament::before{background:linear-gradient(90deg,transparent,var(--line))}
+  .ornament::after{background:linear-gradient(90deg,var(--line),transparent)}
+  .ornament span{font-family:var(--mono);font-size:.62rem;color:var(--faint);letter-spacing:.2em}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a class="brand" href="omni.html">
+    <img src="assets/angelcorp.png" alt="ALLSEER">
+    <span class="wm">ALLSEER<small>SOFTWARE</small></span>
+  </a>
+  <div class="spacer"></div>
+  <span class="tag">Knowledge Base · Free First</span>
+  <a class="back" href="omni.html">&larr; Back to ALLSEER</a>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <span class="pre">A division of ALLSEER SOFTWARE</span>
+  <h1>ALLSEER WIKI<span class="bar"></span></h1>
+  <p class="tag">A free knowledge base — <em>everything made free first.</em><br>Then, every month, one of the ideas becomes real.</p>
+  <div class="meta">
+    <span><b>Free First</b> — always</span>
+    <span><b>Open Source</b> — repackaged</span>
+    <span><b>Wiki Format</b> — clean pages</span>
+    <span><b>Concept Draft</b></span>
+  </div>
+</header>
+
+<section class="sec">
+  <span class="kicker">The idea</span>
+  <h2>Make every idea free. Then pick one to make real each month.</h2>
+  <p class="lede">
+    The ALLSEER WIKI is a free knowledge base — a collection of companies, products, and ideas, all made freely
+    available as clean web pages. The idea: take everything we find interesting, document it clearly, and make it
+    free. Then, every month, we pick one of those ideas and <b>make it real</b> — build the product, ship it, turn
+    the wiki page into a real company.
+  </p>
+</section>
+
+<section class="sec">
+  <span class="kicker">What's in the wiki</span>
+  <h2>Every idea, repackaged cleanly.</h2>
+  <p class="lede">
+    The wiki covers companies, software, hardware, finance, security — everything in the ALLSEER ecosystem. Each
+    entry is a clean, standalone page: what the idea is, how it works, what it would take to build. Nothing fancy —
+    just clear documentation of everything we're thinking about.
+  </p>
+  <div class="grid">
+    <div class="cell">
+      <div class="label">Category</div>
+      <h3>Software &amp; Apps</h3>
+      <p>Open-source software repackaged as clean products with logos and proper web pages. Desktop apps, browser
+      extensions, web apps — whatever's on GitHub, given a real product presentation.</p>
+      <span class="tag">Open source → product</span>
+    </div>
+    <div class="cell">
+      <div class="label">Category</div>
+      <h3>Hardware &amp; Physical</h3>
+      <p>PC conversions, RC toys, robots — physical products documented as clean wiki entries. Dropship-first, with
+      the path to own manufacturing laid out.</p>
+      <span class="tag">Dropship → own products</span>
+    </div>
+    <div class="cell">
+      <div class="label">Category</div>
+      <h3>Finance &amp; Business</h3>
+      <p>Interest-free banking, AI trading, tax/accounting, debt collection, tax-free LLC setup, AI call center —
+      all the finance and business services documented as clear wiki entries.</p>
+      <span class="tag">Concept → real company</span>
+    </div>
+    <div class="cell">
+      <div class="label">Category</div>
+      <h3>Security &amp; Investigation</h3>
+      <p>Offensive security tools, digital private investigation, OPSEC methods, people-search-style tools — the
+      security and investigation ideas documented clearly.</p>
+      <span class="tag">OPSEC → real services</span>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <span class="kicker">The model</span>
+  <h2>Free first. Monetize later. Pick one each month.</h2>
+  <p class="lede">
+    The wiki is free — everything in it is accessible without pay. Then, every month, we take one of the wiki entries
+    and <b>make it real</b>. Repackage open-source software on GitHub as a product or app with a logo and clean website.
+    Combine many ideas into a full application. Add MCP tools. The wiki is the backlog; the monthly "make it real"
+    is the product rollout.
+  </p>
+  <div class="model">
+    <h3>The monthly cadence</h3>
+    <div class="row">
+      <div class="cell">
+        <div class="k">Month 1</div>
+        <div class="v">Document the idea<small> — clean wiki page, what it is, how it works</small></div>
+      </div>
+      <div class="cell">
+        <div class="k">Month 2</div>
+        <div class="v">Repackage existing resources<small> — open-source software, GitHub repos, tools</small></div>
+      </div>
+      <div class="cell">
+        <div class="k">Month 3</div>
+        <div class="v">Add a logo &amp; clean website<small> — make it look like a real product</small></div>
+      </div>
+      <div class="cell">
+        <div class="k">Month 4+</div>
+        <div class="v">Make it real<small> — ship the product, build the business, or keep it free</small></div>
+      </div>
+    </div>
+  </div>
+  <div class="model" style="margin-top:16px">
+    <h3>How ideas get combined</h3>
+    <p style="color:var(--sec);font-size:.9rem;line-height:1.55">
+      Often we can <b>combine many open-source projects into one full application</b> — adding MCP tools, connecting
+      things together, giving it a single brand and a clean website. The wiki entry for that combined idea becomes the
+      landing page for the real product. Nothing new invented — just assembled cleanly.
+    </p>
+  </div>
+</section>
+
+<div class="pledgebar">
+  <a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>
+  an <b>ALLSEER</b> company<span class="sep">|</span>
+  free knowledge base — concept draft</a>
+</div>
+
+<footer>
+  <span class="mark">PRIMAL<sup>APE</sup></span>
+  <span class="right">ALLSEER WIKI — a concept draft. Nothing here is final.<br>
+  Part of the ALLSEER SOFTWARE concept-draft library.</span>
+</footer>
+
+<div class="ornament"><span>CONCEPT DRAFT</span></div>
+
+</div>
+
+</body>
+</html>

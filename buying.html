@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BUYING — Acquire a Company from ALLSEER</title>
+<link rel="icon" type="image/png" href="assets/angelcorp.png">
+<meta name="description" content="BUYING — browse ALLSEER SOFTWARE companies and divisions available for acquisition. Submit an inquiry to purchase any listed company.">
+<style>
+  :root{
+    --bg:#0a0c15; --bg2:#111528; --bg3:#181d33; --bg4:#1f2540;
+    --red:#e6c07a; --red2:#ffe3a6; --sky:#6ea0dd; --sky2:#a9c8f2;
+    --paper:#f2eee4; --steel:#a7aec6; --faint:#606a86;
+    --ray:255,217,122; --glow:143,192,245;
+    --disp:"Marcellus SC",Georgia,serif; --body:"Cormorant Garamond",Georgia,serif;
+    --corp:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --mono:"Archivo","Helvetica Neue",Arial,sans-serif; --maxw:1120px;
+    --line:rgba(232,197,122,.20);
+  }
+  body[data-theme="crimson"]{--line:rgba(226,96,74,.26);--red:#e2603c;--red2:#ff9a7a}
+  body[data-theme="gold"]{--line:rgba(255,198,74,.28);--red:#d9a51c;--red2:#ffd86a}
+  body[data-theme="ivory"]{--bg:#f4efe2;--bg2:#fbf8f0;--bg3:#efe8d6;--bg4:#e7dcc3;
+    --line:#e0d5bd;--red:#a67c2e;--red2:#7d5c1c;--sky:#5a7ea6;--sky2:#42618a;
+    --paper:#221d10;--steel:#5c5340;--faint:#938872;--ray:200,160,80;--glow:150,175,205}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);font-weight:500;background:var(--bg);color:var(--steel);
+    line-height:1.55;font-size:19px;position:relative;-webkit-font-smoothing:antialiased;
+    overflow-x:hidden;background-image:radial-gradient(1100px 520px at 50% -6%,rgba(var(--ray),.06),transparent 62%);
+    background-attachment:fixed}
+  ::-webkit-scrollbar{width:12px}
+  ::-webkit-scrollbar-track{background:var(--bg2)}
+  ::-webkit-scrollbar-thumb{background:var(--red);border:3px solid var(--bg2);border-radius:8px}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{font-family:var(--disp);color:var(--paper);text-wrap:balance;line-height:1.08}
+  .mono{font-family:var(--mono)}
+  ::selection{background:var(--red);color:#fff}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:22px}
+  @media(min-width:721px){.wrap{padding-inline:clamp(76px,9.4vw,132px)}}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--red2)}
+  .topbar{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 84%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .topbar .wrap{display:flex;align-items:center;gap:18px;height:60px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:30px;height:30px;object-fit:contain}
+  .brand .wm{font-family:var(--disp);font-weight:800;font-size:17px;letter-spacing:.10em;color:var(--paper);white-space:nowrap}
+  .brand .wm b{color:var(--red2);font-size:.6em;letter-spacing:.2em;margin-left:.55em;font-weight:600}
+  .topbar .spacer{flex:1}
+  .back{font-family:var(--mono);font-size:11px;color:var(--steel);letter-spacing:.12em;
+    text-transform:uppercase;cursor:pointer;transition:color .15s;padding:6px 0}
+  .back:hover{color:var(--paper)}
+  .hero{padding:60px 0 30px;text-align:center;position:relative}
+  .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(60% 46% at 50% 0%,rgba(var(--ray),.14),transparent 66%)}
+  .hero h1{font-size:clamp(2.8rem,7.6vw,5.2rem);letter-spacing:.10em}
+  .hero .tag{margin-top:14px;font-size:1.05rem;color:var(--steel);max-width:560px;margin-left:auto;margin-right:auto}
+  .hero .tag em{font-style:normal;color:var(--red2);font-weight:600}
+  .section{padding:44px 0;border-top:1px solid var(--line)}
+  .section:first-of-type{border-top:0}
+  .section .kicker{display:block;margin-bottom:10px}
+  .section h2{font-size:clamp(1.6rem,3.4vw,2.4rem);font-weight:800;margin-bottom:8px}
+  .section .intro{color:var(--steel);font-size:1.02rem;max-width:60ch;margin:0 auto 28px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:24px;
+    display:block;transition:transform .16s,border-color .16s,box-shadow .16s;position:relative;overflow:hidden}
+  .card:hover{transform:translateY(-3px);border-color:var(--red);box-shadow:0 22px 54px -32px var(--red)}
+  .card .label{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--red2);margin-bottom:8px}
+  .card h3{font-size:1.3rem;font-weight:800;margin-bottom:8px}
+  .card p{font-size:.92rem;color:var(--steel);line-height:1.5;margin-bottom:6px}
+  .card .price{margin-top:14px;padding-top:16px;border-top:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .card .price .amt{font-family:var(--disp);font-weight:900;font-size:1.5rem;color:var(--red2);letter-spacing:.02em}
+  .card .price .amt small{font-size:.45em;color:var(--faint);font-family:var(--mono);letter-spacing:.06em;
+    vertical-align:super;margin-right:.1em}
+  .card .btn{font-family:var(--corp);font-weight:700;font-size:12px;letter-spacing:.04em;padding:10px 18px;
+    border-radius:5px;cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;
+    background:var(--red);color:#fff;font-family:var(--disp)}
+  .card .btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+  .card.purple{border-left:3px solid #b06bff}
+  .card.orange{border-left:3px solid #e8622a}
+  .card.teal{border-left:3px solid #3ddc84}
+  .card.blue{border-left:3px solid #4a9eff}
+  .soldnote{font-family:var(--mono);font-size:.7rem;color:var(--faint);margin-top:8px;
+    letter-spacing:.06em;text-transform:uppercase}
+  .soldnote b{color:var(--red2);font-weight:700}
+  .modalback{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:none;
+    align-items:center;justify-content:center;padding:24px}
+  .modalback.on{display:flex}
+  .modal{background:var(--bg2);border:1px solid var(--red);border-radius:12px;width:100%;max-width:480px;
+    padding:28px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .modal h2{font-size:1.4rem;margin-bottom:6px}
+  .modal .modal-sub{color:var(--steel);font-size:.92rem;margin-bottom:20px}
+  .modal label{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--faint);margin-bottom:6px;margin-top:14px}
+  .modal label:first-of-type{margin-top:0}
+  .modal input,.modal textarea,.modal select{width:100%;background:var(--bg3);border:1px solid var(--line);
+    border-radius:6px;padding:10px 12px;color:var(--paper);font-family:var(--body);font-size:1rem;
+    font-family:var(--body)}
+  .modal textarea{min-height:100px;resize:vertical;line-height:1.5}
+  .modal .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:420px){.modal .row{grid-template-columns:1fr}}
+  .modal .actions{display:flex;gap:10px;margin-top:20px}
+  .modal .actions button{flex:1;font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.03em;
+    padding:12px;border-radius:5px;cursor:pointer;border:1px solid transparent;transition:filter .15s}
+  .modal .actions .submit{background:var(--red);color:#fff}
+  .modal .actions .submit:hover{filter:brightness(1.1)}
+  .modal .actions .cancel{background:transparent;border-color:var(--line);color:var(--steel)}
+  .modal .actions .cancel:hover{border-color:var(--red2);color:var(--paper)}
+  .modal .fakebadge{font-family:var(--mono);font-size:.62rem;color:var(--faint);letter-spacing:.1em;
+    text-transform:uppercase;border:1px dashed var(--line);border-radius:4px;padding:4px 10px;
+    display:inline-block;margin-top:12px}
+  .modal .fakebadge b{color:var(--red2)}
+  .confirmbox{display:none;background:var(--bg3);border:1px solid var(--red);border-radius:6px;
+    padding:14px 16px;margin-top:14px}
+  .confirmbox.on{display:block}
+  .confirmbox p{font-family:var(--mono);font-size:.78rem;color:var(--red2);margin:0;line-height:1.4}
+  .pledgebar{border-top:1px solid var(--line);padding:20px 0;text-align:center;font-size:.88rem;
+    color:var(--steel)}
+  .pledgebar a{display:inline-block;color:var(--steel);opacity:.82;transition:opacity .15s}
+  .pledgebar a:hover{opacity:1}
+  .pledgebar b{color:var(--red2);font-weight:700}
+  .pledgebar .sep{opacity:.35;margin:0 .5em}
+  footer{border-top:1px solid var(--line);padding:28px 0;text-align:center;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
+  footer .mark{font-family:var(--disp);font-weight:800;color:var(--steel);letter-spacing:.06em;font-size:12px}
+  footer .mark sup{font-size:.55em;vertical-align:super;margin-left:.06em}
+</style>
+</head>
+<body data-mode="dark" data-theme="gold">
+
+<nav class="topbar">
+  <div class="wrap">
+    <a class="brand" href="omni.html">
+      <img src="assets/angelcorp.png" alt="ALLSEER SOFTWARE">
+      <span class="wm">ALLSEER<b>SOFTWARE</b></span>
+    </a>
+    <div class="spacer"></div>
+    <a class="back" href="omni.html">&larr; Back to ALLSEER</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <span class="eyebrow">Acquisition Inquiry</span>
+  <h1>BUYING<span class="bar" style="display:inline-block;width:100px;height:5px;background:var(--red);
+    margin:0 24px 10px;vertical-align:middle;border-radius:2px"></span></h1>
+  <p class="tag">Browse the companies and divisions <em>available for acquisition</em> from ALLSEER SOFTWARE.
+  Submit an inquiry to purchase any listed company — we'll get back to you.</p>
+</header>
+
+<section class="section">
+  <span class="eyebrow">Available for Acquisition</span>
+  <h2>Companies &amp; Divisions for Sale</h2>
+  <p class="intro">Each of these is a standalone operating company or product division under ALLSEER SOFTWARE.
+  Prices listed are indicative — final terms are negotiated per acquisition. Click "Inquire" on any listing to
+  open the purchase inquiry form.</p>
+
+  <div class="grid" id="companyGrid">
+    <!-- populated by JS -->
+  </div>
+</section>
+
+<section class="section" id="howSection" style="display:none">
+  <span class="eyebrow" id="howLabel"></span>
+  <h2 id="howTitle"></h2>
+  <p class="intro" id="howIntro"></p>
+  <div style="max-width:58ch;margin:0 auto">
+    <p style="color:var(--steel);font-size:.96rem;line-height:1.6;margin-bottom:14px" id="howBody"></p>
+    <p style="color:var(--faint);font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;
+      text-transform:uppercase">Prices shown are indicative only. Final terms are negotiated per acquisition.</p>
+  </div>
+</section>
+
+</div>
+
+<div class="modalback" id="modalBack">
+  <div class="modal">
+    <h2 id="modalTitle">Inquire to Purchase</h2>
+    <p class="modal-sub" id="modalSub">Submit your inquiry for this company or division.</p>
+
+    <label for="inquirerName">Your Name</label>
+    <input type="text" id="inquirerName" placeholder="e.g. Alex Rivera">
+
+    <div class="row">
+      <div>
+        <label for="inquirerEmail">Email</label>
+        <input type="email" id="inquirerEmail" placeholder="you@company.com">
+      </div>
+      <div>
+        <label for="inquirerOrg">Your Organisation</label>
+        <input type="text" id="inquirerOrg" placeholder="e.g. Acme Corp">
+      </div>
+    </div>
+
+    <label for="inquirerOffer">Offer / Budget (optional)</label>
+    <input type="text" id="inquirerOffer" placeholder="e.g. $500,000 or open to negotiation">
+
+    <label for="inquirerMessage">Your Message</label>
+    <textarea id="inquirerMessage" placeholder="Tell us why you're interested in acquiring this company, what you'd plan to do with it, and anything else you'd like us to know."></textarea>
+
+    <div class="fakebadge"><b>DRAFT — NOT LIVE</b> This form is a prototype. No email is sent and no inquiry is submitted.</div>
+
+    <div class="actions">
+      <button class="cancel" id="modalCancel">Cancel</button>
+      <button class="submit" id="modalSubmit">Send Inquiry</button>
+    </div>
+
+    <div class="confirmbox" id="confirmBox">
+      <p>✓ Inquiry drafted — <span id="confirmDetail"></span>. No email sent (draft mode).</p>
+    </div>
+  </div>
+</div>
+
+<div class="pledgebar">
+  <a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>
+  an <b>ALLSEER</b> company<span class="sep">|</span>
+  acquisition inquiries</a>
+</div>
+
+<footer>
+  <span class="mark">PRIMAL<sup>APE</sup></span>
+  <br>© 2025 · Charitable-first · Acquisition inquiries — draft
+</footer>
+
+<script>
+const COMPANIES = [
+  {
+    id: 'picodev',
+    label: 'GAME STUDIO',
+    name: 'PICODEV',
+    cat: 'Games',
+    price: '1,200,000',
+    cur: 'USD',
+    accent: '',
+    desc: 'Six Godot-based .io-style games in development, plus a growing portfolio of game concepts. Includes all IP, source code, and the studio brand.',
+    body: 'Six Godot-based .io-style games in development. Includes IP, source code, game concepts, and the PICODEV studio brand. Built by PRIMALAPE. Games include Neon Arsenal, Dreadward, Drawberry, Blade-Paders, Neon Overdrive, and KillShift.',
+    how: 'Transfer of all IP, source code, brand assets, and ongoing projects. Buyer receives the full PICODEV portfolio including all six in-development games, the studio name, and the PRIMALAPE founder relationship.',
+    priceNote: 'Includes all six in-development Godot games, IP, source code, studio brand, and the PRIMALAPE founder relationship.'
+  },
+  {
+    id: 'osiris',
+    label: 'MODDING SOFTWARE',
+    name: 'OSIRIS',
+    cat: 'Software',
+    price: '850,000',
+    cur: 'USD',
+    accent: 'purple',
+    desc: 'Modding tools including PHAROAH (Paladins) and HORUS (Smite). Consumer-facing modding software brand with an active user base.',
+    body: 'Modding tools suite: PHAROAH for Paladins and HORUS for Smite. Active user base and consumer-facing brand. Includes all modding tool source code, user community, and distribution channels.',
+    how: 'Transfer of modding tool source code, user base, brand, and distribution. Buyer gets OSIRIS as a standalone modding software company with existing products and community.',
+    priceNote: 'Includes PHAROAH, HORUS, source code, user community, and brand.'
+  },
+  {
+    id: 'typhon',
+    label: 'OFFENSIVE SECURITY',
+    name: 'TYPHON',
+    cat: 'Security',
+    price: '2,500,000',
+    cur: 'USD',
+    accent: 'orange',
+    desc: 'Offensive-security workspace for real systems. Includes web-app (people-search-style tools), AI assistant, and the multi-hop MVPN product BIGFOOT.',
+    body: 'Offensive-security workspace for real systems (not just games). Includes the TYPHON web-app (people-search-style tool suite with AI, freemium tiers), the BIGFOOT multi-hop MVPN, and the security research division. Also includes the planned TYPHON forum and digital investigation division.',
+    how: 'Transfer of the TYPHON security workspace, web-app, BIGFOOT MVPN product, and all associated IP. Buyer receives the offensive-security brand, tools, and the planned forum and investigation divisions.',
+    priceNote: 'Includes TYPHON web-app, BIGFOOT MVPN, security research division, and planned forum/investigation divisions.'
+  },
+  {
+    id: 'bigfoot',
+    label: 'MULTI-HOP MVPN',
+    name: 'BIGFOOT',
+    cat: 'Privacy',
+    price: '600,000',
+    cur: 'USD',
+    accent: 'teal',
+    desc: 'Multi-hop MVPN that bounces connections through a chain of IPs instead of one exit server. A TYPHON venture currently listed separately for acquisition.',
+    body: 'Multi-hop MVPN product. Bounces your connection through a chain of IPs instead of one exit server. Currently a TYPHON venture but listed separately for acquisition as a standalone privacy product.',
+    how: 'Transfer of the BIGFOOT product, including the multi-hop MVPN technology, brand, and any existing user base. Buyer gets BIGFOOT as a standalone privacy product company.',
+    priceNote: 'Single-product company: the BIGFOOT multi-hop MVPN. Includes product, brand, and user base.'
+  },
+  {
+    id: 'markup',
+    label: 'MEN\'S GROOMING',
+    name: 'MARKUP',
+    cat: 'Consumer',
+    price: '350,000',
+    cur: 'USD',
+    accent: '',
+    desc: 'Men\'s grooming brand focused on looksmaxxing. Hair densifier gel (dry, invisible, color-available), jaw/neck exerciser. Dropship-first, building toward own formulation and hardware.',
+    body: 'Men\'s grooming brand for the looksmaxxing audience. Core product: hair densifier gel in multiple colors (including black) — dry, invisible, doesn\'t rub off, formulated for skin and hair health. Secondary product: jaw/neck exerciser (dropshipped). TikTok-first marketing strategy. Dropship-first model, building toward own formulation and hardware.',
+    how: 'Transfer of the MARKUP brand, product formulations (or drop-ship arrangements), marketing strategy, and any existing customer base. Buyer gets a ready-made men\'s grooming company with a clear market position.',
+    priceNote: 'Includes MARKUP brand, hair densifier gel product line, jaw/neck exerciser drop-ship, and TikTok marketing pipeline.'
+  },
+  {
+    id: 'catalyst',
+    label: 'CHEMISTRY & CONSUMER',
+    name: 'CATALYST',
+    cat: 'Consumer',
+    price: '280,000',
+    cur: 'USD',
+    accent: 'purple',
+    desc: 'Small chemistry products that do one clever thing. Colour-fire candles, freezing candy/drinks, unbreakable bubbles. Concept stage, heavy on the chemistry ideas.',
+    body: 'Small, well-made chemistry products that do one clever thing really well. Three product lines: colour-fire candles (real coloured flames using metal salts), snow caps / frost-bites zero (candy/drink that makes your mouth feel freezing), and unbreakable bubbles. Concept stage — heavy on the chemistry ideas, light on actual products.',
+    how: 'Transfer of the CATALYST brand, product concepts, and any chemistry formulations in development. Buyer gets a concept-stage chemistry company with strong product ideas.',
+    priceNote: 'Includes CATALYST brand, three product line concepts, and chemistry R&D direction.'
+  },
+  {
+    id: 'grover',
+    label: 'ON-DEMAND LAWN CARE',
+    name: 'GROVER',
+    cat: 'Service',
+    price: '420,000',
+    cur: 'USD',
+    accent: 'teal',
+    desc: 'Uber for mowing your lawn. Post a job instead of mowing it yourself — someone nearby picks it up, cuts the grass, and moves on. Concept stage.',
+    body: 'On-demand lawn care marketplace. The idea: Uber, but for mowing your lawn. Post a job instead of mowing it yourself — someone nearby picks it up, cuts the grass, and moves on. Concept stage — brand, pitch, and marketplace model are built; no live operations yet.',
+    how: 'Transfer of the GROVER brand, marketplace model, pitch, and any early operations infrastructure. Buyer gets a ready-made on-demand lawn care concept with a clear market position.',
+    priceNote: 'Includes GROVER brand, marketplace model, and go-to-market pitch.'
+  },
+  {
+    id: 'tweetshield',
+    label: 'BROWSER EXTENSION',
+    name: 'TWEETSHIELD',
+    cat: 'Software',
+    price: '180,000',
+    cur: 'USD',
+    accent: 'blue',
+    desc: 'Browser extension that filters X/Twitter by the poster\'s country of origin — an allow-list, a block-list, or both. Concept stage.',
+    body: 'Browser extension that filters what you see on X/Twitter by the poster\'s country of origin. An allow-list, a block-list, or both. Twitter already tags where a post comes from — TweetShield just gives you the switch. Concept stage — the product idea and UI are built; no live extension yet.',
+    how: 'Transfer of the TweetShield brand, extension concept, and UI design. Buyer gets a ready-made browser extension concept with a clear market position.',
+    priceNote: 'Includes TweetShield brand, extension concept, and UI/UX design.'
+  },
+  {
+    id: 'seraphim',
+    label: 'AEROSPACE & DEFENSE',
+    name: 'SERAPHIM',
+    cat: 'Defense',
+    price: '950,000',
+    cur: 'USD',
+    accent: 'orange',
+    desc: 'Sensor, surveillance & aerospace. Drone hardware concept and surveillance systems. Positioning only — no real capability or specification content. Concept stage.',
+    body: 'Sensor, surveillance & aerospace. Early idea for a drone hardware company. Positioning only — no real capability or specification content. Concept stage with strong visual identity and market positioning, but no real products yet.',
+    how: 'Transfer of the SERAPHIM brand, visual identity, and market positioning. Buyer gets a concept-stage aerospace/defense company with strong branding but no real products — a clean slate with a clear direction.',
+    priceNote: 'Includes SERAPHIM brand, visual identity, and positioning. No real products or capability content.'
+  },
+  {
+    id: 'orphan',
+    label: 'FINANCE & BUSINESS SERVICES',
+    name: 'ORPHANIM',
+    cat: 'Finance',
+    price: '3,200,000',
+    cur: 'USD',
+    accent: '',
+    desc: 'Interest-free bank for businesses. Take 3% equity, give interest-free loans backed by company equity. Also: AI trading/investment bank, tax/accounting, debt collection, tax-free LLC setup, and AI call center lead-gen.',
+    body: 'Interest-free bank for businesses. Core: take 3% equity stake in a company, give them an interest-free loan backed by that equity. No interest, ever. Also includes: AI trading/investment bank (social-media sentiment trading, debit card that\'s always invested but spendable), tax/accounting services (QuickBooks + Intuit + AI), debt collection agency (AI calls, pressure tactics), tax-free parent company setup (offshore loopholes), and AI call center lead-gen (pay-to-buy call center).',
+    how: 'Transfer of the ORPHANIM brand, all six service lines (interest-free loans, AI trading, accounting, debt collection, tax-free setup, call center), and the "build and sell companies" meta-model. Buyer gets a full-stack finance and business services company with multiple revenue streams.',
+    priceNote: 'Includes ORPHANIM brand, all six service lines, and the company-building/selling meta-model.'
+  },
+  {
+    id: 'hardware',
+    label: 'HARDWARE & PHYSICAL PRODUCTS',
+    name: 'ALLSEER HARDWARE',
+    cat: 'Hardware',
+    price: '520,000',
+    cur: 'USD',
+    accent: 'teal',
+    desc: 'PC-to-gaming-PC conversion service and RC toy/robot redesign. Both dropship-first, building toward own manufacturing. Also includes multi-business warehouse-sharing concept.',
+    body: 'Two hardware product lines: (1) Work-PC-to-gaming-PC conversion — modify work PCs into gaming PCs, mostly a new case/rebuild, shipped assembled, sold on Amazon. (2) RC toy/robot redesign — turn hobbyist designs into RC toys and "robots", some dropshipped, some re-characterized. Plus the multi-business warehouse-sharing concept (give us access to your warehouse for dropshipping). Dropship-first, building toward own manufacturing.',
+    how: 'Transfer of both hardware product lines, drop-ship arrangements, and the warehouse-sharing concept. Buyer gets a hardware company with two active product directions and a dropship-first supply chain.',
+    priceNote: 'Includes PC-to-gaming-PC conversion, RC toy/robot line, and warehouse-sharing concept.'
+  },
+  {
+    id: 'wiki',
+    label: 'KNOWLEDGE BASE / WIKI',
+    name: 'ALLSEER WIKI',
+    cat: 'Media',
+    price: '150,000',
+    cur: 'USD',
+    accent: 'blue',
+    desc: 'Free knowledge-base / wiki product. Repackages open-source software and interesting ideas as clean web pages. Every company or idea, made free first. Then monetized later.',
+    body: 'A free knowledge-base / wiki product. The idea: make every company or idea accessible on the website — everything found specifically of interest — made free first. Then, every month, make one of these ideas real. Often repackages open-source software from GitHub as a product or app with a logo and clean website. May combine many into a full application, adding MCP tools and so on.',
+    how: 'Transfer of the ALLSEER WIKI brand, content library, and the "free first, monetize later" model. Buyer gets a content/knowledge product with a clear growth strategy.',
+    priceNote: 'Includes ALLSEER WIKI brand, content library, and the free-to-monetize growth model.'
+  },
+  {
+    id: 'blow',
+    label: 'FREEWARE AD NETWORK',
+    name: 'BLOW (Bloatware-Lite Open Web)',
+    cat: 'Software',
+    price: '340,000',
+    cur: 'USD',
+    accent: 'purple',
+    desc: 'Freeware "ad network" — think Google AdSense, but for software. Desktop port of itch.io that re-categorizes and filters games. Middleman between bloatware companies and freeware developers.',
+    body: 'Two related products: (1) Freeware "ad network" — like Google AdSense but for software. Any game or software can have ads through this network. 10,000 developers → your network → hundreds of sponsors. (2) Bloatware middleman — a service between bloatware companies and freeware developers. Auto-detects downloads and automatically pays the freeware company per download. Bloatware companies pay for the service. Also: a desktop port of itch.io that re-categorizes and filters games, heavily filtering slop games.',
+    how: 'Transfer of the ad network concept, bloatware middleman service, and the itch.io desktop port. Buyer gets a software distribution and monetization platform with multiple revenue streams.',
+    priceNote: 'Includes ad network, bloatware middleman, and itch.io desktop port concept.'
+  },
+  {
+    id: 'unlisted',
+    label: 'BROWSER EXTENSION — SECURITY TOOL',
+    name: 'UNLISTED VIDEOS SCANNER',
+    cat: 'Software',
+    price: '95,000',
+    cur: 'USD',
+    accent: 'blue',
+    desc: 'Chrome extension that scans YouTube for UNLISTED videos and channels for unlisted videos — so you can access them. Discover cool hidden content on YouTube.',
+    body: 'Chrome extension that scans YouTube for unlisted videos and channels for unlisted videos — so you can access them. The idea: discover cool hidden stuff on YouTube that\'s not publicly listed. Simple browser extension concept, small but with a clear use case.',
+    how: 'Transfer of the extension concept, brand, and any development in progress. Buyer gets a small browser extension product with a clear, specific use case.',
+    priceNote: 'Single-product browser extension. Includes concept, brand, and development.'
+  },
+  {
+    id: 'digitalpi',
+    label: 'DIGITAL PRIVATE INVESTIGATOR / OPSEC',
+    name: 'OPSEC INVERTER (working title)',
+    cat: 'Security',
+    price: '780,000',
+    cur: 'USD',
+    accent: 'orange',
+    desc: 'Fully digital private investigator service. Uses OPSEC tools to legally find information on a suspect. AI-assisted: social media image scanning, metadata extraction, profile building, alt-account discovery, writing-style correlation. Could offer red-team cybersecurity.',
+    body: 'Fully digital private investigator / OPSEC investigation service. Uses OPSEC tools to legally find information on a suspect. AI filters for real requests. Core capabilities: PeopleSearch-style tools, finding all images on social media and auto-scanning for metadata with AI, AI building a full profile, investigating related nodes and finding alt-accounts, writing-style analysis to correlate accounts (similar to the method in the referenced YouTube video). Can offer red-team cybersecurity. May partner with or replicate the software referenced in the source video.',
+    how: 'Transfer of the digital PI/OPSEC service concept, tooling approach, AI-assisted investigation methods, and any software in development. Buyer gets a digital investigation company with a clear capability set and a path to red-team cybersecurity.',
+    priceNote: 'Includes digital PI/OPSEC service, AI-assisted investigation methods, and red-team cybersecurity path.'
+  }
+];
+
+const companyGrid = document.getElementById('companyGrid');
+const howSection = document.getElementById('howSection');
+const modalBack = document.getElementById('modalBack');
+const confirmBox = document.getElementById('confirmBox');
+
+function renderCards(){
+  companyGrid.innerHTML = '';
+  COMPANIES.forEach(function(c){
+    const card = document.createElement('div');
+    card.className = 'card' + (c.accent ? ' ' + c.accent : '');
+    card.innerHTML =
+      '<div class="label">' + c.label + '</div>' +
+      '<h3>' + c.name + '</h3>' +
+      '<p>' + c.desc + '</p>' +
+      '<div class="price">' +
+        '<span class="amt"><small>' + c.cur + '</small>' + Number(c.price).toLocaleString() + '</span>' +
+        '<button class="btn inquire" data-id="' + c.id + '">Inquire</button>' +
+      '</div>' +
+      '<div class="soldnote">A <b>ALLSEER</b> company · ' + c.cat + '</div>';
+    companyGrid.appendChild(card);
+  });
+  document.querySelectorAll('.inquire').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      const id = btn.getAttribute('data-id');
+      const company = COMPANIES.filter(function(c){ return c.id === id; })[0];
+      openModal(company);
+    });
+  });
+}
+
+function openModal(company){
+  document.getElementById('modalTitle').textContent = 'Inquire to Purchase ' + company.name;
+  document.getElementById('modalSub').textContent = company.desc;
+  document.getElementById('confirmDetail').textContent = company.name;
+  confirmBox.classList.remove('on');
+  modalBack.classList.add('on');
+  document.getElementById('inquirerName').value = '';
+  document.getElementById('inquirerEmail').value = '';
+  document.getElementById('inquirerOrg').value = '';
+  document.getElementById('inquirerOffer').value = '';
+  document.getElementById('inquirerMessage').value = '';
+}
+
+function closeModal(){
+  modalBack.classList.remove('on');
+  confirmBox.classList.remove('on');
+}
+
+document.getElementById('modalCancel').addEventListener('click', closeModal);
+modalBack.addEventListener('click', function(e){
+  if (e.target === modalBack) closeModal();
+});
+
+document.getElementById('modalSubmit').addEventListener('click', function(){
+  const name = document.getElementById('inquirerName').value.trim();
+  const email = document.getElementById('inquirerEmail').value.trim();
+  const org = document.getElementById('inquirerOrg').value.trim();
+  const offer = document.getElementById('inquirerOffer').value.trim();
+  const message = document.getElementById('inquirerMessage').value.trim();
+  const company = COMPANIES.filter(function(c){
+    return c.id === document.querySelector('#modalTitle').textContent.replace('Inquire to Purchase ', '');
+  })[0];
+  if (!name || !email){
+    alert('Please enter at least your name and email.');
+    return;
+  }
+  const detail = 'inquiry for ' + company.name + ' from ' + name + (org ? ' (' + org + ')' : '');
+  document.getElementById('confirmDetail').textContent = detail;
+  confirmBox.classList.add('on');
+  document.getElementById('modalSubmit').textContent = 'Inquiry Drafted — Draft Mode';
+  document.getElementById('modalSubmit').disabled = true;
+});
+
+renderCards();
+</script>
+
+</body>
+</html>
