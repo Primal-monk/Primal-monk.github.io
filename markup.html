@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MARKUP — Grooming for the Look-Seeker</title>
+<link rel="icon" type="image/png" href="assets/angelcorp.png">
+<meta name="description" content="MARKUP — hair densifier gel and jaw/neck exercisers. Masculine grooming that doesn't feel like makeup. Starts drop-shipped, becomes real. Concept draft.">
+<style>
+  /* ============================================================
+     MARKUP — near-black, chrome-silver, bold condensed sans.
+     Masculine grooming brand. Premium but unpretentious.
+     Looksmaxxing audience: clean, confident, demo-first.
+     ============================================================ */
+  :root{
+    --bg:#08090c; --bg2:#0f1116; --bg3:#171a21; --bg4:#1f232e;
+    --ink:#ece9e0; --sec:#8b93a3; --faint:#4a5260;
+    --chrome:#b8c2cc; --chrome2:#8a94a4; --steel:#3a4452;
+    --line:rgba(184,194,204,.14); --line2:rgba(184,194,204,.08);
+    --accent:#c4a46a; /* muted gold — premium, not loud */
+    --accent2:#8a7544;
+    --corp:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --mono:"Archivo","Courier New",monospace;
+    --maxw:1040px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--corp);background:var(--bg);color:var(--sec);
+    line-height:1.6;font-size:17px;overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(900px 400px at 50% -10%, rgba(196,164,106,.05), transparent 60%),
+      radial-gradient(700px 500px at 90% 90%, rgba(58,68,82,.18), transparent 60%);
+  }
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-track{background:var(--bg2)}
+  ::-webkit-scrollbar-thumb{background:var(--chrome2);border:2px solid var(--bg2);border-radius:6px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--chrome)}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--chrome);color:var(--bg)}
+  .mono{font-family:var(--mono);letter-spacing:.04em}
+
+  /* ---- top bar ---- */
+  .topbar{
+    position:sticky;top:0;z-index:60;height:56px;
+    background:color-mix(in srgb,var(--bg) 88%,transparent);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line2);
+    display:flex;align-items:center;gap:14px;padding:0 24px;
+  }
+  .topbar .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .topbar .brand img{width:26px;height:26px;object-fit:contain}
+  .topbar .brand .wm{
+    font-family:var(--corp);font-weight:900;font-size:15px;
+    color:var(--ink);letter-spacing:.18em;
+  }
+  .topbar .brand .wm small{
+    color:var(--chrome2);font-weight:600;font-size:.6em;
+    letter-spacing:.2em;margin-left:.6em;vertical-align:super;
+  }
+  .topbar .spacer{flex:1}
+  .topbar .back{
+    font-family:var(--mono);font-size:11px;color:var(--chrome2);
+    letter-spacing:.12em;text-transform:uppercase;cursor:pointer;
+    transition:color .15s;padding:6px 0;
+  }
+  .topbar .back:hover{color:var(--accent)}
+  .topbar .pill{
+    font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--chrome2);
+    border:1px solid var(--line);border-radius:3px;
+    padding:5px 10px;white-space:nowrap;
+  }
+
+  /* ---- wrap ---- */
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  @media(max-width:640px){.wrap{padding:0 18px}}
+
+  /* ---- hero ---- */
+  .hero{
+    padding:76px 0 52px;text-align:center;position:relative;
+  }
+  .hero .pre{
+    font-family:var(--mono);font-size:11px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--chrome2);margin-bottom:22px;
+  }
+  .hero h1{
+    font-family:var(--corp);font-weight:900;
+    font-size:clamp(4rem,11vw,8rem);
+    line-height:.92;letter-spacing:-.03em;
+    color:var(--ink);
+    text-shadow:0 2px 0 rgba(0,0,0,.4);
+  }
+  .hero h1 .bar{
+    display:inline-block;width:100%;height:6px;
+    background:linear-gradient(90deg,var(--accent) 0%,var(--accent2) 100%);
+    border-radius:2px;margin:0 clamp(2vw,5vw,4vw) 0;
+  }
+  .hero .tag{
+    font-family:var(--corp);font-weight:600;
+    font-size:clamp(1rem,2.2vw,1.35rem);
+    color:var(--chrome);margin-top:18px;
+    letter-spacing:.01em;max-width:640px;margin-left:auto;margin-right:auto;
+  }
+  .hero .tag em{
+    font-style:normal;color:var(--accent);font-weight:700;
+  }
+  .hero .meta{
+    margin-top:32px;display:flex;gap:14px;justify-content:center;
+    flex-wrap:wrap;font-family:var(--mono);
+  }
+  .hero .meta span{
+    font-size:11px;color:var(--faint);letter-spacing:.16em;
+    text-transform:uppercase;border:1px solid var(--line);
+    border-radius:3px;padding:7px 14px;
+  }
+  .hero .meta span b{color:var(--chrome);font-weight:700}
+
+  /* ---- section heads ---- */
+  .sec{padding:64px 0;border-top:1px solid var(--line2)}
+  .sec:first-of-type{border-top:0}
+  .sec .kicker{
+    font-family:var(--mono);font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--chrome2);margin-bottom:14px;
+    display:block;
+  }
+  .sec h2{
+    font-family:var(--corp);font-weight:900;
+    font-size:clamp(1.6rem,3.6vw,2.4rem);
+    color:var(--ink);letter-spacing:-.01em;line-height:1.04;
+    margin-bottom:14px;
+  }
+  .sec .lede{
+    color:var(--sec);font-size:1.04rem;max-width:620px;
+    margin:0 auto;line-height:1.6;
+  }
+  .sec .lede b{color:var(--ink);font-weight:600}
+
+  /* ---- product card ---- */
+  .prod{
+    display:grid;grid-template-columns:1.1fr .9fr;gap:48px;
+    align-items:start;background:var(--bg2);
+    border:1px solid var(--line);border-radius:12px;
+    padding:32px;overflow:hidden;position:relative;
+  }
+  @media(max-width:760px){.prod{grid-template-columns:1fr;gap:24px}}
+  .prod::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+    background:linear-gradient(180deg,var(--accent),var(--accent2));
+    border-radius:0 2px 2px 0;
+  }
+  .prod .ph{
+    aspect-ratio:4/3;background:linear-gradient(135deg,var(--bg3),var(--bg4));
+    border-radius:8px;display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .prod .ph .silhouette{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 40%, rgba(184,194,204,.06), transparent 70%),
+      radial-gradient(ellipse 50% 40% at 50% 60%, rgba(196,164,106,.08), transparent 70%);
+  }
+  .prod .ph .placeholder-label{
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--faint);
+    position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+  }
+  .prod .pn{font-family:var(--corp);font-weight:900;font-size:1.65rem;color:var(--ink);letter-spacing:-.01em}
+  .prod .pc{
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--accent);margin-top:6px;font-weight:700;
+  }
+  .prod .pd{font-size:1rem;color:var(--chrome);margin-top:14px;line-height:1.55}
+  .prod .pd b{color:var(--ink);font-weight:600}
+
+  /* ---- color swatches ---- */
+  .swatches{
+    display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;
+  }
+  .swatch{
+    display:flex;align-items:center;gap:8px;
+    background:var(--bg3);border:1px solid var(--line);
+    border-radius:6px;padding:7px 12px;cursor:default;
+  }
+  .swatch .dot{
+    width:18px;height:18px;border-radius:50%;
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow:0 0 0 2px var(--bg3), 0 2px 6px rgba(0,0,0,.4);
+  }
+  .swatch .nm{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--sec)}
+  .swatch .nm b{color:var(--ink)}
+
+  /* ---- spec strip ---- */
+  .specs{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:1px;background:var(--line);margin-top:22px;border:1px solid var(--line);
+    border-radius:6px;overflow:hidden;
+  }
+  .specs .cell{
+    background:var(--bg2);padding:14px 16px;border-right:1px solid var(--line);
+  }
+  .specs .cell:last-child{border-right:0}
+  @media(max-width:480px){.specs .cell{border-bottom:1px solid var(--line)}}
+  .specs .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+  .specs .v{font-size:.9rem;color:var(--ink);font-weight:600;line-height:1.35}
+
+  /* ---- feature list ---- */
+  .feats{list-style:none;margin-top:20px}
+  .feats li{
+    padding:9px 0 9px 28px;position:relative;color:var(--chrome);
+    font-size:.94rem;border-bottom:1px solid var(--line2);
+  }
+  .feats li:last-child{border-bottom:0}
+  .feats li::before{
+    content:"";position:absolute;left:0;top:11px;width:10px;height:10px;
+    background:var(--chrome);clip-path:polygon(0 0,100% 0,50% 100%);
+    opacity:.5;
+  }
+  .feats li b{color:var(--ink);font-weight:600}
+
+  /* ---- two-col feature blocks ---- */
+  .twocol{
+    display:grid;grid-template-columns:1fr 1fr;gap:32px;
+    margin-top:32px;
+  }
+  @media(max-width:640px){.twocol{grid-template-columns:1fr;gap:24px}}
+  .twocol .block{
+    background:var(--bg2);border:1px solid var(--line);border-radius:10px;
+    padding:28px;
+  }
+  .twocol .block h3{
+    font-family:var(--corp);font-weight:900;font-size:1.2rem;color:var(--ink);
+    margin-bottom:12px;letter-spacing:-.01em;
+  }
+  .twocol .block p{color:var(--chrome);font-size:.94rem;line-height:1.6}
+  .twocol .block p b{color:var(--ink)}
+
+  /* ---- how-it-works step row ---- */
+  .steps{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+    margin-top:24px;
+  }
+  @media(max-width:640px){.steps{grid-template-columns:1fr}}
+  .steps .step{
+    background:var(--bg2);border:1px solid var(--line);border-radius:8px;
+    padding:24px;position:relative;
+  }
+  .steps .step .n{
+    font-family:var(--mono);font-weight:900;font-size:.7rem;
+    color:var(--accent);letter-spacing:.16em;text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  .steps .step h4{
+    font-family:var(--corp);font-weight:800;font-size:1.02rem;color:var(--ink);
+    margin-bottom:8px;letter-spacing:-.01em;
+  }
+  .steps .step p{color:var(--chrome);font-size:.9rem;line-height:1.55}
+
+  /* ---- transparency note ---- */
+  .truth{
+    margin-top:48px;background:var(--bg2);
+    border:1px solid var(--line);border-left:3px solid var(--chrome2);
+    border-radius:8px;padding:24px 28px;
+    display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:center;
+  }
+  @media(max-width:640px){.truth{grid-template-columns:1fr}}
+  .truth .lbl{
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--faint);margin-bottom:8px;
+  }
+  .truth .body{color:var(--chrome);font-size:.94rem;line-height:1.6}
+  .truth .body b{color:var(--ink);font-weight:600}
+
+  /* ---- pricing strip (drop-ship visual) ---- */
+  .pricebar{
+    margin-top:32px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;
+    background:var(--bg3);border:1px solid var(--line);border-radius:8px;
+    padding:18px 24px;
+  }
+  .pricebar .amt{
+    font-family:var(--corp);font-weight:900;font-size:1.8rem;color:var(--ink);
+    letter-spacing:-.01em;line-height:1;
+  }
+  .pricebar .amt .cur{color:var(--chrome2);font-size:.6em;vertical-align:super;margin-right:.04em}
+  .pricebar .details{font-family:var(--mono);font-size:.72rem;color:var(--sec);
+    letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+  .pricebar .details b{color:var(--chrome)}
+  .pricebar .spacer{flex:1}
+  .pricebar .tag{
+    font-family:var(--mono);font-size:.68rem;color:var(--faint);
+    letter-spacing:.12em;text-transform:uppercase;
+    border:1px solid var(--line);border-radius:3px;padding:6px 12px;
+  }
+
+  /* ---- roadmap strip ---- */
+  .road{
+    margin-top:48px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+  }
+  @media(max-width:640px){.road{grid-template-columns:repeat(2,1fr)}}
+  .road .r{
+    background:var(--bg2);border:1px solid var(--line);border-radius:8px;
+    padding:18px;text-align:center;
+  }
+  .road .r .q{
+    font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;
+    color:var(--faint);text-transform:uppercase;margin-bottom:8px;
+  }
+  .road .r .t{
+    font-family:var(--corp);font-weight:800;font-size:.94rem;color:var(--ink);
+    letter-spacing:-.01em;margin-bottom:4px;
+  }
+  .road .r .d{color:var(--chrome2);font-size:.78rem;line-height:1.4}
+  .road .r.done{border-color:var(--chrome);background:color-mix(in srgb,var(--chrome) 6%,var(--bg2))}
+  .road .r.done .q{color:var(--chrome)}
+
+  /* ---- charity bar ---- */
+  .pledgebar{
+    margin-top:48px;border-top:1px solid rgba(255,255,255,.06);
+    background:color-mix(in srgb,var(--bg2) 80%,transparent);
+    padding:18px 28px;text-align:center;font-size:.88rem;line-height:1.55;
+  }
+  .pledgebar a{display:inline-block;color:var(--chrome);opacity:.82;transition:opacity .15s}
+  .pledgebar a:hover{opacity:1}
+  .pledgebar b{color:var(--accent);font-weight:700}
+  .pledgebar .sep{opacity:.35;margin:0 .6em}
+
+  /* ---- footer ---- */
+  footer{
+    border-top:1px solid var(--line2);padding:32px 28px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    flex-wrap:wrap;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+    color:var(--faint);text-transform:uppercase;
+  }
+  footer .mark{font-family:var(--corp);font-weight:900;color:var(--chrome2);
+    letter-spacing:.14em;font-size:12px}
+  footer .mark sup{font-size:.55em;vertical-align:super;margin-left:.06em;color:var(--faint)}
+  footer .right{text-align:right;color:var(--faint)}
+
+  /* ---- divider ornament ---- */
+  .ornament{
+    display:flex;align-items:center;justify-content:center;gap:14px;
+    margin:40px 0 0;padding-top:32px;border-top:1px solid var(--line2);
+  }
+  .ornament::before,.ornament::after{
+    content:"";height:1px;width:80px;
+  }
+  .ornament::before{background:linear-gradient(90deg,transparent,var(--line))}
+  .ornament::after{background:linear-gradient(90deg,var(--line),transparent)}
+  .ornament span{font-family:var(--mono);font-size:.62rem;color:var(--faint);
+    letter-spacing:.2em}
+</style>
+</head>
+<body>
+
+<!-- ====== TOP BAR ====== -->
+<nav class="topbar">
+  <a class="brand" href="omni.html">
+    <img src="assets/angelcorp.png" alt="ALLSEER">
+    <span class="wm">ALLSEER<small>SOFTWARE</small></span>
+  </a>
+  <div class="spacer"></div>
+  <span class="pill">Dropship-first</span>
+  <a class="back" href="omni.html">&larr; Back to ALLSEER</a>
+</nav>
+
+<div class="wrap">
+
+<!-- ====== HERO ====== -->
+<header class="hero">
+  <span class="pre">A division of ALLSEER SOFTWARE</span>
+  <h1>MARKUP<span class="bar"></span></h1>
+  <p class="tag">Grooming that <em>doesn&rsquo;t feel like makeup.</em><br>Products built for men who want to look better without feeling like they&rsquo;re wearing anything.</p>
+  <div class="meta">
+    <span><b>Hair Densifier Gel</b> — in color</span>
+    <span><b>Jaw &amp; Neck Exerciser</b> — physical</span>
+    <span><b>Dropship-first</b> — real inventory later</span>
+  </div>
+</header>
+
+<!-- ====== THE IDEA ====== -->
+<section class="sec">
+  <span class="kicker">The idea</span>
+  <h2>Makeup for men. But dry. Invisible. And good for your skin.</h2>
+  <p class="lede">
+    Men&rsquo;s grooming has two extremes: <b>nothing</b> or <b>full-on cosmetics</b> that feel feminine,
+    transfer onto your collar, and leave your skin worse than before. MARKUP is the third option &mdash;
+    products that do the job of makeup without feeling like makeup. Dry. Nearly invisible. Built to be
+    comfortable enough that you forget you&rsquo;re wearing them. And formulated so they&rsquo;re not
+    sabotaging your skin or hair while they do it.
+  </p>
+</section>
+
+<!-- ====== PRODUCT 1 — HAIR DENSIFIER GEL ====== -->
+<section class="sec">
+  <span class="kicker">Core product</span>
+  <h2>Hair Densifier Gel</h2>
+  <p class="lede">
+    A color-infused hair gel that fills in thinning areas and bald spots, available in multiple colors
+    including black. Applies like a normal styling product, dries down completely, and doesn&rsquo;t
+    rub off on your clothes or hands. The point: your hair looks thicker and more even in seconds,
+    and you can&rsquo;t feel it once it&rsquo;s dry.
+  </p>
+
+  <div class="prod">
+    <!-- product visual placeholder -->
+    <div class="ph">
+      <div class="silhouette"></div>
+      <span class="placeholder-label">Product photography — swap for real images</span>
+    </div>
+    <div>
+      <div class="pn">DENSIFIER GEL</div>
+      <div class="pc">Hair camouflage — multiple colors</div>
+      <p class="pd">
+        A gel that carries <b>cosmetic color pigments</b> in a dry, quick-setting base. Apply to thinning
+        areas, let it set, and the color fills in where hair is sparse &mdash; the visual effect is denser,
+        more even hair with no bald-spot show-through. Unlike spray-on color or traditional styling products,
+        it&rsquo;s built to <b>dry fully</b> and stay put.
+      </p>
+
+      <div class="swatches">
+        <div class="swatch"><div class="dot" style="background:#1a1a1a"></div><span class="nm"><b>Black</b></span></div>
+        <div class="swatch"><div class="dot" style="background:#2c2417"></div><span class="nm"><b>Dark Brown</b></span></div>
+        <div class="swatch"><div class="dot" style="background:#4a4a4a"></div><span class="nm"><b>Gray</b></span></div>
+        <div class="swatch"><div class="dot" style="background:#5c3a28"></div><span class="nm"><b>Auburn</b></span></div>
+        <div class="swatch"><div class="dot" style="background:#3a3a3a"></div><span class="nm"><b>Charcoal</b></span></div>
+      </div>
+
+      <div class="specs">
+        <div class="cell">
+          <div class="k">Base</div>
+          <div class="v">Quick-dry gel</div>
+        </div>
+        <div class="cell">
+          <div class="k">Finish</div>
+          <div class="v">Matte — no shine</div>
+        </div>
+        <div class="cell">
+          <div class="k">Feel</div>
+          <div class="v">Dry, not sticky</div>
+        </div>
+        <div class="cell">
+          <div class="k">Transfer</div>
+          <div class="v">Minimal — designed not to</div>
+        </div>
+        <div class="cell">
+          <div class="k">Hold</div>
+          <div class="v">Full day, light hold</div>
+        </div>
+        <div class="cell">
+          <div class="k">Colors</div>
+          <div class="v">5 — incl. Black</div>
+        </div>
+      </div>
+
+      <ul class="feats">
+        <li><b>Dries down completely.</b> Not a wet gel sitting on your scalp all day — sets dry and stays dry.</li>
+        <li><b>Doesn&rsquo;t rub off.</b> Built to resist transfer onto your hands, your shirt collar, or anything you rest your head on.</li>
+        <li><b>Comfort-first.</b> You should barely feel it after it sets. No heavy, greasy, crunchy, or stiff feel.</li>
+        <li><b>Formulated for skin and hair.</b> This is the whole point of MARKUP — makeup that doesn&rsquo;t damage what it sits on. Not just color in a bottle.</li>
+        <li><b>For thinning hair and bald spots.</b> The primary use case: fill in the areas that look thin, cover what you want covered, and walk out looking like you just have hair.</li>
+        <li><b>Black available.</b> For guys who want full coverage, not just a tint.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="twocol">
+    <div class="block">
+      <h3>Why a gel, not a spray or a powder</h3>
+      <p>
+        Sprays wash out or feel wet. Powders look dusty and feel like you&rsquo;re wearing something obvious.
+        A gel lets the color <b>sit in the hair</b>, not on top of it, and dry down to something that
+        behaves like your hair just looks better. It&rsquo;s the form factor that gets closest to &ldquo;your
+        hair, but thicker&rdquo; without tipping anyone off.
+      </p>
+    </div>
+    <div class="block">
+      <h3>The looksmaxxing angle, stated plainly</h3>
+      <p>
+        You&rsquo;re here because you want to look better. Thicker hair is one of the highest-impact
+        changes a man can make, and if you&rsquo;re dealing with thinning or bald spots, this is the
+        fastest way to fix the look <em>today</em> while you work on the longer-term stuff. No shame in
+        that — the point is the result.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== HOW IT WORKS ====== -->
+<section class="sec">
+  <span class="kicker">How it works</span>
+  <h2>Three steps. No one notices.</h2>
+  <p class="lede">
+    The product is built to disappear into your routine. Apply it like any other styling product, let it
+    dry, and go. The whole point is that you&rsquo;re not wearing something obvious — your hair just looks
+    better.
+  </p>
+  <div class="steps">
+    <div class="step">
+      <div class="n">Step 01</div>
+      <h4>Apply to thinning areas</h4>
+      <p>Work the gel into the areas you want to fill in — part lines, crown, spots where hair is sparse. Like styling gel, but targeted where you need it.</p>
+    </div>
+    <div class="step">
+      <div class="n">Step 02</div>
+      <h4>Let it dry</h4>
+      <p>It sets dry on its own. No heat, no waiting around. Once it&rsquo;s dry, the color is where it needs to be and the gel base is gone — you&rsquo;re left with the visual effect.</p>
+    </div>
+    <div class="step">
+      <div class="n">Step 03</div>
+      <h4>Walk out looking denser</h4>
+      <p>Your hair looks thicker and more even. The bald spots and thin areas are filled in. Nothing rubs off, nothing feels weird, and no one&rsquo;s the wiser.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PRODUCT 2 — JAW & NECK EXERCISER ====== -->
+<section class="sec">
+  <span class="kicker">Drop-shipped product</span>
+  <h2>Jaw &amp; Neck Exerciser</h2>
+  <p class="lede">
+    A physical resistance trainer for jaw and neck muscles. Drop-shipped initially — the goal is to get
+    something real in your hands fast, then build toward our own hardware later.
+  </p>
+
+  <div class="prod">
+    <div class="ph">
+      <div class="silhouette"></div>
+      <span class="placeholder-label">Product photography — swap for real images</span>
+    </div>
+    <div>
+      <div class="pn">JAW &amp; NECK EXERCISER</div>
+      <div class="pc">Physical resistance trainer</div>
+      <p class="pd">
+        A handheld resistance device designed for jawline and neck muscle training. Works like a grip
+        trainer does for your hands — repetitive resistance exercise, done in short sessions. The pitch
+        for the looksmaxxing crowd: <b>define the jawline, strengthen the neck</b>, the two areas that
+        make the biggest visual difference to your profile.
+      </p>
+
+      <div class="specs">
+        <div class="cell">
+          <div class="k">Type</div>
+          <div class="v">Resistance trainer</div>
+        </div>
+        <div class="cell">
+          <div class="k">Target</div>
+          <div class="v">Jaw &amp; neck muscles</div>
+        </div>
+        <div class="cell">
+          <div class="k">Form</div>
+          <div class="v">Handheld, compact</div>
+        </div>
+        <div class="cell">
+          <div class="k">Use</div>
+          <div class="v">Short daily sessions</div>
+        </div>
+        <div class="cell">
+          <div class="k">Origin</div>
+          <div class="v">Drop-shipped initially</div>
+        </div>
+        <div class="cell">
+          <div class="k">Future</div>
+          <div class="v">Own hardware later</div>
+        </div>
+      </div>
+
+      <ul class="feats">
+        <li><b>Drop-shipped now.</b> Available immediately — no waiting on our own manufacturing. Real product in your hands.</li>
+        <li><b>Goal: own hardware later.</b> This is the starting point — a real product we can sell today, with a path to designing and manufacturing our own version.</li>
+        <li><b>Jawline focus.</b> The visual target for the looksmaxxing audience: a more defined jawline through muscle training, the same logic as any other resistance work.</li>
+        <li><b>Neck included.</b> Neck muscle training is part of the same profile-improving idea — posture, contour, the whole upper-face region.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ====== THE APPROACH ====== -->
+<section class="sec">
+  <span class="kicker">The approach</span>
+  <h2>Makeup, but actually healthy. And masculine.</h2>
+  <p class="lede">
+    Most &ldquo;men&rsquo;s makeup&rdquo; products are just rebranded cosmetics that happen to come in a
+    masculine package. MARKUP is built from a different premise: if a man is going to use a cosmetic
+    product, it should <b>not feel like a cosmetic</b>, it should <b>not damage his skin or hair</b>, and
+    it should look like he just has better hair — not like he&rsquo;s wearing something.
+  </p>
+
+  <div class="twocol">
+    <div class="block">
+      <h3>Dry, not wet</h3>
+      <p>
+        The gel dries down completely. No wet look, no shine, no &ldquo;I can tell you&rsquo;re wearing
+        product.&rdquo; Once it sets, it&rsquo;s dry — like your hair just happens to look better.
+      </p>
+    </div>
+    <div class="block">
+      <h3>Doesn&rsquo;t rub off</h3>
+      <p>
+        Transfer is the giveaway that kills the whole effect. MARKUP products are built to resist it —
+        on your hands, your collar, your pillow. If it rubs off, it fails the job.
+      </p>
+    </div>
+    <div class="block">
+      <h3>Good for your skin and hair</h3>
+      <p>
+        This is the real differentiator. A product you put on your face and scalp every day should not be
+        sabotaging your skin or hair. The formulation angle is real, not marketing fluff — that&rsquo;s the
+        whole thesis of MARKUP.
+      </p>
+    </div>
+    <div class="block">
+      <h3>Comfort is the point</h3>
+      <p>
+        If you can feel it, something&rsquo;s wrong. The target is &ldquo;you forget it&rsquo;s there&rdquo;
+        — comfortable enough to wear all day without thinking about it. That&rsquo;s the bar.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== TRANSPARENCY ====== -->
+<div class="truth">
+  <div>
+    <div class="lbl">How it starts</div>
+    <div class="body">
+      <b>MARKUP is drop-shipped first.</b> The products come from existing supply chains and get slapped
+      with the MARKUP brand and the clean pitch. Real product, real branding, real-looking page — but not
+      yet our own manufacturing. This is the fastest way to get a real product in front of real customers
+      and start learning what actually sells.
+    </div>
+  </div>
+  <div>
+    <div class="lbl">Where it goes</div>
+    <div class="body">
+      <b>Then it becomes real.</b> Once there&rsquo;s demand and a real sales pitch that works, the goal is
+      to move from drop-shipped to our own formulation and hardware — own the product chain. That&rsquo;s the
+      ALLSEER playbook: start with something that looks and sells like a real company, then build the real
+      thing underneath it.
+    </div>
+  </div>
+</div>
+
+<!-- ====== PRICING ====== -->
+<div class="pricebar">
+  <div>
+    <div class="amt"><span class="cur">$</span>24<span style="font-size:.45em;color:var(--sec);vertical-align:super;margin-left:.12em">.99</span></div>
+    <div class="details">Densifier Gel · <b>any color</b> · one bottle</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="tag">Drop-shipped · ships from existing stock</div>
+</div>
+
+<!-- ====== ROADMAP ====== -->
+<div class="road">
+  <div class="r done">
+    <div class="q">Now</div>
+    <div class="t">Drop-shipping live</div>
+    <div class="d">Products from existing supply, branded as MARKUP, page and pitch fully built.</div>
+  </div>
+  <div class="r">
+    <div class="q">Next</div>
+    <div class="t">Own formulation</div>
+    <div class="d">Build our own gel formula — the actual MARKUP product, not a rebranded drop-ship item.</div>
+  </div>
+  <div class="r">
+    <div class="q">Then</div>
+    <div class="t">Own hardware</div>
+    <div class="d">Design and manufacture our own jaw/neck exerciser — the real MARKUP device.</div>
+  </div>
+  <div class="r">
+    <div class="q">Later</div>
+    <div class="t">More products</div>
+    <div class="d">Expand the line — beard care, skincare, anything in the masculine-grooming / looksmaxxing space that fits.</div>
+  </div>
+</div>
+
+<!-- ====== MARKETING PITCH ====== -->
+<section class="sec">
+  <span class="kicker">Marketing angle</span>
+  <h2>Built for TikTok. Built for the looksmaxxing crowd.</h2>
+  <p class="lede">
+    The audience for this is young men who already watch self-improvement content — the looksmaxxing,
+    grooming, gym, and aesthetic crowd on TikTok and YouTube Shorts. The pitch is simple: <b>look better,
+    fast, without looking like you tried.</b> Short-form video showing the product working is the primary
+    marketing channel. The page you&rsquo;re on is the landing — clean, real-looking, confident.
+  </p>
+</section>
+
+<!-- ====== CHARITY PLEDGE ====== -->
+<div class="pledgebar">
+  <a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>
+  an <b>ALLSEER</b> company<span class="sep">|</span>
+  dropship-first, real products later</a>
+</div>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <span class="mark">PRIMAL<sup>APE</sup></span>
+  <span class="right">MARKUP — a concept draft. Nothing here is final.<br>Part of the ALLSEER SOFTWARE concept-draft library.</span>
+</footer>
+
+<div class="ornament"><span>CONCEPT DRAFT</span></div>
+
+</div>
+
+</body>
+</html>
