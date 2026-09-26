@@ -3,178 +3,202 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MARKUP — Makeup for Men</title>
+<title>MARKUP — Visual Density &amp; Structure Tools</title>
 <link rel="icon" type="image/png" href="assets/angelcorp.png">
-<meta name="description" content="MARKUP — makeup for men. Dry, non-transferable haircolor gel in every color. Dropshipped.">
+<meta name="description" content="MARKUP — dry visual density gel and jaw/neck structure exerciser. Looksmaxxing tools. Cover thinning, build the jaw. Dropship-first.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144;600;9..144;700;9..144;800&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap">
 <style>
   :root{
-    --bg:#120608; --bg2:#1c0a0e; --bg3:#280f13; --bg4:#34151a;
-    --line:#4a2228; --line-acc:rgba(255,107,157,.16);
-    --paper:#fce4ec; --dim:#c9a0b0; --faint:#6b4a52;
-    --pink:#ff6b9d; --pink2:#ff8db5; --pink3:#ffa8c8;
-    --amber:#ffb347;
-    --disp:"Fraunces",system-ui,sans-serif;
-    --body:"Inter",system-ui,sans-serif;
+    --bg:#070708; --bg2:#0f0f11; --bg3:#18181c; --bg4:#222226;
+    --line:#2a2a30; --line-acc:rgba(230,57,70,.16);
+    --paper:#f0ece4; --dim:#9a9185; --faint:#4d4a44;
+    --red:#e63946; --red2:#ff4d5a; --red3:#ff6b78;
+    --ink:#0a0a0c;
+    --disp:"Oswald",system-ui,sans-serif;
+    --body:"Barlow",system-ui,sans-serif;
     --mono:"Space Mono","Consolas",monospace;
     --maxw:1340px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:var(--body);background:var(--bg);color:var(--paper);line-height:1.65;
+  body{font-family:var(--body);background:var(--bg);color:var(--paper);line-height:1.6;
     -webkit-font-smoothing:antialiased;overflow-x:hidden;
     background-image:
-      radial-gradient(900px 500px at 84% -8%, rgba(255,107,157,.09), transparent 62%),
-      radial-gradient(700px 400px at -4% 8%, rgba(180,80,90,.05), transparent 60%)}
+      radial-gradient(900px 500px at 84% -8%, rgba(230,57,70,.07), transparent 62%),
+      radial-gradient(700px 400px at -4% 8%, rgba(20,20,24,.05), transparent 60%)}
   a{color:inherit;text-decoration:none}
-  h1,h2,h3,h4{font-family:var(--disp);text-wrap:balance;line-height:1.1}
+  h1,h2,h3,h4{font-family:var(--disp);text-wrap:balance;line-height:1.05;letter-spacing:.01em}
   .mono{font-family:var(--mono)}
-  ::selection{background:var(--pink);color:#120608}
+  ::selection{background:var(--red);color:#070708}
   ::-webkit-scrollbar{width:12px}::-webkit-scrollbar-track{background:var(--bg2)}
-  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--pink),#a84059);border:3px solid var(--bg2);border-radius:8px}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--red),#7a1a22);border:3px solid var(--bg2);border-radius:8px}
   .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:22px}
-  .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--pink2)}
-  .serif{font-family:var(--disp);font-weight:600}
-  .relaxed{font-family:var(--disp);font-weight:300;letter-spacing:.02em}
+  .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--red2)}
 
-  .nav{position:sticky;top:0;z-index:60;background:rgba(18,6,8,.84);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{position:sticky;top:0;z-index:60;background:rgba(7,7,8,.84);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
   .nav-in{display:flex;align-items:center;gap:18px;height:60px}
   .brand{display:flex;align-items:center;gap:10px}
   .brand img{width:28px;height:28px;object-fit:contain}
-  .brand .wm{font-family:var(--disp);font-weight:700;font-size:18px;letter-spacing:.06em}
-  .brand .wm b{color:var(--pink)}
+  .brand .wm{font-family:var(--disp);font-weight:600;font-size:18px;letter-spacing:.1em;text-transform:uppercase}
+  .brand .wm b{color:var(--red)}
   .navlinks{display:flex;gap:22px;margin-left:auto}
-  .navlinks a{font-size:13px;color:var(--dim);letter-spacing:.02em;transition:color .15s}
+  .navlinks a{font-size:12.5px;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;transition:color .15s}
   .navlinks a:hover{color:var(--paper)}
   .navtools{display:flex;align-items:center;gap:10px;margin-left:auto}
   .pill{background:var(--bg3);border:1px solid var(--line-acc);border-radius:4px;color:var(--paper);
     font-family:var(--mono);font-size:10px;padding:5px 10px;letter-spacing:.08em;text-transform:uppercase}
-  .btn{font-family:var(--disp);font-weight:600;font-size:12.5px;letter-spacing:.03em;padding:10px 18px;border-radius:5px;
-    cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;display:inline-block}
+  .btn{font-family:var(--disp);font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;
+    padding:12px 20px;border-radius:4px;cursor:pointer;border:1px solid transparent;
+    transition:transform .12s,filter .15s;display:inline-block;text-decoration:none}
   .btn:hover{transform:translateY(-1px)}
-  .btn-primary{background:linear-gradient(135deg,var(--pink),var(--pink2));color:#120608}
-  .btn-primary:hover{filter:brightness(1.07)}
+  .btn-primary{background:linear-gradient(135deg,var(--red),var(--red2));color:#070708}
+  .btn-primary:hover{filter:brightness(1.06)}
   .btn-ghost{border-color:var(--line-acc);color:var(--paper)}
-  .btn-ghost:hover{border-color:var(--pink);background:rgba(255,107,157,.05)}
+  .btn-ghost:hover{border-color:var(--red);background:rgba(230,57,70,.05)}
   @media(max-width:860px){.navlinks{display:none}}
 
-  .strip{background:#0c0304;border-bottom:1px solid var(--line)}
+  .strip{background:#050506;border-bottom:1px solid var(--line)}
   .strip .wrap{display:flex;gap:22px;align-items:center;height:26px;font-family:var(--mono);
-    font-size:9px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;overflow:hidden;white-space:nowrap}
+    font-size:9px;letter-spacing:.2em;color:var(--faint);text-transform:uppercase;overflow:hidden;white-space:nowrap}
   .strip .a{color:var(--dim)} .strip .ver{margin-left:auto}
-  .strip .dot{width:5px;height:5px;border-radius:50%;background:var(--pink);animation:pulse 2.5s ease-in-out infinite;flex:none}
-  @keyframes pulse{0%,100%{opacity:.3;box-shadow:0 0 0 0 rgba(255,107,157,.3)}50%{opacity:1;box-shadow:0 0 8px 2px rgba(255,107,157,.15)}}
+  .strip .dot{width:5px;height:5px;border-radius:50%;background:var(--red);animation:pulse 2.5s ease-in-out infinite;flex:none}
+  @keyframes pulse{0%,100%{opacity:.3;box-shadow:0 0 0 0 rgba(230,57,70,.3)}50%{opacity:1;box-shadow:0 0 8px 2px rgba(230,57,70,.15)}}
 
-  .hero{position:relative;padding-block:clamp(38px,5.5vw,60px)}
-  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:.92fr 1.08fr;gap:40px;align-items:center}
-  @media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:28px}}
-  .hero h1{font-weight:800;font-size:clamp(2.8rem,7vw,5rem);margin:16px 0 0;letter-spacing:-.03em}
-  .hero h1 .h1soft{font-weight:300;letter-spacing:.02em}
-  .hero .sub{font-size:clamp(.98rem,1.6vw,1.16rem);color:#e6d0d6;max-width:50ch;margin-top:18px;font-family:var(--body);font-weight:300}
-  .hero .sub em{color:var(--pink);font-style:normal;font-weight:600}
-  .hero .cta{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
-  .hero .meta{display:flex;gap:18px;margin-top:22px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--dim)}
-  .hero .meta span{display:flex;align-items:center;gap:7px}
-  .hero .meta i{width:5px;height:5px;background:var(--pink);transform:rotate(45deg);flex:none}
+  .hero{position:relative;padding-block:clamp(36px,5vw,56px)}
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:.88fr 1.12fr;gap:38px;align-items:center}
+  @media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:26px}}
+  .hero h1{font-weight:700;font-size:clamp(3rem,7.5vw,5.4rem);margin:14px 0 0;text-transform:uppercase;letter-spacing:-.01em}
+  .hero .sub{font-size:clamp(.95rem,1.5vw,1.1rem);color:#c8c0b0;max-width:48ch;margin-top:16px;font-weight:300}
+  .hero .sub em{color:var(--paper);font-style:normal;font-weight:500}
+  .hero .cta{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  .hero .meta{display:flex;gap:16px;margin-top:20px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--dim)}
+  .hero .meta span{display:flex;align-items:center;gap:6px}
+  .hero .meta i{width:4px;height:4px;background:var(--red);transform:rotate(45deg);flex:none}
   .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
     background-image:
-      linear-gradient(rgba(255,107,157,.05) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(255,107,157,.05) 1px,transparent 1px);
+      linear-gradient(rgba(230,57,70,.04) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(230,57,70,.04) 1px,transparent 1px);
     background-size:40px 40px;
     -webkit-mask-image:radial-gradient(130% 92% at 74% 6%,#000 0 34%,transparent 78%);
             mask-image:radial-gradient(130% 92% at 74% 6%,#000 0 34%,transparent 78%)}
   .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:100px;z-index:0;pointer-events:none;
     background:linear-gradient(180deg,transparent,var(--bg))}
 
-  /* product grid - editorial color swatches */
-  .prodgrid{margin-top:20px}
-  .prodgrid .pg-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
-  .pg-swatches{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
-  @media(max-width:760px){.pg-swatches{grid-template-columns:repeat(4,1fr)}}
-  .swatch{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px;background:var(--bg2);
-    border:1px solid var(--line);border-radius:6px;text-align:center}
-  .swatch .circle{width:44px;height:44px;border-radius:50%;margin-bottom:4px;box-shadow:0 2px 8px rgba(0,0,0,.3);
-    border:2px solid rgba(255,255,255,.08)}
-  .swatch .name{font-family:var(--body);font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;color:var(--dim)}
-  .swatch.black .circle{background:#1a1a1a;border-color:#333}
-  .swatch.black .name{color:#e8e0d0}
-  .swatch.red .circle{background:#d13a2a}
-  .swatch.brown .circle{background:#5c3418}
-  .swatch.blonde .circle{background:#c9a030}
-  .swatch.grey .circle{background:#7a7a7a}
-  .swatch.gold .circle{background:#b8860b}
-  .swatch.blue .circle{background:#2a4a7a}
-  .swatch.green .circle{background:#2d5a3a}
+  /* tier list */
+  .tiervis{margin-top:22px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg2)}
+  .tiervis .tv-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);padding:12px 16px 0}
+  .tiertrow{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .tiercell{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start}
+  .tiercell:last-child{border-bottom:0}
+  .tiercell .tlabel{font-family:var(--mono);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;width:70px;flex:none;padding-top:2px}
+  .tiercell .tlabel.s-tier{color:var(--red2)}
+  .tiercell .tlabel.f-tier{color:var(--faint)}
+  .tiercell .tcontent{font-size:.86rem;line-height:1.45}
+  .tiercell .tcontent b{font-weight:600}
+  .tiercell.f-tier .tcontent{color:var(--dim)}
 
-  /* editorial feature blocks */
-  .editorial{margin-top:24px;border-top:1px solid var(--line)}
-  .editorial .e-row{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;padding-block:22px}
-  @media(max-width:640px){.editorial .e-row{grid-template-columns:1fr}}
-  .editorial .e-aside{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);
-    text-align:right;min-width:90px;white-space:nowrap}
-  .editorial .e-head{font-family:var(--disp);font-weight:800;font-size:1.5rem;line-height:1.15;margin-bottom:8px;
-    max-width:68ch}
-  .editorial .e-body{color:var(--dim);font-size:.92rem;line-height:1.65;max-width:60ch;font-weight:300}
-  .editorial .e-body em{color:var(--paper);font-style:normal;font-weight:500}
-  .editorial .e-body .big{font-family:var(--disp);font-weight:800;font-size:1.1rem;color:var(--paper);display:block;margin:6px 0}
+  /* product tube - CSS art */
+  .tubecard{margin-top:22px;border:1px solid var(--line);border-left:3px solid var(--red);border-radius:8px;
+    padding:0;background:var(--bg2);position:relative;overflow:hidden}
+  .tubecard::before{content:"";position:absolute;top:0;right:0;width:140px;height:140px;
+    background:radial-gradient(circle at top right,rgba(230,57,70,.07),transparent 70%);pointer-events:none}
+  .tube-art{display:flex;align-items:center;gap:28px;padding:24px;border-bottom:1px solid var(--line)}
+  .tube-art .tube{flex:none;width:78px}
+  .tube-art .tube .cap{width:78px;height:14px;background:var(--bg3);border:1px solid var(--line);border-radius:2px 2px 0 0}
+  .tube-art .tube .body{position:relative;width:60px;height:120px;margin:-2px auto 0;background:linear-gradient(180deg,#1a1a1e,#0d0d0f);
+    border:1px solid var(--line);border-top:none;border-radius:0 0 6px 6px;
+    box-shadow:0 4px 12px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.04)}
+  .tube-art .tube .body::before{content:"";position:absolute;inset:8px 10px;
+    background:radial-gradient(ellipse at center,var(--red) 0 18%,transparent 62%);
+    border-radius:50%;filter:brightness(.85)}
+  .tube-art .tube .body .label{position:absolute;bottom:18px;left:0;right:0;text-align:center;
+    font-family:var(--mono);font-size:.5rem;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+  .tube-art .tube-info h3{font-size:1.2rem;font-weight:700;margin-bottom:6px}
+  .tube-art .tube-info p{color:var(--dim);font-size:.86rem;line-height:1.5;font-weight:300}
+  .tube-art .tube-info .flags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+  .tube-art .tube-info .flag{font-family:var(--mono);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;
+    padding:2px 7px;border-radius:2px;border:1px solid var(--line-acc);color:var(--red2);background:rgba(230,57,70,.06)}
+  .tube-body{padding:18px 24px 20px}
+  .tube-body p{color:var(--dim);font-size:.88rem;line-height:1.55;font-weight:300}
+  .tube-body b{color:var(--paper);font-weight:600}
+  .tube-body .bigq{font-family:var(--disp);font-weight:700;font-size:1.1rem;color:var(--paper);display:block;margin:8px 0}
 
-  /* product detail card */
-  .prodcard{margin-top:18px;border:1px solid var(--line);border-left:3px solid var(--pink);border-radius:8px;
+  /* jaw before/after */
+  .jawrow{margin-top:22px;border-top:1px solid var(--line)}
+  .jawrow .jr-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);padding:14px 0 0}
+  .jawpair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+  @media(max-width:560px){.jawpair{grid-template-columns:1fr}}
+  .jawcard{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg2)}
+  .jawcard .jc-head{padding:10px 14px;background:var(--bg3);display:flex;justify-content:space-between;align-items:center}
+  .jawcard .jc-head .jc-label{font-family:var(--mono);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .jawcard .jc-head .jc-stamp{font-family:var(--mono);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;
+    padding:2px 7px;border-radius:2px;border:1px solid var(--line-acc);color:var(--dim)}
+  .jawcard .jc-head .jc-stamp.watch{border-color:var(--red);color:var(--red2)}
+  .jawcard .jc-art{aspect-ratio:1/1;background:
+    radial-gradient(circle at 50% 45%, #1a1a20 0 32%, transparent 50%),
+    linear-gradient(180deg,var(--bg3) 0%,var(--bg2) 100%);
+    position:relative;overflow:hidden;margin-top:12px}
+  .jawcard .jc-art .jawline{position:absolute;inset:0;pointer-events:none}
+  .jawcard .jc-art .jawline svg{width:100%;height:100%;display:block}
+  .jawcard .jc-foot{padding:10px 14px;font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--faint);display:flex;justify-content:space-between;align-items:center}
+
+  /* color range grid */
+  .crgrid{margin-top:22px}
+  .crgrid .cr-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+  .crgrid .cr-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+  .crgrid .cr-head h3{font-size:1.05rem;font-weight:700}
+  .crgrid .cr-head .cr-sub{color:var(--dim);font-size:.8rem;font-weight:300}
+  .crswatches{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+  @media(max-width:600px){.crswatches{grid-template-columns:repeat(3,1fr)}}
+  .crswatch{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px;border:1px solid var(--line);
+    border-radius:6px;background:var(--bg2);text-align:center}
+  .crswatch .cs-circle{width:36px;height:36px;border-radius:50%;margin-bottom:2px;
+    box-shadow:0 2px 6px rgba(0,0,0,.3),inset 0 0 0 1px rgba(255,255,255,.06)}
+  .crswatch .cs-name{font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+  .crswatch.black .cs-circle{background:#141414}
+  .crswatch.matte .cs-circle{background:#3a3a3a}
+  .crswatch.black .cs-name,.crswatch.matte .cs-name{color:#d8d0c0}
+  .crswatch.red .cs-circle{background:#8a2020}
+  .crswatch.brown .cs-circle{background:#4a2a14}
+  .crswatch.grey .cs-circle{background:#5a5a5a}
+  .crswatch.green .cs-circle{background:#2a3a2a}
+  .crswatch.blonde .cs-circle{background:#a08030}
+
+  /* motive block */
+  .motive{margin-top:24px;border:1px solid var(--line);border-left:3px solid var(--red);border-radius:8px;
     padding:22px;background:var(--bg2);position:relative;overflow:hidden}
-  .prodcard::before{content:"";position:absolute;top:0;right:0;width:120px;height:120px;
-    background:radial-gradient(circle at top right,rgba(255,107,157,.08),transparent 70%);pointer-events:none}
-  .prodcard .pc-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);margin-bottom:6px}
-  .prodcard h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
-  .prodcard p{color:var(--dim);font-size:.88rem;line-height:1.55;font-weight:300}
-  .prodcard p b{color:var(--paper);font-weight:600}
-  .prodcard .pc-tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
-  .prodcard .pc-tag{font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;
-    padding:2px 8px;border-radius:3px;border:1px solid var(--line-acc);color:var(--pink2);background:rgba(255,107,157,.06)}
-  .prodcard .pc-cta{margin-top:12px;display:inline-flex;align-items:center;gap:6px;font-family:var(--disp);
-    font-size:.78rem;letter-spacing:.06em;color:var(--pink);font-weight:600;border-bottom:1px solid var(--pink);padding-bottom:2px}
+  .motive::before{content:"";position:absolute;top:0;right:0;width:120px;height:120px;
+    background:radial-gradient(circle at top right,rgba(230,57,70,.06),transparent 70%);pointer-events:none}
+  .motive .m-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--red2);margin-bottom:8px}
+  .motive h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
+  .motive p{color:var(--dim);font-size:.88rem;line-height:1.55;font-weight:300}
+  .motive p b{color:var(--paper);font-weight:600}
 
   /* stats */
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:22px}
   @media(max-width:500px){.stats{grid-template-columns:1fr}}
-  .stats .c{padding:18px 14px;text-align:center;background:var(--bg2)}
-  .stats .n{font-family:var(--disp);font-weight:800;font-size:1.8rem;line-height:1;font-variant-numeric:tabular-nums}
-  .stats .n.p{color:var(--pink)} .stats .n.w{color:var(--paper);font-weight:300;font-size:1.3rem}
-  .stats .l{font-family:var(--mono);font-size:.62rem;color:var(--faint);letter-spacing:.12em;text-transform:uppercase;margin-top:5px}
+  .stats .c{padding:16px 14px;text-align:center;background:var(--bg2)}
+  .stats .n{font-family:var(--disp);font-weight:700;font-size:1.7rem;line-height:1;text-transform:uppercase;font-variant-numeric:tabular-nums}
+  .stats .n.r{color:var(--red)} .stats .n.w{color:var(--paper);font-weight:400;font-size:1.1rem}
+  .stats .l{font-family:var(--mono);font-size:.6rem;color:var(--faint);letter-spacing:.12em;text-transform:uppercase;margin-top:4px}
 
-  /* vsl demo - fake video preview frame */
-  .vslframe{margin-top:20px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg2);
-    position:relative;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}
-  .vslframe::before{content:"";position:absolute;inset:0;background:
-    linear-gradient(135deg,rgba(255,107,157,.12),rgba(0,0,0,.4));
-    pointer-events:none}
-  .vslframe .vsl-inner{position:relative;text-align:center;z-index:1}
-  .vslframe .vsl-play{width:56px;height:56px;border-radius:50%;background:rgba(255,107,157,.85);
-    border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;
-    transition:transform .15s,background .2s}
-  .vslframe .vsl-play:hover{transform:scale(1.08);background:var(--pink)}
-  .vslframe .vsl-play i{font-family:var(--disp);color:#fff;font-size:1.3rem;font-style:normal;margin-left:2px}
-  .vslframe .vsl-label{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:var(--dim);
-    font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;z-index:1;
-    text-shadow:0 1px 4px rgba(0,0,0,.6)}
-  .vslframe .vsl-bar{position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--line)}
-  .vslframe .vsl-bar i{display:block;height:100%;background:var(--pink);width:38%;border-radius:0 2px 2px 0}
-
-  .pl-edge{border-top:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.028);padding:14px 22px;text-align:center;font-size:.84rem;line-height:1.6}
-  .pl-edge a{display:inline-block;color:inherit;opacity:.82;transition:opacity .15s}
+  .pl-edge{border-top:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.022);padding:12px 22px;text-align:center;font-size:.8rem;line-height:1.6}
+  .pl-edge a{display:inline-block;color:inherit;opacity:.8;transition:opacity .15s}
   .pl-edge a:hover{opacity:1}
-  .pl-edge b{color:#ffd86a;font-weight:700}
-  .pl-edge .sep{opacity:.35;margin:0 .55em}
-  footer{border-top:1px solid var(--line);padding-block:30px}
+  .pl-edge b{color:#ff7080;font-weight:700;font-family:var(--disp);text-transform:uppercase;letter-spacing:.04em}
+  .pl-edge .sep{opacity:.3;margin:0 .5em}
+  footer{border-top:1px solid var(--line);padding-block:26px}
   .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-  .foot .l{display:flex;align-items:center;gap:11px}
-  .foot .l img{width:24px;height:24px;object-fit:contain}
-  .foot .l .x{font-family:var(--mono);font-size:11px;color:var(--dim);line-height:1.4}
-  .foot .l .x b{font-family:var(--disp);color:var(--paper);letter-spacing:.06em;font-size:.95rem}
-  .foot .r{font-family:var(--mono);font-size:10.5px;color:var(--faint);text-align:right}
-  .pmark{font-family:var(--disp);font-weight:700;color:var(--dim)}
-  .pmark sup{font-size:.62em;vertical-align:super;margin-left:.06em}
+  .foot .l{display:flex;align-items:center;gap:10px}
+  .foot .l img{width:22px;height:22px;object-fit:contain}
+  .foot .l .x{font-family:var(--mono);font-size:10.5px;color:var(--dim);line-height:1.4;text-transform:uppercase;letter-spacing:.06em}
+  .foot .l .x b{font-family:var(--disp);color:var(--paper);font-size:.9rem;letter-spacing:.08em}
+  .foot .r{font-family:var(--mono);font-size:10px;color:var(--faint);text-align:right;letter-spacing:.06em}
+  .pmark{font-family:var(--disp);font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+  .pmark sup{font-size:.62em;vertical-align:super;margin-left:.04em}
 </style>
 </head>
 <body>
@@ -186,22 +210,22 @@
       <span class="wm">ALLSEER <b>SOFTWARE</b></span>
     </a>
     <div class="navlinks">
-      <a href="#product">The Product</a>
-      <a href="#why">Why It Works</a>
-      <a href="#shop">Shop Colors</a>
+      <a href="#density">Density Gel</a>
+      <a href="#structure">Structure Exerciser</a>
+      <a href="#tiers">The Gap</a>
     </div>
     <div class="navtools">
-      <span class="pill">Men's Grooming · Dropship</span>
-      <a href="#product" class="btn btn-primary">See The Product</a>
+      <span class="pill">Looksmaxxing · Dropship</span>
+      <a href="#density" class="btn btn-primary">See The Tools</a>
     </div>
   </div>
 </nav>
 
 <div class="strip">
   <div class="wrap">
-    <span class="a">MARKUP // MAKEUP FOR MEN — DROPSIP FIRST</span>
+    <span class="a">MARKUP // VISUAL DENSITY &amp; STRUCTURE — DROPSIP FIRST</span>
     <span class="dot"></span>
-    <span class="ver">DRY · NON-TRANSFERABLE · ALL COLORS</span>
+    <span class="ver">DRY GEL · NON-TRANSFERABLE · STRUCTURE EXERCISER</span>
   </div>
 </div>
 
@@ -210,50 +234,178 @@
     <div>
       <span class="eyebrow">A Division of ALLSEER SOFTWARE</span>
       <h1>MARKUP</h1>
-      <p class="sub"><b style="font-family:var(--disp);font-weight:800;color:var(--paper);display:block;margin-bottom:6px;font-size:1.1rem">Makeup for men.</b><br>
-      Dry, <em>non-transferable</em> haircolor gel in <b>every color</b>. Comfortable on skin and hair. <em>Beneficial.</em> Black for hairloss and thin spots. Makeup — <b>but healthy.</b></p>
+      <p class="sub">Dry visual density gel — covers what you don't want seen, <em>in every color</em>.<br>
+      Jaw and neck structure exerciser — build the mandible you didn't have.<br>
+      <em>For the guys who actually care about the mirror.</em></p>
       <div class="cta">
-        <a href="#product" class="btn btn-primary">See The Product</a>
-        <a href="#shop" class="btn btn-ghost">All Colors</a>
+        <a href="#density" class="btn btn-primary">See The Tools</a>
+        <a href="#tiers" class="btn btn-ghost">The Gap Between You and Them</a>
       </div>
       <div class="meta">
-        <span><i></i>Dry formula — never wet</span>
-        <span><i></i>Non-transferable — won't rub off</span>
-        <span><i></i>Comfortable — skin &amp; hair</span>
-        <span><i></i>Black for hairloss &amp; thin spots</span>
+        <span><i></i>Visual density gel — dry, never wet</span>
+        <span><i></i>Non-transferable — won't rub off all day</span>
+        <span><i></i>Black for hair loss &amp; thin spots</span>
+        <span><i></i>Structure exerciser — jaw &amp; neck</span>
+        <span><i></i>Long-term — hair, skin, structure</span>
         <span><i></i>Dropship-first</span>
       </div>
     </div>
     <div>
       <div style="display:flex;flex-direction:column;gap:14px">
-        <div class="vslframe">
-          <div class="vsl-inner">
-            <div class="vsl-play"><i>▶</i></div>
+        <div class="tubecard">
+          <div class="tube-art">
+            <div class="tube">
+              <div class="cap"></div>
+              <div class="body"><div class="label">MK-01</div></div>
+            </div>
+            <div class="tube-info">
+              <h3>Visual Density Gel — MK-01</h3>
+              <p>Dry, non-transferable. Covers thinning, fills the gaps, doesn't show. Black is the flagship — for hair loss and thin spots you want gone. Applies dry. Stays dry. Doesn't transfer to your pillow, your collar, your hands. <b>Beneficial</b> to hair and skin — it's not sitting on you as a cosmetic, it's doing something.</p>
+              <div class="flags">
+                <span class="flag">Dry Formula</span>
+                <span class="flag">All Colors</span>
+                <span class="flag">Non-Transferable</span>
+                <span class="flag">Hair-Safe</span>
+              </div>
+            </div>
           </div>
-          <div class="vsl-label">The MARKUP VSL — Watch the pitch</div>
-          <div class="vsl-bar"><i></i></div>
         </div>
-        <div class="prodcard" style="border-left-color:var(--pink2)">
-          <div class="pc-label">The Flagship Product</div>
-          <h3>Haircolor Gel — All Colors</h3>
-          <p>Dry, non-transferable haircolor gel in <b>every color</b>. Black for hairloss and thin spots — covers what you don't want seen. Comfortable on skin, comfortable on hair. <b>Beneficial</b> to both. The formula is <b>dry</b>, not wet — it won't run, won't smear, won't transfer to anything you touch.</p>
-          <div class="pc-tags">
-            <span class="pc-tag">Dry Formula</span>
-            <span class="pc-tag">All Colors</span>
-            <span class="pc-tag">Non-Transferable</span>
-            <span class="pc-tag">Skin &amp; Hair</span>
+        <div class="tubecard" style="border-left-color:var(--red2)">
+          <div class="tube-art">
+            <div class="tube" style="transform:scale(.85)">
+              <div class="cap" style="width:62px;height:11px"></div>
+              <div class="body" style="width:48px;height:96px;margin-top:-2px"><div class="label" style="font-size:.42rem;bottom:14px">SJ-02</div></div>
+            </div>
+            <div class="tube-info">
+              <h3>Jaw &amp; Neck Structure Exerciser — SJ-02</h3>
+              <p>Resistance exerciser for the jaw and neck — the areas that actually determine your face. Build the mandible. Define the jawline. Everything else in this market is bullshit; this is mechanical work on the structure that matters. Dropshipped. Works.</p>
+              <div class="flags">
+                <span class="flag">Resistance Train</span>
+                <span class="flag">Jaw &amp; Neck</span>
+                <span class="flag">Structural</span>
+                <span class="flag">Dropshipped</span>
+              </div>
+            </div>
           </div>
-          <span class="pc-cta" href="#shop">→ Shop the full color range</span>
         </div>
       </div>
     </div>
   </div>
 </header>
 
-<section class="band" id="product" style="border-top:1px solid var(--line)">
+<section class="band" id="density" style="border-top:1px solid var(--line)">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow">The Product</span>
-      <h2 class="serif" style="font-size:clamp(1.6rem,3.5vw,2.4rem)">Haircolor gel. Dry. Every color. Beneficial.</h2>
+      <span class="eyebrow">The Tool</span>
+      <h2 style="font-size:clamp(1.7rem,4vw,2.6rem)">Visual density gel. Dry. Every color.</h2>
     </div>
-    <div class="edito...[truncated]
+    <p style="color:var(--dim);font-size:.9rem;max-width:60ch;font-weight:300;margin-bottom:8px">Most guys walk around with thinning they don't have to. Hair loss creeping in, thin spots, gaps that didn't used to be there. MARKUP covers it — dry, invisible, non-transferable. You put it on, it stays, nobody knows.</p>
+    <p style="color:var(--dim);font-size:.9rem;max-width:60ch;font-weight:300">Black is the flagship. For hair loss and thin spots — the thing most guys actually care about hiding. Every color available. This isn't makeup. This is <b style="color:var(--paper)">visual density correction</b> — you look like you, just without the thinning showing.</p>
+  </div>
+</section>
+
+<section class="band" id="structure" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">The Second Tool</span>
+      <h2 style="font-size:clamp(1.7rem,4vw,2.6rem)">Jaw &amp; neck structure exerciser.</h2>
+    </div>
+    <p style="color:var(--dim);font-size:.9rem;max-width:60ch;font-weight:300;margin-bottom:8px">Your face's value is set by your jawline and the structure underneath — the mandible, the neck. Everything else is secondary. MARKUP's structure exerciser is mechanical resistance work on those areas. Not a gadget. Not a gimmick. Resistance.</p>
+    <p style="color:var(--dim);font-size:.9rem;max-width:60ch;font-weight:300">Dropshipped. The market is full of bullshit beauty crap for men that never does anything. This one is engineered to actually train the structure that determines your face. Use it. Build the jaw you didn't have.</p>
+
+    <div class="jawrow">
+      <div class="jr-label">Before / After — Structure Work</div>
+      <div class="jawpair">
+        <div class="jawcard">
+          <div class="jc-head"><span class="jc-label">Baseline · Without</span><span class="jc-stamp">0 Weeks</span></div>
+          <div class="jc-art"><svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
+            <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a1a20"/><stop offset="1" stop-color="#0d0d10"/></linearGradient></defs>
+            <rect width="200" height="200" fill="url(#bg)"/>
+            <!-- soft, undefined jaw -->
+            <path d="M50,80 Q60,100 70,110 Q80,118 100,120 Q120,118 130,110 Q140,100 150,80 Q155,70 150,60 Q140,50 120,48 Q100,46 80,48 Q60,50 50,60 Z" fill="none" stroke="#2a2a30" stroke-width="2"/>
+            <path d="M60,85 Q70,98 82,108 Q95,114 100,115 Q105,114 118,108 Q130,98 140,85" fill="none" stroke="#3a3a40" stroke-width="1.5" opacity=".5"/>
+          </svg></div>
+          <div class="jc-foot"><span>Soft · Undefined</span><span class="watch" style="color:var(--dim)">Baseline</span></div>
+        </div>
+        <div class="jawcard">
+          <div class="jc-head"><span class="jc-label">After · With SJ-02</span><span class="jc-stamp watch">8+ Weeks</span></div>
+          <div class="jc-art"><svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
+            <defs><linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c1c22"/><stop offset="1" stop-color="#0e0e12"/></linearGradient></defs>
+            <rect width="200" height="200" fill="url(#bg2)"/>
+            <!-- defined, angular jaw -->
+            <path d="M45,75 Q55,95 68,108 Q82,118 100,120 Q118,118 132,108 Q145,95 155,75 Q160,65 152,55 Q140,46 120,44 Q100,42 80,44 Q60,46 48,55 Z" fill="none" stroke="#c4394a" stroke-width="2.5"/>
+            <path d="M58,82 Q70,96 85,108 Q98,115 100,116 Q102,115 115,108 Q130,96 142,82" fill="none" stroke="#e63946" stroke-width="2" opacity=".7"/>
+            <path d="M45,75 Q55,95 68,108" fill="none" stroke="#ff6b78" stroke-width="1" opacity=".4"/>
+          </svg></div>
+          <div class="jc-foot"><span>Defined · Angular</span><span style="color:var(--red2)">After Structure Work</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="tiers" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">The Gap</span>
+      <h2 style="font-size:clamp(1.7rem,4vw,2.6rem)">Most guys accept average. Not you.</h2>
+    </div>
+    <p style="color:var(--dim);font-size:.9rem;max-width:60ch;font-weight:300;margin-bottom:18px">The market is full of beauty crap for men that doesn't do anything — it's just rebranded makeup with a masculine label slapped on. MARKUP isn't that. This is density correction and structure work — real tools for the guys who actually optimize.</p>
+    <div class="tiervis">
+      <div class="tv-label">Tier List — What You're Working With</div>
+      <div class="tiertrow">
+        <div class="tiercell">
+          <div class="tlabel s-tier">S-Tier</div>
+          <div class="tcontent"><b>MARKUP tools.</b> Visual density gel to cover thinning, structure exerciser to build the jaw. Dry, non-transferable, dropshipped. Long-term — improves hair, skin, structure. This is the gap between you and the guys who just accept what they have.</div>
+        </div>
+        <div class="tiercell">
+          <div class="tlabel s-tier">A-Tier</div>
+          <div class="tcontent">Density work alone — covers the thinning without the structure. Gets the visual density, misses the jaw. Better than nothing, incomplete.</div>
+        </div>
+        <div class="tiercell">
+          <div class="tlabel f-tier">Bottom Tier</div>
+          <div class="tcontent"><b>Rebranded makeup.</b> Beauty products for men with a masculine label. Doesn't do anything real — just looks feminine and calls it something else. Most of what's out there. Don't be this guy.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="crgrid" style="margin-top:22px">
+      <div class="cr-label">Coverage Colors — All Available</div>
+      <div class="cr-head">
+        <h3>Every color. Pick what covers yours.</h3>
+        <div class="cr-sub">Dry formula · non-transferable · all colors available for dropship</div>
+      </div>
+      <div class="crswatches">
+        <div class="crswatch black"><div class="cs-circle"></div><div class="cs-name">Black · Hair Loss</div></div>
+        <div class="crswatch matte"><div class="cs-circle"></div><div class="cs-name">Matte Grey</div></div>
+        <div class="crswatch red"><div class="cs-circle"></div><div class="cs-name">Dark Red</div></div>
+        <div class="crswatch brown"><div class="cs-circle"></div><div class="cs-name">Brown</div></div>
+        <div class="crswatch grey"><div class="cs-circle"></div><div class="cs-name">Grey</div></div>
+        <div class="crswatch green"><div class="cs-circle"></div><div class="cs-name">Dark Green</div></div>
+      </div>
+    </div>
+
+    <div class="motive">
+      <div class="m-label">The Motive</div>
+      <h3>You either optimize or you accept what you have.</h3>
+      <p>Most guys accept average. They let the thinning show, let the jaw stay soft, settle for what they're given. MARKUP is for the guys who don't. Visual density gel to cover what you don't want seen. Structure exerciser to build the mandible. Long-term — it improves your hair, your skin, your structure. Not a cosmetic that sits on you. A tool that makes you better.</p>
+    </div>
+
+    <div class="stats">
+      <div class="c"><div class="n r">Dry</div><div class="l">Never Wet</div></div>
+      <div class="c"><div class="n w" style="font-weight:600">Non-Transferable</div><div class="l">Won't Rub Off</div></div>
+      <div class="c"><div class="n r">Dropship</div><div class="l">First Strategy</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="pl-edge"><a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>an <b>ALLSEER</b> company</a></div>
+<footer>
+  <div class="wrap foot">
+    <div class="l"><img src="assets/angelcorp.png" alt=""><div class="x"><b>MARKUP</b><br>Visual density &amp; structure tools · concept draft</div></div>
+    <div class="r"><span class="pmark">PRIMAL<sup>APE</sup></span> · under ALLSEER SOFTWARE</div>
+  </div>
+</footer>
+
+</body>
+</html>
