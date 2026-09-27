@@ -456,7 +456,7 @@
 (function(){
   var b=document.getElementById('nbThemeBtn');
   var root=document.body;
-  var current=root.getAttribute('data-theme')||'n...[truncated]
+  var current=root.getAttribute('data-theme')||'nb-light';
   b.setAttribute('aria-pressed',current==='nb-red'?'true':'false');
   b.addEventListener('click',function(){
     var next=(current==='nb-light')?'nb-red':'nb-light';
