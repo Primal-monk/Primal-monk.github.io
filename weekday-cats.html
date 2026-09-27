@@ -187,12 +187,13 @@
   body[data-theme="tac-light"] .band-head p{color:var(--faint)}
 
   /* ══ DAY GRID — TACTICAL ══ */
-  .daygrid{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
-  @media(max-width:980px){.daygrid{grid-template-columns:repeat(4,1fr)}}
-  @media(max-width:540px){.daygrid{grid-template-columns:repeat(2,1fr)}}
-  .daycard{border:1px solid var(--line);border-radius:16px;padding:16px 10px;
+  /* 4 across, so 7 cards wrap into a 4-then-3 pair of rows — fewer, wider
+     columns than the old 7-across row, which is what let the icons grow */
+  .daygrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  @media(max-width:760px){.daygrid{grid-template-columns:repeat(2,1fr)}}
+  .daycard{border:1px solid var(--line);border-radius:16px;padding:18px 12px;
     background:var(--bg2);text-align:center;display:flex;flex-direction:column;
-    align-items:center;gap:8px;transition:all .15s;position:relative;overflow:hidden;
+    align-items:center;gap:10px;transition:all .15s;position:relative;overflow:hidden;
     box-shadow:0 2px 6px rgba(0,0,0,.3) inset}
   .daycard:hover{border-color:var(--green);box-shadow:0 0 0 1px var(--green) inset,
     0 6px 18px -6px rgba(90,140,70,.2);transform:translateY(-2px)}
@@ -200,7 +201,7 @@
   /* boxed, not circle-cropped — and the img rule below (width/height/object-fit)
      was missing before, which is why every icon rendered at native size and
      showed only a tiny corner of the photo inside this small frame */
-  .daycard .day-icon-wrap{position:relative;width:98px;height:98px;border-radius:14px;
+  .daycard .day-icon-wrap{position:relative;width:100%;aspect-ratio:1/1;border-radius:14px;
     overflow:hidden;border:2px solid var(--line);background:var(--bg3);
     display:flex;align-items:center;justify-content:center;
     box-shadow:0 0 0 1px rgba(90,140,70,.08) inset}
@@ -218,8 +219,8 @@
   /* was color:var(--bg) — the light background colour used as text colour,
      making the day name nearly invisible on the light-theme card */
   body[data-theme="tac-light"] .daycard .dayname{color:var(--paper)}
-  .daycard .daydesc{font-size:.64rem;color:var(--steel);font-weight:400;
-    line-height:1.35;max-width:100px;margin-top:2px}
+  .daycard .daydesc{font-size:.72rem;color:var(--steel);font-weight:400;
+    line-height:1.4;max-width:22ch;margin-top:2px}
   body[data-theme="tac-light"] .daycard .daydesc{color:var(--faint)}
   .daycard .unit-stamp{position:absolute;top:6px;right:6px;font-family:var(--mono);
     font-size:7px;letter-spacing:.1em;color:var(--green);border:1px solid var(--green);
