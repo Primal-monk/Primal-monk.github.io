@@ -380,37 +380,6 @@
     .tiertrow{grid-template-columns:1fr}
   }
 </style>
-<script>
-(function(){
-  var t=document.documentElement.getAttribute('data-theme')||'light';
-  var f=document.documentElement.getAttribute('data-font')||'playfair';
-  function applyTheme(theme){
-    document.documentElement.setAttribute('data-theme',theme);
-    try{localStorage.setItem('markup-theme',theme);}catch(e){}
-  }
-  function applyFont(font){
-    document.documentElement.setAttribute('data-font',font);
-    try{localStorage.setItem('markup-font',font);}catch(e){}
-  }
-  try{var st=localStorage.getItem('markup-theme');if(st&&['light','dark','pink'].indexOf(st)>=0)t=st;}catch(e){}
-  try{var sf=localStorage.getItem('markup-font');if(sf&&['playfair','rye','barlow','oswald'].indexOf(sf)>=0)f=sf;}catch(e){}
-  applyTheme(t); applyFont(f);
-  document.querySelectorAll('[data-theme-btn]').forEach(function(b){
-    b.addEventListener('click',function(){
-      var val=b.getAttribute('data-theme-btn');
-      applyTheme(val);
-      document.querySelectorAll('[data-theme-btn]').forEach(function(x){x.classList.toggle('active',x===b);});
-    });
-  });
-  document.querySelectorAll('[data-font-btn]').forEach(function(b){
-    b.addEventListener('click',function(){
-      var val=b.getAttribute('data-font-btn');
-      applyFont(val);
-      document.querySelectorAll('[data-font-btn]').forEach(function(x){x.classList.toggle('active',x===b);});
-    });
-  });
-})();
-</script>
 </head>
 <body>
 
@@ -721,5 +690,36 @@
   </div>
 </footer>
 
+<script>
+(function(){
+  var t=document.documentElement.getAttribute('data-theme')||'light';
+  var f=document.documentElement.getAttribute('data-font')||'playfair';
+  function applyTheme(theme){
+    document.documentElement.setAttribute('data-theme',theme);
+    try{localStorage.setItem('markup-theme',theme);}catch(e){}
+  }
+  function applyFont(font){
+    document.documentElement.setAttribute('data-font',font);
+    try{localStorage.setItem('markup-font',font);}catch(e){}
+  }
+  try{var st=localStorage.getItem('markup-theme');if(st&&['light','dark','pink'].indexOf(st)>=0)t=st;}catch(e){}
+  try{var sf=localStorage.getItem('markup-font');if(sf&&['playfair','rye','barlow','oswald'].indexOf(sf)>=0)f=sf;}catch(e){}
+  applyTheme(t); applyFont(f);
+  document.querySelectorAll('[data-theme-btn]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var val=b.getAttribute('data-theme-btn');
+      applyTheme(val);
+      document.querySelectorAll('[data-theme-btn]').forEach(function(x){x.classList.toggle('active',x===b);});
+    });
+  });
+  document.querySelectorAll('[data-font-btn]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var val=b.getAttribute('data-font-btn');
+      applyFont(val);
+      document.querySelectorAll('[data-font-btn]').forEach(function(x){x.classList.toggle('active',x===b);});
+    });
+  });
+})();
+</script>
 </body>
 </html>
