@@ -3,196 +3,288 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nationalized Banking — A Political Platform</title>
+<title>Nationalized Banking — People's Platform</title>
 <link rel="icon" type="image/png" href="assets/angelcorp.png">
-<meta name="description" content="Nationalized Banking — a political platform for public banking. Full logo, page, style, texts, and a small booklet of the ideology.">
+<meta name="description" content="Nationalized Banking — a political platform for public banking. The banks belong to the people.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
 <style>
+  /* ═══════════════════════════════════════════════════════
+     NATIONALIZED BANKING — People's Platform
+     USSR / constructivist aesthetic. Revolutionary red, gold, cream.
+     Just aesthetics — the content is what it is.
+     ═══════════════════════════════════════════════════════ */
   :root{
-    --ink:#0a0c0e; --ink2:#101418; --ink3:#181d22; --raise:#1f2429;
-    --line:#282e34; --line-warm:rgba(180,180,190,.14);
-    --paper:#e8e4dc; --dim:#989488; --faint:#5a5650;
-    --red:#c43939; --red2:#d94545; --crimson:#8b1a1a;
-    --gold:#b8954a; --gold2:#d4b06a;
-    --blue:#3a5a7a; --blue2:#4a7a9a;
-    --green:#3a6a3a; --teal:#3a6a6a;
-    --strong:"Oswald",system-ui,sans-serif;
-    --disp:"Barlow",system-ui,sans-serif;
-    --body:"Barlow",system-ui,sans-serif;
-    --serif:"Playfair Display",Georgia,serif;
+    --bg:#0c0a08; --bg2:#14110e; --bg3:#1c1814; --raise:#241f1a;
+    --line:#2a2218; --line-acc:rgba(200,160,80,.12);
+    --paper:#e8dcc8; --cream:#f0e6d2; --steel:#7a7060; --faint:#4a4438;
+    --red:#b8302a; --red2:#c8403a; --red-deep:#8a1a16;
+    --gold:#b89040; --gold2:#d4a858; --gold-soft:rgba(200,160,80,.10);
+    --black:#0c0a08;
+    --disp:"Oswald",system-ui,sans-serif;
+    --body:"Archivo",system-ui,sans-serif;
+    --strong:"Anton",Impact,system-ui,sans-serif;
     --mono:"Space Mono",ui-monospace,Consolas,monospace;
-    --maxw:1200px;
+    --maxw:1480px;
+    --inner:clamp(60px,8vw,110px);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:var(--body);background:var(--ink);color:var(--paper);line-height:1.7;
+  body{font-family:var(--body);background:var(--bg);color:var(--paper);line-height:1.65;
     -webkit-font-smoothing:antialiased;overflow-x:hidden;
     background-image:
-      radial-gradient(900px 480px at 88% -8%, rgba(180,180,190,.06), transparent 62%),
-      radial-gradient(700px 400px at -5% 4%, rgba(184,149,74,.05), transparent 60%)}
+      radial-gradient(1100px 520px at 88% -6%,rgba(184,48,42,.06),transparent 62%),
+      radial-gradient(800px 400px at -4% 4%,rgba(184,144,64,.04),transparent 60%)}
   a{color:inherit;text-decoration:none}
-  h1,h2,h3,h4{font-family:var(--disp);text-wrap:balance;line-height:1.1;letter-spacing:.005em}
+  h1,h2,h3,h4{font-family:var(--disp);text-transform:uppercase;letter-spacing:.03em;
+    text-wrap:balance;line-height:1.06}
+  h1{font-size:clamp(2.8rem,7vw,5rem);font-weight:600;letter-spacing:.01em}
+  h2{font-size:clamp(1.5rem,3.2vw,2.3rem);font-weight:600}
+  h3{font-size:1.06rem;font-weight:600}
   .mono{font-family:var(--mono)}
-  ::selection{background:var(--gold);color:#0a0c0e}
-  ::-webkit-scrollbar{width:12px} ::-webkit-scrollbar-track{background:var(--ink2)}
-  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--gold),var(--red));border:3px solid var(--ink2);border-radius:8px}
+  .strong{font-family:var(--strong);font-weight:400;letter-spacing:.08em;text-transform:uppercase}
+  ::selection{background:var(--red);color:var(--cream)}
+  ::-webkit-scrollbar{width:12px}
+  ::-webkit-scrollbar-track{background:var(--bg2)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--gold),var(--red));
+    border:3px solid var(--bg2);border-radius:6px}
 
-  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:22px}
-  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold2)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--inner)}
+  @media(min-width:900px){.wrap{padding-inline:var(--inner)}}
 
-  .topbar{position:sticky;top:0;z-index:60;background:rgba(10,12,14,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-block:14px}
-  .topbar-in{display:flex;align-items:center;gap:18px;justify-content:space-between}
-  .brand{display:flex;align-items:center;gap:10px}
-  .brand .nm{font-family:var(--strong);font-weight:500;font-size:20px;letter-spacing:.12em;text-transform:uppercase}
-  .brand .nm b{color:var(--gold)}
-  .navlinks{display:flex;gap:22px;margin-left:auto}
-  .navlinks a{font-size:12.5px;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;font-family:var(--strong);font-weight:400;transition:color .15s}
-  .navlinks a:hover{color:var(--paper)}
-  @media(max-width:760px){.navlinks{display:none}}
+  /* ══ TOP BAR — PEOPLE'S COMMITTEE ══ */
+  .topbar{position:sticky;top:0;z-index:60;
+    background:linear-gradient(180deg,rgba(12,10,8,.96),rgba(12,10,8,.88));
+    backdrop-filter:blur(10px);border-bottom:2px solid var(--red);
+    padding-block:14px}
+  .topbar-in{display:flex;align-items:center;justify-content:space-between;gap:18px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .star{width:28px;height:28px;flex:none;position:relative}
+  .brand .star::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 50% 50%,var(--gold2),var(--gold) 40%,var(--red-deep) 100%);
+    border-radius:50%;box-shadow:0 0 12px rgba(184,144,64,.3);
+    clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 90%,50% 70%,21% 90%,32% 57%,2% 35%,39% 35%)}
+  .brand .nm{font-family:var(--disp);font-weight:600;font-size:14px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--paper)}
+  .brand .nm b{color:var(--gold);font-weight:700}
+  .navlinks{display:flex;gap:20px}
+  .navlinks a{font-family:var(--disp);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--steel);transition:color .15s;font-weight:500}
+  .navlinks a:hover{color:var(--gold)}
 
-  .hero{position:relative;padding-block:clamp(48px,8vw,92px);text-align:center}
-  .hero-in{position:relative;z-index:1}
-  .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-    background-image:
-      linear-gradient(rgba(180,180,190,.05) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(180,180,190,.05) 1px,transparent 1px);
-    background-size:38px 38px;
-    -webkit-mask-image:radial-gradient(130% 92% at 50% 8%,#000 0 34%,transparent 78%);
-            mask-image:radial-gradient(130% 92% at 50% 8%,#000 0 34%,transparent 78%);}
+  /* ══ RED BANNER STRIP ══ */
+  .redbanner{background:var(--red);padding-block:6px;text-align:center;
+    font-family:var(--strong);font-weight:400;font-size:10px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--cream);line-height:1}
+  .redbanner .sep{opacity:.3;margin:0 .8em}
 
-  .logo-block{margin-bottom:30px}
-  .logo-box{display:inline-flex;flex-direction:column;align-items:center;gap:14px}
-  .logo-mark{width:110px;height:110px;border-radius:50%;position:relative;
-    background:radial-gradient(circle at 40% 35%, var(--gold2), var(--gold) 55%, var(--crimson) 100%);
-    box-shadow:0 0 40px rgba(184,149,74,.35), 0 4px 16px rgba(0,0,0,.5);
-    display:flex;align-items:center;justify-content:center}
-  .logo-mark::before{content:"";position:absolute;inset:8px;border:2px solid rgba(255,255,255,.25);border-radius:50%}
-  .logo-mark::after{content:"";position:absolute;inset:20px;border:1px solid rgba(255,255,255,.12);border-radius:50%}
-  .logo-mark svg{width:52px;height:52px}
-  .logo-mark .shield{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-  .logo-sub{font-family:var(--mono);font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--faint);margin-top:6px}
-
-  .hero h1{font-family:var(--strong);font-weight:500;font-size:clamp(3rem,8vw,5.5rem);line-height:.9;letter-spacing:.01em;text-transform:uppercase;margin:14px 0 0;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+  /* ══ HERO — REVOLUTIONARY POSTER ══ */
+  .hero{position:relative;padding-block:clamp(52px,9vw,100px);
+    background:
+      linear-gradient(180deg,rgba(184,48,42,.05),transparent 70%),
+      repeating-linear-gradient(0deg,transparent,transparent 38px,rgba(200,160,80,.03) 38px,rgba(200,160,80,.03) 40px),
+      repeating-linear-gradient(90deg,transparent,transparent 38px,rgba(200,160,80,.03) 38px,rgba(200,160,80,.03) 40px);
+    border-bottom:2px solid var(--red)}
+  .hero-in{position:relative;z-index:1;text-align:center}
+  .hero h1{margin-top:14px}
   .hero h1 .g{color:var(--gold)}
-  .hero .tagline{font-family:var(--serif);font-style:italic;font-size:clamp(1.1rem,2.2vw,1.6rem);color:var(--dim);margin-top:12px;font-weight:400;letter-spacing:.01em}
-  .hero .sub{font-size:clamp(.95rem,1.5vw,1.08rem);color:var(--dim);max-width:54ch;margin:18px auto 0;font-weight:300}
-  .hero .sub b{color:var(--paper);font-weight:500}
-  .hero .cta{display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap}
-  .btn{font-family:var(--strong);font-weight:500;font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:12px 20px;border-radius:4px;cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;display:inline-block}
+  .hero .tagline{font-family:var(--strong);font-weight:400;font-size:clamp(1.1rem,2.2vw,1.6rem);
+    color:var(--cream);margin-top:16px;letter-spacing:.14em;text-transform:uppercase}
+  .hero .sub{font-size:clamp(.94rem,1.5vw,1.08rem);color:var(--steel);
+    max-width:58ch;margin:22px auto 0;font-weight:400;line-height:1.65}
+  .hero .sub b{color:var(--paper);font-weight:600}
+  .hero .cta{display:flex;gap:14px;justify-content:center;margin-top:28px;flex-wrap:wrap}
+  .btn{font-family:var(--disp);font-weight:600;font-size:11px;letter-spacing:.1em;
+    padding:12px 22px;border-radius:0;cursor:pointer;border:1px solid transparent;
+    transition:transform .12s,filter .15s;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:8px}
   .btn:hover{transform:translateY(-1px)}
-  .btn-primary{background:linear-gradient(135deg,var(--red),var(--red2));color:#0a0c0e}
-  .btn-primary:hover{filter:brightness(1.06)}
-  .btn-ghost{border-color:var(--line-warm);color:var(--paper)}
-  .btn-ghost:hover{border-color:var(--gold);background:rgba(184,149,74,.05)}
+  .btn-primary{background:var(--red);color:var(--cream);border-color:var(--red)}
+  .btn-primary:hover{filter:brightness(1.08);background:var(--red2)}
+  .btn-ghost{border-color:var(--gold);color:var(--gold);background:transparent}
+  .btn-ghost:hover{background:rgba(200,160,80,.08);color:var(--cream)}
+  .hero .meta{display:flex;gap:18px;margin-top:24px;flex-wrap:wrap;justify-content:center;
+    font-family:var(--mono);font-size:9px;color:var(--faint);letter-spacing:.12em;
+    text-transform:uppercase}
+  .hero .meta span{display:flex;align-items:center;gap:6px}
+  .hero .meta i{width:4px;height:4px;background:var(--gold);transform:rotate(45deg);
+    font-style:normal;flex:none}
 
-  section.band{padding-block:clamp(44px,6vw,72px);border-top:1px solid var(--line)}
-  .head{max-width:62ch;margin:0 auto 34px;text-align:center}
-  .head .eyebrow{margin-bottom:10px;display:block}
-  .head h2{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:600}
-  .head p{color:var(--dim);margin-top:12px;font-size:1.02rem;max-width:56ch;margin-left:auto;margin-right:auto}
+  /* ── emblem block ── */
+  .emblem-block{margin-bottom:28px}
+  .emblem-box{display:inline-flex;flex-direction:column;align-items:center;gap:12px}
+  .emblem-mark{width:100px;height:100px;border-radius:50%;position:relative;
+    background:radial-gradient(circle at 40% 35%,var(--gold2),var(--gold) 55%,var(--red-deep) 100%);
+    box-shadow:0 0 40px rgba(184,144,64,.3),0 4px 16px rgba(0,0,0,.5);
+    display:flex;align-items:center;justify-content:center;
+    border:2px solid rgba(200,160,80,.2)}
+  .emblem-mark::before{content:"";position:absolute;inset:7px;
+    border:1.5px solid rgba(200,160,80,.2);border-radius:50%}
+  .emblem-mark::after{content:"";position:absolute;inset:18px;
+    border:1px solid rgba(200,160,80,.12);border-radius:50%}
+  .emblem-mark svg{width:46px;height:46px}
+  .emblem-sub{font-family:var(--mono);font-size:9px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--faint);margin-top:4px}
 
-  .textblock{max-width:64ch;margin:0 auto;padding:0 6px}
+  /* ══ BAND ══ */
+  section.band{padding-block:clamp(40px,6vw,70px);border-top:1px solid var(--line)}
+  section.band:first-of-type{border-top:0}
+  .band-head{max-width:66ch;margin:0 auto 32px;text-align:center}
+  .band-head .eyebrow{display:block;margin-bottom:10px;font-family:var(--mono);
+    font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+  .band-head p{color:var(--steel);margin-top:12px;font-size:1.02rem;max-width:58ch;
+    margin-left:auto;margin-right:auto;line-height:1.6}
+
+  /* ══ TEXT BLOCK ══ */
+  .textblock{max-width:62ch;margin:0 auto;padding:0 6px}
   .textblock p{font-size:1.02rem;color:var(--paper);margin-bottom:14px;font-weight:300}
-  .textblock p b{color:var(--paper);font-weight:500}
-  .textblock .quote{font-family:var(--serif);font-style:italic;font-size:1.18rem;color:var(--gold);line-height:1.45;padding:18px 22px;border-left:3px solid var(--gold);background:rgba(184,149,74,.04);margin:20px 0}
-  .textblock .quote .attr{display:block;margin-top:8px;font-style:normal;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;color:var(--faint);text-transform:uppercase}
+  .textblock p b{color:var(--paper);font-weight:600}
+  .textblock .quote{font-family:var(--strong);font-weight:400;font-size:1.18rem;
+    color:var(--gold);line-height:1.45;padding:18px 22px;border-left:3px solid var(--gold);
+    background:rgba(200,160,80,.04);margin:22px 0;text-align:left}
+  .textblock .quote .attr{display:block;margin-top:10px;font-style:normal;
+    font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--faint);
+    text-transform:uppercase}
 
-  .fullwidth{background:var(--ink2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding-block:clamp(36px,5vw,54px)}
-  .fb-in{max-width:var(--maxw);margin:0 auto;padding-inline:22px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-  @media(max-width:760px){.fb-in{grid-template-columns:1fr}}
-  .fb-text h3{font-family:var(--strong);font-weight:500;font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:.01em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
-  .fb-text p{color:var(--dim);font-size:1rem;font-weight:300;line-height:1.65}
+  /* ══ RED SECTION DIVIDER ══ */
+  .reddivider{background:var(--red);padding-block:30px;margin-block:20px;
+    text-align:center;border-top:1px solid var(--red-deep);border-bottom:1px solid var(--red-deep)}
+  .reddivider .rd-title{font-family:var(--strong);font-weight:400;font-size:clamp(1.2rem,2.5vw,1.6rem);
+    color:var(--cream);letter-spacing:.2em;text-transform:uppercase}
+  .reddivider .rd-sub{font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;
+    color:var(--gold);margin-top:6px;text-transform:uppercase}
 
-  .principles{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:8px}
+  /* ══ PRINCIPLES — RED SQUARES ══ */
+  .principles{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    background:var(--red);border:1px solid var(--red);border-radius:0;overflow:hidden;
+    margin-top:6px}
   @media(max-width:760px){.principles{grid-template-columns:1fr}}
-  .pr{background:var(--ink2);padding:22px 20px}
-  .pr .n{font-family:var(--mono);font-size:10px;color:var(--gold2);letter-spacing:.16em;margin-bottom:8px}
-  .pr h3{font-size:1.15rem;font-weight:600;margin-bottom:6px}
-  .pr p{color:var(--dim);font-size:.88rem;font-weight:300}
+  .pr{background:var(--bg2);padding:22px 20px;border:1px solid var(--red)}
+  .pr .n{font-family:var(--mono);font-size:9px;color:var(--gold2);letter-spacing:.18em;
+    margin-bottom:8px;text-transform:uppercase}
+  .pr h3{font-size:1.12rem;font-weight:600;color:var(--paper);margin-bottom:8px}
+  .pr p{color:var(--steel);font-size:.86rem;font-weight:300;line-height:1.55}
 
-  /* booklet */
-  .booklet{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--ink2);margin-top:8px}
-  .booklet .bk-head{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--ink3);border-bottom:1px solid var(--line)}
-  .booklet .bk-head .bk-mark{width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 40% 35%, var(--gold2), var(--gold) 55%, var(--crimson) 100%);flex:none;box-shadow:0 0 12px rgba(184,149,74,.25)}
-  .booklet .bk-head .bk-title{font-family:var(--strong);font-weight:500;font-size:1rem;letter-spacing:.06em;text-transform:uppercase;color:var(--paper)}
-  .booklet .bk-body{padding:20px 24px}
-  .booklet .bk-chapter{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold2);margin:18px 0 8px}
-  .booklet .bk-chapter:first-child{margin-top:0}
-  .booklet .bk-body h4{font-family:var(--disp);font-weight:600;font-size:1.02rem;margin-bottom:6px}
-  .booklet .bk-body p{color:var(--dim);font-size:.9rem;line-height:1.6;font-weight:300;margin-bottom:8px}
-  .booklet .bk-body p b{color:var(--paper);font-weight:500}
-  .booklet .bk-foot{padding:14px 18px;border-top:1px solid var(--line);font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;color:var(--faint);text-transform:uppercase;text-align:center}
+  /* ══ FULLWIDTH — PEOPLE'S PLATFORM ══ */
+  .fullwidth{background:var(--bg2);border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);padding-block:clamp(36px,5vw,52px)}
+  .fb-in{max-width:var(--maxw);margin:0 auto;padding-inline:var(--inner);
+    display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  @media(max-width:760px){.fb-in{grid-template-columns:1fr}}
+  .fb-text h3{font-family:var(--strong);font-weight:400;font-size:clamp(1.4rem,3vw,2rem);
+    letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;line-height:1}
+  .fb-text p{color:var(--steel);font-size:.98rem;font-weight:300;line-height:1.65}
+  .fb-text p b{color:var(--paper);font-weight:600}
 
-  .partytitle{font-family:var(--serif);font-style:italic;font-size:clamp(1rem,1.8vw,1.2rem);color:var(--dim);margin-top:14px}
+  /* ══ BOOKLET — PEOPLE'S MANIFESTO ══ */
+  .booklet{border:2px solid var(--red);border-radius:0;overflow:hidden;
+    background:var(--bg2);margin-top:6px}
+  .booklet .bk-head{display:flex;align-items:center;gap:12px;padding:14px 18px;
+    background:var(--red);border-bottom:1px solid var(--red-deep)}
+  .booklet .bk-head .bk-mark{width:32px;height:32px;border-radius:50%;
+    background:radial-gradient(circle at 40% 35%,var(--gold2),var(--gold) 55%,var(--red-deep) 100%);
+    flex:none;box-shadow:0 0 10px rgba(184,144,64,.25)}
+  .booklet .bk-head .bk-title{font-family:var(--strong);font-weight:400;font-size:.85rem;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--cream)}
+  .booklet .bk-body{padding:22px 24px}
+  .booklet .bk-chapter{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--gold2);margin:20px 0 8px;
+    border-top:1px solid var(--line);padding-top:12px}
+  .booklet .bk-chapter:first-child{margin-top:0;border-top:0;padding-top:0}
+  .booklet .bk-body h4{font-family:var(--disp);font-weight:600;font-size:1rem;
+    margin-bottom:6px;color:var(--paper)}
+  .booklet .bk-body p{color:var(--steel);font-size:.88rem;line-height:1.6;font-weight:300;margin-bottom:8px}
+  .booklet .bk-body p b{color:var(--paper);font-weight:600}
+  .booklet .bk-foot{padding:14px 18px;border-top:1px solid var(--line);
+    font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--faint);
+    text-transform:uppercase;text-align:center;background:var(--bg3)}
 
-  footer{border-top:1px solid var(--line);padding-block:30px}
-  .foot{max-width:var(--maxw);margin:0 auto;padding-inline:22px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  /* ══ FOOTER ══ */
+  footer{border-top:2px solid var(--red);padding-block:28px;background:var(--bg2)}
+  .foot{max-width:var(--maxw);margin:0 auto;padding-inline:var(--inner);
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
   .foot .l{display:flex;align-items:center;gap:10px}
-  .foot .l .nm{font-family:var(--strong);font-weight:500;font-size:16px;letter-spacing:.1em;text-transform:uppercase;color:var(--paper)}
-  .foot .l .nm b{color:var(--gold)}
-  .foot .r{font-family:var(--mono);font-size:10.5px;color:var(--faint);text-align:right;letter-spacing:.06em}
-  .pmark{font-family:var(--strong);font-weight:500;letter-spacing:.06em;color:var(--dim);text-transform:uppercase}
-  .pmark sup{font-size:.62em;vertical-align:super;margin-left:.04em}
+  .foot .l .star{width:20px;height:20px;position:relative}
+  .foot .l .star::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 50% 50%,var(--gold2),var(--gold) 40%,var(--red-deep) 100%);
+    border-radius:50%;clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 90%,50% 70%,21% 90%,32% 57%,2% 35%,39% 35%)}
+  .foot .l .nm{font-family:var(--disp);font-weight:600;font-size:13px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--paper)}
+  .foot .l .nm b{color:var(--gold);font-weight:700}
+  .foot .r{font-family:var(--mono);font-size:9.5px;color:var(--faint);
+    text-align:right;letter-spacing:.06em;text-transform:uppercase;line-height:1.5}
+  .foot .r b{color:var(--steel);font-weight:700}
 
   @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
 <body>
 
+<!-- ══ RED BANNER ══ -->
+<div class="redbanner">
+  <span style="display:inline-block">PEOPLE'S BANKING · PEOPLE'S MONEY · PEOPLE'S FUTURE</span>
+  <span class="sep">|</span>
+  <span style="font-family:var(--mono);letter-spacing:.2em;font-size:.5rem;opacity:.7">ALLSEER PEOPLE'S PLATFORM · EDITION 0.1</span>
+</div>
+
+<!-- ══ TOP BAR ══ -->
 <div class="topbar">
-  <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:18px">
-    <div class="topbar-in" style="width:100%">
-      <a class="brand" href="omni.html">
-        <div class="logo-mark" style="width:32px;height:32px;box-shadow:none"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="22" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.5"/><circle cx="30" cy="30" r="14" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></div>
-        <span class="nm">Nationalized <b>Banking</b></span>
-      </a>
-      <div class="navlinks">
-        <a href="#platform">Platform</a>
-        <a href="#ideology">Ideology</a>
-        <a href="#booklet">The Booklet</a>
-      </div>
+  <div class="wrap" style="display:flex;align-items:center;justify-content:space-between">
+    <a class="brand" href="omni.html">
+      <div class="star"></div>
+      <span class="nm">Nationalized <b>Banking</b></span>
+    </a>
+    <div class="navlinks">
+      <a href="#platform">Platform</a>
+      <a href="#ideology">Ideology</a>
+      <a href="#booklet">The Booklet</a>
     </div>
   </div>
 </div>
 
+<!-- ══ HERO ══ -->
 <header class="hero">
   <div class="wrap hero-in">
-    <div class="logo-block">
-      <div class="logo-box">
-        <div class="logo-mark">
-          <div class="shield">
-            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M30 6 L52 14 L52 34 C52 44 42 52 30 56 C18 52 8 44 8 34 L8 14 Z" stroke="rgba(255,255,255,.85)" stroke-width="2" fill="rgba(255,255,255,.06)"/>
-              <path d="M30 12 L44 18 L44 32 C44 40 38 46 30 49 C22 46 16 40 16 32 L16 18 Z" stroke="rgba(255,255,255,.4)" stroke-width="1" fill="none"/>
-              <circle cx="30" cy="28" r="6" stroke="rgba(255,255,255,.7)" stroke-width="1.5" fill="none"/>
-              <path d="M30 22 L30 34 M24 28 L36 28" stroke="rgba(255,255,255,.5)" stroke-width="1"/>
-            </svg>
-          </div>
+    <div class="emblem-block">
+      <div class="emblem-box">
+        <div class="emblem-mark">
+          <svg viewBox="0 0 60 60" fill="none">
+            <path d="M30 6 L52 14 L52 34 C52 44 42 52 30 56 C18 52 8 44 8 34 L8 14 Z"
+              stroke="rgba(255,255,255,.85)" stroke-width="2" fill="rgba(255,255,255,.06)"/>
+            <path d="M30 12 L44 18 L44 32 C44 40 38 46 30 49 C22 46 16 40 16 32 L16 18 Z"
+              stroke="rgba(255,255,255,.4)" stroke-width="1" fill="none"/>
+            <circle cx="30" cy="28" r="6" stroke="rgba(255,255,255,.7)" stroke-width="1.5" fill="none"/>
+            <path d="M30 22 L30 34 M24 28 L36 28" stroke="rgba(255,255,255,.5)" stroke-width="1"/>
+          </svg>
         </div>
-        <div class="logo-sub"> 설립 · FOUNDING</div>
+        <div class="emblem-sub">People's Banner · Founded</div>
       </div>
     </div>
     <h1>Nationalized<br><span class="g">Banking</span></h1>
     <p class="tagline">The banks belong to the people.</p>
     <p class="sub">A political platform for <b>public banking</b> — the banks nationalized, the money serving the people, not the other way around. Individual profit is not the goal. <b>Public interest is.</b></p>
     <div class="cta">
-      <a href="#platform" class="btn btn-primary">The Platform</a>
+      <a href="#platform" class="btn btn-primary">Read the Platform</a>
       <a href="#ideology" class="btn btn-ghost">The Ideology</a>
     </div>
-    <p class="partytitle" style="margin-top:22px">A movement, not a party. A platform, not a personality.</p>
+    <div class="meta">
+      <span><i></i>Public ownership · public accountability</span>
+      <span><i></i>Not a party — a platform</span>
+      <span><i></i>Not a personality — a movement</span>
+    </div>
   </div>
 </header>
 
+<!-- ═══ PLATFORM ═══ -->
 <section class="band" id="platform">
   <div class="wrap">
-    <div class="head">
+    <div class="band-head">
       <span class="eyebrow">The Platform</span>
       <h2>Banking for the public. Not the shareholders.</h2>
+      <p>The banks are not in the business of serving the people. They are in the business of serving their shareholders. Nationalized banking changes that — the banks become public institutions, and the money they control serves the public, not private profit.</p>
     </div>
     <div class="textblock">
-      <p>The banks are not in the business of serving the people. They are in the business of serving their shareholders. Nationalized banking changes that — the banks become public institutions, and the money they control serves the public, not private profit.</p>
       <p>This is not about destroying banking. It is about <b>making banking serve the public</b> — the way a road serves the public, the way a school serves the public, the way the money system should serve the people it is made of.</p>
       <div class="quote">
         "The money is not the banks' money. It is the people's money. The banks are just the pipes."
@@ -208,6 +300,14 @@
   </div>
 </section>
 
+<!-- ═══ RED DIVIDER ═══ -->
+<div class="wrap">
+  <div class="reddivider">
+    <div class="rd-title">Why Now</div>
+    <div class="rd-sub">The banks have failed the people</div>
+  </div>
+</div>
+
 <div class="fullwidth">
   <div class="fb-in">
     <div class="fb-text">
@@ -215,30 +315,30 @@
       <p>The banks have failed the people. They take our money, they gamble with it, they crash, and they get bailed out — by us. Nationalized banking ends that cycle. The banks are owned by the people, serve the people, and are accountable to the people.</p>
       <p style="margin-top:10px">It is not a radical idea. It is the obvious one. The banks should serve the public — that is what public infrastructure does.</p>
     </div>
-    <div class="fb-text" style="text-align:right;color:var(--gold)">
-      <div class="logo-box" style="justify-content:flex-end">
-        <div class="logo-mark" style="width:80px;height:80px;box-shadow:0 0 30px rgba(184,149,74,.3)">
-          <div class="shield">
-            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M30 6 L52 14 L52 34 C52 44 42 52 30 56 C18 52 8 44 8 34 L8 14 Z" stroke="rgba(255,255,255,.85)" stroke-width="2" fill="rgba(255,255,255,.06)"/>
-              <circle cx="30" cy="28" r="6" stroke="rgba(255,255,255,.7)" stroke-width="1.5" fill="none"/>
-            </svg>
-          </div>
+    <div class="fb-text" style="text-align:right">
+      <div class="emblem-box" style="justify-content:flex-end">
+        <div class="emblem-mark" style="width:72px;height:72px;box-shadow:0 0 28px rgba(184,144,64,.25)">
+          <svg viewBox="0 0 60 60" fill="none">
+            <path d="M30 6 L52 14 L52 34 C52 44 42 52 30 56 C18 52 8 44 8 34 L8 14 Z"
+              stroke="rgba(255,255,255,.85)" stroke-width="2" fill="rgba(255,255,255,.06)"/>
+            <circle cx="30" cy="28" r="6" stroke="rgba(255,255,255,.7)" stroke-width="1.5" fill="none"/>
+          </svg>
         </div>
-        <div class="logo-sub" style="color:var(--faint)">emblem</div>
+        <div class="emblem-sub" style="color:var(--faint)">emblem</div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- ═══ IDEOLOGY ═══ -->
 <section class="band" id="ideology">
   <div class="wrap">
-    <div class="head">
+    <div class="band-head">
       <span class="eyebrow">The Ideology</span>
       <h2>What we believe.</h2>
+      <p>Nationalized banking is part of a larger idea — that the things the people depend on should be owned by the people, served by the people, and accountable to the people. The banks. The land. The water. The energy. The things that everybody needs, everybody owns.</p>
     </div>
     <div class="textblock">
-      <p>Nationalized banking is part of a larger idea — that the things the people depend on should be owned by the people, served by the people, and accountable to the people. The banks. The land. The water. The energy. The things that everybody needs, everybody owns.</p>
       <p>Individual profit is not the goal. The goal is a society that works — a society where the money serves the people, the banks serve the people, and the public institutions actually serve the public.</p>
       <p>This is not socialism in the old sense. It is not the state running everything. It is the <b>people owning the things they depend on</b> — and the banks are among the most important of those things.</p>
       <div class="quote">
@@ -254,16 +354,18 @@
   </div>
 </section>
 
+<!-- ═══ BOOKLET — PEOPLE'S MANIFESTO ═══ -->
 <section class="band" id="booklet">
   <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">The Booklet</span>
+    <div class="band-head">
+      <span class="eyebrow">The Booklet — People's Manifesto</span>
       <h2>A small document of what we believe.</h2>
+      <p>A short statement of the platform. Read it. Carry it. Spread it.</p>
     </div>
     <div class="booklet">
       <div class="bk-head">
         <div class="bk-mark"></div>
-        <div class="bk-title">Nationalized Banking · Booklet</div>
+        <div class="bk-title">Nationalized Banking · People's Manifesto</div>
       </div>
       <div class="bk-body">
         <div class="bk-chapter">Chapter I · The Problem</div>
@@ -286,18 +388,19 @@
         <div class="bk-chapter">Chapter V · The Movement</div>
         <p>This is a movement, not a party. A platform, not a personality. The banks belong to the people — and it is time we said so, and meant it.</p>
       </div>
-      <div class="bk-foot">Nationalized Banking · Founding Platform · Edition 0.1</div>
+      <div class="bk-foot">Nationalized Banking · People's Manifesto · Edition 0.1</div>
     </div>
   </div>
 </section>
 
+<!-- ══ FOOTER ══ -->
 <footer>
   <div class="foot">
     <div class="l">
-      <div class="logo-mark" style="width:24px;height:24px;box-shadow:none"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="22" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.5"/><circle cx="30" cy="30" r="14" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></div>
+      <div class="star"></div>
       <div class="nm"><b>NATIONALIZED BANKING</b></div>
     </div>
-    <div class="r">A movement, not a party<br><span class="pmark">PRIMAL<sup>APE</sup></span> · political platform</div>
+    <div class="r">A movement, not a party<br><span class="pmark" style="color:var(--steel);font-family:var(--disp);font-weight:600">PEOPLE'S PLATFORM</span> · founded 2026</div>
   </div>
 </footer>
 
