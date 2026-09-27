@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>XYPHON — Cancer Research &amp; Fast Vaccine Development</title>
-<link rel="icon" type="image/png" href="assets/angelcorp.png">
-<meta name="description" content="XYPHON — a cancer research company. Grow cancer, study it, make it resistant, use it to develop vaccines and cures fast. PHAGEIO application for research groups.">
+<title>XYPHON — Cancer Research &amp; Human Tumor Banking</title>
+<link rel="icon" type="image/jpeg" href="assets/xyphon-icon2.jpg">
+<meta name="description" content="XYPHON — a cancer research company that banks real, patient-donated tumors and tests cures directly on human tissue instead of lab mice. PHAGEIO application for research groups.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Chakra+Petch:wght@500;600;700&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
@@ -17,6 +17,7 @@
     --paper:#ece4f0; --dim:#9b8fa8; --faint:#5a5068;
     --pink:#e82535; --pink2:#ff4a6a; --rose:#ff2070; --rose2:#ff5a8a;
     --crimson:#ff1a4a; --green:#4fd07f; --danger:#e01d2b; --danger2:#ff4653;
+    --amber:#ff7a3a; --amber2:#ffb15a;
     --strong:"Anton",Impact,system-ui,sans-serif;
     --disp:"Chakra Petch",system-ui,sans-serif;
     --body:"Archivo",system-ui,sans-serif;
@@ -43,7 +44,7 @@
 
   .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:clamp(28px,5vw,52px)}
   .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--rose2)}
-  .gradtext{background:linear-gradient(96deg,var(--rose2),var(--pink) 55%,var(--rose));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .gradtext{background:linear-gradient(96deg,var(--rose2),var(--pink) 55%,var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
 
   .nav{position:sticky;top:0;z-index:60;background:rgba(13,10,15,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
   .nav-in{display:flex;align-items:center;gap:18px;height:60px}
@@ -63,7 +64,7 @@
   .modepill:hover{border-color:var(--rose)}
   .btn{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.05em;padding:9px 16px;border-radius:5px;cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;display:inline-block}
   .btn:hover{transform:translateY(-1px)}
-  .btn-primary{background:linear-gradient(96deg,var(--pink),var(--rose));color:#0d0508}
+  .btn-primary{background:linear-gradient(96deg,var(--pink),var(--amber));color:#0d0508}
   .btn-primary:hover{filter:brightness(1.08)}
   .btn-ghost{border-color:var(--line-warm);color:var(--paper)}
   .btn-ghost:hover{border-color:var(--rose);background:rgba(255,64,106,.06)}
@@ -78,9 +79,9 @@
   .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:46px;align-items:center}
   @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:34px}}
   .hero h1{font-family:var(--strong);font-weight:400;font-size:clamp(3.8rem,12vw,8.4rem);line-height:.86;letter-spacing:.02em;text-transform:uppercase;margin:12px 0 0;
-    background:linear-gradient(100deg,var(--rose2),var(--pink) 55%,var(--rose));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 34px rgba(232,37,53,.22))}
+    background:linear-gradient(100deg,var(--rose2),var(--pink) 55%,var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 34px rgba(232,37,53,.22))}
   .tagline{font-family:var(--strong);font-weight:400;font-size:clamp(1.3rem,3.2vw,2.3rem);letter-spacing:.16em;text-transform:uppercase;color:var(--paper);margin-top:8px}
-  .tagline .gradtext{background:linear-gradient(100deg,var(--rose2),var(--pink) 60%,var(--rose));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tagline .gradtext{background:linear-gradient(100deg,var(--rose2),var(--pink) 60%,var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
   .hero .sub{font-size:clamp(1rem,1.7vw,1.18rem);color:#c8c2d4;max-width:56ch;margin-top:20px}
   .hero .cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
   .hero .meta{display:flex;gap:20px;margin-top:26px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.04em}
@@ -91,10 +92,21 @@
   @media(max-width:900px){.glow-logo{display:none}}
   /* SERAPHIM-style hover logo: two stacked images, second fades in on hover */
   .logowrap{position:relative;display:inline-block;width:30px;height:30px;flex:none}
-  .logowrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .18s}
+  .logowrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:7px;transition:opacity .18s}
   .logowrap img.b{opacity:0}
   .logowrap:hover img.a{opacity:0}
   .logowrap:hover img.b{opacity:1}
+  /* same hover-swap on the big hero emblem art — .emblem .emblemlogo img beats the
+     plain .emblem img rule below regardless of source order (higher specificity) */
+  .emblem .emblemlogo{position:relative;display:inline-block;width:min(380px,72%);aspect-ratio:1;z-index:3;
+    transform:translateY(5%);animation:breathe 6s ease-in-out infinite}
+  .emblem .emblemlogo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:30px;
+    transform:none;z-index:auto;animation:none;
+    transition:opacity .18s;filter:drop-shadow(0 0 54px rgba(232,37,53,.5))}
+  .emblem .emblemlogo img.b{opacity:0}
+  .emblem .emblemlogo:hover img.a{opacity:0}
+  .emblem .emblemlogo:hover img.b{opacity:1}
+  body[data-emblem="lockon"] .emblem .emblemlogo img{filter:drop-shadow(0 0 46px rgba(224,29,139,.45)) drop-shadow(0 0 20px rgba(232,37,53,.5))}
 
   .emblem{position:relative;display:flex;align-items:center;justify-content:center;min-height:clamp(340px,44vw,500px);perspective:1100px}
   .emblem span{position:absolute}
@@ -254,15 +266,18 @@
 <nav class="nav">
   <div class="wrap nav-in">
     <a class="parent" href="omni.html" title="Parent company">← <b>ALLSEER SOFTWARE</b></a>
-    <a class="brand" href="xyphon.html"><img src="assets/xyphon-logo.png" alt="XYPHON" decoding="async"><span class="wm gradtext">XYPHON</span></a>
+    <a class="brand" href="xyphon.html">
+      <span class="logowrap"><img class="a" src="assets/xyphon-icon2.jpg" alt="XYPHON" decoding="async"><img class="b" src="assets/xyphon-icon4.jpg" alt="" decoding="async"></span>
+      <span class="wm gradtext">XYPHON</span></a>
     <div class="navlinks">
       <a href="#overview">Overview</a>
-      <a href="#cancerlab">Cancer Lab</a>
+      <a href="#cancerlab">Tumor Bank</a>
+      <a href="#modules">Modules</a>
       <a href="#researchmap">Research Map</a>
       <a href="#phageio">PHAGEIO</a>
     </div>
     <div class="navtools">
-      <button class="modepill" id="emblemBtn" title="Emblem style">Halo</button>
+      <button class="modepill" id="emblemBtn" title="Emblem style">Lock-On</button>
       <div class="langwrap"><button class="lang on" data-lang="en">EN</button><button class="lang" data-lang="es">ES</button></div>
       <a href="#download" class="btn btn-primary">Get PHAGEIO</a>
     </div>
@@ -271,8 +286,8 @@
 
 <div class="statusstrip">
   <div class="wrap">
-    <span class="a">XYPHON // CANCER, CONTROLLED</span>
-    <span class="h">BIOLOGICAL EXPERIMENTATION · SAFE STRAINS ONLY</span>
+    <span class="a">XYPHON // REAL TUMORS, NOT MICE</span>
+    <span class="h">PATIENT-CONSENTED TISSUE · DE-IDENTIFIED SAMPLES ONLY</span>
     <span class="ver">BUILD 0.9 · RESEARCH ACCESS</span>
   </div>
 </div>
@@ -281,18 +296,18 @@
   <canvas class="netcanvas" id="netcanvas" aria-hidden="true"></canvas>
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow">Cancer as a tool for medical discovery</span>
+      <span class="eyebrow">Real tumors, studied directly — no mice</span>
       <h1>XYPHON</h1>
       <p class="tagline">Grow the disease. <span class="gradtext">Reverse it.</span></p>
-      <p class="sub">Grow cancer. Make it resistant. Study it. Instead of killing cancer to cure it — grow it into something powerful, give it its own immune system, push it as far as it can go, and learn what it teaches us about the brain, the organs, and every disease we haven't cracked yet. Fast medical development. Not through government patents — through us.</p>
+      <p class="sub">Every tumor removed in surgery is usually thrown away. XYPHON asks the patient first, then banks it. Real human tumor tissue, grown into a living culture outside the body — one that keeps behaving like the actual disease, not a mouse standing in for it. Test candidate cures directly on human cancer and see what really works, in weeks instead of years.</p>
       <div class="cta">
         <a href="#download" class="btn btn-primary">Get PHAGEIO</a>
-        <a href="#cancerlab" class="btn btn-ghost">See the Cancer Lab</a>
+        <a href="#cancerlab" class="btn btn-ghost">See the Tumor Bank</a>
       </div>
       <div class="meta">
-        <span><i></i>Non-contagious safe cancer strains</span>
-        <span><i></i>Cancer farms — rent to medical companies</span>
-        <span><i></i>AI fast-vaccine development</span>
+        <span><i></i>Patient-donated tumor tissue, with consent</span>
+        <span><i></i>Living organoid cultures — grown, not simulated</span>
+        <span><i></i>Direct cure testing, no animal models</span>
         <span><i></i>PHAGEIO — biology + chemistry app</span>
       </div>
     </div>
@@ -300,8 +315,8 @@
       <span class="glow"></span><span class="haloflat rmode"></span><span class="ringx rmode"></span><span class="ringtilt rmode"></span>
       <span class="beadring rmode"><i></i><i class="b2"></i></span>
       <span class="glowred lmode"></span><span class="sweep lmode"></span><span class="lockring lmode"></span><span class="lockring i2 lmode"></span><span class="lockbox lmode"><i></i><i></i><i></i><i></i></span>
-      <img src="assets/xyphon-logo.png" alt="XYPHON emblem" decoding="async" fetchpriority="high">
-      <span class="stamp">Garden of Disease</span>
+      <span class="emblemlogo"><img class="a" src="assets/xyphon-icon2.jpg" alt="XYPHON emblem" decoding="async" fetchpriority="high"><img class="b" src="assets/xyphon-icon4.jpg" alt="" decoding="async"></span>
+      <span class="stamp">Archive of Disease</span>
     </div>
   </div>
 </header>
@@ -312,19 +327,19 @@
       <div class="idea-left">
         <div class="head" style="margin-bottom:18px">
           <span class="eyebrow">The idea</span>
-          <h2>Not curing cancer by killing it. By growing it.</h2>
+          <h2>Not curing cancer with a mouse. Curing it with the real thing.</h2>
         </div>
         <div class="pillars-v">
-          <div class="pil-row"><span class="pn">01</span><div class="pil-b"><h3 style="color:var(--rose2)">The Cancer Farm</h3><p style="color:var(--dim)">Grow cancer in controlled, safe, non-contagious strains — push it to be as powerful as possible, give it its own immune system, make it resistant to disease. Use it to study the brain, the organs, every medical field.</p></div></div>
-          <div class="pil-row"><span class="pn">02</span><div class="pil-b"><h3 style="color:var(--rose2)">Fast Vaccine Development</h3><p style="color:var(--dim)">Medical patents go through us, not the government. We test, discover, and implement fast. Rent our cancer farms to medical companies — see how their medicines affect cancer, how cancer reacts, what it teaches them.</p></div></div>
-          <div class="pil-row"><span class="pn">03</span><div class="pil-b"><h3 style="color:var(--rose2)">PHAGEIO</h3><p style="color:var(--dim)">The application for research groups — biology and chemistry, AI-assisted. Design experiments, simulate cancer in environments it feels are real, cross-reference medical literature, get cure suggestions from the AI.</p></div></div>
+          <div class="pil-row"><span class="pn">01</span><div class="pil-b"><h3 style="color:var(--rose2)">The Tumor Bank</h3><p style="color:var(--dim)">A surgeon removes a tumor, the patient consents, and we keep the sample. Grown into a living culture that keeps behaving like the real cancer — not a mouse standing in for it.</p></div></div>
+          <div class="pil-row"><span class="pn">02</span><div class="pil-b"><h3 style="color:var(--rose2)">Direct Human Testing</h3><p style="color:var(--dim)">Cures go straight onto real human tumor tissue, not lab mice. See exactly how a compound performs against the actual disease before it ever reaches a patient.</p></div></div>
+          <div class="pil-row"><span class="pn">03</span><div class="pil-b"><h3 style="color:var(--rose2)">PHAGEIO</h3><p style="color:var(--dim)">The application for research groups — biology and chemistry, AI-assisted. Match a tumor's profile to compound libraries, simulate outcomes, cross-reference medical literature, get cure suggestions from the AI.</p></div></div>
         </div>
       </div>
       <div class="idea-shot">
         <div class="showcase">
-          <div class="showcase-bar"><span class="d a"></span><span class="d b"></span><span class="d"></span><span class="p">XYPHON — PHAGEIO preview</span></div>
-          <img src="assets/xyphon-logo.png" alt="PHAGEIO interface preview" loading="lazy" decoding="async" style="object-fit:contain;aspect-ratio:1.6/1;background:#0a0710">
-          <div class="cap">Interface preview — placeholder art, to be replaced with the live app build.</div>
+          <div class="showcase-bar"><span class="d a"></span><span class="d b"></span><span class="d"></span><span class="p">XYPHON — the mark</span></div>
+          <img src="assets/xyphon-icon-raven.jpg" alt="XYPHON raven mark — intelligence, applied to disease" loading="lazy" decoding="async" style="object-fit:contain;width:100%;height:420px;background:#0a0710">
+          <div class="cap">The raven. Intelligence, pointed at the disease.</div>
         </div>
       </div>
     </div>
@@ -335,33 +350,53 @@
   <div class="wrap">
     <div class="head">
       <span class="eyebrow">Specialization · v1</span>
-      <h2>The cancer lab. Grow it. Study it. Reverse it.</h2>
-      <p>XYPHON's first specialization is the cancer farm — non-contagious, safe cancer strains grown in AI-simulated environments that feel real to the cancer. Make it resistant. Give it an immune system. Study what happens when cancer gets advanced — and use everything it teaches us.</p>
+      <h2>The tumor bank. Grown from real patients. Tested for real cures.</h2>
+      <p>XYPHON's first specialization is the tumor bank — surgical tumor tissue, donated with consent, grown into living organoid cultures that behave like the real disease. No synthetic strains, no lab mice standing in for a human tumor. Just the real thing, studied directly.</p>
     </div>
     <div class="dos-grid" style="display:grid;grid-template-columns:1.25fr .75fr;gap:26px;align-items:start">
       <div class="clab">
         <div class="clab-top">
-          <span class="t">Cancer strain monitor · XY-001 (safe, non-contagious)</span>
+          <span class="t">Tumor culture monitor · XY-001 (patient-consented, de-identified)</span>
           <span class="st" id="clabel">Growth: nominal</span>
         </div>
         <div class="clab-graph"><canvas id="clabcanvas" aria-hidden="true"></canvas></div>
         <div class="clab-gauges">
-          <div class="clab-gauge" data-metric="mass" data-peak="97"><div class="gh"><span class="gl">Tumor mass</span><span class="gv"><span class="num">0</span>%</span></div><div class="track"><div class="fill"></div></div></div>
-          <div class="clab-gauge" data-metric="resist" data-peak="88"><div class="gh"><span class="gl">Resistance</span><span class="gv"><span class="num">0</span>%</span></div><div class="track"><div class="fill"></div></div></div>
-          <div class="clab-gauge" data-metric="immune" data-peak="94"><div class="gh"><span class="gl">Own immune system</span><span class="gv"><span class="num">0</span>%</span></div><div class="track"><div class="fill"></div></div></div>
+          <div class="clab-gauge" data-metric="mass" data-peak="97"><div class="gh"><span class="gl">Culture viability</span><span class="gv"><span class="num">0</span>%</span></div><div class="track"><div class="fill"></div></div></div>
+          <div class="clab-gauge" data-metric="resist" data-peak="88"><div class="gh"><span class="gl">Drug resistance profile</span><span class="gv"><span class="num">0</span>%</span></div><div class="track"><div class="fill"></div></div></div>
+          <div class="clab-gauge" data-metric="immune" data-peak="94"><div class="gh"><span class="gl">Engraftment rate</span><span class="gv"><span class="num">0</span>%</span></div><div class="track"><div class="fill"></div></div></div>
           <div class="clab-gauge" data-metric="ai" data-peak="100"><div class="gh"><span class="gl">AI simulation fidelity</span><span class="gv"><span class="num">0</span>%</span></div><div class="track"><div class="fill"></div></div></div>
         </div>
       </div>
       <div>
         <div class="cvlist">
-          <div class="cvitem"><div class="k">Strain Design</div><div class="v"><h4>Non-contagious, safe cancer</h4><p>AI designs cancer strains that can't spread — only grow where we put them. Safe to experiment on. Advanced enough to teach us.</p></div></div>
-          <div class="cvitem"><div class="k">Environment</div><p style="color:var(--dim)"><div class="v"><h4>AI-simulated real environments</h4><p>Simulate the cancer in an environment it feels is real — so it reacts the way it would in a body. Then study what happens.</p></div></div>
-          <div class="cvitem"><div class="k">Rent the Farm</div><p style="color:var(--dim)"><div class="v"><h4>Cancer farms for medical companies</h4><p>Rent our cancer farms to learn the effects of what they give. How do cancers react to these medicines? Can anything from the cancers be useful?</p></div></div>
+          <div class="cvitem"><div class="k">Sample Sourcing</div><div class="v"><h4>Patient-donated, with consent</h4><p>Every tumor comes from a real surgery, with explicit patient consent and de-identification. Nothing synthetic, nothing farmed to be aggressive.</p></div></div>
+          <div class="cvitem"><div class="k">Culture Method</div><div class="v"><h4>Organoids — living, not simulated</h4><p>Grown into 3D organoid cultures that keep the tumor's real genetic and structural fingerprint, so a drug's response actually means something.</p></div></div>
+          <div class="cvitem"><div class="k">Rent the Bank</div><div class="v"><h4>Access for medical companies</h4><p>Approved research partners test candidate compounds directly against banked tumor samples — real tissue, not an animal proxy.</p></div></div>
         </div>
         <div class="cgate">
-          <div class="t">Safety gate</div>
-          <p>All strains are non-contagious and safe. AI is used to not design anything dangerous — only cancers which are safe, contained, and useful for research.</p>
+          <div class="t">Consent gate</div>
+          <p>Every sample is patient-donated with informed consent and de-identified before it enters the bank. Nothing is taken without permission, and no data is ever linked back to a patient.</p>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="modules">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">The suite</span>
+      <h2>Built as a real platform, module by module.</h2>
+      <p>Grouped the way a finished product would be. Click any module to see what it does.</p>
+    </div>
+    <div class="suite">
+      <div class="suite-top">
+        <span class="t">XYPHON SUITE</span>
+        <span class="hint">select a module &rarr;</span>
+      </div>
+      <div class="suite-body">
+        <div class="suite-nav" id="suiteNav"></div>
+        <div class="suite-panel" id="suitePanel"></div>
       </div>
     </div>
   </div>
@@ -371,8 +406,8 @@
   <div class="wrap">
     <div class="head">
       <span class="eyebrow">Live research</span>
-      <h2>Global cancer research map.</h2>
-      <p>A live picture of cancer research across the grid — the same view a medical research lab watches, rendered for authorized research only.</p>
+      <h2>Global tumor bank map.</h2>
+      <p>A live picture of banked-sample research across the grid — the same view a medical research lab watches, rendered for authorized research only.</p>
     </div>
     <div class="mapgrid">
       <div class="mapstage">
@@ -392,17 +427,17 @@
     <div class="head">
       <span class="eyebrow">The application</span>
       <h2>PHAGEIO — biology and chemistry, AI-assisted.</h2>
-      <p>Much like TYPHON is an app for offensive security — PHAGEIO is the app for biological studies. For research groups to use. Uses AI to assist in creating vaccines quickly. Biology and chemistry, both — because chemistry is needed for biology.</p>
+      <p>Much like TYPHON is an app for offensive security — PHAGEIO is the app for biological studies. For research groups to use. Matches a real tumor's profile to candidate compounds and simulates the result, fast. Biology and chemistry, both — because chemistry is needed for biology.</p>
     </div>
     <div class="ai-grid">
       <div class="flow">
-        <div class="s">Researcher: <b>"simulate a lung cancer strain, test the new vaccine candidate."</b></div>
-        <div class="ar">↓ strain + vaccine → PHAGEIO AI</div>
-        <div class="s ai"><b>PHAGEIO AI</b> → simulate <span style="color:var(--rose2)">XY-001</span> + vaccine compound</div>
-        <div class="ar">↓ AI-simulated environment, feels real to the cancer</div>
-        <div class="s">Result → cancer reaction, resistance, immune response</div>
+        <div class="s">Researcher: <b>"match candidate compound X against banked lung tumor sample XY-014."</b></div>
+        <div class="ar">↓ tumor genomic profile + compound → PHAGEIO AI</div>
+        <div class="s ai"><b>PHAGEIO AI</b> → simulate compound response on <span style="color:var(--rose2)">XY-014</span> organoid culture</div>
+        <div class="ar">↓ AI-modeled environment, mirrors the tissue's real behavior</div>
+        <div class="s">Result → viability drop, resistance markers, off-target signal</div>
         <div class="ar">↓ cross-reference medical literature</div>
-        <div class="s ai"><b>PHAGEIO AI</b> → "vaccine candidate shows 84% efficacy. Suggest trial."</div>
+        <div class="s ai"><b>PHAGEIO AI</b> → "compound shows an 84% viability drop on this tumor profile. Suggest trial."</div>
       </div>
       <div class="aicard">
         <div class="kv">
@@ -413,9 +448,9 @@
           <div><span>Cross-reference</span><span>suggests cures &amp; experiments</span></div>
         </div>
         <div class="feature-row">
-          <div class="fr"><h4 style="color:var(--rose2)">Fast vaccine dev</h4><p style="color:var(--dim)">The AI suggests experiments, simulates outcomes, cuts vaccine development from years to weeks.</p></div>
+          <div class="fr"><h4 style="color:var(--rose2)">Fast cure dev</h4><p style="color:var(--dim)">The AI suggests experiments, simulates outcomes, cuts cure development from years to weeks — starting from real tumor data.</p></div>
           <div class="fr"><h4 style="color:var(--rose2)">Read the libraries</h4><p style="color:var(--dim)">AI reads libraries of medical information and research, cross-references, suggests cures and experiments.</p></div>
-          <div class="fr"><h4 style="color:var(--rose2)">Cancer as tool</h4><p style="color:var(--dim)">The cure to so many diseases might be cancer. Cancer fights disease. Research it there, then develop the cure.</p></div>
+          <div class="fr"><h4 style="color:var(--rose2)">The tumor, not a proxy</h4><p style="color:var(--dim)">Real tumors don't behave like mice. Test on the real thing, and the result actually means something.</p></div>
         </div>
       </div>
     </div>
@@ -440,29 +475,29 @@
 <div class="pledgebar"><a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>an <b>ALLSEER</b> company</a></div>
 <footer>
   <div class="wrap foot">
-    <div class="l"><img src="assets/xyphon-logo.png" alt=""><div class="x"><b>XYPHON</b><br>Grow the disease. Reverse it. · concept draft</div></div>
-    <div class="r"><span class="pmark">PRIMAL<sup>APE</sup></span> · under ALLSEER SOFTWARE<br><span style="opacity:.8">Non-contagious safe strains only. Research use.</span></div>
+    <div class="l"><img src="assets/xyphon-icon2.jpg" alt="" style="border-radius:5px"><div class="x"><b>XYPHON</b><br>Grow the disease. Reverse it. · concept draft</div></div>
+    <div class="r"><span class="pmark">PRIMAL<sup>APE</sup></span> · under ALLSEER SOFTWARE<br><span style="opacity:.8">Patient-consented tissue only. Research use.</span></div>
   </div>
 </footer>
 
 <script>
 /* ---------------- module suite ---------------- */
 const MODULES = [
- {g:'Cancer Farm', n:'Strain Designer', p:'AI-designed non-contagious cancer strains — safe, contained, advanced enough to teach us.'},
- {g:'Cancer Farm', n:'Immune System Lab', p:'Give cancer its own immune system. Study what happens when cancer gets advanced.'},
- {g:'Cancer Farm', n:'Resistance Engine', p:'Make cancer resistant to disease. Use the resistance to learn how to defeat it — and other diseases.'},
- {g:'Cancer Farm', n:'Cancer Farm Rental', p:'Rent our cancer farms to medical companies. See how their medicines affect cancer.'},
- {g:'Simulation', n:'AI Environment', p:'Simulate cancer in environments it feels are real — so it reacts the way it would in a body.'},
- {g:'Simulation', n:'Brain Tumor Studies', p:'What can we learn about the brain by growing brain tumors? Study it in the simulation.'},
- {g:'Simulation', n:'Artificial Organs', p:'Using cancer to grow artificial organs — controlled, safe cancer as a growth tool.'},
- {g:'Vaccines', n:'Fast Vaccine Dev', p:'The AI suggests experiments, simulates outcomes, cuts vaccine development from years to weeks.'},
- {g:'Vaccines', n:'Fungi Engineering', p:'Study fungi for medicine. Engineer fungi to fight a disease and develop a cure — or engineer a disease to attack a fungus.'},
- {g:'Vaccines', n:'Virology', p:'Create a strain of virus that targets only cancer cells. Virology, applied to cancer.'},
- {g:'PHAGEIO', n:'PHAGEIO App', p:'The biology + chemistry application for research groups. AI-assisted vaccine development.'},
+ {g:'Tumor Bank', n:'Sample Intake', p:'Patients consent, surgeons hand off the tumor, we log and de-identify it before it ever reaches a freezer.'},
+ {g:'Tumor Bank', n:'Organoid Culture Lab', p:'Grow the tumor into a living 3D culture that keeps behaving like the real disease outside the body.'},
+ {g:'Tumor Bank', n:'Engraftment Tracking', p:'Track how well a sample takes in culture — the number that decides whether it is usable for testing.'},
+ {g:'Tumor Bank', n:'Bank Access for Partners', p:'Approved research partners test compounds directly against banked human tumor tissue instead of a mouse model.'},
+ {g:'Testing', n:'AI Environment', p:'Simulate the tumor\'s environment inside the culture so it keeps behaving like it would in a body.'},
+ {g:'Testing', n:'Genomic Matching', p:'Match a tumor\'s mutation profile to the compound libraries most likely to work against it.'},
+ {g:'Testing', n:'Direct Compound Screening', p:'Run candidate drugs straight against the real tumor tissue and read the response — not a proxy.'},
+ {g:'Cures', n:'Fast Cure Development', p:'The AI suggests experiments, simulates outcomes, cuts development from years to weeks by starting from real tumor data.'},
+ {g:'Cures', n:'Resistance Mapping', p:'Watch how a real tumor develops resistance to a candidate drug, and use that to design around it.'},
+ {g:'Cures', n:'Companion Diagnostics', p:'Turn what a tumor\'s response teaches us into a test that tells a future patient which drug will actually work for them.'},
+ {g:'PHAGEIO', n:'PHAGEIO App', p:'The biology + chemistry application for research groups. AI-assisted, built around real patient tumor data.'},
  {g:'PHAGEIO', n:'Literature Engine', p:'AI reads libraries of medical information and research, cross-references, suggests cures and experiments.'},
  {g:'PHAGEIO', n:'Cure Suggestion', p:'The AI suggests cures and experiments based on everything it has read and simulated.'},
 ];
-let active = 0;
+let active = 1; // open on the Organoid Culture Lab, the specialization
 const nav = document.getElementById('suiteNav'); const panel = document.getElementById('suitePanel');
 function buildNav(){ nav.innerHTML=''; let lastG=null; MODULES.forEach(function(m,i){ if(m.g!==lastG){ const g=document.createElement('div'); g.className='grp'; g.textContent=m.g; nav.appendChild(g); lastG=m.g; } const b=document.createElement('button'); b.className='mbtn'+(i===active?' active':''); b.textContent=m.n; b.addEventListener('click',function(){active=i;render();}); nav.appendChild(b); }); }
 function renderPanel(){ const m=MODULES[active]; panel.innerHTML='<div class="cat">'+m.g+'</div><h3>'+m.n+'</h3><p>'+m.p+'</p><span class="st">In development</span>'; }
@@ -500,6 +535,7 @@ buildNav(); renderPanel();
       sx.beginPath(); series.forEach(function(v,i){ var x=i/(series.length-1)*sW, y=sH-(v/100)*(sH-10)-4; i?sx.lineTo(x,y):sx.moveTo(x,y); });
       var grad=sx.createLinearGradient(0,0,0,sH); grad.addColorStop(0,'rgba(232,37,53,.28)'); grad.addColorStop(1,'rgba(232,37,53,0)'); sx.lineTo(sW,sH); sx.lineTo(0,sH); sx.closePath(); sx.fillStyle=grad; sx.fill();
       sx.beginPath(); series.forEach(function(v,i){ var x=i/(series.length-1)*sW, y=sH-(v/100)*(sH-10)-4; i?sx.lineTo(x,y):sx.moveTo(x,y); });
+      var last=series[series.length-1];
       sx.strokeStyle=last>=85?'#ff1a4a':'#ff4a6a'; sx.lineWidth=1.6; sx.stroke()
       var ex=sW, ey=sH-(last/100)*(sH-10)-4; sx.fillStyle=last>=85?'#ff1a4a':'#ff5a8a'; sx.beginPath(); sx.arc(ex-2,ey,2.4,0,6.283); sx.fill();
       requestAnimationFrame(sframe);
@@ -509,11 +545,11 @@ buildNav(); renderPanel();
 })();
 </script>
 <script>
-(function(){ var modes=[{id:'',name:'Halo'},{id:'lockon',name:'Lock-On'}]; var b=document.getElementById('emblemBtn'),i=0; try{ var s=localStorage.getItem('xyphon-emblem'); if(s!==null){ for(var j=0;j<modes.length;j++) if(modes[j].id===s) i=j; } } catch(e){} function ap(){ var m=modes[i]; if(m.id) document.body.setAttribute('data-emblem',m.id); else document.body.removeAttribute('data-emblem'); b.textContent=m.name; try{ localStorage.setItem('xyphon-emblem',m.id); } catch(e){} } b.addEventListener('click',function(){ i=(i+1)%modes.length; ap(); }); ap(); })();
+(function(){ var modes=[{id:'',name:'Halo'},{id:'lockon',name:'Lock-On'}]; var b=document.getElementById('emblemBtn'),i=1; try{ var s=localStorage.getItem('xyphon-emblem'); if(s!==null){ for(var j=0;j<modes.length;j++) if(modes[j].id===s) i=j; } } catch(e){} function ap(){ var m=modes[i]; if(m.id) document.body.setAttribute('data-emblem',m.id); else document.body.removeAttribute('data-emblem'); b.textContent=m.name; try{ localStorage.setItem('xyphon-emblem',m.id); } catch(e){} } b.addEventListener('click',function(){ i=(i+1)%modes.length; ap(); }); ap(); })();
 </script>
 <script src="livemap.js"></script>
 <script>
-  if(window.initLiveMap) initLiveMap({ canvas:'tmap', feed:'tfeed', counter:'tcount', palette:{dot:'rgba(150,128,104,.30)', arcs:['#e82535','#ff2070','#ff1a4a'], hub:'#ff5a8a'}, types:['Strain design','Resistance test','Immune study','Vaccine test','Fungi experiment','Virology','Organ growth'], rate:820 });
+  if(window.initLiveMap) initLiveMap({ canvas:'tmap', feed:'tfeed', counter:'tcount', palette:{dot:'rgba(150,128,104,.30)', arcs:['#e82535','#ff2070','#ff1a4a'], hub:'#ff5a8a'}, types:['Sample intake','Organoid culture','Resistance test','Compound screen','Engraftment check','Genomic match','Cure candidate'], rate:820 });
 </script>
 </body>
 </html>

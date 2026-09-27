@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="tac-green" data-font="oswald">
+<html lang="en" data-theme="tac-light" data-font="oswald">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WEEKDAY CATS — Tactical Plushie Division</title>
-<link rel="icon" type="image/png" href="assets/angelcorp.png">
+<link rel="icon" type="image/jpeg" href="assets/weekday-cats/icons/en-monday.jpg">
 <meta name="description" content="WEEKDAY CATS — one cat for each weekday. Plushies, merch, prints, stickers. English and Arabic. Tactical edition.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,13 +46,15 @@
     --red:#8a1a16; --red2:#a82020; --red-deep:#5a0a0a;
     --pat-opacity:.10;
   }
+  /* tac-light is the cutesie default: soft blush background, sage-mint green,
+     coral red — same "tactical" language, softened presentation */
   body[data-theme="tac-light"]{
-    --bg:#f0ead2; --bg2:#f6efdc; --bg3:#fbf4e4; --raise:#faf4e8;
-    --line:#d8c8a8; --line-acc:rgba(120,90,40,.12);
-    --paper:#1a1510; --steel:#5a4a30; --faint:#8a7a5a;
-    --green:#2a5a1a; --green2:#3a6a2a; --green-soft:rgba(40,80,20,.10);
-    --red:#8a2010; --red2:#a82818; --red-deep:#5a0a05;
-    --pat-opacity:.07;
+    --bg:#fdf1ee; --bg2:#fff8f6; --bg3:#fffcfb; --raise:#ffffff;
+    --line:#f0d9d2; --line-acc:rgba(95,174,122,.16);
+    --paper:#3a2420; --steel:#8a6a60; --faint:#b89a90;
+    --green:#4a9a6a; --green2:#5fae7a; --green-soft:rgba(95,174,122,.12);
+    --red:#e0574a; --red2:#e2685a; --red-deep:#b8402f;
+    --pat-opacity:.22;
   }
   body[data-theme="tac-red"]{
     --bg:#1a0e0c; --bg2:#241410; --bg3:#2e1a14; --raise:#382018;
@@ -66,9 +68,12 @@
   html{scroll-behavior:smooth}
   body{font-family:var(--body);background:var(--bg);color:var(--paper);line-height:1.6;
     -webkit-font-smoothing:antialiased;overflow-x:hidden}
+  /* Tessellation pattern (same tile ALLSEER's main page defaults to), scaled up
+     bigger here so the repeat reads clearly instead of going busy/small */
   .bgpat{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background-image:url("pat-3.jpg");background-size:cover;background-position:center;background-repeat:no-repeat;
-    opacity:var(--pat-opacity);filter:invert(1)}
+    background-image:url("bg-geo.jpg");background-size:1200px auto;background-repeat:repeat;
+    opacity:var(--pat-opacity);filter:invert(1) contrast(1.15)}
+  body[data-theme="tac-light"] .bgpat{filter:none}
   a{color:inherit;text-decoration:none}
   h1,h2,h3,h4{font-family:var(--disp);text-transform:uppercase;letter-spacing:.02em;
     text-wrap:balance;line-height:1.06}
@@ -94,19 +99,19 @@
     height:60px;flex-wrap:wrap}
   .brand{display:flex;align-items:center;gap:10px}
   .brand .insignia{width:32px;height:32px;flex:none;border:1px solid var(--green);
-    border-radius:4px;background:var(--bg3);display:flex;align-items:center;justify-content:center;
+    border-radius:16px;background:var(--bg3);display:flex;align-items:center;justify-content:center;
     font-family:var(--strong);font-size:.6rem;color:var(--green);letter-spacing:.1em;
     box-shadow:0 0 0 2px rgba(90,140,70,.08) inset}
   .brand .wm{font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:.08em;
     text-transform:uppercase;color:var(--paper)}
   .brand .wm b{color:var(--green);font-weight:700}
   .unit-tag{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--faint);
-    border:1px solid var(--line);border-radius:3px;padding:4px 9px;text-transform:uppercase;
+    border:1px solid var(--line);border-radius:10px;padding:4px 9px;text-transform:uppercase;
     background:var(--bg2)}
 
   /* ── language toggle (fixed — uses body data-lang) ── */
   .lang-toggle{display:flex;align-items:center;gap:0;border:1px solid var(--line);
-    border-radius:3px;overflow:hidden;background:var(--bg2)}
+    border-radius:10px;overflow:hidden;background:var(--bg2)}
   .lang-toggle button{font-family:var(--disp);font-weight:600;font-size:11px;letter-spacing:.06em;
     padding:7px 12px;cursor:pointer;border:none;color:var(--steel);text-transform:uppercase;
     transition:all .15s;display:flex;align-items:center;gap:6px;background:transparent}
@@ -122,7 +127,7 @@
   @media(max-width:760px){.navlinks{display:none}}
 
   /* ══ THEME SWITCHER ══ */
-  .theme-switch{display:inline-flex;border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--bg2)}
+  .theme-switch{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg2)}
   .theme-switch button{font-family:var(--mono);font-size:9px;letter-spacing:.1em;
     padding:5px 8px;cursor:pointer;border:none;background:transparent;color:var(--steel);
     transition:all .15s;text-transform:uppercase;line-height:1}
@@ -143,7 +148,7 @@
   .strip-in .dot{width:3px;height:3px;background:var(--green);border-radius:50%;opacity:.6}
   body[data-theme="tac-light"] .strip-in .dot{background:var(--red2)}
   .strip-in .ver{margin-left:auto;color:var(--faint)}
-  .strip-in .classmark{color:var(--olive);border:1px solid var(--line);border-radius:2px;
+  .strip-in .classmark{color:var(--olive);border:1px solid var(--line);border-radius:7px;
     padding:2px 6px;font-weight:700}
 
   /* ══ HERO ══ */
@@ -157,7 +162,7 @@
   body[data-theme="tac-light"] .hero .sub{color:var(--faint)}
   .hero .cta{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap}
   .btn{font-family:var(--disp);font-weight:600;font-size:11.5px;letter-spacing:.08em;
-    padding:11px 20px;border-radius:3px;cursor:pointer;border:1px solid transparent;
+    padding:11px 20px;border-radius:10px;cursor:pointer;border:1px solid transparent;
     transition:transform .12s,filter .15s,border-color .15s;text-transform:uppercase;
     display:inline-flex;align-items:center;gap:8px}
   .btn:hover{transform:translateY(-1px)}
@@ -185,40 +190,47 @@
   .daygrid{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
   @media(max-width:980px){.daygrid{grid-template-columns:repeat(4,1fr)}}
   @media(max-width:540px){.daygrid{grid-template-columns:repeat(2,1fr)}}
-  .daycard{border:1px solid var(--line);border-radius:4px;padding:16px 10px;
+  .daycard{border:1px solid var(--line);border-radius:16px;padding:16px 10px;
     background:var(--bg2);text-align:center;display:flex;flex-direction:column;
     align-items:center;gap:8px;transition:all .15s;position:relative;overflow:hidden;
     box-shadow:0 2px 6px rgba(0,0,0,.3) inset}
   .daycard:hover{border-color:var(--green);box-shadow:0 0 0 1px var(--green) inset,
     0 6px 18px -6px rgba(90,140,70,.2);transform:translateY(-2px)}
   body[data-theme="tac-light"] .daycard:hover{border-color:var(--red2);box-shadow:0 0 0 1px var(--red2) inset,0 6px 18px -6px rgba(184,48,42,.2)}
-  .daycard .day-icon-wrap{position:relative;width:64px;height:64px;border-radius:50%;
+  /* boxed, not circle-cropped — and the img rule below (width/height/object-fit)
+     was missing before, which is why every icon rendered at native size and
+     showed only a tiny corner of the photo inside this small frame */
+  .daycard .day-icon-wrap{position:relative;width:98px;height:98px;border-radius:14px;
     overflow:hidden;border:2px solid var(--line);background:var(--bg3);
     display:flex;align-items:center;justify-content:center;
     box-shadow:0 0 0 1px rgba(90,140,70,.08) inset}
   body[data-theme="tac-light"] .daycard .day-icon-wrap{border-color:var(--line);box-shadow:none}
+  .daycard .day-icon-wrap img{width:100%;height:100%;object-fit:cover;display:block}
   .daycard .day-icon-overlay{position:absolute;inset:0;
-    background:linear-gradient(180deg,transparent 40%,rgba(6,8,6,.55) 100%)}
-  .daycard .day-icon-wrap::after{content:"";position:absolute;inset:0;border-radius:50%;
+    background:linear-gradient(180deg,transparent 55%,rgba(6,8,6,.4) 100%)}
+  body[data-theme="tac-light"] .daycard .day-icon-overlay{background:linear-gradient(180deg,transparent 65%,rgba(60,36,32,.18) 100%)}
+  .daycard .day-icon-wrap::after{content:"";position:absolute;inset:0;border-radius:14px;
     border:1px solid rgba(90,140,70,.12)}
   .daycard .daynum{font-family:var(--mono);font-size:8px;letter-spacing:.14em;
     color:var(--faint);text-transform:uppercase;margin-top:4px}
   .daycard .dayname{font-family:var(--disp);font-weight:700;font-size:.86rem;
     text-transform:uppercase;color:var(--paper);letter-spacing:.04em;line-height:1.1}
-  body[data-theme="tac-light"] .daycard .dayname{color:var(--bg)}
+  /* was color:var(--bg) — the light background colour used as text colour,
+     making the day name nearly invisible on the light-theme card */
+  body[data-theme="tac-light"] .daycard .dayname{color:var(--paper)}
   .daycard .daydesc{font-size:.64rem;color:var(--steel);font-weight:400;
     line-height:1.35;max-width:100px;margin-top:2px}
   body[data-theme="tac-light"] .daycard .daydesc{color:var(--faint)}
   .daycard .unit-stamp{position:absolute;top:6px;right:6px;font-family:var(--mono);
     font-size:7px;letter-spacing:.1em;color:var(--green);border:1px solid var(--green);
-    border-radius:2px;padding:1px 4px;background:rgba(90,140,70,.08);text-transform:uppercase}
+    border-radius:7px;padding:1px 4px;background:rgba(90,140,70,.08);text-transform:uppercase}
   body[data-theme="tac-light"] .daycard .unit-stamp{color:var(--red2);border-color:var(--red2);background:rgba(184,48,42,.08)}
 
   /* ══ CAT SHELF — EQUIPMENT CRATES ══ */
   .catshelf{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:4px}
   @media(max-width:820px){.catshelf{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:440px){.catshelf{grid-template-columns:1fr}}
-  .catcard{border:1px solid var(--line);border-radius:4px;overflow:hidden;
+  .catcard{border:1px solid var(--line);border-radius:16px;overflow:hidden;
     background:var(--bg2);display:flex;flex-direction:column;text-align:center;
     transition:all .15s;box-shadow:0 2px 8px rgba(0,0,0,.3) inset}
   .catcard:hover{border-color:var(--green);box-shadow:0 0 0 1px var(--green) inset,
@@ -236,14 +248,14 @@
   .catcard .cbody{padding:12px 10px 14px}
   .catcard .ctitle{font-family:var(--disp);font-weight:700;font-size:.82rem;
     text-transform:uppercase;color:var(--paper);letter-spacing:.04em;margin-bottom:3px;line-height:1.15}
-  body[data-theme="tac-light"] .catcard .ctitle{color:var(--bg)}
+  body[data-theme="tac-light"] .catcard .ctitle{color:var(--paper)}
   .catcard .cdesc{font-size:.64rem;color:var(--steel);font-weight:400;
     line-height:1.4;max-width:18ch;margin:0 auto}
   body[data-theme="tac-light"] .catcard .cdesc{color:var(--faint)}
   .catcard .cprice{font-family:var(--mono);font-size:.68rem;color:var(--green);
     letter-spacing:.08em;text-transform:uppercase;margin:8px 0 10px}
   body[data-theme="tac-light"] .catcard .cprice{color:var(--red2)}
-  .catcard .cbtn{padding:6px 14px;border-radius:3px;background:var(--green);color:#060806;
+  .catcard .cbtn{padding:6px 14px;border-radius:10px;background:var(--green);color:#060806;
     font-family:var(--disp);font-size:.6rem;font-weight:700;letter-spacing:.06em;
     text-transform:uppercase;display:inline-block;transition:filter .12s}
   .catcard .cbtn:hover{filter:brightness(1.1)}
@@ -254,7 +266,7 @@
   .arab-cats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:4px}
   @media(max-width:760px){.arab-cats-row{grid-template-columns:repeat(3,1fr)}}
   @media(max-width:440px){.arab-cats-row{grid-template-columns:repeat(2,1fr)}}
-  .arab-catcard{border:1px solid var(--line);border-radius:4px;overflow:hidden;
+  .arab-catcard{border:1px solid var(--line);border-radius:16px;overflow:hidden;
     background:var(--bg2);aspect-ratio:1/1;position:relative;overflow:hidden;
     box-shadow:0 2px 6px rgba(0,0,0,.3) inset;transition:all .15s}
   .arab-catcard:hover{border-color:var(--green);box-shadow:0 0 0 1px var(--green) inset}
@@ -263,34 +275,34 @@
     background:linear-gradient(180deg,transparent 35%,rgba(6,8,6,.6) 100%)}
   .arab-catcard .ac-label{position:absolute;left:8px;bottom:8px;font-family:var(--disp);
     font-weight:700;font-size:.6rem;color:var(--green);background:rgba(6,8,6,.7);
-    padding:2px 6px;border-radius:2px;text-transform:uppercase;letter-spacing:.04em}
+    padding:2px 6px;border-radius:7px;text-transform:uppercase;letter-spacing:.04em}
   body[data-theme="tac-light"] .arab-catcard .ac-label{color:var(--red2)}
 
   /* ══ ARROWS — ORDNANCE STRIP ══ */
   .arrowstray{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
   @media(max-width:640px){.arrowstray{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:400px){.arrowstray{grid-template-columns:1fr}}
-  .arrowcard{border:1px solid var(--line);border-radius:4px;overflow:hidden;
+  .arrowcard{border:1px solid var(--line);border-radius:16px;overflow:hidden;
     background:var(--bg2);position:relative;aspect-ratio:16/9;overflow:hidden;
     transition:all .15s;box-shadow:0 2px 8px rgba(0,0,0,.3) inset}
   .arrowcard:hover{border-color:var(--green);box-shadow:0 0 0 1px var(--green) inset}
   .arrowcard img{width:100%;height:100%;object-fit:cover;display:block}
   .arrowcard .arrow-label{position:absolute;left:8px;bottom:8px;font-family:var(--mono);
     font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--paper);
-    background:rgba(6,8,6,.75);padding:2px 6px;border-radius:2px;border:1px solid var(--line);
+    background:rgba(6,8,6,.75);padding:2px 6px;border-radius:7px;border:1px solid var(--line);
     backdrop-filter:blur(2px)}
   .arrowcard .arrow-tag{position:absolute;right:8px;top:8px;font-family:var(--strong);
-    font-size:.5rem;color:var(--paper);background:var(--green);padding:2px 6px;border-radius:2px;
+    font-size:.5rem;color:var(--paper);background:var(--green);padding:2px 6px;border-radius:7px;
     letter-spacing:.08em;text-transform:uppercase}
 
   /* ══ EXPLANATION — SITUATION REPORT ══ */
   .sitrept{margin-top:28px;border-top:1px solid var(--line);padding-top:24px;
-    text-align:center;border:1px solid var(--line);border-radius:4px;background:var(--bg2)}
+    text-align:center;border:1px solid var(--line);border-radius:16px;background:var(--bg2)}
   .sitrept .sr-title{font-family:var(--strong);font-weight:400;font-size:1.4rem;
     color:var(--paper);margin-bottom:14px;letter-spacing:.08em;text-transform:uppercase}
   .sitrept .sr-title b{color:var(--green)}
   .sitrept .sr-img-wrap{position:relative;width:100%;max-width:860px;margin:0 auto;
-    border-radius:4px;overflow:hidden;border:1px solid var(--line);background:var(--bg3)}
+    border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--bg3)}
   .sitrept .sr-img-wrap img{width:100%;height:auto;display:block;object-fit:contain}
   .sitrept .sr-caption{margin-top:12px;font-size:.76rem;color:var(--faint);
     font-weight:400;max-width:46ch;margin-inline:auto;font-family:var(--mono);
@@ -301,7 +313,7 @@
   /* ══ STORE TILES ══ */
   .store-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:18px}
   .store-tile{flex:1;min-width:180px;max-width:280px;border:1px solid var(--line);
-    border-radius:4px;background:var(--bg2);padding:24px 18px;text-align:center;
+    border-radius:16px;background:var(--bg2);padding:24px 18px;text-align:center;
     transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:8px;
     box-shadow:0 2px 8px rgba(0,0,0,.3) inset}
   .store-tile:hover{border-color:var(--green);box-shadow:0 0 0 1px var(--green) inset}
@@ -310,11 +322,11 @@
     justify-content:center;font-size:1.6rem}
   .store-tile .st-title{font-family:var(--disp);font-weight:700;font-size:.82rem;
     text-transform:uppercase;color:var(--paper);letter-spacing:.04em}
-  body[data-theme="tac-light"] .store-tile .st-title{color:var(--bg)}
+  body[data-theme="tac-light"] .store-tile .st-title{color:var(--paper)}
   .store-tile .st-desc{font-size:.7rem;color:var(--steel);font-weight:400;
     line-height:1.4;max-width:20ch}
   body[data-theme="tac-light"] .store-tile .st-desc{color:var(--faint)}
-  .store-tile .st-btn{padding:7px 16px;border-radius:3px;background:var(--green);
+  .store-tile .st-btn{padding:7px 16px;border-radius:10px;background:var(--green);
     color:#060806;font-family:var(--disp);font-size:.6rem;font-weight:700;
     letter-spacing:.06em;text-transform:uppercase;display:inline-block}
   .store-tile .st-btn:hover{filter:brightness(1.1)}
@@ -339,7 +351,7 @@
     display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
   .foot .l{display:flex;align-items:center;gap:10px}
   .foot .l .insignia{width:20px;height:20px;border:1px solid var(--green);
-    border-radius:3px;background:var(--bg3);display:flex;align-items:center;justify-content:center;
+    border-radius:10px;background:var(--bg3);display:flex;align-items:center;justify-content:center;
     font-family:var(--strong);font-size:.5rem;color:var(--green)}
   .foot .l .wm{font-family:var(--disp);font-weight:600;font-size:13px;letter-spacing:.06em;
     text-transform:uppercase;color:var(--paper)}
@@ -351,7 +363,7 @@
   @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
-<body data-theme="tac-green" data-font="oswald" data-lang="en">
+<body data-theme="tac-light" data-font="oswald" data-lang="en">
 <span class="bgpat" aria-hidden="true"></span>
 
 <!-- ══ TOP BAR ══ -->
@@ -359,22 +371,27 @@
   <div class="wrap topbar-in">
     <a class="brand" href="omni.html">
       <div class="insignia">W</div>
-      <span class="wm">WEEKDAY <b>CATS</b></span>
+      <span class="wm lang-en">WEEKDAY <b>CATS</b></span>
+      <span class="wm lang-ar" dir="rtl">قطط <b>الأسبوع</b></span>
     </a>
     <div class="lang-toggle" id="langToggle">
           <button data-lang="en" class="active"><span class="flag-icon">🇬🇧</span>English</button>
           <button data-lang="ar"><span class="ar-flag"></span>العربية</button>
         </div>
         <div class="theme-switch" id="themeToggle">
-          <button data-theme="tac-green" class="active"><span></span>Dark</button>
-          <button data-theme="tac-light"><span></span>Light</button>
+          <button data-theme="tac-green"><span></span>Dark</button>
+          <button data-theme="tac-light" class="active"><span></span>Light</button>
           <button data-theme="tac-red"><span></span>Red</button>
         </div>
         <div class="navlinks">
-      <a href="#the-days">Days</a>
-      <a href="#cats">Plushies</a>
-      <a href="#arrows">Ord'nance</a>
-      <a href="#story">SitRep</a>
+      <a href="#the-days" class="lang-en">Days</a>
+      <a href="#cats" class="lang-en">Plushies</a>
+      <a href="#arrows" class="lang-en">Ord'nance</a>
+      <a href="#story" class="lang-en">SitRep</a>
+      <a href="#the-days" class="lang-ar" dir="rtl">الأيام</a>
+      <a href="#cats" class="lang-ar" dir="rtl">الحيوانات المحشوة</a>
+      <a href="#arrows" class="lang-ar" dir="rtl">العتاد</a>
+      <a href="#story" class="lang-ar" dir="rtl">التقرير</a>
     </div>
   </div>
 </nav>
@@ -383,10 +400,12 @@
 <div class="strip">
   <div class="wrap" style="display:flex;align-items:center;gap:24px;height:28px">
     <div class="strip-in" style="width:100%">
-      <span class="a">WEEKDAY CATS // TACTICAL PLUSHIE DIVISION</span>
+      <span class="a lang-en">WEEKDAY CATS // TACTICAL PLUSHIE DIVISION</span>
+      <span class="a lang-ar" dir="rtl">قطط الأسبوع // فرقة الحيوانات المحشوة التكتيكية</span>
       <span class="dot"></span>
       <span class="classmark">CL<br>IV</span>
-      <span class="ver">BUILD 0.9 · PLUSHIE OPS</span>
+      <span class="ver lang-en">BUILD 0.9 · PLUSHIE OPS</span>
+      <span class="ver lang-ar" dir="rtl">إصدار 0.9 · عمليات الحيوانات المحشوة</span>
     </div>
   </div>
 </div>
@@ -395,24 +414,42 @@
 <header class="hero">
   <div class="wrap hero-in">
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px">
-      <span style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
-        color:var(--steel);border:1px solid var(--line);border-radius:3px;padding:4px 10px;
+      <span class="lang-en" style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+        color:var(--steel);border:1px solid var(--line);border-radius:10px;padding:4px 10px;
         background:var(--bg2)">MISSION: ONE CAT PER DAY</span>
-      <span style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
-        color:var(--faint);border:1px solid var(--line);border-radius:3px;padding:4px 10px;
+      <span class="lang-en" style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+        color:var(--faint);border:1px solid var(--line);border-radius:10px;padding:4px 10px;
         background:var(--bg2)">THEATRE: PRINTIFY + REDBUBBLE</span>
+      <span class="lang-ar" dir="rtl" style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+        color:var(--steel);border:1px solid var(--line);border-radius:10px;padding:4px 10px;
+        background:var(--bg2)">المهمة: قطة واحدة لكل يوم</span>
+      <span class="lang-ar" dir="rtl" style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+        color:var(--faint);border:1px solid var(--line);border-radius:10px;padding:4px 10px;
+        background:var(--bg2)">المتجر: Printify + Redbubble</span>
     </div>
-    <h1>WEEKDAY<br><span style="color:var(--green)">CATS</span></h1>
-    <p class="sub">One cat for each weekday. Plushies, merch, prints, stickers — presented as tactical equipment. <b style="color:var(--paper)">Seven cats. Seven days. All plushies. All just cats.</b> English and Arabic.</p>
-    <div class="cta">
+    <h1 class="lang-en">WEEKDAY<br><span style="color:var(--green)">CATS</span></h1>
+    <h1 class="lang-ar" dir="rtl">قطط<br><span style="color:var(--green)">الأسبوع</span></h1>
+    <p class="sub lang-en">One cat for each weekday. Plushies, merch, prints, stickers — presented as tactical equipment. <b style="color:var(--paper)">Seven cats. Seven days. All plushies. All just cats.</b> English and Arabic.</p>
+    <p class="sub lang-ar" dir="rtl" style="text-align:right">قطة واحدة لكل يوم من أيام الأسبوع. حيوانات محشوة، بضائع، مطبوعات، ملصقات — معروضة كمعدات تكتيكية. <b style="color:var(--paper)">سبع قطط. سبعة أيام. كلها حيوانات محشوة. كلها مجرد قطط.</b> بالإنجليزية والعربية.</p>
+    <div class="cta lang-en">
       <a href="#the-days" class="btn btn-primary">View the Days</a>
       <a href="#cats" class="btn btn-ghost">Equip Plushies</a>
     </div>
-    <div class="meta">
+    <div class="cta lang-ar" dir="rtl">
+      <a href="#the-days" class="btn btn-primary">عرض الأيام</a>
+      <a href="#cats" class="btn btn-ghost">تجهيز الحيوانات المحشوة</a>
+    </div>
+    <div class="meta lang-en">
       <span><i></i>7 cats · 7 days</span>
       <span><i></i>English + Arabic theatres</span>
       <span><i></i>Printify · Redbubble</span>
       <span><i></i>Tactical edition</span>
+    </div>
+    <div class="meta lang-ar" dir="rtl">
+      <span><i></i>7 قطط · 7 أيام</span>
+      <span><i></i>مسارح إنجليزية وعربية</span>
+      <span><i></i>Printify · Redbubble</span>
+      <span><i></i>إصدار تكتيكي</span>
     </div>
   </div>
 </header>
@@ -420,10 +457,15 @@
 <!-- ═══ THE DAYS ═══ -->
 <section id="the-days" class="band">
   <div class="wrap">
-    <div class="band-head">
+    <div class="band-head lang-en">
       <span class="eyebrow">DAY GRID — 7 CATS · 7 DAYS</span>
       <h2 style="margin-bottom:10px">The <span style="color:var(--green)">7 Days</span>. 7 cats.</h2>
       <p>One cat for each weekday — Monday through Sunday. Different cat, different day, same plushie quality. Each day has its own cat, its own station. Tap a day to identify the asset.</p>
+    </div>
+    <div class="band-head lang-ar" dir="rtl">
+      <span class="eyebrow">شبكة الأيام — 7 قطط · 7 أيام</span>
+      <h2 style="margin-bottom:10px">الأيام <span style="color:var(--green)">السبعة</span>. 7 قطط.</h2>
+      <p>قطة واحدة لكل يوم من أيام الأسبوع — من الإثنين إلى الأحد. قطة مختلفة، يوم مختلف، نفس جودة الحشو. لكل يوم قطته الخاصة، ومحطته الخاصة.</p>
     </div>
 
     <!-- ENGLISH day cards -->
@@ -481,54 +523,56 @@
       </div>
     </div>
 
-    <!-- ARABIC day cards -->
+    <!-- ARABIC day cards — icons cropped from the labeled all-7-cats illustration,
+         each headband verified to actually say that day's name in Arabic
+         (the old files here mismatched three days and repeated one image twice) -->
     <div class="lang-ar">
       <div class="daygrid">
         <div class="daycard">
           <span class="unit-stamp">اليوم 01</span>
-          <div class="day-icon-wrap"><img src="assets/weekday-cats/arabic/arabic.jpg" alt="إثنين" loading="eager"><div class="day-icon-overlay"></div></div>
+          <div class="day-icon-wrap"><img src="assets/weekday-cats/icons/ar-monday.jpg" alt="الإثنين" loading="eager"><div class="day-icon-overlay"></div></div>
           <div class="daynum">إث</div>
           <div class="dayname">الإثنين</div>
           <div class="daydesc" style="direction:rtl;text-align:right">يبدأ الأسبوع. بجد.</div>
         </div>
         <div class="daycard">
           <span class="unit-stamp">اليوم 02</span>
-          <div class="day-icon-wrap"><img src="assets/weekday-cats/arabic/arabic (1).jpg" alt="ثلاثاء" loading="lazy"><div class="day-icon-overlay"></div></div>
-          <div class="daynum">ثث</div>
+          <div class="day-icon-wrap"><img src="assets/weekday-cats/icons/ar-tuesday.jpg" alt="الثلاثاء" loading="lazy"><div class="day-icon-overlay"></div></div>
+          <div class="daynum">ثل</div>
           <div class="dayname">الثلاثاء</div>
-          <div class="daydesc" style="direction:rtl;text-align:right">فوق أول جب.</div>
+          <div class="daydesc" style="direction:rtl;text-align:right">فوق أول عقبة.</div>
         </div>
         <div class="daycard">
           <span class="unit-stamp">اليوم 03</span>
-          <div class="day-icon-wrap"><img src="assets/weekday-cats/arabic/arabic (2).jpg" alt="أربعاء" loading="lazy"><div class="day-icon-overlay"></div></div>
+          <div class="day-icon-wrap"><img src="assets/weekday-cats/icons/ar-wednesday.jpg" alt="الأربعاء" loading="lazy"><div class="day-icon-overlay"></div></div>
           <div class="daynum">أر</div>
           <div class="dayname">الأربعاء</div>
-          <div class="daydesc" style="direction:rtl;text-align:right">يوم الجب. هنا.</div>
+          <div class="daydesc" style="direction:rtl;text-align:right">منتصف الأسبوع. هنا بالضبط.</div>
         </div>
         <div class="daycard">
           <span class="unit-stamp">اليوم 04</span>
-          <div class="day-icon-wrap"><img src="assets/weekday-cats/arabic/arabic (3).jpg" alt="خميس" loading="lazy"><div class="day-icon-overlay"></div></div>
+          <div class="day-icon-wrap"><img src="assets/weekday-cats/icons/ar-thursday.jpg" alt="الخميس" loading="lazy"><div class="day-icon-overlay"></div></div>
           <div class="daynum">خم</div>
           <div class="dayname">الخميس</div>
-          <div class="daydesc" style="direction:rtl;text-align:right">تقريبًا عطلة.</div>
+          <div class="daydesc" style="direction:rtl;text-align:right">تقريبًا نهاية الأسبوع.</div>
         </div>
         <div class="daycard">
           <span class="unit-stamp">اليوم 05</span>
-          <div class="day-icon-wrap"><img src="assets/weekday-cats/arabic/arabic (4).jpg" alt="جمعة" loading="lazy"><div class="day-icon-overlay"></div></div>
+          <div class="day-icon-wrap"><img src="assets/weekday-cats/icons/ar-friday.jpg" alt="الجمعة" loading="lazy"><div class="day-icon-overlay"></div></div>
           <div class="daynum">جم</div>
           <div class="dayname">الجمعة</div>
-          <div class="daydesc" style="direction:rtl;text-align:right">العطلة ترنّ.</div>
+          <div class="daydesc" style="direction:rtl;text-align:right">عطلة نهاية الأسبوع تقترب.</div>
         </div>
         <div class="daycard">
           <span class="unit-stamp">اليوم 06</span>
-          <div class="day-icon-wrap"><img src="assets/weekday-cats/arabic/arabic (4).jpg" alt="سبت" loading="lazy"><div class="day-icon-overlay"></div></div>
+          <div class="day-icon-wrap"><img src="assets/weekday-cats/icons/ar-saturday.jpg" alt="السبت" loading="lazy"><div class="day-icon-overlay"></div></div>
           <div class="daynum">سب</div>
           <div class="dayname">السبت</div>
           <div class="daydesc" style="direction:rtl;text-align:right">يوم راحة. لا منبهات.</div>
         </div>
         <div class="daycard">
           <span class="unit-stamp">اليوم 07</span>
-          <div class="day-icon-wrap"><img src="assets/weekday-cats/arabic/arabic.jpg" alt="أحد" loading="lazy"><div class="day-icon-overlay"></div></div>
+          <div class="day-icon-wrap"><img src="assets/weekday-cats/icons/ar-sunday.jpg" alt="الأحد" loading="lazy"><div class="day-icon-overlay"></div></div>
           <div class="daynum">أح</div>
           <div class="dayname">الأحد</div>
           <div class="daydesc" style="direction:rtl;text-align:right">يوم راحة. إعادة ضبط.</div>
@@ -541,109 +585,104 @@
 <!-- ═══ CATS / PLUSHIES ═══ -->
 <section id="cats" class="band">
   <div class="wrap">
-    <div class="band-head">
+    <div class="band-head lang-en">
       <span class="eyebrow">PLUSHIE OPS — EQUIPMENT CRATES</span>
       <h2 style="margin-bottom:10px">The <span>Plushies</span>. Soft. Collectable.</h2>
-      <p>Real plushies of the weekday cats. One of seven. Get the cat that matches your day — or collect all seven. Each plushie is a deployable asset.</p>
+      <p>Real plushies of the weekday cats. Get the cat that matches your day — or collect all seven. Each plushie is a deployable asset.</p>
+    </div>
 
-      <!-- ENGLISH plushies -->
-      <div class="lang-en">
-        <div class="catshelf">
-          <div class="catcard">
-            <div class="cimg-wrap"><img src="assets/weekday-cats/plushies/english.jpg" alt="Full set plushie" loading="lazy"><div class="cimg-overlay"></div></div>
-            <div class="cbody">
-              <div class="ctitle">Full Set · ALL 7</div>
-              <div class="cdesc">All seven weekday cats, as a set of plushies. The complete collection.</div>
-              <div class="cprice">$174.93</div>
-              <div class="cbtn">Equip All</div>
-            </div>
+    <!-- ENGLISH plushies — three real product photos exist (Monday, Friday,
+         Saturday, confirmed by the headband each one is actually wearing);
+         the other two card slots used to show group photos of all six cats
+         mislabeled as a single day, so they're swapped for the photos that
+         are actually correct -->
+    <div class="lang-en">
+      <div class="catshelf">
+        <div class="catcard">
+          <div class="cimg-wrap"><img src="assets/weekday-cats/days/AllCats (1).jpg" alt="Full set — all seven weekday cats" loading="lazy"><div class="cimg-overlay"></div></div>
+          <div class="cbody">
+            <div class="ctitle">Full Set · ALL 7</div>
+            <div class="cdesc">All seven weekday cats, as a set of plushies. The complete collection.</div>
+            <div class="cprice">$174.93</div>
+            <div class="cbtn">Equip All</div>
           </div>
-          <div class="catcard">
-            <div class="cimg-wrap"><img src="assets/weekday-cats/plushies/english (1).jpg" alt="Monday plushie" loading="lazy"><div class="cimg-overlay"></div></div>
-            <div class="cbody">
-              <div class="ctitle">MONDAY CAT</div>
-              <div class="cdesc">The Monday cat, as a plushie. Opens the week. Soft. Raw.</div>
-              <div class="cprice">$24.99</div>
-              <div class="cbtn">Equip</div>
-            </div>
+        </div>
+        <div class="catcard">
+          <div class="cimg-wrap"><img src="assets/weekday-cats/plushies/english.jpg" alt="Monday plushie" loading="lazy"><div class="cimg-overlay"></div></div>
+          <div class="cbody">
+            <div class="ctitle">MONDAY CAT</div>
+            <div class="cdesc">The Monday cat, as a plushie. Opens the week. Soft. Raw.</div>
+            <div class="cprice">$24.99</div>
+            <div class="cbtn">Equip</div>
           </div>
-          <div class="catcard">
-            <div class="cimg-wrap"><img src="assets/weekday-cats/plushies/english (2).jpg" alt="Wednesday plushie" loading="lazy"><div class="cimg-overlay"></div></div>
-            <div class="cbody">
-              <div class="ctitle">WEDNESDAY CAT</div>
-              <div class="cdesc">Hump day cat, as a plushie. Right in the middle. Comfort in the middle.</div>
-              <div class="cprice">$24.99</div>
-              <div class="cbtn">Equip</div>
-            </div>
+        </div>
+        <div class="catcard">
+          <div class="cimg-wrap"><img src="assets/weekday-cats/plushies/english (4).jpg" alt="Friday plushie" loading="lazy"><div class="cimg-overlay"></div></div>
+          <div class="cbody">
+            <div class="ctitle">FRIDAY CAT</div>
+            <div class="cdesc">Friday cat, as a plushie. Weekend's coming. Celebrate with soft.</div>
+            <div class="cprice">$24.99</div>
+            <div class="cbtn">Equip</div>
           </div>
-          <div class="catcard">
-            <div class="cimg-wrap"><img src="assets/weekday-cats/plushies/english (3).jpg" alt="Friday plushie" loading="lazy"><div class="cimg-overlay"></div></div>
-            <div class="cbody">
-              <div class="ctitle">FRIDAY CAT</div>
-              <div class="cdesc">Friday cat, as a plushie. Weekend's coming. Celebrate with soft.</div>
-              <div class="cprice">$24.99</div>
-              <div class="cbtn">Equip</div>
-            </div>
-          </div>
-          <div class="catcard">
-            <div class="cimg-wrap"><img src="assets/weekday-cats/plushies/english (4).jpg" alt="Sunday plushie" loading="lazy"><div class="cimg-overlay"></div></div>
-            <div class="cbody">
-              <div class="ctitle">SUNDAY CAT</div>
-              <div class="cdesc">Sunday cat, as a plushie. Rest day. Calm. Reset soft.</div>
-              <div class="cprice">$24.99</div>
-              <div class="cbtn">Equip</div>
-            </div>
+        </div>
+        <div class="catcard">
+          <div class="cimg-wrap"><img src="assets/weekday-cats/plushies/english (3).jpg" alt="Saturday plushie" loading="lazy"><div class="cimg-overlay"></div></div>
+          <div class="cbody">
+            <div class="ctitle">SATURDAY CAT</div>
+            <div class="cdesc">Saturday cat, as a plushie. Day off. Calm. Reset soft.</div>
+            <div class="cprice">$24.99</div>
+            <div class="cbtn">Equip</div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- ARABIC plushies -->
-      <div class="lang-ar">
-        <div class="catshelf">
-          <div class="catcard">
-            <div class="cimg-wrap"><img src="assets/weekday-cats/arabic/AllCats (2).jpg" alt="مجموعة القطط الكاملة" loading="lazy"><div class="cimg-overlay"></div></div>
-            <div class="cbody">
-              <div class="ctitle" style="font-family:var(--disp)">مجموعة كاملة · كل 7</div>
-              <div class="cdesc" style="direction:rtl;text-align:right">كل قطط الأسبوع السبعة، كمجموعة من الحيوانات المرصوصة. المجموعة الكاملة.</div>
-              <div class="cprice">174.93 ر.س</div>
-              <div class="cbtn" style="font-family:var(--disp)"> equipping الكل</div>
-            </div>
+    <div class="band-head lang-ar" dir="rtl">
+      <span class="eyebrow">عمليات الحيوانات المحشوة — صناديق المعدات</span>
+      <h2 style="margin-bottom:10px">الحيوانات <span>المحشوة</span>. ناعمة. للتجميع.</h2>
+      <p>حيوانات محشوة حقيقية لقطط الأسبوع. احصل على القطة التي تطابق يومك — أو اجمعها كلها.</p>
+    </div>
+
+    <!-- ARABIC plushies — only three individual product photos actually exist
+         (Friday, Saturday, Sunday, confirmed by each headband's real text);
+         the old cards mislabeled two of these as Monday/Wednesday and used
+         a group photo of all six cats for a fourth slot -->
+    <div class="lang-ar" dir="rtl">
+      <div class="catshelf">
+        <div class="catcard">
+          <div class="cimg-wrap"><img src="assets/weekday-cats/arabic/AllCats (2).jpg" alt="مجموعة القطط الكاملة" loading="lazy"><div class="cimg-overlay"></div></div>
+          <div class="cbody">
+            <div class="ctitle" style="font-family:var(--disp)">مجموعة كاملة · كل 7</div>
+            <div class="cdesc" style="direction:rtl;text-align:right">كل قطط الأسبوع السبعة، كمجموعة من الحيوانات المحشوة. المجموعة الكاملة.</div>
+            <div class="cprice">174.93 ر.س</div>
+            <div class="cbtn" style="font-family:var(--disp)">تجهيز الكل</div>
           </div>
-          <div class="catcard">
-            <div class="cimg-wrap"><img src="assets/weekday-cats/arabic/arabic (1).jpg" alt="قط الإثنين" loading="lazy"><div class="cimg-overlay"></div></div>
-            <div class="cbody">
-              <div class="ctitle" style="font-family:var(--disp)">قطط الإثنين</div>
-              <div class="cdesc" style="direction:rtl;text-align:right">قط الإثنين، كحيوان مرفوع. يبدأ الأسبوع. ناعم. خام.</div>
-              <div class="cprice">24.99 ر.س</div>
-              <div class="cbtn" style="font-family:var(--disp)"> equipping</div>
-            </div>
+        </div>
+        <div class="catcard">
+          <div class="cimg-wrap"><img src="assets/weekday-cats/arabic/arabic.jpg" alt="قط الجمعة" loading="lazy"><div class="cimg-overlay"></div></div>
+          <div class="cbody">
+            <div class="ctitle" style="font-family:var(--disp)">قطة الجمعة</div>
+            <div class="cdesc" style="direction:rtl;text-align:right">قطة الجمعة، كحيوان محشو. عطلة نهاية الأسبوع تقترب. احتفل بنعومة.</div>
+            <div class="cprice">24.99 ر.س</div>
+            <div class="cbtn" style="font-family:var(--disp)">تجهيز</div>
           </div>
-          <div class="catcard">
-            <div class="cimg-wrap"><img src="assets/weekday-cats/arabic/arabic (2).jpg" alt="قط الأربعاء" loading="lazy"><div class="cimg-overlay"></div></div>
-            <div class="cbody">
-              <div class="ctitle" style="font-family:var(--disp)">قطط الأربعاء</div>
-              <div class="cdesc" style="direction:rtl;text-align:right">قط الأربعاء، كحيوان مرفوع. في المنتصف. راحة في المنتصف.</div>
-              <div class="cprice">24.99 ر.س</div>
-              <div class="cbtn" style="font-family:var(--disp)"> equipping</div>
-            </div>
+        </div>
+        <div class="catcard">
+          <div class="cimg-wrap"><img src="assets/weekday-cats/arabic/arabic (1).jpg" alt="قط الأحد" loading="lazy"><div class="cimg-overlay"></div></div>
+          <div class="cbody">
+            <div class="ctitle" style="font-family:var(--disp)">قطة الأحد</div>
+            <div class="cdesc" style="direction:rtl;text-align:right">قطة الأحد، كحيوان محشو. يوم راحة. هادئ. إعادة ضبط ناعمة.</div>
+            <div class="cprice">24.99 ر.س</div>
+            <div class="cbtn" style="font-family:var(--disp)">تجهيز</div>
           </div>
-          <div class="catcard">
-            <div class="cimg-wrap"><img src="assets/weekday-cats/arabic/arabic (3).jpg" alt="قط الجمعة" loading="lazy"><div class="cimg-overlay"></div></div>
-            <div class="cbody">
-              <div class="ctitle" style="font-family:var(--disp)">قطط الجمعة</div>
-              <div class="cdesc" style="direction:rtl;text-align:right">قط الجمعة، كحيوان مرفوع. عطلة نهاية الأسبوع تأتي. احتفل بنعومة.</div>
-              <div class="cprice">24.99 ر.س</div>
-              <div class="cbtn" style="font-family:var(--disp)"> equipping</div>
-            </div>
-          </div>
-          <div class="catcard">
-            <div class="cimg-wrap"><img src="assets/weekday-cats/arabic/arabic (4).jpg" alt="قط الأحد" loading="lazy"><div class="cimg-overlay"></div></div>
-            <div class="cbody">
-              <div class="ctitle" style="font-family:var(--disp)">قطط الأحد</div>
-              <div class="cdesc" style="direction:rtl;text-align:right">قط الأحد، كحيوان مرفوع. يوم راحة. هادئ. إعادة ضبط ناعمة.</div>
-              <div class="cprice">24.99 ر.س</div>
-              <div class="cbtn" style="font-family:var(--disp)"> equipping</div>
-            </div>
+        </div>
+        <div class="catcard">
+          <div class="cimg-wrap"><img src="assets/weekday-cats/arabic/arabic (2).jpg" alt="قط السبت" loading="lazy"><div class="cimg-overlay"></div></div>
+          <div class="cbody">
+            <div class="ctitle" style="font-family:var(--disp)">قطة السبت</div>
+            <div class="cdesc" style="direction:rtl;text-align:right">قطة السبت، كحيوان محشو. يوم إجازة. هادئة وناعمة.</div>
+            <div class="cprice">24.99 ر.س</div>
+            <div class="cbtn" style="font-family:var(--disp)">تجهيز</div>
           </div>
         </div>
       </div>
@@ -654,37 +693,42 @@
 <!-- ═══ ARROWS & MINES — ORDNANCE ═══ -->
 <section id="arrows" class="band">
   <div class="wrap">
-    <div class="band-head">
+    <div class="band-head lang-en">
       <span class="eyebrow">ORD'NANCE STRIP — ARROWS &amp; MINES</span>
       <h2 style="margin-bottom:10px">Red <span style="color:var(--green)">Arrows</span> &amp; Mines.</h2>
       <p>The arrows point. The mines wait. Cat merch with attitude — prints, stickers, pins, all the cat stuff that's not just cute. Treat it like ordnance.</p>
+    </div>
+    <div class="band-head lang-ar" dir="rtl">
+      <span class="eyebrow">شريط العتاد — أسهم وألغام</span>
+      <h2 style="margin-bottom:10px">أسهم <span style="color:var(--green)">حمراء</span> وألغام.</h2>
+      <p>الأسهم تشير، الألغام تنتظر. بضائع القطط بشخصية — مطبوعات، ملصقات، دبابيس، كل أشياء القطط التي ليست مجرد لطيفة. تعامل معها كعتاد.</p>
+    </div>
 
-      <!-- ENGLISH -->
-      <div class="lang-en">
-        <div class="arrowstray">
-          <div class="arrowcard"><img src="assets/weekday-cats/arrows/Arrows (1).jpg" alt="Red arrow" loading="lazy"><div class="arrow-label">Arrow · No. 01</div><div class="arrow-tag">RED</div></div>
-          <div class="arrowcard"><img src="assets/weekday-cats/arrows/Arrows (4).jpg" alt="Red arrow" loading="lazy"><div class="arrow-label">Arrow · No. 02</div><div class="arrow-tag">RED</div></div>
-          <div class="arrowcard"><img src="assets/weekday-cats/arrows/Arrows (5).jpg" alt="Red arrow" loading="lazy"><div class="arrow-label">Arrow · No. 03</div><div class="arrow-tag">RED</div></div>
-        </div>
-        <div class="arrowstray" style="margin-top:12px">
-          <div class="arrowcard"><img src="assets/weekday-cats/arrows/Mines (1).jpg" alt="Mine" loading="lazy"><div class="arrow-label">Mine · No. 01</div><div class="arrow-tag">MINE</div></div>
-          <div class="arrowcard"><img src="assets/weekday-cats/arrows/Mines (2).jpg" alt="Mine" loading="lazy"><div class="arrow-label">Mine · No. 02</div><div class="arrow-tag">MINE</div></div>
-          <div class="arrowcard"><img src="assets/weekday-cats/days/RedArrow.jpg" alt="Red arrow" loading="lazy"><div class="arrow-label">Red Arrow · Hero</div><div class="arrow-tag">RED</div></div>
-        </div>
+    <!-- ENGLISH -->
+    <div class="lang-en">
+      <div class="arrowstray">
+        <div class="arrowcard"><img src="assets/weekday-cats/arrows/Arrows (1).jpg" alt="Red arrow" loading="lazy"><div class="arrow-label">Arrow · No. 01</div><div class="arrow-tag">RED</div></div>
+        <div class="arrowcard"><img src="assets/weekday-cats/arrows/Arrows (4).jpg" alt="Red arrow" loading="lazy"><div class="arrow-label">Arrow · No. 02</div><div class="arrow-tag">RED</div></div>
+        <div class="arrowcard"><img src="assets/weekday-cats/arrows/Arrows (5).jpg" alt="Red arrow" loading="lazy"><div class="arrow-label">Arrow · No. 03</div><div class="arrow-tag">RED</div></div>
       </div>
+      <div class="arrowstray" style="margin-top:12px">
+        <div class="arrowcard"><img src="assets/weekday-cats/arrows/Mines (1).jpg" alt="Mine" loading="lazy"><div class="arrow-label">Mine · No. 01</div><div class="arrow-tag">MINE</div></div>
+        <div class="arrowcard"><img src="assets/weekday-cats/arrows/Mines (2).jpg" alt="Mine" loading="lazy"><div class="arrow-label">Mine · No. 02</div><div class="arrow-tag">MINE</div></div>
+        <div class="arrowcard"><img src="assets/weekday-cats/days/RedArrow.jpg" alt="Red arrow" loading="lazy"><div class="arrow-label">Red Arrow · Hero</div><div class="arrow-tag">RED</div></div>
+      </div>
+    </div>
 
-      <!-- ARABIC -->
-      <div class="lang-ar">
-        <div class="arrowstray">
-          <div class="arrowcard"><img src="assets/weekday-cats/arrows/Arrows (1).jpg" alt="سهم أحمر" loading="lazy"><div class="arrow-label" style="direction:rtl;text-align:right">سهم · رقم 01</div><div class="arrow-tag" style="font-family:var(--disp)">أحمر</div></div>
-          <div class="arrowcard"><img src="assets/weekday-cats/arrows/Arrows (4).jpg" alt="سهم أحمر" loading="lazy"><div class="arrow-label" style="direction:rtl;text-align:right">سهم · رقم 02</div><div class="arrow-tag" style="font-family:var(--disp)">أحمر</div></div>
-          <div class="arrowcard"><img src="assets/weekday-cats/arrows/Arrows (5).jpg" alt="سهم أحمر" loading="lazy"><div class="arrow-label" style="direction:rtl;text-align:right">سهم · رقم 03</div><div class="arrow-tag" style="font-family:var(--disp)">أحمر</div></div>
-        </div>
-        <div class="arrowstray" style="margin-top:12px">
-          <div class="arrowcard"><img src="assets/weekday-cats/arrows/Mines (1).jpg" alt="معدن" loading="lazy"><div class="arrow-label" style="direction:rtl;text-align:right">معدن · رقم 01</div><div class="arrow-tag" style="font-family:var(--disp)">معدن</div></div>
-          <div class="arrowcard"><img src="assets/weekday-cats/arrows/Mines (2).jpg" alt="معدن" loading="lazy"><div class="arrow-label" style="direction:rtl;text-align:right">معدن · رقم 02</div><div class="arrow-tag" style="font-family:var(--disp)">معدن</div></div>
-          <div class="arrowcard"><img src="assets/weekday-cats/days/RedArrow.jpg" alt="سهم أحمر" loading="lazy"><div class="arrow-label" style="direction:rtl;text-align:right">سهم أحمر · البطل</div><div class="arrow-tag" style="font-family:var(--disp)">أحمر</div></div>
-        </div>
+    <!-- ARABIC -->
+    <div class="lang-ar" dir="rtl">
+      <div class="arrowstray">
+        <div class="arrowcard"><img src="assets/weekday-cats/arrows/Arrows (1).jpg" alt="سهم أحمر" loading="lazy"><div class="arrow-label" style="direction:rtl;text-align:right">سهم · رقم 01</div><div class="arrow-tag" style="font-family:var(--disp)">أحمر</div></div>
+        <div class="arrowcard"><img src="assets/weekday-cats/arrows/Arrows (4).jpg" alt="سهم أحمر" loading="lazy"><div class="arrow-label" style="direction:rtl;text-align:right">سهم · رقم 02</div><div class="arrow-tag" style="font-family:var(--disp)">أحمر</div></div>
+        <div class="arrowcard"><img src="assets/weekday-cats/arrows/Arrows (5).jpg" alt="سهم أحمر" loading="lazy"><div class="arrow-label" style="direction:rtl;text-align:right">سهم · رقم 03</div><div class="arrow-tag" style="font-family:var(--disp)">أحمر</div></div>
+      </div>
+      <div class="arrowstray" style="margin-top:12px">
+        <div class="arrowcard"><img src="assets/weekday-cats/arrows/Mines (1).jpg" alt="لغم" loading="lazy"><div class="arrow-label" style="direction:rtl;text-align:right">لغم · رقم 01</div><div class="arrow-tag" style="font-family:var(--disp)">لغم</div></div>
+        <div class="arrowcard"><img src="assets/weekday-cats/arrows/Mines (2).jpg" alt="لغم" loading="lazy"><div class="arrow-label" style="direction:rtl;text-align:right">لغم · رقم 02</div><div class="arrow-tag" style="font-family:var(--disp)">لغم</div></div>
+        <div class="arrowcard"><img src="assets/weekday-cats/days/RedArrow.jpg" alt="سهم أحمر" loading="lazy"><div class="arrow-label" style="direction:rtl;text-align:right">سهم أحمر · البطل</div><div class="arrow-tag" style="font-family:var(--disp)">أحمر</div></div>
       </div>
     </div>
   </div>
@@ -694,15 +738,22 @@
 <section id="story" class="band">
   <div class="wrap">
     <div class="sitrept">
-      <div class="sr-title">SITUATION <b>REPORT</b> — The Story of Weekday Cats.</div>
+      <div class="sr-title lang-en">SITUATION <b>REPORT</b> — The Story of Weekday Cats.</div>
+      <div class="sr-title lang-ar" dir="rtl">تقرير <b>الموقف</b> — قصة قطط الأسبوع.</div>
       <div class="sr-img-wrap">
         <img src="assets/weekday-cats/exp/Calendars.jpg" alt="Weekday Cats calendar — situation report" loading="lazy">
       </div>
-      <div class="sr-caption">Weekday Cats — one cat for each weekday. Mon to Sun. All different. All plushies. All just cats. ENG / AR.</div>
-      <div class="sr-body">
+      <div class="sr-caption lang-en">Weekday Cats — one cat for each weekday. Mon to Sun. All different. All plushies. All just cats. ENG / AR.</div>
+      <div class="sr-caption lang-ar" dir="rtl">قطط الأسبوع — قطة واحدة لكل يوم. من الإثنين إلى الأحد. كلها مختلفة. كلها حيوانات محشوة. كلها مجرد قطط. إنجليزي / عربي.</div>
+      <div class="sr-body lang-en">
         <p>Weekday Cats started with a simple idea: one cat for each weekday. Monday cat, Tuesday cat, Wednesday cat, Thursday cat, Friday cat, Saturday cat, Sunday cat — seven cats, seven days, all plushies, all just cats.</p>
         <p style="margin-top:8px">It's not a big idea. It doesn't have to be. The cats are cute. People like cute cat stuff. Put the cats on plushies, put the cats on merch, put the cats on Printify and Redbubble — and that's Weekday Cats.</p>
         <p style="margin-top:8px"><b style="color:var(--paper)">Just cats.</b> That's the whole thing. English and Arabic. Seven days. Seven cats. All plushies. All merch. All Printify and Redbubble.</p>
+      </div>
+      <div class="sr-body lang-ar" dir="rtl" style="text-align:right">
+        <p>بدأت قطط الأسبوع بفكرة بسيطة: قطة واحدة لكل يوم من أيام الأسبوع. قطة الإثنين، قطة الثلاثاء، قطة الأربعاء، قطة الخميس، قطة الجمعة، قطة السبت، قطة الأحد — سبع قطط، سبعة أيام، كلها حيوانات محشوة، كلها مجرد قطط.</p>
+        <p style="margin-top:8px">إنها ليست فكرة كبيرة. ولا داعي لذلك. القطط لطيفة. الناس يحبون أشياء القطط اللطيفة. ضع القطط على الحيوانات المحشوة، ضع القطط على البضائع، ضعها على Printify و Redbubble — وهذه هي قطط الأسبوع.</p>
+        <p style="margin-top:8px"><b style="color:var(--paper)">مجرد قطط.</b> هذا كل شيء. بالإنجليزية والعربية. سبعة أيام. سبع قطط. كلها حيوانات محشوة. كل البضائع. كل شيء على Printify و Redbubble.</p>
       </div>
 
       <!-- ENGLISH stores -->
@@ -724,19 +775,19 @@
       </div>
 
       <!-- ARABIC stores -->
-      <div class="lang-ar" style="margin-top:20px">
+      <div class="lang-ar" dir="rtl" style="margin-top:20px">
         <div class="store-row">
           <div class="store-tile">
             <div class="st-mark">🛍️</div>
             <div class="st-title" style="font-family:var(--disp)">متجر Printify</div>
-            <div class="st-desc" style="direction:rtl;text-align:right">حيوانات مرصوصة ومتعلبات أسبوعية القطة، تُطبع عند الطلب، تُشحن إليك. حيوانات مرصوصة حقيقية. قطط حقيقية.</div>
-            <div class="st-btn" style="font-family:var(--disp)">زر العيارة</div>
+            <div class="st-desc" style="direction:rtl;text-align:right">حيوانات محشوة وبضائع قطط الأسبوع، تُطبع عند الطلب، تُشحن إليك. حيوانات محشوة حقيقية. قطط حقيقية.</div>
+            <div class="st-btn" style="font-family:var(--disp)">زيارة Printify</div>
           </div>
           <div class="store-tile">
             <div class="st-mark">🎨</div>
             <div class="st-title" style="font-family:var(--disp)">متجر Redbubble</div>
-            <div class="st-desc" style="direction:rtl;text-align:right">طباعات فنية، ملصقات، دبابيس، وكل أشياء القطة. للناس الذين يريدون القطط على الأشياء.</div>
-            <div class="st-btn" style="font-family:var(--disp)">زر العيارة</div>
+            <div class="st-desc" style="direction:rtl;text-align:right">طباعات فنية، ملصقات، دبابيس، وكل أشياء القطط. للناس الذين يريدون القطط على أشيائهم.</div>
+            <div class="st-btn" style="font-family:var(--disp)">زيارة Redbubble</div>
           </div>
         </div>
       </div>
@@ -749,9 +800,11 @@
   <div class="foot">
     <div class="l">
       <div class="insignia">W</div>
-      <div class="wm">WEEKDAY <b>CATS</b></div>
+      <div class="wm lang-en">WEEKDAY <b>CATS</b></div>
+      <div class="wm lang-ar" dir="rtl">قطط <b>الأسبوع</b></div>
     </div>
-    <div class="r">One cat per weekday · English &amp; Arabic<br><span class="pmark" style="color:var(--steel)">PRIMAL<sup>APE</sup></span> · tactical plushie division · concept draft</div>
+    <div class="r lang-en">One cat per weekday · English &amp; Arabic<br><span class="pmark" style="color:var(--steel)">PRIMAL<sup>APE</sup></span> · tactical plushie division · concept draft</div>
+    <div class="r lang-ar" dir="rtl">قطة واحدة لكل يوم · إنجليزي وعربي<br><span class="pmark" style="color:var(--steel)">PRIMAL<sup>APE</sup></span> · فرقة الحيوانات المحشوة التكتيكية · مسودة مفهوم</div>
   </div>
 </footer>
 
@@ -761,8 +814,12 @@
   var themeButtons=document.querySelectorAll('#themeToggle button');
   var langButtons=document.querySelectorAll('#langToggle button');
   var activeLang=root.getAttribute('data-lang');
-  var activeTheme=root.getAttribute('data-theme')||'tac-green';
+  var activeTheme=root.getAttribute('data-theme')||'tac-light';
 
+  // Theme and language are independent — either one can be picked with either
+  // the other. (This used to force light theme whenever Arabic was picked,
+  // and force English back whenever light theme was picked, which made it
+  // impossible to actually view the Arabic page in the light/cutesie theme.)
   langButtons.forEach(function(b){
     b.addEventListener('click',function(){
       var lang=b.getAttribute('data-lang');
@@ -771,14 +828,6 @@
       b.classList.add('active');
       try{localStorage.setItem('weekday-cats-lang',lang);}catch(e){}
       root.setAttribute('lang',lang==='ar'?'ar':'en');
-      if(lang==='ar'){
-        root.setAttribute('data-theme','tac-light');
-        themeButtons.forEach(function(x){x.classList.remove('active');});
-        themeButtons.forEach(function(t){
-          if(t.getAttribute('data-theme')==='tac-light')t.classList.add('active');
-        });
-        try{localStorage.setItem('weekday-cats-theme','tac-light');}catch(e){}
-      }
     });
   });
 
@@ -790,14 +839,6 @@
       themeButtons.forEach(function(x){x.classList.remove('active');});
       b.classList.add('active');
       try{localStorage.setItem('weekday-cats-theme',theme);}catch(e){}
-      if(theme==='tac-light'){
-        root.setAttribute('data-lang','en');
-        langButtons.forEach(function(x){x.classList.remove('active');});
-        langButtons.forEach(function(t){
-          if(t.getAttribute('data-lang')==='en')t.classList.add('active');
-        });
-        try{localStorage.setItem('weekday-cats-lang','en');}catch(e){}
-      }
     });
   });
 

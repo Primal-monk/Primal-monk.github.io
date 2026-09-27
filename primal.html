@@ -146,9 +146,27 @@
   .pct.p-low{background:#e8564a}
   .pct.p-mid{background:#f0b429}
   .pct.p-high{background:#4fe08a}
+  .pct.p-idea{background:#3a4a5e;color:#a8bcd4}
   .pbar i.p-low{background:linear-gradient(90deg,#a83228,#e8564a)}
   .pbar i.p-mid{background:linear-gradient(90deg,#c08610,#f0b429)}
   .pbar i.p-high{background:linear-gradient(90deg,#27a862,#4fe08a)}
+  .pbar i.p-idea{background:linear-gradient(90deg,#2c3b4d,#4d6b8a)}
+
+  /* whiteboard concept cards: same shape as a real game card, greyed and
+     blue-tinted instead of the amber "in progress" look, always 0% */
+  .wbrow{margin-top:26px}
+  .wbhint{color:var(--sec2);font-size:.78rem;margin-bottom:13px}
+  .game.idea{opacity:.66;filter:saturate(.55)}
+  .game.idea:hover{opacity:.92;border-color:#4d6b8a}
+  .game.idea .ghead .nm{color:#93a8bf}
+  .game.idea .ghead .gn{color:#647186}
+  .game.idea .chev{color:#647186}
+  .game.idea:hover .ghead .nm::before,.game.idea.open .ghead .nm::before{color:#6fa0d6!important}
+  .ideaico{width:52px;height:52px;border-radius:8px;flex:none;background:var(--bg3);
+    display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:#647186}
+  .game.idea .idea-tag{display:inline-block;font-size:.66rem;font-weight:800;letter-spacing:.08em;
+    text-transform:uppercase;color:#7f93ab;border:1px solid #3a4a5e;border-radius:10px;
+    padding:3px 10px;margin-bottom:11px}
   .pbar{width:74px;height:6px;background:var(--bg4);border-radius:4px;overflow:hidden}
   .pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--hi2),var(--hi))}
 
@@ -545,6 +563,11 @@ h2::before{content:"";width:15px;height:15px;flex:none;box-shadow:2px 2px 0 var(
           <span class="pad4" aria-hidden="true"><i class="b"></i><i class="g"></i><i class="y"></i><i class="r"></i></span>
         </div>
         <div class="games" id="games"></div>
+        <div class="h2row wbrow">
+          <h2 data-i18n="h_wb">Also on the Whiteboard</h2>
+        </div>
+        <p class="wbhint" data-i18n="p_wbhint"></p>
+        <div class="games ideas" id="ideas"></div>
       </section>
     </div>
 
@@ -609,6 +632,7 @@ en:{
  byline:'Founded and made by',
  h_about:'The Studio', h_games:'Select a Game', h_mods:'Mod Tools',
  h_advice:'How I Think You Should Make Games', h_future:'On the Whiteboard',
+ h_wb:'Also on the Whiteboard', p_wbhint:'Concept only &mdash; nothing built yet. Click a card to read the idea.',
  h_corp:'Parent Company', madewith:'All made with Godot', soon:'Coming soon',
  tab_games:'GAMES', tab_studio:'STUDIO', tab_devlog:'DEVLOG', tab_shop:'SHOP',
  cart_cap:'PICODEV · CART-01 · MADE WITH GODOT · &copy; PRIMALAPE',
@@ -634,6 +658,7 @@ es:{
  byline:'Fundado y hecho por',
  h_about:'El Estudio', h_games:'Elige un Juego', h_mods:'Herramientas de Mods',
  h_advice:'C&oacute;mo Creo Que Se Deben Hacer Juegos', h_future:'En la Pizarra',
+ h_wb:'Tambi&eacute;n en la Pizarra', p_wbhint:'Solo concepto &mdash; nada empezado todav&iacute;a. Toca una tarjeta para leer la idea.',
  h_corp:'Empresa Matriz', madewith:'Todo hecho con Godot', soon:'Pr&oacute;ximamente',
  tab_games:'JUEGOS', tab_studio:'ESTUDIO', tab_devlog:'DEVLOG', tab_shop:'TIENDA',
  cart_cap:'PICODEV · CART-01 · HECHO CON GODOT · &copy; PRIMALAPE',
@@ -755,12 +780,58 @@ const GAMES=[
       'Comparte personajes y mundo con Neon Arsenal']}}
 ];
 
+/* Whiteboard: ideas that exist only as concept text, no work started.
+   Rendered as the same card shape as a real game, but greyed out, tagged
+   CONCEPT and pinned at 0% — see buildIdeas(). */
+const IDEAS=[
+{k:'mechsurv',ico:'&#9881;',
+ en:{nm:'MECH SURVIVAL',gn:'Survival Crafting &mdash; Mechs',
+  p:'A blocky, buildable survival crafting game with mechs &mdash; somewhere between Palworld and a mech garage.'},
+ es:{nm:'SUPERVIVENCIA MECH',gn:'Supervivencia y Construcci&oacute;n &mdash; Mechs',
+  p:'Un juego de supervivencia y construcci&oacute;n por bloques con mechs &mdash; entre Palworld y un taller de mechs.'}},
+{k:'pvzraid',ico:'&#128737;',
+ en:{nm:'BASE RAID',gn:'Team Territory Raid &mdash; PvZ-style',
+  p:'Teams hold territory and raid each other&rsquo;s bases, PvZ-style, under a 3-team protocol that keeps power shifting.'},
+ es:{nm:'ASALTO DE BASE',gn:'Territorio por Equipos &mdash; estilo PvZ',
+  p:'Equipos que defienden territorio y asaltan las bases rivales, al estilo PvZ, bajo un protocolo de 3 equipos.'}},
+{k:'tower',ico:'&#127793;',
+ en:{nm:'GARDEN LINE',gn:'Tower Defense &mdash; PvZ-style',
+  p:'Garden defenders against waves of critters, tilemap combat built in Godot.'},
+ es:{nm:'L&Iacute;NEA DE JARD&Iacute;N',gn:'Defensa de Torres &mdash; estilo PvZ',
+  p:'Defensores de jard&iacute;n contra oleadas de criaturas, combate en tilemap hecho en Godot.'}},
+{k:'arksurv',ico:'&#127957;',
+ en:{nm:'HOSTILE MAP',gn:'Open-World Survival &mdash; Ark-style',
+  p:'Tame creatures, build bases, survive on a hostile open map.'},
+ es:{nm:'MAPA HOSTIL',gn:'Supervivencia Mundo Abierto &mdash; estilo Ark',
+  p:'Domesticar criaturas, construir bases, sobrevivir en un mapa hostil y abierto.'}},
+{k:'buckshot',ico:'&#128163;',
+ en:{nm:'BUCKSHOT .IO',gn:'.io Game &mdash; Buckshot Roulette',
+  p:'Buckshot Roulette, rebuilt as a quick browser .io game.'},
+ es:{nm:'BUCKSHOT .IO',gn:'Juego .io &mdash; Buckshot Roulette',
+  p:'Buckshot Roulette, rehecho como un juego .io r&aacute;pido para navegador.'}},
+{k:'boardio',ico:'&#127922;',
+ en:{nm:'TABLE .IO',gn:'.io Board Games',
+  p:'Board and tabletop games as .io titles &mdash; Uno, party games, that kind of thing.'},
+ es:{nm:'MESA .IO',gn:'Juegos de Mesa .io',
+  p:'Juegos de mesa como t&iacute;tulos .io &mdash; Uno, juegos de fiesta, ese estilo.'}},
+{k:'killonline',ico:'&#128225;',
+ en:{nm:'KILLSHIFT ONLINE',gn:'3D .io Spinoff of Killshift',
+  p:'A multiplayer spinoff of Killshift: a 3D .io blockbench hero shooter where everyone has wallhacks, same as the singleplayer game.'},
+ es:{nm:'KILLSHIFT ONLINE',gn:'Spin-off 3D .io de Killshift',
+  p:'Un spin-off multijugador de Killshift: un hero shooter 3D .io en blockbench donde todos tienen wallhacks, igual que la versi&oacute;n para un jugador.'}},
+{k:'territory',ico:'&#128506;',
+ en:{nm:'TERRITORY WAR',gn:'3-Team War &mdash; Blockbench Ark',
+  p:'A 3-team territory war on a blockbench ark world &mdash; new players spawn into the weakest team to keep power shifting.'},
+ es:{nm:'GUERRA DE TERRITORIO',gn:'Guerra de 3 Equipos &mdash; Ark Blockbench',
+  p:'Una guerra de territorio de 3 equipos en un mundo ark blockbench &mdash; los nuevos jugadores entran al equipo m&aacute;s d&eacute;bil para que el poder siga cambiando.'}}
+];
+
 /* Neon Arsenal has alternate logos to cycle through on click/hover. */
 const NEON_ALTS=['assets/g-neon.png'];
 for(let i=1;i<=10;i++) NEON_ALTS.push('assets/neon-alt-'+i+'.png');
 let neonIdx=0;
 
-let lang='en',openKey=null;
+let lang='en',openKey=null,openIdeaKey=null;
 
 function buildGames(){
   const box=document.getElementById('games');box.innerHTML='';
@@ -831,6 +902,28 @@ function buildGames(){
     box.appendChild(card);
   });
 }
+function buildIdeas(){
+  const box=document.getElementById('ideas');if(!box)return;box.innerHTML='';
+  IDEAS.forEach(function(idea){
+    const L=idea[lang],open=openIdeaKey===idea.k;
+    const card=document.createElement('div');
+    card.className='game idea'+(open?' open':'');
+    const prog='<div class="pwrap"><span class="pct p-idea">0%</span>'
+      +'<span class="pbar"><i class="p-idea" style="width:0%"></i></span></div>';
+    const head='<div class="ghead"><span class="ico ideaico" aria-hidden="true">'+idea.ico+'</span>'
+      +'<div class="t"><div class="nm">'+L.nm+'</div><div class="gn">'+L.gn+'</div></div>'
+      +prog+'<span class="chev">'+(open?'&minus;':'+')+'</span></div>';
+    card.innerHTML=head+'<div class="gbody">'
+      +'<div class="idea-tag">'+(lang==='es'?'IDEA &mdash; SIN EMPEZAR':'CONCEPT &mdash; NOT STARTED')+'</div>'
+      +'<p>'+L.p+'</p>'
+      +'<button class="closebtn">'+(lang==='es'?'CERRAR':'CLOSE')+'</button></div>';
+    card.querySelector('.ghead').addEventListener('click',function(){
+      openIdeaKey=open?null:idea.k;buildIdeas();});
+    card.querySelector('.closebtn').addEventListener('click',function(e){
+      e.stopPropagation();openIdeaKey=null;buildIdeas();});
+    box.appendChild(card);
+  });
+}
 function render(){
   const L=I18N[lang];document.documentElement.lang=lang;
   document.querySelectorAll('[data-i18n]').forEach(function(el){
@@ -839,6 +932,7 @@ function render(){
   if(ad){ad.innerHTML='';L.advice.forEach(function(s){const li=document.createElement('li');li.innerHTML=s;ad.appendChild(li);});}
   document.querySelectorAll('.lang').forEach(function(b){b.classList.toggle('on',b.dataset.lang===lang);});
   buildGames();
+  buildIdeas();
 }
 document.querySelectorAll('.lang').forEach(function(b){
   b.addEventListener('click',function(){lang=b.dataset.lang;render();});});
