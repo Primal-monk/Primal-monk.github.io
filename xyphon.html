@@ -10,7 +10,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Chakra+Petch:wght@500;600;700&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
 <style>
-  :root{
+  /* SHARP. Near-black canvas, cold blue data accent. TYPHON-dark structure with
+     hot pink replacing amber — cancer research as controlled biological work. */
     --ink:#0d0a0f; --ink2:#131017; --ink3:#1a1620; --raise:#201c28;
     --line:#2a2435; --line-warm:rgba(242,130,210,.16);
     --paper:#ece4f0; --dim:#9b8fa8; --faint:#5a5068;
@@ -27,11 +28,10 @@
   body{font-family:var(--body);background:var(--ink);color:var(--paper);line-height:1.6;
     -webkit-font-smoothing:antialiased;overflow-x:hidden;
     background-image:
-      radial-gradient(900px 480px at 88% -8%, rgba(232,98,154,.10), transparent 62%),
-      radial-gradient(700px 400px at -5% 4%, rgba(242,130,210,.06), transparent 60%)}
+      radial-gradient(900px 480px at 88% -8%, rgba(232,98,154,.07), transparent 62%),
+      radial-gradient(700px 400px at -5% 4%, rgba(242,130,210,.04), transparent 60%)}
   .bgpat{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background-image:url("pat-3.jpg");background-size:cover;background-position:center;
-    background-repeat:no-repeat;opacity:.10;filter:invert(1) hue-rotate(280deg)}
+    background-image:url("pat-2.jpg");background-size:560px auto;background-repeat:repeat;filter:none;opacity:.18}
   a{color:inherit;text-decoration:none}
   h1,h2,h3,h4{font-family:var(--disp);text-wrap:balance;line-height:1.08;letter-spacing:.005em}
   .mono{font-family:var(--mono)}
@@ -88,6 +88,12 @@
     -webkit-mask-image:radial-gradient(130% 92% at 74% 6%, #000 0 28%, transparent 76%);mask-image:radial-gradient(130% 92% at 74% 6%, #000 0 28%, transparent 76%)}
   .glow-logo{position:absolute;right:-140px;top:-40px;width:520px;opacity:.06;pointer-events:none;filter:drop-shadow(0 0 40px var(--pink))}
   @media(max-width:900px){.glow-logo{display:none}}
+  /* SERAPHIM-style hover logo: two stacked images, second fades in on hover */
+  .logowrap{position:relative;display:inline-block;width:30px;height:30px;flex:none}
+  .logowrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .18s}
+  .logowrap img.b{opacity:0}
+  .logowrap:hover img.a{opacity:0}
+  .logowrap:hover img.b{opacity:1}
 
   .emblem{position:relative;display:flex;align-items:center;justify-content:center;min-height:clamp(340px,44vw,500px);perspective:1100px}
   .emblem span{position:absolute}
@@ -248,7 +254,7 @@
 <nav class="nav">
   <div class="wrap nav-in">
     <a class="parent" href="omni.html" title="Parent company">← <b>ALLSEER SOFTWARE</b></a>
-    <a class="brand" href="xyphon.html"><img src="assets/seraphim.png" alt="XYPHON"><span class="wm gradtext">XYPHON</span></a>
+    <a class="brand" href="xyphon.html"><span class="logowrap"><img class="a" src="assets/seraphim.png" alt="XYPHON"><img class="b" src="assets/seraphim-hover.png" alt="XYPHON"></span><span class="wm gradtext">XYPHON</span></a>
     <div class="navlinks">
       <a href="#overview">Overview</a>
       <a href="#cancerlab">Cancer Lab</a>
@@ -294,7 +300,7 @@
       <span class="glow"></span><span class="haloflat rmode"></span><span class="ringx rmode"></span><span class="ringtilt rmode"></span>
       <span class="beadring rmode"><i></i><i class="b2"></i></span>
       <span class="glowred lmode"></span><span class="sweep lmode"></span><span class="lockring lmode"></span><span class="lockring i2 lmode"></span><span class="lockbox lmode"><i></i><i></i><i></i><i></i></span>
-      <img src="assets/seraphim.png" alt="XYPHON emblem" decoding="async" fetchpriority="high">
+      <span class="logowrap"><img class="a" src="assets/seraphim.png" alt="XYPHON emblem" decoding="async" fetchpriority="high"><img class="b" src="assets/seraphim-hover.png" alt="" decoding="async"></span>
       <span class="stamp">Garden of Disease</span>
     </div>
   </div>
