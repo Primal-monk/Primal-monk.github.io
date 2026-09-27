@@ -28,10 +28,11 @@
   body{font-family:var(--body);background:var(--ink);color:var(--paper);line-height:1.6;
     -webkit-font-smoothing:antialiased;overflow-x:hidden;
     background-image:
-      radial-gradient(900px 480px at 88% -8%, rgba(242,12,51,.12), transparent 62%),
-      radial-gradient(700px 400px at -5% 4%, rgba(255,29,93,.10), transparent 60%)}
+      radial-gradient(900px 480px at 88% -8%, rgba(232,37,53,.10), transparent 62%),
+      radial-gradient(700px 400px at -5% 4%, rgba(242,37,53,.06), transparent 60%)}
   .bgpat{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background-image:url("pat-2.jpg");background-size:560px auto;background-repeat:repeat;filter:none;opacity:.18}
+    background-image:url("pat-3.jpg");background-size:cover;background-position:center;background-repeat:no-repeat;
+    opacity:.13;filter:invert(1)}
   a{color:inherit;text-decoration:none}
   h1,h2,h3,h4{font-family:var(--disp);text-wrap:balance;line-height:1.08;letter-spacing:.005em}
   .mono{font-family:var(--mono)}
@@ -40,7 +41,7 @@
   ::-webkit-scrollbar-track{background:var(--ink2)}
   ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--rose2),var(--pink));border:3px solid var(--ink2);border-radius:8px}
 
-  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:22px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:clamp(28px,5vw,52px)}
   .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--rose2)}
   .gradtext{background:linear-gradient(96deg,var(--rose2),var(--pink) 55%,var(--rose));-webkit-background-clip:text;background-clip:text;color:transparent}
 
@@ -69,7 +70,7 @@
   @media(max-width:880px){.navlinks{display:none}}
   @media(max-width:520px){.nav .navtools .btn-primary{display:none}}
 
-  .statusstrip{background:#08050a;border-bottom:1px solid var(--line)}
+  .statusstrip{background:#0a0806;border-bottom:1px solid var(--line)}
   .statusstrip .wrap{display:flex;gap:26px;align-items:center;height:30px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--faint);text-transform:uppercase;overflow:hidden;white-space:nowrap}
   .statusstrip .a{color:var(--dim)} .statusstrip .ver{margin-left:auto;color:var(--faint)}
 

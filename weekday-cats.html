@@ -20,6 +20,7 @@
     --line:#1e241e; --line-acc:rgba(90,140,70,.15);
     --paper:#e8e8e0; --steel:#8a9482; --faint:#5a6254;
     --green:#5a8c3a; --green2:#6ca04a; --green-soft:rgba(90,140,70,.12);
+    --red:#c4382a; --red2:#d4483a; --red-deep:#8a1a16;
     --black:#0a0c0a; --olive:#4a5a2a; --khaki:#8a8060;
     --disp:"Oswald",system-ui,sans-serif;
     --body:"Archivo",system-ui,sans-serif;
@@ -27,30 +28,47 @@
     --mono:"Space Mono",ui-monospace,Consolas,monospace;
     --maxw:1640px;
     --inner:clamp(70px,9vw,120px);
-    --pat-opacity:.22;
+    --pat-opacity:.13;
   }
   body[data-theme="tac-green"]{
     --bg:#0a0c0a; --bg2:#0f120f; --bg3:#141814; --raise:#1a1e1a;
     --line:#1e241e; --line-acc:rgba(90,140,70,.15);
     --paper:#e8e8e0; --steel:#8a9482; --faint:#5a6254;
     --green:#5a8c3a; --green2:#6ca04a; --green-soft:rgba(90,140,70,.12);
-    --pat-opacity:.22;
+    --red:#c4382a; --red2:#d4483a; --red-deep:#8a1a16;
+    --pat-opacity:.13;
   }
   body[data-theme="tac-black"]{
     --bg:#060806; --bg2:#0a0e0a; --bg3:#0e120e; --raise:#121612;
     --line:#161c16; --line-acc:rgba(60,90,50,.12);
     --paper:#d8d8d0; --steel:#7a8272; --faint:#4a5244;
     --green:#3a5a2a; --green2:#4a6a3a; --green-soft:rgba(60,90,50,.08);
-    --pat-opacity:.18;
+    --red:#8a1a16; --red2:#a82020; --red-deep:#5a0a0a;
+    --pat-opacity:.10;
+  }
+  body[data-theme="tac-light"]{
+    --bg:#f0ead2; --bg2:#f6efdc; --bg3:#fbf4e4; --raise:#faf4e8;
+    --line:#d8c8a8; --line-acc:rgba(120,90,40,.12);
+    --paper:#1a1510; --steel:#5a4a30; --faint:#8a7a5a;
+    --green:#2a5a1a; --green2:#3a6a2a; --green-soft:rgba(40,80,20,.10);
+    --red:#8a2010; --red2:#a82818; --red-deep:#5a0a05;
+    --pat-opacity:.07;
+  }
+  body[data-theme="tac-red"]{
+    --bg:#1a0e0c; --bg2:#241410; --bg3:#2e1a14; --raise:#382018;
+    --line:#4a2820; --line-acc:rgba(200,80,40,.14);
+    --paper:#f0e4d4; --steel:#8a7060; --faint:#5a4a3a;
+    --green:#4a6a3a; --green2:#5a7a4a; --green-soft:rgba(80,120,60,.10);
+    --red:#c4382a; --red2:#d4483a; --red-deep:#8a1a16;
+    --pat-opacity:.10;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{font-family:var(--body);background:var(--bg);color:var(--paper);line-height:1.6;
     -webkit-font-smoothing:antialiased;overflow-x:hidden}
   .bgpat{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background-image:url("pat-4.jpg");background-size:400px auto;background-repeat:repeat;
-    opacity:var(--pat-opacity);filter:invert(1) contrast(1.2) brightness(.9)}
-  body[data-theme="tac-black"] .bgpat{opacity:.16;filter:invert(1) contrast(1.3) brightness(.85)}
+    background-image:url("pat-3.jpg");background-size:cover;background-position:center;background-repeat:no-repeat;
+    opacity:var(--pat-opacity);filter:invert(1)}
   a{color:inherit;text-decoration:none}
   h1,h2,h3,h4{font-family:var(--disp);text-transform:uppercase;letter-spacing:.02em;
     text-wrap:balance;line-height:1.06}
@@ -103,13 +121,27 @@
   .navlinks a:hover{color:var(--paper)}
   @media(max-width:760px){.navlinks{display:none}}
 
+  /* ══ THEME SWITCHER ══ */
+  .theme-switch{display:inline-flex;border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--bg2)}
+  .theme-switch button{font-family:var(--mono);font-size:9px;letter-spacing:.1em;
+    padding:5px 8px;cursor:pointer;border:none;background:transparent;color:var(--steel);
+    transition:all .15s;text-transform:uppercase;line-height:1}
+  .theme-switch button.active{background:var(--green);color:#060806;font-weight:700}
+  body[data-theme="tac-black"] .theme-switch button.active{background:var(--green2);color:#060806}
+  body[data-theme="tac-light"] .theme-switch button.active{background:var(--green);color:#f0ead2;font-weight:700}
+  body[data-theme="tac-red"] .theme-switch button.active{background:var(--red2);color:#1a0e0c;font-weight:700}
+  .tac-white-mode{color:var(--paper)}
+  body[data-theme="tac-light"] .tac-white-mode{color:var(--bg)}
+
   /* ══ STATUS STRIP ══ */
   .strip{border-bottom:1px solid var(--line);background:rgba(0,0,0,.25)}
   .strip-in{display:flex;gap:24px;align-items:center;height:28px;font-family:var(--mono);
     font-size:9px;letter-spacing:.16em;color:var(--steel);text-transform:uppercase;
     white-space:nowrap;overflow:hidden}
   .strip-in .a{color:var(--green)}
+  body[data-theme="tac-light"] .strip-in .a{color:var(--red2)}
   .strip-in .dot{width:3px;height:3px;background:var(--green);border-radius:50%;opacity:.6}
+  body[data-theme="tac-light"] .strip-in .dot{background:var(--red2)}
   .strip-in .ver{margin-left:auto;color:var(--faint)}
   .strip-in .classmark{color:var(--olive);border:1px solid var(--line);border-radius:2px;
     padding:2px 6px;font-weight:700}
@@ -119,8 +151,10 @@
     background:linear-gradient(180deg,rgba(90,140,70,.04),transparent 60%);border-bottom:1px solid var(--line)}
   .hero-in{position:relative;z-index:1}
   .hero h1{margin-top:10px}
+  body[data-theme="tac-light"] .hero h1 b{color:var(--red2)}
   .hero .sub{font-size:clamp(.92rem,1.4vw,1.06rem);color:var(--steel);
     max-width:56ch;margin-top:18px;font-weight:400;line-height:1.6}
+  body[data-theme="tac-light"] .hero .sub{color:var(--faint)}
   .hero .cta{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap}
   .btn{font-family:var(--disp);font-weight:600;font-size:11.5px;letter-spacing:.08em;
     padding:11px 20px;border-radius:3px;cursor:pointer;border:1px solid transparent;
@@ -143,7 +177,9 @@
   .band-head{max-width:68ch;margin-bottom:30px}
   .band-head .eyebrow{display:block;margin-bottom:10px;font-family:var(--mono);
     font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--green)}
+  body[data-theme="tac-light"] .band-head .eyebrow{color:var(--red2)}
   .band-head p{color:var(--steel);margin-top:12px;font-size:1rem;max-width:58ch;line-height:1.6}
+  body[data-theme="tac-light"] .band-head p{color:var(--faint)}
 
   /* ══ DAY GRID — TACTICAL ══ */
   .daygrid{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
@@ -155,11 +191,12 @@
     box-shadow:0 2px 6px rgba(0,0,0,.3) inset}
   .daycard:hover{border-color:var(--green);box-shadow:0 0 0 1px var(--green) inset,
     0 6px 18px -6px rgba(90,140,70,.2);transform:translateY(-2px)}
+  body[data-theme="tac-light"] .daycard:hover{border-color:var(--red2);box-shad...[truncated]
   .daycard .day-icon-wrap{position:relative;width:64px;height:64px;border-radius:50%;
     overflow:hidden;border:2px solid var(--line);background:var(--bg3);
     display:flex;align-items:center;justify-content:center;
     box-shadow:0 0 0 1px rgba(90,140,70,.08) inset}
-  .daycard .day-icon-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+  body[data-theme="tac-light"] .daycard .day-icon-wrap{border-color:var(--line);b...[truncated]
   .daycard .day-icon-overlay{position:absolute;inset:0;
     background:linear-gradient(180deg,transparent 40%,rgba(6,8,6,.55) 100%)}
   .daycard .day-icon-wrap::after{content:"";position:absolute;inset:0;border-radius:50%;
@@ -168,11 +205,14 @@
     color:var(--faint);text-transform:uppercase;margin-top:4px}
   .daycard .dayname{font-family:var(--disp);font-weight:700;font-size:.86rem;
     text-transform:uppercase;color:var(--paper);letter-spacing:.04em;line-height:1.1}
+  body[data-theme="tac-light"] .daycard .dayname{color:var(--bg)}
   .daycard .daydesc{font-size:.64rem;color:var(--steel);font-weight:400;
     line-height:1.35;max-width:100px;margin-top:2px}
+  body[data-theme="tac-light"] .daycard .daydesc{color:var(--faint)}
   .daycard .unit-stamp{position:absolute;top:6px;right:6px;font-family:var(--mono);
     font-size:7px;letter-spacing:.1em;color:var(--green);border:1px solid var(--green);
     border-radius:2px;padding:1px 4px;background:rgba(90,140,70,.08);text-transform:uppercase}
+  body[data-theme="tac-light"] .daycard .unit-stamp{color:var(--red2);border-color:var(--red2);background:rgba(184,48,42,.08)}
 
   /* ══ CAT SHELF — EQUIPMENT CRATES ══ */
   .catshelf{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:4px}
@@ -190,19 +230,25 @@
   .catcard:hover .cimg-wrap img{transform:scale(1.04)}
   .catcard .cimg-overlay{position:absolute;inset:0;
     background:linear-gradient(180deg,transparent 50%,rgba(6,8,6,.5) 100%)}
+  body[data-theme="tac-light"] .catcard .cimg-overlay{background:linear-gradi...[truncated]
   .catcard .cimg-wrap::after{content:"";position:absolute;inset:0;
     border:1px solid rgba(90,140,70,.1);pointer-events:none}
   .catcard .cbody{padding:12px 10px 14px}
   .catcard .ctitle{font-family:var(--disp);font-weight:700;font-size:.82rem;
     text-transform:uppercase;color:var(--paper);letter-spacing:.04em;margin-bottom:3px;line-height:1.15}
+  body[data-theme="tac-light"] .catcard .ctitle{color:var(--bg)}
   .catcard .cdesc{font-size:.64rem;color:var(--steel);font-weight:400;
     line-height:1.4;max-width:18ch;margin:0 auto}
+  body[data-theme="tac-light"] .catcard .cdesc{color:var(--faint)}
   .catcard .cprice{font-family:var(--mono);font-size:.68rem;color:var(--green);
     letter-spacing:.08em;text-transform:uppercase;margin:8px 0 10px}
+  body[data-theme="tac-light"] .catcard .cprice{color:var(--red2)}
   .catcard .cbtn{padding:6px 14px;border-radius:3px;background:var(--green);color:#060806;
     font-family:var(--disp);font-size:.6rem;font-weight:700;letter-spacing:.06em;
     text-transform:uppercase;display:inline-block;transition:filter .12s}
   .catcard .cbtn:hover{filter:brightness(1.1)}
+  body[data-theme="tac-light"] .catcard .cbtn{background:var(--red2);border:1px solid var(--red2);color:var(--bg)}
+  body[data-theme="tac-light"] .catcard .cbtn:hover{filter:brightness(1.1)}
 
   /* ══ ARABIC CATS ROW ══ */
   .arab-cats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:4px}
@@ -218,6 +264,7 @@
   .arab-catcard .ac-label{position:absolute;left:8px;bottom:8px;font-family:var(--disp);
     font-weight:700;font-size:.6rem;color:var(--green);background:rgba(6,8,6,.7);
     padding:2px 6px;border-radius:2px;text-transform:uppercase;letter-spacing:.04em}
+  body[data-theme="tac-light"] .arab-catcard .ac-label{...[truncated]
 
   /* ══ ARROWS — ORDNANCE STRIP ══ */
   .arrowstray{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
@@ -263,8 +310,10 @@
     justify-content:center;font-size:1.6rem}
   .store-tile .st-title{font-family:var(--disp);font-weight:700;font-size:.82rem;
     text-transform:uppercase;color:var(--paper);letter-spacing:.04em}
+  body[data-theme="tac-light"] .store-tile .st-title{color:var(--bg)}
   .store-tile .st-desc{font-size:.7rem;color:var(--steel);font-weight:400;
     line-height:1.4;max-width:20ch}
+  body[data-theme="tac-light"] .store-tile .st-desc{color:var(--faint)}
   .store-tile .st-btn{padding:7px 16px;border-radius:3px;background:var(--green);
     color:#060806;font-family:var(--disp);font-size:.6rem;font-weight:700;
     letter-spacing:.06em;text-transform:uppercase;display:inline-block}
@@ -313,10 +362,15 @@
       <span class="wm">WEEKDAY <b>CATS</b></span>
     </a>
     <div class="lang-toggle" id="langToggle">
-      <button data-lang="en" class="active"><span class="flag-icon">🇬🇧</span>English</button>
-      <button data-lang="ar"><span class="ar-flag"></span>العربية</button>
-    </div>
-    <div class="navlinks">
+          <button data-lang="en" class="active"><span class="flag-icon">🇬🇧</span>English</button>
+          <button data-lang="ar"><span class="ar-flag"></span>العربية</button>
+        </div>
+        <div class="theme-switch" id="themeToggle">
+          <button data-theme="tac-green" class="active"><span></span>Dark</button>
+          <button data-theme="tac-light"><span></span>Light</button>
+          <button data-theme="tac-red"><span></span>Red</button>
+        </div>
+        <div class="navlinks">
       <a href="#the-days">Days</a>
       <a href="#cats">Plushies</a>
       <a href="#arrows">Ord'nance</a>
@@ -431,52 +485,52 @@
     <div class="lang-ar">
       <div class="daygrid">
         <div class="daycard">
-          <span class="unit-stamp" style="color:var(--green)">اليوم 01</span>
+          <span class="unit-stamp">اليوم 01</span>
           <div class="day-icon-wrap"><img src="assets/weekday-cats/arabic/arabic.jpg" alt="إثنين" loading="eager"><div class="day-icon-overlay"></div></div>
-          <div class="daynum" style="color:var(--green)">إث</div>
-          <div class="dayname" style="font-family:var(--disp)">الإثنين</div>
+          <div class="daynum">إث</div>
+          <div class="dayname">الإثنين</div>
           <div class="daydesc" style="direction:rtl;text-align:right">يبدأ الأسبوع. بجد.</div>
         </div>
         <div class="daycard">
-          <span class="unit-stamp" style="color:var(--green)">اليوم 02</span>
+          <span class="unit-stamp">اليوم 02</span>
           <div class="day-icon-wrap"><img src="assets/weekday-cats/arabic/arabic (1).jpg" alt="ثلاثاء" loading="lazy"><div class="day-icon-overlay"></div></div>
-          <div class="daynum" style="color:var(--green)">ثث</div>
-          <div class="dayname" style="font-family:var(--disp)">الثلاثاء</div>
+          <div class="daynum">ثث</div>
+          <div class="dayname">الثلاثاء</div>
           <div class="daydesc" style="direction:rtl;text-align:right">فوق أول جب.</div>
         </div>
         <div class="daycard">
-          <span class="unit-stamp" style="color:var(--green)">اليوم 03</span>
+          <span class="unit-stamp">اليوم 03</span>
           <div class="day-icon-wrap"><img src="assets/weekday-cats/arabic/arabic (2).jpg" alt="أربعاء" loading="lazy"><div class="day-icon-overlay"></div></div>
-          <div class="daynum" style="color:var(--green)">أر</div>
-          <div class="dayname" style="font-family:var(--disp)">الأربعاء</div>
+          <div class="daynum">أر</div>
+          <div class="dayname">الأربعاء</div>
           <div class="daydesc" style="direction:rtl;text-align:right">يوم الجب. هنا.</div>
         </div>
         <div class="daycard">
-          <span class="unit-stamp" style="color:var(--green)">اليوم 04</span>
+          <span class="unit-stamp">اليوم 04</span>
           <div class="day-icon-wrap"><img src="assets/weekday-cats/arabic/arabic (3).jpg" alt="خميس" loading="lazy"><div class="day-icon-overlay"></div></div>
-          <div class="daynum" style="color:var(--green)">خم</div>
-          <div class="dayname" style="font-family:var(--disp)">الخميس</div>
+          <div class="daynum">خم</div>
+          <div class="dayname">الخميس</div>
           <div class="daydesc" style="direction:rtl;text-align:right">تقريبًا عطلة.</div>
         </div>
         <div class="daycard">
-          <span class="unit-stamp" style="color:var(--green)">اليوم 05</span>
+          <span class="unit-stamp">اليوم 05</span>
           <div class="day-icon-wrap"><img src="assets/weekday-cats/arabic/arabic (4).jpg" alt="جمعة" loading="lazy"><div class="day-icon-overlay"></div></div>
-          <div class="daynum" style="color:var(--green)">جم</div>
-          <div class="dayname" style="font-family:var(--disp)">الجمعة</div>
+          <div class="daynum">جم</div>
+          <div class="dayname">الجمعة</div>
           <div class="daydesc" style="direction:rtl;text-align:right">العطلة ترنّ.</div>
         </div>
         <div class="daycard">
-          <span class="unit-stamp" style="color:var(--green)">اليوم 06</span>
+          <span class="unit-stamp">اليوم 06</span>
           <div class="day-icon-wrap"><img src="assets/weekday-cats/arabic/arabic (4).jpg" alt="سبت" loading="lazy"><div class="day-icon-overlay"></div></div>
-          <div class="daynum" style="color:var(--green)">سب</div>
-          <div class="dayname" style="font-family:var(--disp)">السبت</div>
+          <div class="daynum">سب</div>
+          <div class="dayname">السبت</div>
           <div class="daydesc" style="direction:rtl;text-align:right">يوم راحة. لا منبهات.</div>
         </div>
         <div class="daycard">
-          <span class="unit-stamp" style="color:var(--green)">اليوم 07</span>
+          <span class="unit-stamp">اليوم 07</span>
           <div class="day-icon-wrap"><img src="assets/weekday-cats/arabic/arabic.jpg" alt="أحد" loading="lazy"><div class="day-icon-overlay"></div></div>
-          <div class="daynum" style="color:var(--green)">أح</div>
-          <div class="dayname" style="font-family:var(--disp)">الأحد</div>
+          <div class="daynum">أح</div>
+          <div class="dayname">الأحد</div>
           <div class="daydesc" style="direction:rtl;text-align:right">يوم راحة. إعادة ضبط.</div>
         </div>
       </div>
@@ -489,7 +543,7 @@
   <div class="wrap">
     <div class="band-head">
       <span class="eyebrow">PLUSHIE OPS — EQUIPMENT CRATES</span>
-      <h2 style="margin-bottom:10px">The <span style="color:var(--green)">Plushies</span>. Soft. Collectable.</h2>
+      <h2 style="margin-bottom:10px">The <span>Plushies</span>. Soft. Collectable.</h2>
       <p>Real plushies of the weekday cats. One of seven. Get the cat that matches your day — or collect all seven. Each plushie is a deployable asset.</p>
 
       <!-- ENGLISH plushies -->
@@ -704,23 +758,64 @@
 <script>
 (function(){
   var root=document.body;
-  var buttons=document.querySelectorAll('#langToggle button');
-  buttons.forEach(function(b){
+  var themeButtons=document.querySelectorAll('#themeToggle button');
+  var langButtons=document.querySelectorAll('#langToggle button');
+  var activeLang=root.getAttribute('data-lang');
+  var activeTheme=root.getAttribute('data-theme')||'tac-green';
+
+  langButtons.forEach(function(b){
     b.addEventListener('click',function(){
       var lang=b.getAttribute('data-lang');
       root.setAttribute('data-lang',lang);
-      buttons.forEach(function(x){x.classList.remove('active');});
+      langButtons.forEach(function(x){x.classList.remove('active');});
       b.classList.add('active');
       try{localStorage.setItem('weekday-cats-lang',lang);}catch(e){}
       root.setAttribute('lang',lang==='ar'?'ar':'en');
+      if(lang==='ar'){
+        root.setAttribute('data-theme','tac-light');
+        themeButtons.forEach(function(x){x.classList.remove('active');});
+        themeButtons.forEach(function(t){
+          if(t.getAttribute('data-theme')==='tac-light')t.classList.add('active');
+        });
+        try{localStorage.setItem('weekday-cats-theme','tac-light');}catch(e){}
+      }
     });
   });
+
+  themeButtons.forEach(function(b){
+    b.addEventListener('click',function(){
+      var theme=b.getAttribute('data-theme');
+      root.setAttribute('data-theme',theme);
+      activeTheme=theme;
+      themeButtons.forEach(function(x){x.classList.remove('active');});
+      b.classList.add('active');
+      try{localStorage.setItem('weekday-cats-theme',theme);}catch(e){}
+      if(theme==='tac-light'){
+        root.setAttribute('data-lang','en');
+        langButtons.forEach(function(x){x.classList.remove('active');});
+        langButtons.forEach(function(t){
+          if(t.getAttribute('data-lang')==='en')t.classList.add('active');
+        });
+        try{localStorage.setItem('weekday-cats-lang','en');}catch(e){}
+      }
+    });
+  });
+
   try{
+    var tl=localStorage.getItem('weekday-cats-theme');
+    if(tl&&['tac-green','tac-black','tac-light','tac-red'].indexOf(tl)>=0){
+      root.setAttribute('data-theme',tl);
+      activeTheme=tl;
+      themeButtons.forEach(function(b){
+        if(b.getAttribute('data-theme')===tl)b.classList.add('active');
+        else b.classList.remove('active');
+      });
+    }
     var sl=localStorage.getItem('weekday-cats-lang');
     if(sl&&['en','ar'].indexOf(sl)>=0){
       root.setAttribute('data-lang',sl);
       root.setAttribute('lang',sl==='ar'?'ar':'en');
-      buttons.forEach(function(b){
+      langButtons.forEach(function(b){
         if(b.getAttribute('data-lang')===sl)b.classList.add('active');
         else b.classList.remove('active');
       });

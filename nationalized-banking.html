@@ -16,12 +16,12 @@
      Just aesthetics — the content is what it is.
      ═══════════════════════════════════════════════════════ */
   :root{
-    --bg:#0c0a08; --bg2:#14110e; --bg3:#1c1814; --raise:#241f1a;
-    --line:#2a2218; --line-acc:rgba(200,160,80,.12);
-    --paper:#e8dcc8; --cream:#f0e6d2; --steel:#7a7060; --faint:#4a4438;
+    --bg:#e8e0d4; --bg2:#f4ede2; --bg3:#faf4ea; --raise:#f0e8dc;
+    --line:#d8ccb8; --line-acc:rgba(120,60,20,.10);
+    --paper:#14110e; --cream:#2a1f15; --steel:#4a3a28; --faint:#6a5a48;
     --red:#b8302a; --red2:#c8403a; --red-deep:#8a1a16;
-    --gold:#b89040; --gold2:#d4a858; --gold-soft:rgba(200,160,80,.10);
-    --black:#0c0a08;
+    --gold:#b89040; --gold2:#d4a858; --gold-soft:rgba(120,60,20,.08);
+    --black:#14110e;
     --disp:"Oswald",system-ui,sans-serif;
     --body:"Archivo",system-ui,sans-serif;
     --strong:"Anton",Impact,system-ui,sans-serif;
@@ -29,13 +29,20 @@
     --maxw:1480px;
     --inner:clamp(60px,8vw,110px);
   }
+  body[data-theme="nb-red"]{
+    --bg:#2a1512; --bg2:#351c18; --bg3:#3e2218; --raise:#48281c;
+    --line:#5a3020; --line-acc:rgba(200,160,80,.12);
+    --paper:#e8dcc8; --cream:#f0e6d2; --steel:#7a7060; --faint:#4a4438;
+    --red:#b8302a; --red2:#c8403a; --red-deep:#8a1a16;
+    --black:#2a1512;
+  }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{font-family:var(--body);background:var(--bg);color:var(--paper);line-height:1.65;
     -webkit-font-smoothing:antialiased;overflow-x:hidden;
     background-image:
-      radial-gradient(1100px 520px at 88% -6%,rgba(184,48,42,.06),transparent 62%),
-      radial-gradient(800px 400px at -4% 4%,rgba(184,144,64,.04),transparent 60%)}
+      radial-gradient(1200px 600px at 88% -6%,rgba(120,60,20,.04),transparent 62%),
+      radial-gradient(800px 400px at -4% 4%,rgba(120,60,20,.03),transparent 60%)}
   a{color:inherit;text-decoration:none}
   h1,h2,h3,h4{font-family:var(--disp);text-transform:uppercase;letter-spacing:.03em;
     text-wrap:balance;line-height:1.06}
@@ -47,7 +54,7 @@
   ::selection{background:var(--red);color:var(--cream)}
   ::-webkit-scrollbar{width:12px}
   ::-webkit-scrollbar-track{background:var(--bg2)}
-  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--gold),var(--red));
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--red2),var(--red));
     border:3px solid var(--bg2);border-radius:6px}
 
   .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--inner)}
@@ -55,7 +62,7 @@
 
   /* ══ TOP BAR — PEOPLE'S COMMITTEE ══ */
   .topbar{position:sticky;top:0;z-index:60;
-    background:linear-gradient(180deg,rgba(12,10,8,.96),rgba(12,10,8,.88));
+    background:linear-gradient(180deg,rgba(232,224,212,.96),rgba(232,224,212,.92));
     backdrop-filter:blur(10px);border-bottom:2px solid var(--red);
     padding-block:14px}
   .topbar-in{display:flex;align-items:center;justify-content:space-between;gap:18px}
@@ -63,38 +70,49 @@
   .brand .star{width:28px;height:28px;flex:none;position:relative}
   .brand .star::before{content:"";position:absolute;inset:0;
     background:radial-gradient(circle at 50% 50%,var(--gold2),var(--gold) 40%,var(--red-deep) 100%);
-    border-radius:50%;box-shadow:0 0 12px rgba(184,144,64,.3);
+    border-radius:50%;box-shadow:0 0 12px rgba(120,60,20,.4);
     clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 90%,50% 70%,21% 90%,32% 57%,2% 35%,39% 35%)}
+  .brand .star::after{content:"";position:absolute;inset:8px;border-radius:50%;
+    box-shadow:0 0 24px rgba(184,48,42,.35);filter:blur(2px)}
   .brand .nm{font-family:var(--disp);font-weight:600;font-size:14px;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--paper)}
-  .brand .nm b{color:var(--gold);font-weight:700}
+    text-transform:uppercase;color:var(--cream)}
+  .brand .nm b{color:var(--red2);font-weight:700}
   .navlinks{display:flex;gap:20px}
   .navlinks a{font-family:var(--disp);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
     color:var(--steel);transition:color .15s;font-weight:500}
-  .navlinks a:hover{color:var(--gold)}
+  .navlinks a:hover{color:var(--red2)}
 
   /* ══ RED BANNER STRIP ══ */
   .redbanner{background:var(--red);padding-block:6px;text-align:center;
     font-family:var(--strong);font-weight:400;font-size:10px;letter-spacing:.3em;
     text-transform:uppercase;color:var(--cream);line-height:1}
-  .redbanner .sep{opacity:.3;margin:0 .8em}
+  .redbanner a.hover{display:inline-block;padding:3px 8px;border:1px solid var(--cream);color:var(--cream);font-family:var(--disp);font-size:9.5px;letter-spacing:.1em;margin-left:6px;transition:all .15s}
+  .redbanner a.hover:hover{background:var(--cream);color:var(--red)}
+  body[data-theme="nb-red"] .redbanner a.hover:hover{background:var(--steel);color:var(--cream)}
 
   /* ══ HERO — REVOLUTIONARY POSTER ══ */
   .hero{position:relative;padding-block:clamp(52px,9vw,100px);
     background:
-      linear-gradient(180deg,rgba(184,48,42,.05),transparent 70%),
-      repeating-linear-gradient(0deg,transparent,transparent 38px,rgba(200,160,80,.03) 38px,rgba(200,160,80,.03) 40px),
-      repeating-linear-gradient(90deg,transparent,transparent 38px,rgba(200,160,80,.03) 38px,rgba(200,160,80,.03) 40px);
+      linear-gradient(180deg,rgba(120,60,20,.04),transparent 70%),
+      repeating-linear-gradient(0deg,transparent,transparent 38px,rgba(120,60,20,.025) 38px,rgba(120,60,20,.025) 40px),
+      repeating-linear-gradient(90deg,transparent,transparent 38px,rgba(120,60,20,.025) 38px,rgba(120,60,20,.025) 40px);
     border-bottom:2px solid var(--red)}
   .hero-in{position:relative;z-index:1;text-align:center}
   .hero h1{margin-top:14px}
-  .hero h1 .g{color:var(--gold)}
+  .hero h1 .g{color:var(--red2)}
+  body[data-theme="nb-red"] .hero h1 .g{color:var(--gold2)}
   .hero .tagline{font-family:var(--strong);font-weight:400;font-size:clamp(1.1rem,2.2vw,1.6rem);
     color:var(--cream);margin-top:16px;letter-spacing:.14em;text-transform:uppercase}
   .hero .sub{font-size:clamp(.94rem,1.5vw,1.08rem);color:var(--steel);
     max-width:58ch;margin:22px auto 0;font-weight:400;line-height:1.65}
   .hero .sub b{color:var(--paper);font-weight:600}
   .hero .cta{display:flex;gap:14px;justify-content:center;margin-top:28px;flex-wrap:wrap}
+  .hero .cta .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;
+    background:var(--red);color:var(--cream);font-family:var(--disp);font-size:.7rem;
+    letter-spacing:.1em;text-transform:uppercase;font-weight:600;border:1px solid var(--red-deep);
+    border-radius:2px;cursor:pointer;transition:all .15s}
+  body[data-theme="nb-red"] .hero .cta .btn{background:var(--bg2);color:var(--gold2);
+    border-color:var(--gold2)}
   .btn{font-family:var(--disp);font-weight:600;font-size:11px;letter-spacing:.1em;
     padding:12px 22px;border-radius:0;cursor:pointer;border:1px solid transparent;
     transition:transform .12s,filter .15s;text-transform:uppercase;
@@ -108,8 +126,9 @@
     font-family:var(--mono);font-size:9px;color:var(--faint);letter-spacing:.12em;
     text-transform:uppercase}
   .hero .meta span{display:flex;align-items:center;gap:6px}
-  .hero .meta i{width:4px;height:4px;background:var(--gold);transform:rotate(45deg);
+  .hero .meta i{width:4px;height:4px;background:var(--red2);transform:rotate(45deg);
     font-style:normal;flex:none}
+  body[data-theme="nb-red"] .hero .meta i{background:var(--gold)}
 
   /* ── emblem block ── */
   .emblem-block{margin-bottom:28px}
@@ -123,65 +142,77 @@
     border:1.5px solid rgba(200,160,80,.2);border-radius:50%}
   .emblem-mark::after{content:"";position:absolute;inset:18px;
     border:1px solid rgba(200,160,80,.12);border-radius:50%}
-  .emblem-mark svg{width:46px;height:46px}
-  .emblem-sub{font-family:var(--mono);font-size:9px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--faint);margin-top:4px}
+  .emblem-mark svg{filter:none}
+  .emblem-mark .stamp{font-family:var(--mono);font-size:9px;letter-spacing:.28em;
+    color:var(--faint);text-transform:uppercase;margin-top:8px}
 
   /* ══ BAND ══ */
   section.band{padding-block:clamp(40px,6vw,70px);border-top:1px solid var(--line)}
   section.band:first-of-type{border-top:0}
   .band-head{max-width:66ch;margin:0 auto 32px;text-align:center}
   .band-head .eyebrow{display:block;margin-bottom:10px;font-family:var(--mono);
-    font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
-  .band-head p{color:var(--steel);margin-top:12px;font-size:1.02rem;max-width:58ch;
+    font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--red2)}
+  .band-head p{color:var(--cream);margin-top:12px;font-size:1.02rem;max-width:58ch;
     margin-left:auto;margin-right:auto;line-height:1.6}
 
   /* ══ TEXT BLOCK ══ */
   .textblock{max-width:62ch;margin:0 auto;padding:0 6px}
-  .textblock p{font-size:1.02rem;color:var(--paper);margin-bottom:14px;font-weight:300}
+  .textblock p{font-size:1.02rem;color:var(--cream);margin-bottom:14px;font-weight:300}
+  body[data-theme="nb-red"] .textblock p{color:var(--paper)}
   .textblock p b{color:var(--paper);font-weight:600}
+  body[data-theme="nb-red"] .textblock p b{color:var(--gold2)}
   .textblock .quote{font-family:var(--strong);font-weight:400;font-size:1.18rem;
-    color:var(--gold);line-height:1.45;padding:18px 22px;border-left:3px solid var(--gold);
-    background:rgba(200,160,80,.04);margin:22px 0;text-align:left}
+    color:var(--red2);line-height:1.45;padding:18px 22px;border-left:3px solid var(--red2);
+    background:rgba(120,60,20,.05);margin:22px 0;text-align:left}
+  body[data-theme="nb-red"] .textblock .quote{background:rgba(40,20,10,.4);border-left:3px solid var(--gold)}
   .textblock .quote .attr{display:block;margin-top:10px;font-style:normal;
     font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--faint);
     text-transform:uppercase}
+  body[data-theme="nb-red"] .textblock .quote .attr{color:var(--steel)}
 
   /* ══ RED SECTION DIVIDER ══ */
   .reddivider{background:var(--red);padding-block:30px;margin-block:20px;
     text-align:center;border-top:1px solid var(--red-deep);border-bottom:1px solid var(--red-deep)}
   .reddivider .rd-title{font-family:var(--strong);font-weight:400;font-size:clamp(1.2rem,2.5vw,1.6rem);
     color:var(--cream);letter-spacing:.2em;text-transform:uppercase}
+  body[data-theme="nb-red"] .reddivider .rd-title{color:var(--steel)}
   .reddivider .rd-sub{font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;
     color:var(--gold);margin-top:6px;text-transform:uppercase}
+  body[data-theme="nb-red"] .reddivider .rd-sub{color:var(--cream)}
 
   /* ══ PRINCIPLES — RED SQUARES ══ */
-  .principles{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-    background:var(--red);border:1px solid var(--red);border-radius:0;overflow:hidden;
-    margin-top:6px}
-  @media(max-width:760px){.principles{grid-template-columns:1fr}}
+  .principles{background:var(--red);border:1px solid var(--red)}
   .pr{background:var(--bg2);padding:22px 20px;border:1px solid var(--red)}
-  .pr .n{font-family:var(--mono);font-size:9px;color:var(--gold2);letter-spacing:.18em;
+  .pr .n{font-family:var(--mono);font-size:9px;color:var(--red2);letter-spacing:.18em;
     margin-bottom:8px;text-transform:uppercase}
-  .pr h3{font-size:1.12rem;font-weight:600;color:var(--paper);margin-bottom:8px}
-  .pr p{color:var(--steel);font-size:.86rem;font-weight:300;line-height:1.55}
+  .pr h3{font-size:1.12rem;font-weight:600;color:var(--cream);margin-bottom:8px}
+  .pr p{color:var(--cream);font-size:.86rem;font-weight:300;line-height:1.55}
+  body[data-theme="nb-red"] .pr{background:#1a0a04;border-color:var(--line);padding:22px 20px}
+  body[data-theme="nb-red"] .pr .n{color:var(--gold)}
+  body[data-theme="nb-red"] .pr h3{color:var(--cream)}
+  body[data-theme="nb-red"] .pr p{color:var(--cream)}
 
   /* ══ FULLWIDTH — PEOPLE'S PLATFORM ══ */
   .fullwidth{background:var(--bg2);border-top:1px solid var(--line);
     border-bottom:1px solid var(--line);padding-block:clamp(36px,5vw,52px)}
+  body[data-theme="nb-red"] .fullwidth{background:#1a0a04;border-top:1px solid var(--black);border-bottom:1px solid var(--black)}
   .fb-in{max-width:var(--maxw);margin:0 auto;padding-inline:var(--inner);
     display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
   @media(max-width:760px){.fb-in{grid-template-columns:1fr}}
   .fb-text h3{font-family:var(--strong);font-weight:400;font-size:clamp(1.4rem,3vw,2rem);
-    letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;line-height:1}
-  .fb-text p{color:var(--steel);font-size:.98rem;font-weight:300;line-height:1.65}
-  .fb-text p b{color:var(--paper);font-weight:600}
+    letter-spacing:.08em;text-transform:uppercase;color:var(--red2);margin-bottom:14px;line-height:1}
+  .fb-text p{color:var(--cream);font-size:.98rem;font-weight:300;line-height:1.65}
+  .fb-text p b{color:var(--cream);font-weight:600}
+  body[data-theme="nb-red"] .fb-text p b{color:var(--gold2)}
+  body[data-theme="nb-red"] .fb-text p{color:var(--cream)}
+  body[data-theme="nb-red"] .fb-text p b{color:var(--gold2)}
 
   /* ══ BOOKLET — PEOPLE'S MANIFESTO ══ */
   .booklet{border:2px solid var(--red);border-radius:0;overflow:hidden;
     background:var(--bg2);margin-top:6px}
   .booklet .bk-head{display:flex;align-items:center;gap:12px;padding:14px 18px;
     background:var(--red);border-bottom:1px solid var(--red-deep)}
+  body[data-theme="nb-red"] .booklet .bk-head{background:#3a0e08}
   .booklet .bk-head .bk-mark{width:32px;height:32px;border-radius:50%;
     background:radial-gradient(circle at 40% 35%,var(--gold2),var(--gold) 55%,var(--red-deep) 100%);
     flex:none;box-shadow:0 0 10px rgba(184,144,64,.25)}
@@ -189,16 +220,19 @@
     letter-spacing:.08em;text-transform:uppercase;color:var(--cream)}
   .booklet .bk-body{padding:22px 24px}
   .booklet .bk-chapter{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;
-    text-transform:uppercase;color:var(--gold2);margin:20px 0 8px;
+    text-transform:uppercase;color:var(--red2);margin:20px 0 8px;
     border-top:1px solid var(--line);padding-top:12px}
+  body[data-theme="nb-red"] .booklet .bk-chapter{color:var(--gold)}
   .booklet .bk-chapter:first-child{margin-top:0;border-top:0;padding-top:0}
   .booklet .bk-body h4{font-family:var(--disp);font-weight:600;font-size:1rem;
-    margin-bottom:6px;color:var(--paper)}
-  .booklet .bk-body p{color:var(--steel);font-size:.88rem;line-height:1.6;font-weight:300;margin-bottom:8px}
-  .booklet .bk-body p b{color:var(--paper);font-weight:600}
+    margin-bottom:6px;color:var(--cream)}
+  .booklet .bk-body p{color:var(--cream);font-size:.88rem;line-height:1.6;font-weight:300;margin-bottom:8px}
+  .booklet .bk-body p b{color:var(--cream);font-weight:600}
+  body[data-theme="nb-red"] .booklet .bk-body p b{color:var(--gold2)}
   .booklet .bk-foot{padding:14px 18px;border-top:1px solid var(--line);
     font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--faint);
     text-transform:uppercase;text-align:center;background:var(--bg3)}
+  body[data-theme="nb-red"] .booklet .bk-foot{color:var(--steel);background:#1a0a04}
 
   /* ══ FOOTER ══ */
   footer{border-top:2px solid var(--red);padding-block:28px;background:var(--bg2)}
@@ -210,16 +244,27 @@
     background:radial-gradient(circle at 50% 50%,var(--gold2),var(--gold) 40%,var(--red-deep) 100%);
     border-radius:50%;clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 90%,50% 70%,21% 90%,32% 57%,2% 35%,39% 35%)}
   .foot .l .nm{font-family:var(--disp);font-weight:600;font-size:13px;letter-spacing:.1em;
-    text-transform:uppercase;color:var(--paper)}
-  .foot .l .nm b{color:var(--gold);font-weight:700}
+    text-transform:uppercase;color:var(--cream)}
+  .foot .l .nm b{color:var(--red2);font-weight:700}
+  body[data-theme="nb-red"] .foot .l .nm b{color:var(--gold2)}
   .foot .r{font-family:var(--mono);font-size:9.5px;color:var(--faint);
     text-align:right;letter-spacing:.06em;text-transform:uppercase;line-height:1.5}
-  .foot .r b{color:var(--steel);font-weight:700}
+  body[data-theme="nb-red"] .foot .r{color:var(--steel)}
+  .foot .r b{color:var(--cream);font-weight:700}
 
-  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+  .theme-btn{border:1px solid var(--red);background:var(--cream);color:var(--red);
+    cursor:pointer;padding:5px 7px;border-radius:2px;font-size:.7rem;letter-spacing:.04em;
+    display:inline-flex;align-items:center;gap:3px;transition:background .15s,color .15s}
+  .theme-btn:hover{background:var(--red);color:var(--cream)}
+  .theme-sun{display:inline}
+  .theme-moon{display:none}
+  body[data-theme="nb-red"] .theme-btn{background:var(--black);color:var(--cream);border-color:var(--cream)}
+  body[data-theme="nb-red"] .theme-btn:hover{background:var(--red);color:var(--cream)}
+  body[data-theme="nb-red"] .theme-sun{display:none}
+  body[data-theme="nb-red"] .theme-moon{display:inline}
 </style>
 </head>
-<body>
+<body data-theme="nb-light">
 
 <!-- ══ RED BANNER ══ -->
 <div class="redbanner">
@@ -239,6 +284,9 @@
       <a href="#platform">Platform</a>
       <a href="#ideology">Ideology</a>
       <a href="#booklet">The Booklet</a>
+      <button class="theme-btn" id="nbThemeBtn" title="Toggle light / red-dark">
+        <span class="theme-sun">☀</span><span class="theme-moon">☾</span>
+      </button>
     </div>
   </div>
 </div>
@@ -404,5 +452,28 @@
   </div>
 </footer>
 
+<script>
+(function(){
+  var b=document.getElementById('nbThemeBtn');
+  var root=document.body;
+  var current=root.getAttribute('data-theme')||'n...[truncated]
+  b.setAttribute('aria-pressed',current==='nb-red'?'true':'false');
+  b.addEventListener('click',function(){
+    var next=(current==='nb-light')?'nb-red':'nb-light';
+    root.setAttribute('data-theme',next);
+    current=next;
+    b.setAttribute('aria-pressed',next==='nb-red'?'true':'false');
+    try{localStorage.setItem('nb-theme',next);}catch(e){}
+  });
+  try{
+    var saved=localStorage.getItem('nb-theme');
+    if(saved&&(saved==='nb-light'||saved==='nb-red')){
+      root.setAttribute('data-theme',saved);
+      current=saved;
+      b.setAttribute('aria-pressed',saved==='nb-red'?'true':'false');
+    }
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
