@@ -8,7 +8,7 @@
 <meta name="description" content="XYPHON — a cancer research company that banks real, patient-donated tumors and tests cures directly on human tissue instead of lab mice. PHAGEIO application for research groups.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Chakra+Petch:wght@500;600;700&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;0,900;1,500;1,600&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
 <style>
   :root{
   /* SHARP. Near-black canvas, cold blue data accent. TYPHON-dark structure with
@@ -19,11 +19,15 @@
     --pink:#e82535; --pink2:#ff4a6a; --rose:#ff2070; --rose2:#ff5a8a;
     --crimson:#ff1a4a; --green:#4fd07f; --danger:#e01d2b; --danger2:#ff4653;
     --amber:#ff7a3a; --amber2:#ffb15a;
-    --strong:"Anton",Impact,system-ui,sans-serif;
-    --disp:"Chakra Petch",system-ui,sans-serif;
+    /* Fraunces for both display roles — an organic, slightly "grown" serif
+       with irregular ink-trap detailing, standing in for the sharp geometric
+       Anton/Chakra Petch pairing TYPHON uses, so this reads as biological
+       research instead of a security tool. */
+    --strong:"Fraunces",Georgia,serif;
+    --disp:"Fraunces",Georgia,serif;
     --body:"Archivo",system-ui,sans-serif;
     --mono:"Space Mono",ui-monospace,Consolas,monospace;
-    --maxw:1320px;
+    --maxw:1800px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -53,19 +57,19 @@
   .parent b{color:var(--dim)}
   .brand{display:flex;align-items:center;gap:10px}
   .brand img{width:30px;height:30px;object-fit:contain}
-  .brand .wm{font-family:var(--strong);font-weight:400;font-size:23px;letter-spacing:.12em}
+  .brand .wm{font-family:var(--strong);font-weight:600;font-size:23px;letter-spacing:.04em}
   .navlinks{display:flex;gap:22px;margin-left:auto}
   .navlinks a{font-size:13.5px;color:var(--dim);letter-spacing:.02em;transition:color .15s}
   .navlinks a:hover{color:var(--paper)}
   .navtools{display:flex;align-items:center;gap:12px}
-  .langwrap{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .langwrap{display:inline-flex;border:1px solid var(--line);border-radius:20px;overflow:hidden}
   .lang{background:transparent;border:0;cursor:pointer;padding:6px 10px;font-family:var(--mono);font-size:11px;font-weight:500;color:var(--dim)}
   .lang.on{background:var(--rose);color:#0d0508}
-  .modepill{background:var(--ink3);border:1px solid var(--line);border-radius:4px;color:var(--paper);font-family:var(--mono);font-size:11px;padding:6px 11px;cursor:pointer;letter-spacing:.04em}
+  .modepill{background:var(--ink3);border:1px solid var(--line);border-radius:20px;color:var(--paper);font-family:var(--mono);font-size:11px;padding:6px 11px;cursor:pointer;letter-spacing:.04em}
   .modepill:hover{border-color:var(--rose)}
-  .btn{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.05em;padding:9px 16px;border-radius:5px;cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;display:inline-block}
+  .btn{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.05em;padding:9px 16px;border-radius:14px;cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;display:inline-block}
   .btn:hover{transform:translateY(-1px)}
-  .btn-primary{background:linear-gradient(96deg,var(--pink),var(--amber));color:#0d0508}
+  .btn-primary{background:linear-gradient(96deg,var(--danger),var(--crimson));color:#fff}
   .btn-primary:hover{filter:brightness(1.08)}
   .btn-ghost{border-color:var(--line-warm);color:var(--paper)}
   .btn-ghost:hover{border-color:var(--rose);background:rgba(255,64,106,.06)}
@@ -79,9 +83,9 @@
   .hero{position:relative;padding-block:clamp(44px,7vw,86px)}
   .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:46px;align-items:center}
   @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:34px}}
-  .hero h1{font-family:var(--strong);font-weight:400;font-size:clamp(3.8rem,12vw,8.4rem);line-height:.86;letter-spacing:.02em;text-transform:uppercase;margin:12px 0 0;
+  .hero h1{font-family:var(--strong);font-weight:700;font-size:clamp(3.8rem,12vw,8.4rem);line-height:.86;letter-spacing:-.01em;text-transform:none;margin:12px 0 0;
     background:linear-gradient(100deg,var(--rose2),var(--pink) 55%,var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 34px rgba(232,37,53,.22))}
-  .tagline{font-family:var(--strong);font-weight:400;font-size:clamp(1.3rem,3.2vw,2.3rem);letter-spacing:.16em;text-transform:uppercase;color:var(--paper);margin-top:8px}
+  .tagline{font-family:var(--strong);font-weight:600;font-style:italic;font-size:clamp(1.3rem,3.2vw,2.3rem);letter-spacing:.01em;text-transform:none;color:var(--paper);margin-top:8px}
   .tagline .gradtext{background:linear-gradient(100deg,var(--rose2),var(--pink) 60%,var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
   .hero .sub{font-size:clamp(1rem,1.7vw,1.18rem);color:#c8c2d4;max-width:56ch;margin-top:20px}
   .hero .cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
@@ -131,7 +135,7 @@
   .emblem .lockring{width:min(540px,98%);aspect-ratio:1;border-radius:50%;border:1px dashed rgba(232,37,53,.38);animation:spin 26s linear infinite}
   .emblem .lockring.i2{width:min(420px,78%);border-color:rgba(255,64,106,.28);animation:spin 18s linear infinite reverse}
   .emblem .lockbox{width:min(430px,82%);aspect-ratio:1;animation:pulse 2.2s ease-in-out infinite}
-  .emblem .lockbox i{position:absolute;width:28px;height:28px;border:2px solid var(--danger2)}
+  .emblem .lockbox i{position:absolute;width:28px;height:28px;border:2px solid var(--danger2);border-radius:8px}
   .emblem .lockbox i:nth-child(1){top:0;left:0;border-right:0;border-bottom:0} .emblem .lockbox i:nth-child(2){top:0;right:0;border-left:0;border-bottom:0}
   .emblem .lockbox i:nth-child(3){bottom:0;left:0;border-right:0;border-top:0} .emblem .lockbox i:nth-child(4){bottom:0;right:0;border-left:0;border-top:0}
   .emblem img{width:min(380px,72%);position:relative;z-index:3;transform:translateY(5%);filter:drop-shadow(0 0 54px rgba(232,37,53,.5));animation:breathe 6s ease-in-out infinite}
@@ -174,14 +178,14 @@
   .head h2{font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:700}
   .head p{color:var(--dim);margin-top:12px;font-size:1.02rem}
 
-  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:24px;overflow:hidden}
   @media(max-width:760px){.pillars{grid-template-columns:1fr}}
   .pil{background:var(--ink2);padding:26px 24px}
   .pil .n{font-family:var(--mono);font-size:11px;color:var(--rose2);letter-spacing:.14em}
   .pil h3{font-size:1.32rem;font-weight:700;margin:12px 0 8px}
   .pil p{color:var(--dim);font-size:.94rem}
 
-  .suite{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--ink2)}
+  .suite{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--ink2)}
   .suite-top{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#0f0d14;border-bottom:1px solid var(--line)}
   .suite-top .t{font-family:var(--disp);font-weight:700;letter-spacing:.12em;font-size:.9rem}
   .suite-top .hint{font-family:var(--mono);font-size:11px;color:var(--faint)}
@@ -197,16 +201,16 @@
   .suite-panel .cat{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--rose2)}
   .suite-panel h3{font-size:1.6rem;font-weight:700;margin:8px 0 10px}
   .suite-panel p{color:#c8c2d4;max-width:52ch}
-  .suite-panel .st{display:inline-block;margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);border:1px solid var(--line-warm);border-radius:3px;padding:4px 10px}
+  .suite-panel .st{display:inline-block;margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);border:1px solid var(--line-warm);border-radius:12px;padding:4px 10px}
 
   .mapgrid{display:grid;grid-template-columns:1fr 270px;gap:18px}
   @media(max-width:820px){.mapgrid{grid-template-columns:1fr}}
-  .mapstage{position:relative;border:1px solid var(--line);border-radius:10px;background:#0a070e;overflow:hidden}
+  .mapstage{position:relative;border:1px solid var(--line);border-radius:24px;background:#0a070e;overflow:hidden}
   .mapstage canvas{display:block;width:100%;height:clamp(300px,40vw,460px)}
   .mapstat{position:absolute;left:16px;bottom:14px}
   .mapstat-n{display:block;font-family:var(--strong);font-size:2.1rem;color:var(--rose2);line-height:1;font-variant-numeric:tabular-nums;text-shadow:0 0 18px rgba(232,37,53,.4)}
   .mapstat-l{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
-  .feed{border:1px solid var(--line);border-radius:10px;background:var(--ink2);overflow:hidden;display:flex;flex-direction:column}
+  .feed{border:1px solid var(--line);border-radius:24px;background:var(--ink2);overflow:hidden;display:flex;flex-direction:column}
   .feed-top{padding:11px 14px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--faint);background:#0f0d14;display:flex;justify-content:space-between;align-items:center}
   .feed-top b{color:var(--danger2);font-weight:700}
   .fm{padding:6px 12px;display:flex;flex-direction:column}
@@ -216,7 +220,7 @@
   .ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
   @media(max-width:820px){.ai-grid{grid-template-columns:1fr}}
   .flow{display:flex;flex-direction:column;gap:8px}
-  .flow .s{font-family:var(--mono);font-size:12.5px;color:#c8c2d4;border:1px solid var(--line);border-radius:6px;padding:10px 13px;background:var(--ink2)}
+  .flow .s{font-family:var(--mono);font-size:12.5px;color:#c8c2d4;border:1px solid var(--line);border-radius:16px;padding:10px 13px;background:var(--ink2)}
   .flow .s b{color:var(--rose2);font-weight:500} .flow .s.ai b{color:var(--rose2)}
   .flow .ar{color:var(--faint);font-size:11px;text-align:center;font-family:var(--mono)}
   .aicard .kv{display:flex;flex-direction:column;gap:0}
@@ -224,11 +228,11 @@
   .aicard .kv div:last-child{border-bottom:0} .aicard .kv span:first-child{color:var(--dim)} .aicard .kv span:last-child{color:var(--paper)}
   .feature-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
   @media(max-width:760px){.feature-row{grid-template-columns:1fr}}
-  .fr{border:1px solid var(--line);border-radius:8px;padding:18px;background:var(--ink2)}
+  .fr{border:1px solid var(--line);border-radius:20px;padding:18px;background:var(--ink2)}
   .fr h4{font-family:var(--disp);font-weight:600;font-size:1.02rem;margin-bottom:6px}
   .fr p{color:var(--dim);font-size:.88rem}
 
-  .dl{border:1px solid var(--line-warm);border-radius:12px;background:linear-gradient(180deg,var(--ink2),#14101c);padding:clamp(30px,5vw,54px);text-align:center}
+  .dl{border:1px solid var(--line-warm);border-radius:32px;background:linear-gradient(180deg,var(--ink2),#14101c);padding:clamp(30px,5vw,54px);text-align:center}
   .dl h2{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800}
   .dl p{color:#c8c2d4;max-width:52ch;margin:14px auto 0}
   .dl .cta{display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap}
@@ -248,7 +252,18 @@
   .pledgebar b{color:#ffd86a;font-weight:700} .pledgebar .sep{opacity:.35;margin:0 .55em}
 
   /* cancer-lab specific */
-  .clab{border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,#0e0a14,#0a0710);overflow:hidden;box-shadow:0 30px 70px -50px rgba(0,0,0,.9)}
+  /* a loose scatter of cell-culture "bubbles" behind the tumor bank section —
+     biological texture instead of the sharp data-grid look elsewhere */
+  #cancerlab{position:relative;overflow:hidden}
+  #cancerlab::before{content:"";position:absolute;inset:-10%;z-index:0;pointer-events:none;
+    background-image:
+      radial-gradient(circle at 8% 20%, rgba(232,37,53,.10) 0 34px, transparent 35px),
+      radial-gradient(circle at 22% 68%, rgba(255,122,58,.08) 0 22px, transparent 23px),
+      radial-gradient(circle at 78% 12%, rgba(255,64,106,.09) 0 46px, transparent 47px),
+      radial-gradient(circle at 92% 60%, rgba(232,37,53,.07) 0 28px, transparent 29px),
+      radial-gradient(circle at 55% 88%, rgba(255,122,58,.07) 0 38px, transparent 39px)}
+  #cancerlab .wrap{position:relative;z-index:1}
+  .clab{border:1px solid var(--line);border-radius:24px;background:linear-gradient(180deg,#0e0a14,#0a0710);overflow:hidden;box-shadow:0 30px 70px -50px rgba(0,0,0,.9)}
   .clab-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);background:#0a0710}
   .clab-top .t{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
   .clab-top .st{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--crimson);white-space:nowrap}
@@ -262,14 +277,14 @@
   .clab-gauge .gv{font-family:var(--disp);font-weight:700;font-size:1.5rem;color:var(--paper);font-variant-numeric:tabular-nums;line-height:1}
   .clab-gauge .gv .num{transition:color .2s}
   .clab-gauge.crit .gv .num{color:var(--crimson)}
-  .clab-gauge .track{height:8px;border-radius:2px;background:#16121f;overflow:hidden;position:relative}
+  .clab-gauge .track{height:8px;border-radius:4px;background:#16121f;overflow:hidden;position:relative}
   .clab-gauge .track::after{content:"";position:absolute;left:82%;top:-2px;bottom:-2px;width:1px;background:var(--rose);opacity:.55}
-  .clab-gauge .fill{height:100%;border-radius:2px;width:5%;background:linear-gradient(90deg,var(--pink),var(--pink2));transition:width .35s linear,background .35s}
+  .clab-gauge .fill{height:100%;border-radius:4px;width:5%;background:linear-gradient(90deg,var(--pink),var(--pink2));transition:width .35s linear,background .35s}
   .cvlist{display:flex;flex-direction:column;gap:18px}
   .cvitem .k{font-family:var(--mono);font-size:10px;color:var(--rose2);letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
   .cvitem .v h4{font-family:var(--disp);font-size:1.02rem;font-weight:600;margin-bottom:3px}
   .cvitem .v p{color:var(--dim);font-size:.88rem}
-  .cgate{margin-top:22px;border:1px solid var(--line-warm);border-left:3px solid var(--rose);border-radius:6px;padding:14px 16px;background:rgba(255,64,106,.04)}
+  .cgate{margin-top:22px;border:1px solid var(--line-warm);border-left:3px solid var(--rose);border-radius:16px;padding:14px 16px;background:rgba(255,64,106,.04)}
   .cgate .t{font-family:var(--mono);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--rose2);margin-bottom:5px;font-size:.76rem}
   .cgate p{font-size:.9rem;color:#c8c2d4}
 
@@ -487,7 +502,7 @@
 <div class="pledgebar"><a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>an <b>ALLSEER</b> company</a></div>
 <footer>
   <div class="wrap foot">
-    <div class="l"><img src="assets/xyphon-icon2.jpg" alt="" style="border-radius:5px"><div class="x"><b>XYPHON</b><br>Grow the disease. Reverse it. · concept draft</div></div>
+    <div class="l"><img src="assets/xyphon-icon2.jpg" alt="" style="border-radius:50%"><div class="x"><b>XYPHON</b><br>Grow the disease. Reverse it. · concept draft</div></div>
     <div class="r"><span class="pmark">PRIMAL<sup>APE</sup></span> · under ALLSEER SOFTWARE<br><span style="opacity:.8">Patient-consented tissue only. Research use.</span></div>
   </div>
 </footer>
