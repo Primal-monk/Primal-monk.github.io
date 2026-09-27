@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THE FORGE — Forum &amp; Idea Exchange</title>
+<link rel="icon" type="image/png" href="assets/angelcorp.png">
+<meta name="description" content="THE FORGE — the ALLSEER forum and idea exchange. Post ideas, build on each other's, shape what gets built next.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Chakra+Petch:wght@500;600;700&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
+<style>
+  :root{
+    --ink:#0c0d10; --ink2:#121319; --ink3:#181a22; --raise:#1d2029;
+    --line:#262935; --line-warm:rgba(242,178,41,.12);
+    --paper:#ece7de; --dim:#8b909c; --faint:#565c69;
+    --amber:#e8a030; --amber2:#f0b848; --gold:#c49530;
+    --red:#e04030; --green:#4a9a5a; --blue:#4a7aaa;
+    --strong:"Anton",Impact,system-ui,sans-serif;
+    --disp:"Chakra Petch",system-ui,sans-serif;
+    --body:"Archivo",system-ui,sans-serif;
+    --mono:"Space Mono",ui-monospace,Consolas,monospace;
+    --maxw:1280px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--ink);color:var(--paper);line-height:1.65;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background-image:
+      radial-gradient(900px 480px at 88% -8%, rgba(232,160,48,.07), transparent 62%),
+      radial-gradient(700px 400px at -5% 4%, rgba(196,149,48,.05), transparent 60%)}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,h4{font-family:var(--disp);text-wrap:balance;line-height:1.08;letter-spacing:.005em}
+  .mono{font-family:var(--mono)}
+  ::selection{background:var(--amber);color:#0a0805}
+  ::-webkit-scrollbar{width:12px} ::-webkit-scrollbar-track{background:var(--ink2)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--amber),var(--gold));border:3px solid var(--ink2);border-radius:8px}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:22px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber2)}
+
+  .nav{position:sticky;top:0;z-index:60;background:rgba(12,13,16,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;gap:18px;height:60px}
+  .parent{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.08em;padding-right:14px;border-right:1px solid var(--line)}
+  .parent b{color:var(--dim)}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:30px;height:30px;object-fit:contain}
+  .brand .wm{font-family:var(--strong);font-weight:400;font-size:22px;letter-spacing:.12em;text-transform:uppercase}
+  .brand .wm b{color:var(--amber)}
+  .navlinks{display:flex;gap:22px;margin-left:auto}
+  .navlinks a{font-size:12.5px;color:var(--dim);letter-spacing:.02em;transition:color .15s}
+  .navlinks a:hover{color:var(--paper)}
+  .navtools{display:flex;align-items:center;gap:12px}
+  .btn{font-family:var(--strong);font-weight:400;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:9px 16px;border-radius:5px;cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;display:inline-block}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:linear-gradient(96deg,var(--amber),var(--amber2));color:#0a0805}
+  .btn-primary:hover{filter:brightness(1.07)}
+  .btn-ghost{border-color:var(--line-warm);color:var(--paper)}
+  .btn-ghost:hover{border-color:var(--amber);background:rgba(232,160,48,.05)}
+  @media(max-width:880px){.navlinks{display:none}}
+
+  .strip{background:#08090c;border-bottom:1px solid var(--line)}
+  .strip .wrap{display:flex;gap:26px;align-items:center;height:30px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--faint);text-transform:uppercase;overflow:hidden;white-space:nowrap}
+  .strip .a{color:var(--dim)} .strip .ver{margin-left:auto;color:var(--faint)}
+
+  .hero{position:relative;padding-block:clamp(40px,6vw,66px)}
+  .hero-in{position:relative;z-index:1;text-align:center}
+  .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(232,160,48,.04) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(232,160,48,.04) 1px,transparent 1px);
+    background-size:38px 38px;
+    -webkit-mask-image:radial-gradient(130% 92% at 50% 8%,#000 0 34%,transparent 78%);
+            mask-image:radial-gradient(130% 92% at 50% 8%,#000 0 34%,transparent 78%);}
+
+  .hero h1{font-family:var(--strong);font-weight:400;font-size:clamp(3.5rem,10vw,6.5rem);line-height:.88;letter-spacing:.02em;text-transform:uppercase;margin:12px 0 0}
+  .hero h1 .g{color:var(--amber)}
+  .hero .sub{font-size:clamp(1rem,1.7vw,1.15rem);color:#c4c0b6;max-width:54ch;margin:16px auto 0;font-weight:300}
+  .hero .sub em{color:var(--amber);font-style:normal;font-weight:500}
+  .hero .cta{display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+
+  /* forum preview */
+  .forum-preview{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--ink2);margin-top:24px}
+  .forum-preview .fp-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--ink3);border-bottom:1px solid var(--line)}
+  .forum-preview .fp-head .fp-title{font-family:var(--disp);font-weight:700;font-size:1rem;letter-spacing:.06em}
+  .forum-preview .fp-head .fp-count{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.1em;text-transform:uppercase}
+  .forum-preview .fp-body{display:flex;flex-direction:column}
+  .fp-row{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:13px 16px;border-bottom:1px solid var(--line)}
+  .fp-row:last-child{border-bottom:0}
+  .fp-row .fp-cat{font-family:var(--strong);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);min-width:70px;text-align:right}
+  .fp-row .fp-content h4{font-size:.98rem;font-weight:600;margin-bottom:2px}
+  .fp-row .fp-content p{font-size:.8rem;color:var(--dim);font-weight:300;line-height:1.4}
+  .fp-row .fp-meta{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);text-align:right;min-width:60px}
+  .fp-row .fp-meta .up{color:var(--green);font-weight:700}
+  .fp-row .fp-meta .cm{color:var(--faint)}
+  .fp-row.hot{background:rgba(232,160,48,.04)}
+  .fp-row .fp-hotbadge{font-family:var(--mono);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);border:1px solid var(--line-warm);border-radius:2px;padding:1px 6px}
+
+  .idea-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+  @media(max-width:760px){.idea-cards{grid-template-columns:1fr}}
+  .icard{border:1px solid var(--line);border-radius:8px;padding:20px;background:var(--ink2);position:relative;overflow:hidden}
+  .icard::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:var(--amber)}
+  .icard .ic-cat{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber2);margin-bottom:8px}
+  .icard h3{font-size:1.1rem;font-weight:600;margin-bottom:6px;line-height:1.2}
+  .icard p{color:var(--dim);font-size:.84rem;line-height:1.5;font-weight:300}
+  .icard .ic-meta{margin-top:14px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  .icard .ic-meta .ic-views{color:var(--amber2);font-weight:700}
+
+  .section-head{margin-bottom:14px}
+  .section-head .eyebrow{display:block;margin-bottom:8px}
+  .section-head h2{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:600}
+
+  section.band{padding-block:clamp(40px,6vw,64px);border-top:1px solid var(--line)}
+  .head{max-width:58ch;margin:0 auto 28px;text-align:center}
+  .head .eyebrow{display:block;margin-bottom:8px}
+  .head h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:600}
+  .head p{color:var(--dim);margin-top:10px;font-size:.95rem;max-width:50ch;margin-left:auto;margin-right:auto}
+
+  .cta-block{border:1px solid var(--line-warm);border-radius:10px;background:linear-gradient(180deg,var(--ink2),#14110c);padding:clamp(28px,4vw,44px);text-align:center;margin-top:8px}
+  .cta-block h2{font-size:clamp(1.6rem,3.2vw,2.2rem);font-weight:700}
+  .cta-block p{color:#c4c0b6;max-width:48ch;margin:12px auto 0;font-weight:300}
+  .cta-block .cta{display:flex;gap:12px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+
+  footer{border-top:1px solid var(--line);padding-block:28px}
+  .foot{max-width:var(--maxw);margin:0 auto;padding-inline:22px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .foot .l{display:flex;align-items:center;gap:10px}
+  .foot .l img{width:24px;height:24px;object-fit:contain}
+  .foot .l .nm{font-family:var(--strong);font-weight:400;font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--paper)}
+  .foot .l .nm b{color:var(--amber)}
+  .foot .r{font-family:var(--mono);font-size:10px;color:var(--faint);text-align:right;letter-spacing:.06em}
+  .pmark{font-family:var(--strong);font-weight:400;letter-spacing:.06em;color:var(--dim);text-transform:uppercase}
+  .pmark sup{font-size:.62em;vertical-align:super;margin-left:.04em}
+
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="parent" href="omni.html">← <b>ALLSEER SOFTWARE</b></a>
+    <a class="brand" href="forge.html"><img src="assets/angelcorp.png" alt=""><span class="wm">THE <b>FORGE</b></span></a>
+    <div class="navlinks">
+      <a href="#ideas">Ideas</a>
+      <a href="#hot">Hot</a>
+      <a href="#about">About</a>
+    </div>
+    <div class="navtools">
+      <a href="#post" class="btn btn-primary">Post an Idea</a>
+    </div>
+  </div>
+</nav>
+
+<div class="strip">
+  <div class="wrap">
+    <span class="a">THE FORGE // THE ALLSEER IDEA EXCHANGE</span>
+    <span class="ver">POST · BUILD · SHAPE WHAT COMES NEXT</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap hero-in">
+    <h1>THE<br><span class="g">FORGE</span></h1>
+    <p class="sub">The <em>ALLSEER</em> idea exchange. Post an idea, build on someone else's, shape what gets built next. This is where the companies start — as ideas, in the open, before they become anything.</p>
+    <div class="cta">
+      <a href="#ideas" class="btn btn-primary">See the Ideas</a>
+      <a href="#post" class="btn btn-ghost">Post Your Own</a>
+    </div>
+
+    <div class="forum-preview">
+      <div class="fp-head">
+        <span class="fp-title">Recent Ideas</span>
+        <span class="fp-count">12 ideas · 3 new today</span>
+      </div>
+      <div class="fp-body">
+        <div class="fp-row hot">
+          <span class="fp-cat">XYPHON</span>
+          <div class="fp-content">
+            <h4>Cancer as a tool for vaccine development</h4>
+            <p>Grow cancer, make it resistant, study it. Fast medical development through cancer farms.</p>
+          </div>
+          <div class="fp-meta"><span class="up">▲ 14</span> <span class="cm">· 4d</span></div>
+        </div>
+        <div class="fp-row">
+          <span class="fp-cat">HW</span>
+          <div class="fp-content">
+            <h4>Work PCs built in gaming cases</h4>
+            <p>Your work machine in a case that doesn't embarrass you. Build to order.</p>
+          </div>
+          <div class="fp-meta"><span class="up">▲ 9</span> <span class="cm">· 6d</span></div>
+        </div>
+        <div class="fp-row hot">
+          <span class="fp-cat">POL</span>
+          <div class="fp-content">
+            <h4>Nationalized banking platform</h4>
+            <p>The banks belong to the people. Public ownership of the money system.</p>
+          </div>
+          <div class="fp-meta"><span class="up">▲ 22</span> <span class="cm">· 2d</span></div>
+        </div>
+        <div class="fp-row">
+          <span class="fp-cat">GAME</span>
+          <div class="fp-content">
+            <h4>Plants vs Zombies — a new take</h4>
+            <p>A fresh take on the tower defense / plant warfare concept. PICODEV, early stage.</p>
+          </div>
+          <div class="fp-meta"><span class="up">▲ 7</span> <span class="cm">· 1w</span></div>
+        </div>
+        <div class="fp-row">
+          <span class="fp-cat">AI</span>
+          <div class="fp-content">
+            <h4>Pixel art AI generation company</h4>
+            <p>Drawberry becomes a bigger AI company. Pixel art generation, Blockbench AI, web game engine.</p>
+          </div>
+          <div class="fp-meta"><span class="up">▲ 11</span> <span class="cm">· 3d</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="band" id="ideas">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">The Ideas</span>
+      <h2>Where everything starts.</h2>
+      <p>Every ALLSEER company starts as an idea in the Forge. Post yours, build on others', watch what gets picked up and built. The ideas that don't go anywhere stay ideas. The ones that do — become companies.</p>
+    </div>
+    <div class="idea-cards">
+      <div class="icard">
+        <div class="ic-cat">XYPHON · Research</div>
+        <h3>Cancer as a vaccine-development tool</h3>
+        <p>Grow cancer in safe, non-contagious strains. Make it resistant. Study it. Use it to develop vaccines fast. PHAGEIO app for research groups. AI-assisted.</p>
+        <div class="ic-meta"><span>XYPHON</span><span class="ic-views">▲ 14</span></div>
+      </div>
+      <div class="icard">
+        <div class="ic-cat">PC SALES · Hardware</div>
+        <h3>Work PCs in gaming cases</h3>
+        <p>Your work machine in a gaming case that doesn't embarrass you. Build to order. Plus robot dogs and Printify robots.</p>
+        <div class="ic-meta"><span>PC SALES</span><span class="ic-views">▲ 9</span></div>
+      </div>
+      <div class="icard">
+        <div class="ic-cat">POL · Movement</div>
+        <h3>Nationalized banking</h3>
+        <p>The banks belong to the people. Public ownership of the money system. A political platform, a booklet, an ideology.</p>
+        <div class="ic-meta"><span>POL</span><span class="ic-views">▲ 22</span></div>
+      </div>
+      <div class="icard">
+        <div class="ic-cat">AI · Drawberry</div>
+        <h3>Pixel art AI generation</h3>
+        <p>Drawberry becomes a bigger AI company. Pixel art generation, Blockbench AI, eventually a custom web-based game engine.</p>
+        <div class="ic-meta"><span>DRAWBERRY</span><span class="ic-views">▲ 11</span></div>
+      </div>
+      <div class="icard">
+        <div class="ic-cat">ROBOTICS · Hardware</div>
+        <h3>Robot dogs + custom robots</h3>
+        <p>Robot dogs built from Printify parts. Other robots on request. Real robotics, built to order, by ALLSEER PC SALES.</p>
+        <div class="ic-meta"><span>ROBOTICS</span><span class="ic-views">▲ 8</span></div>
+      </div>
+      <div class="icard">
+        <div class="ic-cat">GAME · PICODEV</div>
+        <h3>ARK-style survival game</h3>
+        <p>A survival game in the ARK mold — build, tame, survive. Early concept, PICODEV. Plants vs Zombies take also in the works.</p>
+        <div class="ic-meta"><span>PICODEV</span><span class="ic-views">▲ 16</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="hot">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Hot Right Now</span>
+      <h2>The ideas people are building on.</h2>
+      <p>The ideas with the most attention, the most replies, the most momentum. Watch these — they're the ones that might become the next ALLSEER company.</p>
+    </div>
+    <div class="forum-preview">
+      <div class="fp-head">
+        <span class="fp-title">Hot Ideas</span>
+        <span class="fp-count">trending · last 7 days</span>
+      </div>
+      <div class="fp-body">
+        <div class="fp-row hot">
+          <span class="fp-cat">POL</span>
+          <div class="fp-content">
+            <h4><span class="fp-hotbadge">HOT</span> Nationalized banking — the booklet</h4>
+            <p>A small document of what we believe. Public ownership of the banks. Public good over private profit.</p>
+          </div>
+          <div class="fp-meta"><span class="up">▲ 22</span> <span class="cm">· 2d</span></div>
+        </div>
+        <div class="fp-row hot">
+          <span class="fp-cat">XYPHON</span>
+          <div class="fp-content">
+            <h4><span class="fp-hotbadge">HOT</span> Can cancer be the cure?</h4>
+            <p>What if the cure to everything is cancer? Grow it, study it, use it. Fast vaccine development through cancer research.</p>
+          </div>
+          <div class="fp-meta"><span class="up">▲ 18</span> <span class="cm">· 3d</span></div>
+        </div>
+        <div class="fp-row">
+          <span class="fp-cat">GAME</span>
+          <div class="fp-content">
+            <h4>Plants vs Zombies — a fresh take</h4>
+            <p>A new take on the plant warfare tower defense concept. PICODEV early stage.</p>
+          </div>
+          <div class="fp-meta"><span class="up">▲ 11</span> <span class="cm">· 4d</span></div>
+        </div>
+        <div class="fp-row">
+          <span class="fp-cat">AI</span>
+          <div class="fp-content">
+            <h4>Drawberry — bigger AI company</h4>
+            <p>Pixel art AI, Blockbench AI, a custom web-based game engine. Drawberry grows into a real AI company.</p>
+          </div>
+          <div class="fp-meta"><span class="up">▲ 9</span> <span class="cm">· 5d</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="post">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Post an Idea</span>
+      <h2>Your idea. In the open. Before it becomes anything.</h2>
+      <p>This is where the companies start. Post your idea, see what people think, watch it get built or not. No gatekeeping. No approval process. Just ideas in the open, in the Forge.</p>
+    </div>
+    <div class="cta-block">
+      <h2>Post in the Forge</h2>
+      <p>An idea can be anything — a company, a product, a game, a movement. Post it. Let it breathe. See what happens.</p>
+      <div class="cta">
+        <a href="#" class="btn btn-primary">Post an Idea</a>
+        <a href="#" class="btn btn-ghost">View the Rules</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot">
+    <div class="l"><img src="assets/angelcorp.png" alt=""><div class="nm">THE <b>FORGE</b></div></div>
+    <div class="r">The ALLSEER idea exchange<br><span class="pmark">PRIMAL<sup>APE</sup></span> · concept draft</div>
+  </div>
+</footer>
+
+</body>
+</html>

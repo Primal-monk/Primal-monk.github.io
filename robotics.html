@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ALLSEER ROBOTICS — Robot Concepts &amp; Builds</title>
+<link rel="icon" type="image/png" href="assets/angelcorp.png">
+<meta name="description" content="ALLSEER ROBOTICS — robot concepts and builds. Robot dogs, custom robots, Printify robotics. Real robotics, built to order.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Chakra+Petch:wght@500;600;700&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
+<style>
+  :root{
+    --ink:#0c0d10; --ink2:#121319; --ink3:#181a22; --raise:#1d2029;
+    --line:#262935; --line-warm:rgba(90,160,255,.14);
+    --paper:#ece7de; --dim:#8b909c; --faint:#565c69;
+    --blue:#5aa0ff; --blue2:#7ab8ff; --green:#4fd07f; --gold:#f2b229;
+    --strong:"Anton",Impact,system-ui,sans-serif;
+    --disp:"Chakra Petch",system-ui,sans-serif;
+    --body:"Archivo",system-ui,sans-serif;
+    --mono:"Space Mono",ui-monospace,Consolas,monospace;
+    --maxw:1320px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--ink);color:var(--paper);line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background-image:
+      radial-gradient(900px 480px at 88% -8%, rgba(90,160,255,.08), transparent 62%),
+      radial-gradient(700px 400px at -5% 4%, rgba(79,208,127,.05), transparent 60%)}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,h4{font-family:var(--disp);text-wrap:balance;line-height:1.08;letter-spacing:.005em}
+  .mono{font-family:var(--mono)}
+  ::selection{background:var(--blue);color:#0c0510}
+  ::-webkit-scrollbar{width:12px} ::-webkit-scrollbar-track{background:var(--ink2)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--blue),var(--green));border:3px solid var(--ink2);border-radius:8px}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:22px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--blue2)}
+
+  .nav{position:sticky;top:0;z-index:60;background:rgba(12,13,16,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;gap:18px;height:60px}
+  .parent{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.08em;padding-right:14px;border-right:1px solid var(--line)}
+  .parent b{color:var(--dim)}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:30px;height:30px;object-fit:contain}
+  .brand .wm{font-family:var(--strong);font-weight:400;font-size:23px;letter-spacing:.12em}
+  .brand .wm b{color:var(--blue)}
+  .navlinks{display:flex;gap:22px;margin-left:auto}
+  .navlinks a{font-size:13.5px;color:var(--dim);letter-spacing:.02em;transition:color .15s}
+  .navlinks a:hover{color:var(--paper)}
+  .navtools{display:flex;align-items:center;gap:12px}
+  .modepill{background:var(--ink3);border:1px solid var(--line);border-radius:4px;color:var(--paper);font-family:var(--mono);font-size:11px;padding:6px 11px;cursor:pointer;letter-spacing:.04em}
+  .modepill:hover{border-color:var(--blue)}
+  .btn{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.05em;padding:9px 16px;border-radius:5px;cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;display:inline-block}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:linear-gradient(96deg,var(--blue),var(--green));color:#0c0510}
+  .btn-primary:hover{filter:brightness(1.08)}
+  .btn-ghost{border-color:var(--line-warm);color:var(--paper)}
+  .btn-ghost:hover{border-color:var(--blue);background:rgba(90,160,255,.06)}
+  @media(max-width:880px){.navlinks{display:none}}
+
+  .statusstrip{background:#08090c;border-bottom:1px solid var(--line)}
+  .statusstrip .wrap{display:flex;gap:26px;align-items:center;height:30px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--faint);text-transform:uppercase;overflow:hidden;white-space:nowrap}
+  .statusstrip .a{color:var(--dim)} .statusstrip .ver{margin-left:auto;color:var(--faint)}
+
+  .hero{position:relative;padding-block:clamp(44px,7vw,86px)}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:46px;align-items:center}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:34px}}
+
+  .hero h1{font-family:var(--strong);font-weight:400;font-size:clamp(3.8rem,12vw,8.4rem);line-height:.86;letter-spacing:.02em;text-transform:uppercase;margin:12px 0 0}
+  .hero h1 .g{color:var(--blue)}
+  .tagline{font-family:var(--strong);font-weight:400;font-size:clamp(1.3rem,3.2vw,2.3rem);letter-spacing:.16em;text-transform:uppercase;color:var(--paper);margin-top:8px}
+  .tagline .gradtext{background:linear-gradient(100deg,var(--blue2),var(--green) 60%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .sub{font-size:clamp(1rem,1.7vw,1.18rem);color:#c4c0b6;max-width:56ch;margin-top:20px}
+  .hero .cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+  .hero .meta{display:flex;gap:20px;margin-top:26px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.04em}
+  .hero .meta span{display:flex;align-items:center;gap:7px} .hero .meta i{width:5px;height:5px;background:var(--blue);transform:rotate(45deg);font-style:normal;flex:none}
+
+  .robot-showcase{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--ink2);box-shadow:0 40px 90px -50px rgba(0,0,0,.9), 0 0 0 1px rgba(90,160,255,.05) inset}
+  .robot-showcase .rs-bar{display:flex;align-items:center;gap:7px;padding:10px 14px;background:#0f1015;border-bottom:1px solid var(--line)}
+  .robot-showcase .rs-bar .d{width:10px;height:10px;border-radius:50%;background:#3a3f4b}
+  .robot-showcase .rs-bar .d.a{background:var(--blue)} .robot-showcase .rs-bar .d.b{background:var(--green)}
+  .robot-showcase .rs-bar .p{margin-left:8px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .robot-showcase img{display:block;width:100%;height:auto}
+  .robot-showcase .cap{padding:10px 14px;border-top:1px solid var(--line);font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.04em;text-align:center}
+
+  .robot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+  @media(max-width:760px){.robot-grid{grid-template-columns:1fr}}
+  .robot-card{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--ink2)}
+  .robot-card .rc-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--ink3);border-bottom:1px solid var(--line)}
+  .robot-card .rc-head .rc-icon{width:48px;height:48px;border-radius:8px;background:var(--ink);display:flex;align-items:center;justify-content:center;font-size:1.6rem}
+  .robot-card .rc-head .rc-info h3{font-family:var(--disp);font-weight:700;font-size:1.08rem;margin-bottom:2px}
+  .robot-card .rc-head .rc-info p{color:var(--dim);font-size:.78rem;font-family:var(--mono)}
+  .robot-card .rc-body{padding:16px 16px}
+  .robot-card .rc-body p{color:var(--dim);font-size:.86rem;line-height:1.55}
+  .robot-card .rc-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid var(--line);background:var(--ink3)}
+  .robot-card .rc-footer .rc-price{font-family:var(--strong);font-size:1.4rem;color:var(--blue);line-height:1}
+  .robot-card .rc-footer .rc-price small{display:block;font-family:var(--mono);font-size:.6rem;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;font-weight:400}
+
+  section.band{padding-block:clamp(48px,7vw,84px);border-top:1px solid var(--line)}
+  .head{max-width:62ch;margin-bottom:34px}
+  .head .eyebrow{margin-bottom:12px;display:block}
+  .head h2{font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:700}
+  .head p{color:var(--dim);margin-top:12px;font-size:1.02rem}
+
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  @media(max-width:760px){.pillars{grid-template-columns:1fr}}
+  .pil{background:var(--ink2);padding:26px 24px}
+  .pil .n{font-family:var(--mono);font-size:11px;color:var(--blue2);letter-spacing:.14em}
+  .pil h3{font-size:1.32rem;font-weight:700;margin:12px 0 8px}
+  .pil p{color:var(--dim);font-size:.94rem}
+
+  .build-flow{display:flex;flex-direction:column;gap:0;margin-top:18px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--ink2)}
+  .bf-step{display:grid;grid-template-columns:50px 1fr;gap:16px;padding:16px 20px;border-bottom:1px solid var(--line);align-items:center}
+  .bf-step:last-child{border-bottom:0}
+  .bf-step .bf-num{font-family:var(--strong);font-size:1.8rem;color:var(--blue2);line-height:1;text-align:center}
+  .bf-step .bf-content h4{font-size:1.05rem;font-weight:600;margin-bottom:3px}
+  .bf-step .bf-content p{color:var(--dim);font-size:.86rem;font-weight:300}
+
+  .cta-block{border:1px solid var(--line-warm);border-radius:10px;background:linear-gradient(180deg,var(--ink2),#14110c);padding:clamp(28px,4vw,44px);text-align:center;margin-top:8px}
+  .cta-block h2{font-size:clamp(1.6rem,3.2vw,2.2rem);font-weight:700}
+  .cta-block p{color:#c4c0b6;max-width:48ch;margin:12px auto 0;font-weight:300}
+  .cta-block .cta{display:flex;gap:12px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+
+  footer{border-top:1px solid var(--line);padding-block:34px;margin-top:0}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .foot .l{display:flex;align-items:center;gap:11px}
+  .foot .l img{width:26px;height:26px;object-fit:contain}
+  .foot .l .x{font-family:var(--mono);font-size:11.5px;color:var(--dim);line-height:1.5}
+  .foot .l .x b{color:var(--paper);font-family:var(--disp);letter-spacing:.1em}
+  .foot .r{font-family:var(--mono);font-size:11px;color:var(--faint);text-align:right}
+  .pmark{font-family:var(--disp);font-weight:800;letter-spacing:.06em;color:var(--dim)} .pmark sup{font-size:.62em;vertical-align:super;margin-left:.06em}
+
+  .pledgebar{border-top:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.028);padding:15px 22px;text-align:center;font-size:.84rem;line-height:1.6}
+  .pledgebar a{display:inline-block;color:inherit;opacity:.82;transition:opacity .15s} .pledgebar a:hover{opacity:1}
+  .pledgebar b{color:#ffd86a;font-weight:700} .pledgebar .sep{opacity:.35;margin:0 .55em}
+
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="parent" href="omni.html" title="Parent company">← <b>ALLSEER SOFTWARE</b></a>
+    <a class="brand" href="robotics.html"><img src="assets/angelcorp.png" alt="ROBOTICS"><span class="wm">ALLSEER <b>ROBOTICS</b></span></a>
+    <div class="navlinks">
+      <a href="#concepts">Robot Concepts</a>
+      <a href="#builds">The Builds</a>
+      <a href="#how">How It Works</a>
+    </div>
+    <div class="navtools">
+      <a href="#builds" class="btn btn-primary">See the Builds</a>
+    </div>
+  </div>
+</nav>
+
+<div class="statusstrip">
+  <div class="wrap">
+    <span class="a">ALLSEER ROBOTICS // ROBOTS, BUILT RIGHT</span>
+    <span class="h">ROBOT DOGS · PRINTIFY · CUSTOM BUILDS</span>
+    <span class="ver">CONCEPT · BUILD 0.1</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">A Division of ALLSEER SOFTWARE</span>
+      <h1>ALLSEER<br><span class="g">ROBOTICS</span></h1>
+      <p class="tagline" data-i18n="h_title">Robots. <span class="gradtext">Built to order.</span></p>
+      <p class="sub">Robot dogs. Custom robots. Printify robotics. Real robotics, built to order, by people who use their machines. Same deal as the PCs — real inside, real outside, built for the people who want it.</p>
+      <div class="cta">
+        <a href="#builds" class="btn btn-primary">See the Builds</a>
+        <a href="#how" class="btn btn-ghost">How It Works</a>
+      </div>
+      <div class="meta">
+        <span><i></i>Robot dogs — Printify build</span>
+        <span><i></i>Custom robots — on request</span>
+        <span><i></i>Real robotics, built to order</span>
+        <span><i></i>ALLSEER SOFTWARE</span>
+      </div>
+    </div>
+    <div class="robot-showcase">
+      <div class="rs-bar"><span class="d a"></span><span class="d b"></span><span class="d"></span><span class="p">ALLSEER ROBOTICS — robot preview</span></div>
+      <img src="assets/angelcorp.png" alt="Robot preview" loading="lazy" decoding="async" style="object-fit:contain;aspect-ratio:1.6/1;background:#0a0b10">
+      <div class="cap">Robot preview — placeholder art, to be replaced with real robot shots.</div>
+    </div>
+  </div>
+</header>
+
+<section class="band" id="concepts">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Robot Concepts</span>
+      <h2>The robots we build.</h2>
+      <p>Robot dogs. Custom robots. Other things we can build from Printify parts. Real robotics, built to order — every robot is built for the person who wants it.</p>
+    </div>
+    <div class="robot-grid">
+      <div class="robot-card">
+        <div class="rc-head">
+          <div class="rc-icon">🐕</div>
+          <div class="rc-info"><h3>K9 WORKER</h3><p>Robot Dog · Printify Build</p></div>
+        </div>
+        <div class="rc-body">
+          <p>A robot dog built from Printify robotics parts. Walks, responds, carries small loads. Built for people who want a robot dog on their desk, in their lab, or on their property. Real robotics inside, looks real outside.</p>
+        </div>
+        <div class="rc-footer">
+          <div class="rc-price">$1,299<small>Printify · build to order</small></div>
+          <a href="#how" class="btn btn-primary">Build this</a>
+        </div>
+      </div>
+      <div class="robot-card">
+        <div class="rc-head">
+          <div class="rc-icon">🦾</div>
+          <div class="rc-info"><h3>PRINTIFY ARM</h3><p>Custom Robot Arm · On Request</p></div>
+        </div>
+        <div class="rc-body">
+          <p>A robot arm built from Printify parts, built to your spec. Pick the reach, the load, the control — we build it. For the lab, the workshop, the desk.</p>
+        </div>
+        <div class="rc-footer">
+          <div class="rc-price">On request<small>Tell us what you want</small></div>
+          <a href="#how" class="btn btn-ghost">Request build</a>
+        </div>
+      </div>
+      <div class="robot-card">
+        <div class="rc-head">
+          <div class="rc-icon">🦿</div>
+          <div class="rc-info"><h3>WALKER</h3><p>Custom Walker · On Request</p></div>
+        </div>
+        <div class="rc-body">
+          <p>A walking robot, built from Printify parts, built to your spec. Pick the gait, the load, the look — we build it. Real robotics, built to order.</p>
+        </div>
+        <div class="rc-footer">
+          <div class="rc-price">On request<small>Tell us what you want</small></div>
+          <a href="#how" class="btn btn-ghost">Request build</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="builds">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">The Builds</span>
+      <h2>Real robotics. Built to order.</h2>
+      <p>Every robot is built to the spec you pick. Every robot is built for the person who wants it. Nothing off the shelf. Nothing toy-like. Real robotics, built by people who use their machines.</p>
+    </div>
+    <div class="pillars">
+      <div class="pil"><div class="n">BUILD 01</div><h3>Build to Order</h3><p>Every robot is built to the spec you pick. Robot dogs, arms, walkers — tell us what you want, we build it.</p></div>
+      <div class="pil"><div class="n">BUILD 02</div><h3>Printify Robotics</h3><p>Robot dogs and other robots built from Printify parts. Real parts, real robotics, built to order.</p></div>
+      <div class="pil"><div class="n">BUILD 03</div><h3>Real Robotics</h3><p>Real robotics inside, looks real outside. No toy robots. No gimmicks. Built for the people who want real robots.</p></div>
+    </div>
+
+    <div class="cta-block">
+      <h2>Want a robot built?</h2>
+      <p>Tell us what you want — robot dog, arm, walker, something else. We build it from Printify parts, built to order, real robotics inside and out.</p>
+      <div class="cta">
+        <a href="#how" class="btn btn-primary">Request a Build</a>
+        <a href="#" class="btn btn-ghost">See the Process</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="how">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">How It Works</span>
+      <h2>You want a robot. We build it.</h2>
+    </div>
+    <div class="build-flow">
+      <div class="bf-step">
+        <div class="bf-num">01</div>
+        <div class="bf-content"><h4>You tell us what you want</h4><p>Robot dog, arm, walker, something else. Tell us the spec — the look, the load, the way it should move. We build to your request.</p></div>
+      </div>
+      <div class="bf-step"><div class="bf-num">02</div><div class="bf-content"><h4>We build it from Printify parts</h4><p>Real Printify robotics parts. Real robotics. Built to your spec. Built to order. Nothing off the shelf.</p></div></div>
+      <div class="bf-step"><div class="bf-num">03</div><div class="bf-content"><h4>You get a real robot</h4><p>Real robotics inside, looks real outside. Built for you. Built to your spec. Real robotics, built to order.</p></div></div>
+    </div>
+
+    <div class="cta-block" style="margin-top:22px">
+      <h2>Build a robot with ALLSEER ROBOTICS</h2>
+      <p>Robot dogs, custom robots, other Printify robots — tell us what you want, we build it. Real robotics, built to order.</p>
+      <div class="cta">
+        <a href="#" class="btn btn-primary">Request a Build</a>
+        <a href="pc-sales.html" class="btn btn-ghost">See the PCs</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pledgebar"><a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>an <b>ALLSEER</b> company</a></div>
+<footer>
+  <div class="wrap foot">
+    <div class="l"><img src="assets/angelcorp.png" alt=""><div class="x"><b>ALLSEER ROBOTICS</b><br>Robot concepts &amp; builds · concept draft</div></div>
+    <div class="r"><span class="pmark">PRIMAL<sup>APE</sup></span> · under ALLSEER SOFTWARE<br><span style="opacity:.8">Printify robotics · concept draft</span></div>
+  </div>
+</footer>
+
+</body>
+</html>

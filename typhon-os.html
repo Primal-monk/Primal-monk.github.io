@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TYPHON OS — The Operating System</title>
+<link rel="icon" type="image/png" href="assets/typhon-logo.png">
+<meta name="description" content="TYPHON OS — a fake Linux operating system. The OS that TYPHON lives in. Terminal-first, security-first, chaos-first.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Chakra+Petch:wght@500;600;700&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
+<style>
+  :root{
+    --ink:#0c0d10; --ink2:#121319; --ink3:#181a22; --raise:#1d2029;
+    --line:#262935; --line-warm:rgba(242,178,41,.16);
+    --paper:#ece7de; --dim:#8b909c; --faint:#565c69;
+    --ember:#e8622a; --ember2:#f5843f; --gold:#f2b229; --gold2:#ffcc55;
+    --red:#ff5c68; --green:#4fd07f;
+    --strong:"Anton",Impact,system-ui,sans-serif;
+    --disp:"Chakra Petch",system-ui,sans-serif;
+    --body:"Archivo",system-ui,sans-serif;
+    --mono:"Space Mono",ui-monospace,Consolas,monospace;
+    --maxw:1320px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--ink);color:var(--paper);line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background-image:
+      radial-gradient(900px 480px at 88% -8%, rgba(232,98,42,.10), transparent 62%),
+      radial-gradient(700px 400px at -5% 4%, rgba(242,178,41,.06), transparent 60%)}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,h4{font-family:var(--disp);text-wrap:balance;line-height:1.08;letter-spacing:.005em}
+  .mono{font-family:var(--mono)}
+  ::selection{background:var(--ember);color:#120a04}
+  ::-webkit-scrollbar{width:12px} ::-webkit-scrollbar-track{background:var(--ink2)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--gold),var(--ember));border:3px solid var(--ink2);border-radius:8px}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:22px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ember2)}
+
+  .nav{position:sticky;top:0;z-index:60;background:rgba(12,13,16,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;gap:18px;height:60px}
+  .parent{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.08em;padding-right:14px;border-right:1px solid var(--line)}
+  .parent b{color:var(--dim)}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:30px;height:30px;object-fit:contain}
+  .brand .wm{font-family:var(--strong);font-weight:400;font-size:23px;letter-spacing:.12em}
+  .brand .wm .os{color:var(--ember)}
+  .navlinks{display:flex;gap:22px;margin-left:auto}
+  .navlinks a{font-size:13.5px;color:var(--dim);letter-spacing:.02em;transition:color .15s}
+  .navlinks a:hover{color:var(--paper)}
+  .navtools{display:flex;align-items:center;gap:12px}
+  .modepill{background:var(--ink3);border:1px solid var(--line);border-radius:4px;color:var(--paper);font-family:var(--mono);font-size:11px;padding:6px 11px;cursor:pointer;letter-spacing:.04em}
+  .modepill:hover{border-color:var(--gold)}
+  .btn{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.05em;padding:9px 16px;border-radius:5px;cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;display:inline-block}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:linear-gradient(96deg,var(--ember),var(--gold));color:#120a04}
+  .btn-primary:hover{filter:brightness(1.08)}
+  .btn-ghost{border-color:var(--line-warm);color:var(--paper)}
+  .btn-ghost:hover{border-color:var(--gold);background:rgba(242,178,41,.06)}
+  @media(max-width:880px){.navlinks{display:none}}
+
+  .statusstrip{background:#08090c;border-bottom:1px solid var(--line)}
+  .statusstrip .wrap{display:flex;gap:26px;align-items:center;height:30px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--faint);text-transform:uppercase;overflow:hidden;white-space:nowrap}
+  .statusstrip .a{color:var(--dim)} .statusstrip .ver{margin-left:auto;color:var(--faint)}
+
+  .hero{position:relative;padding-block:clamp(44px,7vw,86px)}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:46px;align-items:center}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:34px}}
+
+  .hero h1{font-family:var(--strong);font-weight:400;font-size:clamp(3.8rem,12vw,8.4rem);line-height:.86;letter-spacing:.02em;text-transform:uppercase;margin:12px 0 0}
+  .hero h1 .g{color:var(--ember)}
+  .hero h1 .os2{color:var(--gold)}
+  .tagline{font-family:var(--strong);font-weight:400;font-size:clamp(1.3rem,3.2vw,2.3rem);letter-spacing:.16em;text-transform:uppercase;color:var(--paper);margin-top:8px}
+  .tagline .gradtext{background:linear-gradient(100deg,var(--gold2),var(--ember2) 60%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .sub{font-size:clamp(1rem,1.7vw,1.18rem);color:#c4c0b6;max-width:56ch;margin-top:20px}
+  .hero .cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+  .hero .meta{display:flex;gap:20px;margin-top:26px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.04em}
+  .hero .meta span{display:flex;align-items:center;gap:7px} .hero .meta i{width:5px;height:5px;background:var(--ember);transform:rotate(45deg);font-style:normal;flex:none}
+
+  /* terminal mockup */
+  .term-mock{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--ink2);box-shadow:0 40px 90px -50px rgba(0,0,0,.95), 0 0 0 1px rgba(242,178,41,.05) inset}
+  .term-mock .tm-bar{display:flex;align-items:center;gap:7px;padding:10px 13px;background:#0f1015;border-bottom:1px solid var(--line)}
+  .tm-bar .d{width:9px;height:9px;border-radius:50%;background:#3a3f4b}
+  .tm-bar .d.a{background:var(--ember)} .tm-bar .d.b{background:var(--gold)} .tm-bar .d.c{background:#3a3f4b}
+  .tm-bar .path{margin-left:8px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .tm-body{font-family:var(--mono);font-size:13px;line-height:1.7;padding:18px 20px;overflow-x:auto}
+  .tm-body .prompt{color:var(--ember2);font-weight:500}
+  .tm-body .cmd{color:var(--paper)}
+  .tm-body .out{color:var(--dim)}
+  .tm-body .out b{color:var(--green);font-weight:500}
+  .tm-body .cursor{color:var(--ember2);animation:bl 1s steps(1) infinite}
+  @keyframes bl{50%{opacity:0}}
+
+  .showcase{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--ink2);box-shadow:0 40px 90px -50px rgba(0,0,0,.9), 0 0 0 1px rgba(242,178,41,.05) inset}
+  .showcase-bar{display:flex;align-items:center;gap:7px;padding:10px 14px;background:#0f1015;border-bottom:1px solid var(--line)}
+  .showcase-bar .d{width:10px;height:10px;border-radius:50%;background:#3a3f4b}
+  .showcase-bar .d.a{background:var(--ember)} .showcase-bar .d.b{background:var(--gold)}
+  .showcase-bar .p{margin-left:8px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .showcase img{display:block;width:100%;height:auto}
+  .showcase .cap{padding:10px 14px;border-top:1px solid var(--line);font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.04em;text-align:center}
+
+  .idea-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center}
+  @media(max-width:860px){.idea-grid{grid-template-columns:1fr;gap:26px}}
+  .pillars-v{display:flex;flex-direction:column}
+  .pil-row{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:16px 2px;border-top:1px solid var(--line)}
+  .pil-row:last-child{border-bottom:1px solid var(--line)}
+  .pil-row .pn{font-family:var(--strong);font-size:1.7rem;color:var(--ember2);line-height:1}
+  .pil-b h3{font-family:var(--disp);font-weight:700;font-size:1.18rem;margin-bottom:3px}
+  .pil-b p{color:var(--dim);font-size:.92rem}
+
+  section.band{padding-block:clamp(48px,7vw,84px);border-top:1px solid var(--line)}
+  .head{max-width:62ch;margin-bottom:34px}
+  .head .eyebrow{margin-bottom:12px;display:block}
+  .head h2{font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:700}
+  .head p{color:var(--dim);margin-top:12px;font-size:1.02rem}
+
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  @media(max-width:760px){.pillars{grid-template-columns:1fr}}
+  .pil{background:var(--ink2);padding:26px 24px}
+  .pil .n{font-family:var(--mono);font-size:11px;color:var(--ember2);letter-spacing:.14em}
+  .pil h3{font-size:1.32rem;font-weight:700;margin:12px 0 8px}
+  .pil p{color:var(--dim);font-size:.94rem}
+
+  .suite{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--ink2)}
+  .suite-top{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#0f1015;border-bottom:1px solid var(--line)}
+  .suite-top .t{font-family:var(--disp);font-weight:700;letter-spacing:.12em;font-size:.9rem}
+  .suite-top .hint{font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .suite-body{display:grid;grid-template-columns:230px 1fr}
+  @media(max-width:720px){.suite-body{grid-template-columns:1fr}}
+  .suite-nav{border-right:1px solid var(--line);max-height:320px;overflow-y:auto}
+  @media(max-width:720px){.suite-nav{max-height:180px;border-right:0;border-bottom:1px solid var(--line)}}
+  .grp{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);padding:14px 16px 6px}
+  .mbtn{display:block;width:100%;text-align:left;background:transparent;border:0;cursor:pointer;color:var(--dim);font-family:var(--body);font-size:13px;padding:8px 16px;border-left:2px solid transparent}
+  .mbtn:hover{color:var(--paper);background:var(--ink3)}
+  .mbtn.active{color:var(--gold2);border-left-color:var(--ember);background:var(--ink3)}
+  .suite-panel{padding:26px 26px}
+  .suite-panel .cat{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ember2)}
+  .suite-panel h3{font-size:1.6rem;font-weight:700;margin:8px 0 10px}
+  .suite-panel p{color:#c4c0b6;max-width:52ch}
+  .suite-panel .st{display:inline-block;margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line-warm);border-radius:3px;padding:4px 10px}
+
+  .feature-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+  @media(max-width:760px){.feature-row{grid-template-columns:1fr}}
+  .fr{border:1px solid var(--line);border-radius:8px;padding:18px 18px;background:var(--ink2)}
+  .fr h4{font-family:var(--disp);font-weight:600;font-size:1.02rem;margin-bottom:6px}
+  .fr p{color:var(--dim);font-size:.88rem}
+
+  .dl{border:1px solid var(--line-warm);border-radius:12px;background:linear-gradient(180deg,var(--ink2),#14100c);padding:clamp(30px,5vw,54px);text-align:center}
+  .dl h2{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800}
+  .dl p{color:#c4c0b6;max-width:52ch;margin:14px auto 0}
+  .dl .cta{display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+  .dl .req{margin-top:22px;font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.03em}
+
+  footer{border-top:1px solid var(--line);padding-block:34px;margin-top:0}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .foot .l{display:flex;align-items:center;gap:11px}
+  .foot .l img{width:26px;height:26px;object-fit:contain}
+  .foot .l .x{font-family:var(--mono);font-size:11.5px;color:var(--dim);line-height:1.5}
+  .foot .l .x b{color:var(--paper);font-family:var(--disp);letter-spacing:.1em}
+  .foot .r{font-family:var(--mono);font-size:11px;color:var(--faint);text-align:right}
+  .pmark{font-family:var(--disp);font-weight:800;letter-spacing:.06em;color:var(--dim)} .pmark sup{font-size:.62em;vertical-align:super;margin-left:.06em}
+
+  .pledgebar{border-top:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.028);padding:15px 22px;text-align:center;font-size:.84rem;line-height:1.6}
+  .pledgebar a{display:inline-block;color:inherit;opacity:.82;transition:opacity .15s} .pledgebar a:hover{opacity:1}
+  .pledgebar b{color:#ffd86a;font-weight:700} .pledgebar .sep{opacity:.35;margin:0 .55em}
+
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="parent" href="omni.html" title="Parent company">← <b>ALLSEER SOFTWARE</b></a>
+    <a class="brand" href="typhon-os.html"><img src="assets/typhon-logo.png" alt="TYPHON OS"><span class="wm">TYPHON <span class="os">OS</span></span></a>
+    <div class="navlinks">
+      <a href="#overview">Overview</a>
+      <a href="#kernel">The Kernel</a>
+      <a href="#apps">Built-In Apps</a>
+      <a href="#distro">The Distro</a>
+    </div>
+    <div class="navtools">
+      <a href="#distro" class="btn btn-primary">See the Distro</a>
+    </div>
+  </div>
+</nav>
+
+<div class="statusstrip">
+  <div class="wrap">
+    <span class="a">TYPHON OS // THE OPERATING SYSTEM</span>
+    <span class="h">FAKE LINUX · SECURITY-FIRST · CHAOS-FIRST</span>
+    <span class="ver">CONCEPT · BUILD 0.1</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">A Division of ALLSEER SOFTWARE</span>
+      <h1>TYPHON<br><span class="os2">OS</span></h1>
+      <p class="tagline" data-i18n="h_title">The OS that <span class="gradtext">TYPHON</span> lives in.</p>
+      <p class="sub">TYPHON OS is the operating system underneath it all — a fake Linux distribution built for security work, terminal-first, chaos-first. The OS that TYPHON the app runs on. The OS that runs the tools. Eventually, the OS that does everything.</p>
+      <div class="cta">
+        <a href="#kernel" class="btn btn-primary">See the Kernel</a>
+        <a href="#distro" class="btn btn-ghost">The Distro</a>
+      </div>
+      <div class="meta">
+        <span><i></i>Linux-based · fake distro concept</span>
+        <span><i></i>Terminal-first · security-first</span>
+        <span><i></i>TYPHON app lives inside it</span>
+        <span><i></i>Eventually, the whole OS</span>
+      </div>
+    </div>
+    <div class="term-mock">
+      <div class="tm-bar"><span class="d a"></span><span class="d b"></span><span class="d c"></span><span class="path">TYPHON-OS — ~</span></div>
+      <div class="tm-body">
+        <div class="prompt">typhon@os:~$ <span class="cmd">uname -a</span></div>
+        <div class="out">TYPHON-OS 0.1.0 · Linux 6.x · x86_64 · built for chaos</div>
+        <div style="margin:10px 0 4px"></div>
+        <div class="prompt">typhon@os:~$ <span class="cmd">typhon status</span></div>
+        <div class="out">TYPHON workspace: <b>active</b><br>AI analyst: <b>running</b> · Hermes local<br>Tooling: <b>Kali MCP connected</b><br>Security posture: <b>authorized</b></div>
+        <div style="margin:10px 0 4px"></div>
+        <div class="prompt">typhon@os:~$ <span class="cmd">help</span><span class="cursor">_</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="band" id="overview">
+  <div class="wrap">
+    <div class="idea-grid">
+      <div class="idea-left">
+        <div class="head" style="margin-bottom:18px">
+          <span class="eyebrow">The idea</span>
+          <h2>Not just an app. An operating system.</h2>
+        </div>
+        <div class="pillars-v">
+          <div class="pil-row"><span class="pn">01</span><div class="pil-b"><h3 style="color:var(--ember2)">The Kernel</h3><p style="color:var(--dim)">TYPHON OS is a Linux-based kernel built for security work. Terminal-first. Chaos-first. The OS that doesn't get in your way — it gets the tools running.</p></div></div>
+          <div class="pil-row"><span class="pn">02</span><div class="pil-b"><h3 style="color:var(--ember2)">The TYPHON App</h3><p style="color:var(--dim)">TYPHON the app lives inside TYPHON OS. The workspace, the AI analyst, the tools — all of it runs in the OS. The app is the face, the OS is the foundation.</p></div></div>
+          <div class="pil-row"><span class="pn">03</span><div class="pil-b"><h3 style="color:var(--ember2)">The Distro</h3><p style="color:var(--dim)">One day, TYPHON OS becomes a real Linux distribution. Not today. Today it's a concept. But one day — the OS you install to do security work.</p></div></div>
+        </div>
+      </div>
+      <div class="idea-shot">
+        <div class="showcase">
+          <div class="showcase-bar"><span class="d a"></span><span class="d b"></span><span class="d"></span><span class="p">TYPHON OS — desktop preview</span></div>
+          <img src="assets/angelcorp.png" alt="TYPHON OS desktop preview" loading="lazy" decoding="async" style="object-fit:contain;aspect-ratio:1.6/1;background:#0a0b10">
+          <div class="cap">Desktop preview — placeholder art, to be replaced with a real mockup.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="kernel">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">The Kernel</span>
+      <h2>Linux-based. Terminal-first. Security-first.</h2>
+    </div>
+    <div class="pillars">
+      <div class="pil"><div class="n">KERNEL 01</div><h3>Linux-based</h3><p>TYPHON OS is built on Linux — because Linux is the security workhorse. The kernel is real, the tools are real, the terminal is real.</p></div>
+      <div class="pil"><div class="n">KERNEL 02</div><h3>Terminal-first</h3><p>The terminal is the face of the OS. You work in the terminal. The GUI is there when you want it, but the terminal is where the work happens.</p></div>
+      <div class="pil"><div class="n">KERNEL 03</div><h3>Security-first</h3><p>The OS is built for security work from the ground up. Isolation, permission, audit — the OS itself is a security tool.</p></div>
+    </div>
+    <div class="suite" style="margin-top:22px">
+      <div class="suite-top"><span class="t">TYPHON OS · KERNEL MODULES</span><span class="hint">select a module →</span></div>
+      <div class="suite-body">
+        <div class="suite-nav" id="suiteNav"></div>
+        <div class="suite-panel" id="suitePanel"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="apps">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Built-In Apps</span>
+      <h2>The apps that live in TYPHON OS.</h2>
+    </div>
+    <div class="feature-row">
+      <div class="fr"><h4 style="color:var(--ember2)">TYPHON Workspace</h4><p style="color:var(--dim)">The workspace app — targets, findings, timeline, the whole investigation. Lives inside the OS.</p></div>
+      <div class="fr"><h4 style="color:var(--ember2)">AI Analyst</h4><p style="color:var(--dim)">The Hermes-based AI analyst — runs locally, drives the tools, reads the workspace, tells you what it saw.</p></div>
+      <div class="fr"><h4 style="color:var(--ember2)">Kali Backend</h4><p style="color:var(--dim)">The Kali Linux backend — the actual tools. TYPHON OS wraps them in one clean surface.</p></div>
+    </div>
+    <div class="feature-row" style="margin-top:14px">
+      <div class="fr"><h4 style="color:var(--ember2)">Terminal</h4><p style="color:var(--dim)">The terminal is the face. Full PTY, full shell, full Linux. The way security work should feel.</p></div>
+      <div class="fr"><h4 style="color:var(--ember2)">Package Manager</h4><p style="color:var(--dim)">A TYPHON-native package manager — install tools, modules, AI models. The OS manages itself.</p></div>
+      <div class="fr"><h4 style="color:var(--ember2)">Audit Log</h4><p style="color:var(--dim)">Everything is logged. Every command, every tool run, every AI decision. The OS remembers everything.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="distro">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">The Distro</span>
+      <h2>One day. A real Linux distribution.</h2>
+    </div>
+    <div class="dl" style="border:none;background:transparent;padding:0;text-align:left">
+      <span class="eyebrow">One day · concept</span>
+      <h2 style="margin-top:10px;font-size:clamp(1.6rem,3.4vw,2.2rem)">TYPHON OS — the Linux distro.</h2>
+      <p style="font-size:1rem">Not today. Today it's a concept. But one day, TYPHON OS becomes a real Linux distribution — the OS you install to do security work, the OS that TYPHON the app lives in, the OS that runs the tools and the AI and the workspace.</p>
+      <p style="font-size:.94rem;color:var(--dim);margin-top:10px">Terminal-first. Security-first. Chaos-first. The OS that doesn't get in your way.</p>
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap">
+        <a href="typhon.html" class="btn btn-primary">See TYPHON the app</a>
+        <a href="#" class="btn btn-ghost">Follow the distro</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pledgebar"><a href="omni.html"><b>20%</b> of all gross income is pledged to charity<span class="sep">|</span>an <b>ALLSEER</b> company</a></div>
+<footer>
+  <div class="wrap foot">
+    <div class="l"><img src="assets/typhon-logo.png" alt=""><div class="x"><b>TYPHON OS</b><br>The operating system · concept draft</div></div>
+    <div class="r"><span class="pmark">PRIMAL<sup>APE</sup></span> · under ALLSEER SOFTWARE<br><span style="opacity:.8">Fake Linux distro · concept</span></div>
+  </div>
+</footer>
+
+<script>
+const KERNEL_MODULES = [
+ {g:'Core', n:'Linux Kernel', p:'The real Linux kernel underneath. Security patches, custom config, built for the work.'},
+ {g:'Core', n:'Terminal Shell', p:'The terminal — the face of the OS. Full PTY, full shell, the way security work should feel.'},
+ {g:'Core', n:'TYPHON Daemon', p:'The background daemon that runs the TYPHON workspace and AI analyst.'},
+ {g:'Security', n:'Isolation Layer', p:'Process isolation, permission layers, the OS itself as a security tool.'},
+ {g:'Security', n:'Audit Logger', p:'Everything logged. Every command, every tool, every AI decision. The OS remembers.'},
+ {g:'Security', n:'Package Manager', p:'TYPHON-native package manager — install tools, modules, AI models. The OS manages itself.'},
+ {g:'App', n:'TYPHON Workspace', p:'The workspace app — targets, findings, timeline. Lives inside the OS.'},
+ {g:'App', n:'AI Analyst', p:'The Hermes-based AI analyst — runs locally, drives the tools, reads the workspace.'},
+ {g:'App', n:'Kali Backend', p:'The Kali Linux backend — the actual tools. TYPHON OS wraps them in one surface.'},
+];
+let kactive = 0;
+const knav = document.getElementById('suiteNav'); const kpan = document.getElementById('suitePanel');
+function buildKernel(){ knav.innerHTML=''; let lastG=null; KERNEL_MODULES.forEach(function(m,i){ if(m.g!==lastG){ const g=document.createElement('div'); g.className='grp'; g.textContent=m.g; knav.appendChild(g); lastG=m.g; } const b=document.createElement('button'); b.className='mbtn'+(i===kactive?' active':''); b.textContent=m.n; b.addEventListener('click',function(){kactive=i;renderKernel();}); knav.appendChild(b); }); }
+function renderKernel(){ const m=KERNEL_MODULES[kactive]; kpan.innerHTML='<div class="cat">'+m.g+'</div><h3>'+m.n+'</h3><p>'+m.p+'</p><span class="st">In development</span>'; }
+function renderKernelAll(){ document.querySelectorAll('#suiteNav .mbtn').forEach(function(b){b.classList.remove('active');}); const btns=document.querySelectorAll('#suiteNav .mbtn'); if(btns[kactive])btns[kactive].classList.add('active'); renderKernel(); }
+buildKernel(); renderKernelAll();
+</script>
+</body>
+</html>
