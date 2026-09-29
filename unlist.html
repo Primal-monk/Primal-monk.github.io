@@ -122,6 +122,7 @@
   .result .rt b{font-size:.92rem;color:var(--paper);font-family:var(--body);font-weight:600;display:block}
   .result .rt span{font-size:.76rem;color:var(--dim);font-family:var(--mono)}
   .result .rt span small{display:block;color:var(--faint);font-size:.7rem;margin-top:2px}
+  .result img.thumb{width:64px;height:36px;object-fit:cover;border-radius:4px;flex:none;background:#000}
   .mock-foot{display:flex;justify-content:space-between;gap:10px;padding:8px 13px;border-top:1px solid var(--line);
     background:#0c111c;font-family:var(--mono);font-size:10px;color:var(--dim)}
   .mock-foot .ok{color:var(--green)}
@@ -302,26 +303,45 @@
 <section class="band" id="demo">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow">Live Demo</span>
-      <h2>Try the concept right now.</h2>
+      <span class="eyebrow">Live Scanner</span>
+      <h2>Find leaked unlisted videos, for real.</h2>
+      <p>YouTube's own API will never hand you a channel's unlisted videos directly — that data path doesn't exist. So UNLIST doesn't ask YouTube "what's hidden on this channel." It Google-dorks the open web for pages (forums, blogs, tweets, wikis) that mention the channel next to a youtube.com/watch or youtu.be link, pulls every video ID out of what it finds, then checks each ID's real privacy status straight from YouTube. Anything that comes back <b style="color:var(--paper)">unlisted</b> is a genuine, verified hit — not a guess.</p>
     </div>
+
     <div class="demo">
-      <h3>UNLIST · demo scan interface</h3>
+      <h3>Setup — one-time, free</h3>
+      <div class="demo-row" style="flex-direction:column;align-items:stretch">
+        <input type="text" id="ytKey" placeholder="YouTube Data API v3 key (console.cloud.google.com/apis/credentials)">
+        <input type="text" id="cseKey" placeholder="Google Custom Search API key (same Google Cloud project)">
+        <input type="text" id="cseId" placeholder="Search Engine ID / cx (programmablesearchengine.google.com — set to 'Search the entire web')">
+      </div>
+      <p style="color:var(--faint);font-size:.72rem;margin-top:8px">Keys are saved only in your browser (localStorage) — never sent anywhere but Google. Both APIs are free at low volume: enable "YouTube Data API v3" and "Custom Search API" on one Google Cloud project for the keys, then create a Programmable Search Engine for the cx ID.</p>
+      <p id="quotaLine" style="color:var(--faint);font-family:var(--mono);font-size:.68rem;margin-top:4px"></p>
+    </div>
+
+    <div class="demo" style="margin-top:16px">
+      <h3>UNLIST · scan</h3>
       <div class="demo-row">
-        <div class="mode-toggle">
+        <div class="mode-toggle" id="modeToggle">
           <button class="active" data-mode="channel">Channel Scan</button>
           <button data-mode="keyword">Keyword Search</button>
         </div>
-        <input type="text" placeholder="Paste a YouTube channel URL..." id="demoInput">
+        <input type="text" placeholder="Paste a YouTube channel URL or @handle..." id="demoInput">
         <button class="btn btn-primary" id="demoBtn">Scan</button>
       </div>
-      <div class="demo-results" id="demoResults">
-        <div class="result"><div class="ico">▶</div><div class="rt"><b>Draft: Q3 Update V3 (Unlisted)</b><span>Channel: TechReviewPro · 3 weeks ago · 14:22</span><small>Unlisted — not visible on channel page</small></div></div>
-        <div class="result"><div class="ico">▶</div><div class="rt"><b>Behind the Scenes: Studio Setup (Unlisted)</b><span>Channel: TechReviewPro · 2 months ago · 8:05</span><small>Unlisted — private share link</small></div></div>
-        <div class="result"><div class="ico">▶</div><div class="rt"><b>WIP: New Microphone Test (Unlisted)</b><span>Channel: TechReviewPro · 5 months ago · 5:33</span><small>Unlisted — draft / work in progress</small></div></div>
+      <div id="demoStatus" style="font-family:var(--mono);font-size:.78rem;color:var(--dim);min-height:20px;margin-top:6px"></div>
+      <div class="demo-row" id="resultTools" style="display:none;margin-top:2px">
+        <div class="mode-toggle" id="filterToggle">
+          <button class="active" data-filter="all">All</button>
+          <button data-filter="unlisted">Unlisted</button>
+          <button data-filter="public">Public</button>
+          <button data-filter="other">Removed/Private</button>
+        </div>
+        <button class="btn btn-ghost" id="exportBtn" style="margin-left:auto">Export CSV</button>
       </div>
+      <div class="demo-results" id="demoResults"></div>
     </div>
-    <p style="color:var(--faint);font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;margin-top:12px;text-align:center">Demo — fake results showing the concept. A real extension would scan live YouTube data.</p>
+    <p style="color:var(--faint);font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;margin-top:12px;text-align:center">Real scan, real Google/YouTube APIs, runs entirely in your browser. Checks the channel's public playlists, Google-dorks the open web, and checks Wayback Machine snapshots of the channel's old video list. It can only find videos that leaked a link or were once public somewhere — it cannot discover a video no one ever linked to and that was never public.</p>
   </div>
 </section>
 
@@ -334,18 +354,386 @@
 </footer>
 
 <script>
-  const modes=document.querySelectorAll('.mode-toggle button');
+(function(){
+  const modes=document.querySelectorAll('#modeToggle button');
+  const filterBtns=document.querySelectorAll('#filterToggle button');
   const input=document.getElementById('demoInput');
   const btn=document.getElementById('demoBtn');
-  const results=document.getElementById('demoResults');
+  const exportBtn=document.getElementById('exportBtn');
+  const resultTools=document.getElementById('resultTools');
+  const resultsEl=document.getElementById('demoResults');
+  const statusEl=document.getElementById('demoStatus');
+  const quotaLine=document.getElementById('quotaLine');
+  const ytKeyEl=document.getElementById('ytKey');
+  const cseKeyEl=document.getElementById('cseKey');
+  const cseIdEl=document.getElementById('cseId');
+  let currentMode='channel';
+  let activeFilter='all';
+  let lastResults=[];
+
+  try{
+    ytKeyEl.value=localStorage.getItem('unlist_yt')||'';
+    cseKeyEl.value=localStorage.getItem('unlist_cseKey')||'';
+    cseIdEl.value=localStorage.getItem('unlist_cseId')||'';
+  }catch(e){}
+
   modes.forEach(b=>b.addEventListener('click',()=>{
     modes.forEach(x=>x.classList.remove('active'));
     b.classList.add('active');
-    input.placeholder=b.dataset.mode==='channel'
-      ?'Paste a YouTube channel URL, e.g. https://youtube.com/@TechReviewPro'
-      :'Enter a keyword to search for unlisted content...';
+    currentMode=b.dataset.mode;
+    input.placeholder=currentMode==='channel'
+      ?'Paste a YouTube channel URL or @handle...'
+      :'Enter a keyword to search for leaked unlisted videos...';
   }));
-  btn.addEventListener('click',()=>{results.classList.add('show');results.scrollIntoView({behavior:'smooth',block:'nearest'});});
+
+  filterBtns.forEach(b=>b.addEventListener('click',()=>{
+    filterBtns.forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    activeFilter=b.dataset.filter;
+    applyFilterAndRender();
+  }));
+
+  function escapeHtml(s){
+    return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function toggleResultTools(show){ resultTools.style.display=show?'flex':'none'; }
+
+  // ---- Custom Search free-tier quota tracker (100/day, local estimate) ----
+  function todayStr(){ return new Date().toISOString().slice(0,10); }
+  function getQuota(){
+    let q; try{ q=JSON.parse(localStorage.getItem('unlist_cse_quota')||'null'); }catch(e){ q=null; }
+    if(!q||q.date!==todayStr()) q={date:todayStr(),count:0};
+    return q;
+  }
+  function noteQuotaUsed(n){
+    const q=getQuota(); q.count+=n;
+    try{ localStorage.setItem('unlist_cse_quota',JSON.stringify(q)); }catch(e){}
+    renderQuota();
+  }
+  function renderQuota(){
+    const q=getQuota();
+    quotaLine.textContent=`Custom Search: ~${q.count}/100 free queries used today (local estimate — Google resets this on its own clock).`;
+  }
+  renderQuota();
+
+  function parseChannelRef(raw){
+    raw=raw.trim();
+    if(raw.startsWith('@')) return {type:'handle',value:raw};
+    let url;
+    try{ url=new URL(raw.includes('://')?raw:'https://'+raw); }
+    catch(e){ return {type:'search',value:raw}; }
+    const path=url.pathname.replace(/^\/+/,'').replace(/\/+$/,'');
+    const seg=path.split('/');
+    if(seg[0].startsWith('@')) return {type:'handle',value:seg[0]};
+    if(seg[0]==='channel'&&seg[1]) return {type:'id',value:seg[1]};
+    if(seg[0]==='user'&&seg[1]) return {type:'username',value:seg[1]};
+    if(seg[0]==='c'&&seg[1]) return {type:'search',value:seg[1]};
+    return {type:'search',value:seg[0]||raw};
+  }
+
+  async function apiGet(url){
+    const res=await fetch(url);
+    const json=await res.json();
+    if(json.error) throw new Error(json.error.message||('API error '+res.status));
+    return json;
+  }
+
+  async function resolveChannel(ref,ytKey){
+    const base='https://www.googleapis.com/youtube/v3/channels';
+    let url;
+    if(ref.type==='id') url=`${base}?part=snippet,contentDetails&id=${encodeURIComponent(ref.value)}&key=${ytKey}`;
+    else if(ref.type==='handle') url=`${base}?part=snippet,contentDetails&forHandle=${encodeURIComponent(ref.value)}&key=${ytKey}`;
+    else if(ref.type==='username') url=`${base}?part=snippet,contentDetails&forUsername=${encodeURIComponent(ref.value)}&key=${ytKey}`;
+    else{
+      const s=await apiGet(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&maxResults=1&q=${encodeURIComponent(ref.value)}&key=${ytKey}`);
+      const cid=s.items&&s.items[0]&&s.items[0].id&&s.items[0].id.channelId;
+      if(!cid) throw new Error('Could not resolve a channel from that input.');
+      url=`${base}?part=snippet,contentDetails&id=${cid}&key=${ytKey}`;
+    }
+    const res=await apiGet(url);
+    const item=res.items&&res.items[0];
+    if(!item) throw new Error('No channel found for that input.');
+    return {channelId:item.id,title:item.snippet.title,uploadsPlaylistId:item.contentDetails.relatedPlaylists.uploads};
+  }
+
+  async function fetchKnownPublicIds(playlistId,ytKey,maxPages){
+    const ids=new Set();
+    let pageToken='';
+    for(let i=0;i<maxPages;i++){
+      const url=`https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&playlistId=${playlistId}&key=${ytKey}${pageToken?'&pageToken='+pageToken:''}`;
+      const res=await apiGet(url);
+      (res.items||[]).forEach(it=>ids.add(it.contentDetails.videoId));
+      if(!res.nextPageToken) break;
+      pageToken=res.nextPageToken;
+    }
+    return ids;
+  }
+
+  // ---- Real leak vector #1: unlisted videos sitting inside the channel's own PUBLIC playlists ----
+  // playlistItems.list returns every item of a public playlist regardless of that video's own
+  // privacy status — only the playlist's privacy is checked. A creator who drops an unlisted
+  // video into a public playlist exposes it here, even though it never appears on the channel page.
+  async function fetchChannelPlaylistVideoIds(channelId,ytKey,maxPlaylists,maxPagesPerPlaylist){
+    const found=new Map(); // videoId -> {title, playlistId}
+    let pageToken='';
+    let scanned=0;
+    do{
+      const url=`https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=${channelId}&maxResults=50&key=${ytKey}${pageToken?'&pageToken='+pageToken:''}`;
+      const res=await apiGet(url);
+      const playlists=res.items||[];
+      for(const pl of playlists){
+        if(scanned>=maxPlaylists) break;
+        scanned++;
+        let ptoken='';
+        for(let p=0;p<maxPagesPerPlaylist;p++){
+          let ires;
+          try{
+            const iurl=`https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&playlistId=${pl.id}&key=${ytKey}${ptoken?'&pageToken='+ptoken:''}`;
+            ires=await apiGet(iurl);
+          }catch(e){ break; }
+          (ires.items||[]).forEach(it=>{
+            const vid=it.contentDetails.videoId;
+            if(!found.has(vid)) found.set(vid,{title:pl.snippet.title,playlistId:pl.id});
+          });
+          if(!ires.nextPageToken) break;
+          ptoken=ires.nextPageToken;
+        }
+      }
+      pageToken=res.nextPageToken;
+    }while(pageToken&&scanned<maxPlaylists);
+    return found;
+  }
+
+  // ---- Real leak vector #2: Wayback Machine snapshots of the channel's old /videos page ----
+  // A video that used to be public (and so got crawled into an old snapshot) but was later
+  // switched to unlisted will no longer appear in the channel's current public list — but its
+  // ID survives in the archived HTML. Free, no API key, but archive.org's raw-snapshot route
+  // doesn't always send CORS headers, so this is best-effort and fails silently.
+  async function fetchWaybackCandidateIds(channelId){
+    try{
+      const channelVideosUrl=`https://www.youtube.com/channel/${channelId}/videos`;
+      const cdxUrl=`https://web.archive.org/cdx/search/cdx?url=${encodeURIComponent(channelVideosUrl)}&output=json&fl=timestamp,original&collapse=timestamp:6&limit=10`;
+      const rows=await fetch(cdxUrl).then(r=>r.json()).catch(()=>null);
+      if(!Array.isArray(rows)||rows.length<2) return [];
+      const snaps=rows.slice(1);
+      const step=Math.max(1,Math.ceil(snaps.length/5));
+      const picks=snaps.filter((_,i)=>i%step===0).slice(0,5);
+      const ids=new Map();
+      for(const row of picks){
+        const timestamp=row[0], original=row[1];
+        try{
+          const snapUrl=`https://web.archive.org/web/${timestamp}id_/${original}`;
+          const html=await fetch(snapUrl).then(r=>r.text());
+          for(const id of extractVideoIds(html)) if(!ids.has(id)) ids.set(id,timestamp);
+        }catch(e){ /* CORS or network — skip this snapshot */ }
+      }
+      return Array.from(ids,([id,ts])=>({
+        id,sourceType:'archive',
+        sourceLink:`https://web.archive.org/web/${ts}/${channelVideosUrl}`,
+        sourceTitle:`Archived channel page (${ts.slice(0,4)}-${ts.slice(4,6)}-${ts.slice(6,8)})`
+      }));
+    }catch(e){ return []; }
+  }
+
+  async function dorkSearch(query,cseKey,cseId){
+    const url=`https://www.googleapis.com/customsearch/v1?key=${cseKey}&cx=${cseId}&num=10&q=${encodeURIComponent(query)}`;
+    const res=await apiGet(url);
+    return res.items||[];
+  }
+
+  function extractVideoIds(text){
+    const ids=new Set();
+    const re=/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/g;
+    let m;
+    while((m=re.exec(text))) ids.add(m[1]);
+    return ids;
+  }
+
+  async function checkVideoStatus(id,ytKey){
+    const res=await apiGet(`https://www.googleapis.com/youtube/v3/videos?part=snippet,status&id=${id}&key=${ytKey}`);
+    const item=res.items&&res.items[0];
+    if(!item) return {id,status:'not_found'};
+    return {
+      id,status:item.status.privacyStatus,title:item.snippet.title,channelTitle:item.snippet.channelTitle,
+      publishedAt:item.snippet.publishedAt,
+      thumb:item.snippet.thumbnails&&(item.snippet.thumbnails.default||{}).url
+    };
+  }
+
+  async function scanQueries(queries,keys,knownPublic){
+    const seen=new Set();
+    const hits=[];
+    for(const q of queries){
+      let items;
+      try{ items=await dorkSearch(q,keys.cseKey,keys.cseId); }
+      catch(e){ statusEl.textContent='Search error: '+e.message; continue; }
+      for(const it of items){
+        const text=(it.link||'')+' '+(it.title||'')+' '+(it.snippet||'');
+        for(const id of extractVideoIds(text)){
+          if(seen.has(id)||(knownPublic&&knownPublic.has(id))) continue;
+          seen.add(id);
+          hits.push({id,sourceLink:it.link,sourceTitle:it.title});
+        }
+      }
+    }
+    noteQuotaUsed(queries.length);
+    return hits;
+  }
+
+  function statusBadge(status){
+    return status==='unlisted'?{c:'var(--accent)',t:'UNLISTED — FOUND'}
+      :status==='public'?{c:'var(--dim)',t:'PUBLIC'}
+      :status==='private'?{c:'var(--faint)',t:'PRIVATE'}
+      :{c:'var(--faint)',t:'NOT FOUND / REMOVED'};
+  }
+  function sourceLabel(t){ return t==='playlist'?'Public playlist':t==='archive'?'Archived snapshot':'Web search'; }
+  function fmtDate(iso){ if(!iso) return ''; try{ return new Date(iso).toLocaleDateString(); }catch(e){ return ''; } }
+
+  function applyFilterAndRender(){
+    const list=activeFilter==='all'?lastResults
+      :activeFilter==='unlisted'?lastResults.filter(r=>r.status==='unlisted')
+      :activeFilter==='public'?lastResults.filter(r=>r.status==='public')
+      :lastResults.filter(r=>r.status==='private'||r.status==='not_found');
+    renderResults(list);
+  }
+
+  function renderResults(list){
+    if(list.length===0){
+      resultsEl.innerHTML='<p style="color:var(--faint);font-family:var(--mono);font-size:.8rem;padding:10px 0">No results in this filter.</p>';
+      resultsEl.classList.add('show');
+      return;
+    }
+    resultsEl.innerHTML=list.map(r=>{
+      const b=statusBadge(r.status);
+      const thumb=r.thumb?`<img class="thumb" src="${escapeHtml(r.thumb)}" alt="">`:`<div class="ico">▶</div>`;
+      const src=r.sourceLink?`<a href="${escapeHtml(r.sourceLink)}" target="_blank" rel="noopener">${escapeHtml(r.sourceTitle||r.sourceLink)}</a>`:(escapeHtml(r.sourceTitle)||'—');
+      return `<div class="result">${thumb}<div class="rt"><b>${escapeHtml(r.title||r.id)}</b><span style="color:${b.c}">${b.t} · ${sourceLabel(r.sourceType)}${r.publishedAt?' · '+fmtDate(r.publishedAt):''}</span><small>Found via: ${src} · <a href="https://youtube.com/watch?v=${encodeURIComponent(r.id)}" target="_blank" rel="noopener">watch</a></small></div></div>`;
+    }).join('');
+    resultsEl.classList.add('show');
+  }
+
+  function toCsv(list){
+    const header=['title','video_id','status','source_type','source','published_at','watch_url'];
+    const esc=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+    const rows=list.map(r=>[r.title||'',r.id,r.status,sourceLabel(r.sourceType),r.sourceTitle||'',r.publishedAt||'',`https://youtube.com/watch?v=${r.id}`]);
+    return [header,...rows].map(row=>row.map(esc).join(',')).join('\r\n');
+  }
+  exportBtn.addEventListener('click',()=>{
+    if(!lastResults.length) return;
+    const blob=new Blob([toCsv(lastResults)],{type:'text/csv'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url; a.download='unlist-results.csv'; document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  async function checkAll(hits,ytKey){
+    const checked=[];
+    for(const h of hits){
+      try{ checked.push({...h,...await checkVideoStatus(h.id,ytKey)}); }catch(e){}
+      await new Promise(r=>setTimeout(r,100));
+    }
+    return checked;
+  }
+
+  async function runChannelScan(raw,keys){
+    statusEl.textContent='Resolving channel...';
+    const ref=parseChannelRef(raw);
+    const channel=await resolveChannel(ref,keys.yt);
+
+    statusEl.textContent=`Found "${channel.title}". Loading its known public videos...`;
+    const knownPublic=await fetchKnownPublicIds(channel.uploadsPlaylistId,keys.yt,8);
+
+    statusEl.textContent=`${knownPublic.size} public video(s) on record. Checking public playlists for buried videos...`;
+    let playlistMap=new Map();
+    try{ playlistMap=await fetchChannelPlaylistVideoIds(channel.channelId,keys.yt,30,3); }catch(e){}
+    const fromPlaylists=[];
+    playlistMap.forEach((info,id)=>{
+      if(knownPublic.has(id)) return;
+      fromPlaylists.push({id,sourceType:'playlist',sourceLink:`https://www.youtube.com/playlist?list=${info.playlistId}`,sourceTitle:`Public playlist: ${info.title}`});
+    });
+
+    statusEl.textContent=`${fromPlaylists.length} candidate(s) from playlists. Searching the open web for leaked links...`;
+    const handle=ref.type==='handle'?ref.value.replace(/^@/,''):null;
+    const queries=[
+      `"${channel.title}" "youtube.com/watch?v="`,
+      `"${channel.title}" "youtu.be/"`,
+      `"${channel.title}" "youtube.com/embed/"`
+    ];
+    if(handle&&handle.toLowerCase()!==channel.title.toLowerCase()) queries.push(`"@${handle}" youtube.com`);
+    const webHitsRaw=await scanQueries(queries,keys,knownPublic);
+    const fromWeb=webHitsRaw.map(h=>({...h,sourceType:'web'}));
+
+    statusEl.textContent='Checking Wayback Machine snapshots of the channel\'s old video list...';
+    const fromArchive=(await fetchWaybackCandidateIds(channel.channelId)).filter(h=>!knownPublic.has(h.id));
+
+    const merged=new Map();
+    [...fromPlaylists,...fromWeb,...fromArchive].forEach(h=>{ if(!merged.has(h.id)) merged.set(h.id,h); });
+    const hits=Array.from(merged.values());
+
+    if(hits.length===0){
+      statusEl.textContent=`No leaked or buried videos found for "${channel.title}" in this pass. Try again later (search quota refills daily), or check a specific forum/page yourself if you know where a link was posted.`;
+      lastResults=[]; toggleResultTools(false); resultsEl.classList.remove('show'); resultsEl.innerHTML='';
+      return;
+    }
+
+    statusEl.textContent=`Found ${hits.length} candidate(s) across playlists/web/archive. Verifying real status against YouTube...`;
+    lastResults=await checkAll(hits,keys.yt);
+    toggleResultTools(true);
+    applyFilterAndRender();
+    const unlistedCount=lastResults.filter(c=>c.status==='unlisted').length;
+    statusEl.textContent=`Scan complete. ${unlistedCount} unlisted video(s) confirmed out of ${lastResults.length} candidate(s) (${fromPlaylists.length} via playlists, ${fromWeb.length} via web search, ${fromArchive.length} via archive).`;
+  }
+
+  async function runKeywordScan(keyword,keys){
+    statusEl.textContent='Searching the open web...';
+    const queries=[
+      `"${keyword}" "youtube.com/watch?v="`,
+      `"${keyword}" "youtu.be/"`,
+      `"${keyword}" "youtube.com/embed/"`
+    ];
+    const hitsRaw=await scanQueries(queries,keys,null);
+    const hits=hitsRaw.map(h=>({...h,sourceType:'web'}));
+
+    if(hits.length===0){
+      statusEl.textContent=`No candidate links found for "${keyword}" in this pass. Try a more specific phrase — exact titles or names work best.`;
+      lastResults=[]; toggleResultTools(false); resultsEl.classList.remove('show'); resultsEl.innerHTML='';
+      return;
+    }
+
+    statusEl.textContent=`Found ${hits.length} candidate link(s). Verifying real status against YouTube...`;
+    lastResults=await checkAll(hits,keys.yt);
+    toggleResultTools(true);
+    applyFilterAndRender();
+    const unlistedCount=lastResults.filter(c=>c.status==='unlisted').length;
+    statusEl.textContent=`Scan complete. ${unlistedCount} unlisted video(s) confirmed out of ${lastResults.length} candidate(s) checked.`;
+  }
+
+  btn.addEventListener('click',async()=>{
+    const ytKey=ytKeyEl.value.trim(),cseKey=cseKeyEl.value.trim(),cseId=cseIdEl.value.trim();
+    try{
+      localStorage.setItem('unlist_yt',ytKey);
+      localStorage.setItem('unlist_cseKey',cseKey);
+      localStorage.setItem('unlist_cseId',cseId);
+    }catch(e){}
+    if(!ytKey||!cseKey||!cseId){ statusEl.textContent='Fill in all three API keys above first (one-time setup, free from Google).'; return; }
+    const val=input.value.trim();
+    if(!val){ statusEl.textContent=currentMode==='channel'?'Paste a channel URL or @handle.':'Enter a keyword.'; return; }
+    btn.disabled=true; const oldLabel=btn.textContent; btn.textContent='Scanning...';
+    toggleResultTools(false);
+    resultsEl.classList.remove('show'); resultsEl.innerHTML='';
+    try{
+      if(currentMode==='channel') await runChannelScan(val,{yt:ytKey,cseKey,cseId});
+      else await runKeywordScan(val,{yt:ytKey,cseKey,cseId});
+    }catch(e){
+      statusEl.textContent='Error: '+e.message;
+    }finally{
+      btn.disabled=false; btn.textContent=oldLabel;
+      resultsEl.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+  });
+})();
 </script>
 </body>
 </html>
