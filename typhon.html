@@ -292,6 +292,32 @@
   .gate .t{font-family:var(--mono);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--gold2);margin-bottom:5px;font-size:.76rem}
   .gate p{font-size:.9rem;color:#c4c0b6}
 
+  /* ---------- OSINT dork console ---------- */
+  .dork{border:1px solid var(--line);border-radius:10px;background:var(--ink2);padding:22px;
+    box-shadow:0 0 0 1px rgba(242,178,41,.03) inset}
+  .dork h3{font-family:var(--disp);font-size:1rem;font-weight:700;margin-bottom:14px}
+  .dork-cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .dork-cat{background:var(--ink3);border:1px solid var(--line);border-radius:999px;color:var(--dim);
+    font-family:var(--mono);font-size:11px;letter-spacing:.04em;padding:7px 14px;cursor:pointer;transition:all .15s}
+  .dork-cat:hover{border-color:var(--gold);color:var(--paper)}
+  .dork-cat.active{background:linear-gradient(96deg,var(--ember),var(--gold));border-color:transparent;color:#120a04;font-weight:700}
+  .dork-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+  .dork-row input{flex:1;min-width:200px;background:var(--ink3);border:1px solid var(--line);
+    border-radius:6px;padding:11px 14px;color:var(--paper);font-family:var(--mono);font-size:.85rem;outline:none}
+  .dork-row input:focus{border-color:var(--gold)}
+  .dork-preview{font-family:var(--mono);font-size:.74rem;color:var(--faint);margin-bottom:14px;word-break:break-all}
+  .dork-preview b{color:var(--ember2)}
+  .dork-status{font-family:var(--mono);font-size:.78rem;color:var(--dim);min-height:20px;margin-bottom:6px}
+  .dork-results{display:flex;flex-direction:column;gap:0}
+  .dork-result{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+  .dork-result:last-child{border-bottom:0}
+  .dork-result .ico{width:26px;height:26px;border-radius:6px;flex:none;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--ember),var(--gold));color:#120a04;font-size:11px;font-weight:900}
+  .dork-result .rt{flex:1;min-width:0}
+  .dork-result .rt a.tt{font-size:.92rem;color:var(--paper);font-weight:600;display:block}
+  .dork-result .rt .u{font-size:.74rem;color:var(--ember2);font-family:var(--mono);word-break:break-all}
+  .dork-result .rt .sn{font-size:.82rem;color:var(--dim);margin-top:3px}
+
   /* ---------- live threat map ---------- */
   .mapgrid{display:grid;grid-template-columns:1fr 270px;gap:18px}
   @media(max-width:820px){.mapgrid{grid-template-columns:1fr}}
@@ -336,6 +362,11 @@
   .dl p{color:#c4c0b6;max-width:52ch;margin:14px auto 0}
   .dl .cta{display:flex;gap:12px;justify-content:center;margin-top:26px;flex-wrap:wrap}
   .dl .req{margin-top:22px;font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.03em}
+  .pricetag{display:inline-flex;align-items:baseline;gap:8px;margin:20px auto 0;padding:10px 20px;
+    border:1px solid var(--line-warm);border-radius:999px;background:rgba(242,178,41,.06)}
+  .pricetag .amt{font-family:var(--strong);font-size:1.7rem;color:var(--gold2)}
+  .pricetag .amt small{font-family:var(--mono);font-size:.5em;color:var(--dim);letter-spacing:.04em;margin-right:2px}
+  .pricetag .note{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--dim);text-transform:uppercase}
 
   /* ---------- footer ---------- */
   footer{border-top:1px solid var(--line);padding-block:34px;margin-top:0}
@@ -375,6 +406,8 @@
       <a href="#dos" data-i18n="nv_dos">DoS Lab</a>
       <a href="#threatmap" data-i18n="nv_map">Threat Map</a>
       <a href="#ai" data-i18n="nv_ai">AI Analyst</a>
+      <a href="#osint" data-i18n="nv_osint">OSINT</a>
+      <a href="typhon-docs.html" data-i18n="nv_docs">Docs</a>
     </div>
     <div class="navtools">
       <button class="modepill" id="emblemBtn" title="Emblem style">Halo</button>
@@ -578,6 +611,32 @@
   </div>
 </section>
 
+<!-- ===================== OSINT / DORK CONSOLE ===================== -->
+<section class="band" id="osint">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow" data-i18n="os_eyebrow">Open-source recon</span>
+      <h2 data-i18n="os_title">Find what's already exposed.</h2>
+      <p data-i18n="os_sub">The same technique researchers use to surface exposed databases, leaked files and open panels — pointed at your own assets. TYPHON builds the search-engine dork for you, runs it against the live open web, and hands back exactly what's actually indexed.</p>
+    </div>
+    <div class="dork">
+      <h3 data-i18n="os_h3">Dork console</h3>
+      <div class="dork-cats" id="dorkCats"></div>
+      <div class="dork-row">
+        <input type="text" id="dorkTarget" placeholder="Domain, name, handle, or brand+model...">
+        <button class="btn btn-primary" id="dorkBtn" data-i18n="os_run">Run search</button>
+      </div>
+      <div class="dork-preview" id="dorkPreview"></div>
+      <div class="dork-status" id="dorkStatus"></div>
+      <div class="dork-results" id="dorkResults"></div>
+    </div>
+    <div class="gate" style="margin-top:20px">
+      <div class="t" data-i18n="os_gate_t">Authorization gate</div>
+      <p data-i18n="os_gate_p">Point this at your own domain, brand, handle, or devices — or a target you're explicitly authorized to assess. It only surfaces what a search engine already crawled and indexed; it accesses nothing directly and exploits nothing.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== DOWNLOAD ===================== -->
 <section class="band" id="download">
   <div class="wrap">
@@ -585,6 +644,7 @@
       <span class="eyebrow" data-i18n="dl_eyebrow">Early build · in active development</span>
       <h2 data-i18n="dl_title" style="margin-top:12px">Get TYPHON</h2>
       <p data-i18n="dl_sub">A single Windows download that sets up its own Kali backend. Early build — rough edges expected, shipping fast. Authorized testing only.</p>
+      <div class="pricetag"><span class="amt"><small>$</small>200</span><span class="note" data-i18n="dl_price_note">One-time license · locks in at this price for early access</span></div>
       <div class="cta">
         <a href="https://github.com/Primal-monk" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="dl_cta1">Download for Windows</a>
         <a href="https://github.com/Primal-monk" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="dl_cta2">View on GitHub</a>
@@ -659,7 +719,7 @@ buildNav(); renderPanel();
 /* ---------------- language toggle (core strings) ---------------- */
 const I18N={
 en:{
- nv_over:'Overview', nv_mod:'Modules', nv_dos:'DoS Lab', nv_ai:'AI Analyst', nv_get:'Get TYPHON',
+ nv_over:'Overview', nv_mod:'Modules', nv_dos:'DoS Lab', nv_ai:'AI Analyst', nv_osint:'OSINT', nv_docs:'Docs', nv_get:'Get TYPHON',
  h_eyebrow:'Operator-grade offensive security',
  h_title:'Chaos. <span class="gradtext">Weaponized.</span>',
  h_sub:'Every Kali tool, one clean weapon. TYPHON runs the full arsenal through a single command surface — recon, exploitation and reporting with the discipline of a red-team engagement, not a wall of buttons. Authorized work only: labs, CTFs, and systems you own.',
@@ -683,15 +743,21 @@ en:{
  a_f1h:'Bring your own tools', a_f1p:'Point TYPHON at a GitHub repo — the analyst reads it, wires it in, and adapts it to your workflow.',
  a_f2h:'Fact vs. hypothesis', a_f2p:'Every AI statement is tagged: observed, hypothesized, or your own conclusion.',
  a_f3h:'Everything logged', a_f3p:'A live dashboard shows exactly what the AI ran, and why.',
+ os_eyebrow:'Open-source recon', os_title:'Find what\'s already exposed.',
+ os_sub:'The same technique researchers use to surface exposed databases, leaked files and open panels — pointed at your own assets. TYPHON builds the search-engine dork for you, runs it against the live open web, and hands back exactly what\'s actually indexed.',
+ os_h3:'Dork console', os_run:'Run search',
+ os_gate_t:'Authorization gate',
+ os_gate_p:'Point this at your own domain, brand, handle, or devices — or a target you\'re explicitly authorized to assess. It only surfaces what a search engine already crawled and indexed; it accesses nothing directly and exploits nothing.',
  dl_eyebrow:'Early build · in active development', dl_title:'Get TYPHON',
  dl_sub:'A single Windows download that sets up its own Kali backend. Early build — rough edges expected, shipping fast. Authorized testing only.',
  dl_cta1:'Download for Windows', dl_cta2:'View on GitHub',
+ dl_price_note:'One-time license · locks in at this price for early access',
  dl_req:'Requires Windows 10/11 · WSL2 · ~8 GB free · virtualization enabled',
  ft_note:'Offensive-security workspace · authorized testing only.',
  ft_legal:'Labs, CTFs & systems you own — nothing else.'
 },
 es:{
- nv_over:'Resumen', nv_mod:'Módulos', nv_dos:'Lab DoS', nv_ai:'Analista IA', nv_get:'Obtener TYPHON',
+ nv_over:'Resumen', nv_mod:'Módulos', nv_dos:'Lab DoS', nv_ai:'Analista IA', nv_osint:'OSINT', nv_docs:'Docs', nv_get:'Obtener TYPHON',
  h_eyebrow:'Seguridad ofensiva de nivel operador',
  h_title:'Caos. <span class="gradtext">Convertido en arma.</span>',
  h_sub:'Todo Kali, una sola arma limpia. TYPHON ejecuta el arsenal completo desde una sola superficie de comando — reconocimiento, explotación e informes con la disciplina de un red team, no un muro de botones. Solo trabajo autorizado: laboratorios, CTFs y sistemas propios.',
@@ -715,9 +781,15 @@ es:{
  a_f1h:'Trae tus herramientas', a_f1p:'Apunta TYPHON a un repo de GitHub — el analista lo lee, lo integra y lo adapta a tu flujo.',
  a_f2h:'Hecho vs. hipótesis', a_f2p:'Cada afirmación de la IA se etiqueta: observado, hipótesis o tu propia conclusión.',
  a_f3h:'Todo registrado', a_f3p:'Un panel en vivo muestra exactamente qué ejecutó la IA, y por qué.',
+ os_eyebrow:'Reconocimiento de fuente abierta', os_title:'Encuentra lo que ya está expuesto.',
+ os_sub:'La misma técnica que usan los investigadores para hallar bases de datos expuestas, archivos filtrados y paneles abiertos — apuntada a tus propios activos. TYPHON construye la búsqueda por ti, la ejecuta contra la web abierta en vivo y te muestra lo que realmente está indexado.',
+ os_h3:'Consola de dorks', os_run:'Ejecutar búsqueda',
+ os_gate_t:'Barrera de autorización',
+ os_gate_p:'Apunta esto a tu propio dominio, marca, usuario o dispositivos — o a un objetivo que estés explícitamente autorizado a evaluar. Solo muestra lo que un buscador ya rastreó e indexó; no accede a nada directamente ni explota nada.',
  dl_eyebrow:'Versión temprana · en desarrollo activo', dl_title:'Obtener TYPHON',
  dl_sub:'Una sola descarga de Windows que configura su propio backend Kali. Versión temprana — se esperan asperezas, avanzando rápido. Solo pruebas autorizadas.',
  dl_cta1:'Descargar para Windows', dl_cta2:'Ver en GitHub',
+ dl_price_note:'Licencia única · precio fijo de acceso anticipado',
  dl_req:'Requiere Windows 10/11 · WSL2 · ~8 GB libres · virtualización activada',
  ft_note:'Espacio de seguridad ofensiva · solo pruebas autorizadas.',
  ft_legal:'Laboratorios, CTFs y sistemas propios — nada más.'
@@ -865,6 +937,82 @@ applyLang();
     types:['Port scan','Brute force','SQL probe','Malware C2','Exploit attempt','Recon','DoS attempt'],
     rate:820
   });
+</script>
+
+<!-- ---------------- OSINT dork console: real search, reuses UNLIST's proxy ---------------- -->
+<script>
+(function(){
+  const PROXY_BASE='https://googledorker.cyberunmask.workers.dev';
+  const CATS=[
+    {key:'files',    label:'Exposed Files & Backups',    build:t=>`site:${t} (filetype:sql OR filetype:env OR filetype:bak OR filetype:log)`},
+    {key:'admin',    label:'Admin / Login Panels',       build:t=>`site:${t} (inurl:admin OR inurl:login OR inurl:wp-admin)`},
+    {key:'gitenv',   label:'Git / Config Leaks',         build:t=>`site:${t} (inurl:.git OR inurl:.env OR inurl:config.php)`},
+    {key:'dirs',     label:'Open Directory Listings',    build:t=>`site:${t} intitle:"index of"`},
+    {key:'docs',     label:'Exposed Documents',          build:t=>`site:${t} (filetype:pdf OR filetype:xlsx OR filetype:docx) (confidential OR internal)`},
+    {key:'device',   label:'Device / Camera Exposure',   build:t=>`(intitle:"live view" OR intitle:"webcam") "${t}"`},
+    {key:'footprint',label:'Self / Brand Footprint',     build:t=>`"${t}"`}
+  ];
+  let activeCat=0;
+  const catsEl=document.getElementById('dorkCats');
+  if(!catsEl) return; // section not present on this page
+
+  const targetEl=document.getElementById('dorkTarget');
+  const btn=document.getElementById('dorkBtn');
+  const previewEl=document.getElementById('dorkPreview');
+  const statusEl=document.getElementById('dorkStatus');
+  const resultsEl=document.getElementById('dorkResults');
+
+  function escapeHtml(s){
+    return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function renderCats(){
+    catsEl.innerHTML=CATS.map((c,i)=>`<button class="dork-cat${i===activeCat?' active':''}" data-i="${i}">${escapeHtml(c.label)}</button>`).join('');
+    catsEl.querySelectorAll('.dork-cat').forEach(b=>b.addEventListener('click',()=>{
+      activeCat=+b.dataset.i; renderCats(); updatePreview();
+    }));
+  }
+  function updatePreview(){
+    const t=targetEl.value.trim()||'example.com';
+    previewEl.innerHTML='Query: <b>'+escapeHtml(CATS[activeCat].build(t))+'</b>';
+  }
+  targetEl.addEventListener('input',updatePreview);
+  renderCats(); updatePreview();
+
+  async function apiGet(url){
+    const res=await fetch(url);
+    const json=await res.json();
+    if(json.error) throw new Error(json.error.message||('API error '+res.status));
+    return json;
+  }
+
+  btn.addEventListener('click',async()=>{
+    const target=targetEl.value.trim();
+    if(!target){ statusEl.textContent='Enter a domain, name, handle, or device to check.'; return; }
+    const q=CATS[activeCat].build(target);
+    btn.disabled=true; const old=btn.textContent; btn.textContent='Searching...';
+    statusEl.textContent='Running: '+q;
+    resultsEl.innerHTML='';
+    try{
+      const res=await apiGet(`${PROXY_BASE}/cse?num=10&q=${encodeURIComponent(q)}`);
+      const items=res.items||[];
+      if(items.length===0){
+        statusEl.textContent='Nothing indexed for this query — for an exposure check, that\'s usually good news.';
+      }else{
+        statusEl.textContent=`${items.length} indexed result(s).`;
+        resultsEl.innerHTML=items.map(it=>`<div class="dork-result"><div class="ico">&#9678;</div><div class="rt">
+          <a class="tt" href="${escapeHtml(it.link)}" target="_blank" rel="noopener">${escapeHtml(it.title||it.link)}</a>
+          <div class="u">${escapeHtml(it.link)}</div>
+          <div class="sn">${escapeHtml(it.snippet||'')}</div>
+        </div></div>`).join('');
+      }
+    }catch(e){
+      statusEl.textContent='Error: '+e.message;
+    }finally{
+      btn.disabled=false; btn.textContent=old;
+    }
+  });
+})();
 </script>
 </body>
 </html>

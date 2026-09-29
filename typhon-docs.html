@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TYPHON Docs — The Denial-of-Service Field Guide</title>
+<link rel="icon" type="image/png" href="assets/typhon-logo.png">
+<meta name="description" content="A structured, plain-language field guide to denial-of-service mechanisms — what gets exhausted, how, and how TYPHON's DoS Lab tests it against systems you're authorized to test.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Chakra+Petch:wght@500;600;700&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
+<style>
+  :root{
+    --ink:#0c0d10; --ink2:#121319; --ink3:#181a22; --raise:#1d2029;
+    --line:#262935; --line-warm:rgba(242,178,41,.16);
+    --paper:#ece7de; --dim:#8b909c; --faint:#565c69;
+    --ember:#e8622a; --ember2:#f5843f; --gold:#f2b229; --gold2:#ffcc55;
+    --red:#ff5c68; --green:#4fd07f; --danger:#e01d2b; --danger2:#ff4653;
+    --strong:"Anton",Impact,system-ui,sans-serif;
+    --disp:"Chakra Petch",system-ui,sans-serif;
+    --body:"Archivo",system-ui,sans-serif;
+    --mono:"Space Mono",ui-monospace,Consolas,monospace;
+    --maxw:1320px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--ink);color:var(--paper);line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background-image:
+      radial-gradient(900px 480px at 88% -8%, rgba(232,98,42,.10), transparent 62%),
+      radial-gradient(700px 400px at -5% 4%, rgba(242,178,41,.06), transparent 60%);}
+  .bgpat{position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background-image:url("pat-3.jpg");background-size:cover;background-position:center;
+    background-repeat:no-repeat;opacity:.13;filter:invert(1)}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,h4{font-family:var(--disp);text-wrap:balance;line-height:1.15;letter-spacing:.005em}
+  .mono{font-family:var(--mono)}
+  ::selection{background:var(--ember);color:#120a04}
+  ::-webkit-scrollbar{width:12px}
+  ::-webkit-scrollbar-track{background:var(--ink2)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--gold),var(--ember));border:3px solid var(--ink2);border-radius:8px}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:22px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ember2)}
+  .gradtext{background:linear-gradient(96deg,var(--gold2),var(--ember));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* nav (shared with typhon.html) */
+  .nav{position:sticky;top:0;z-index:60;background:rgba(12,13,16,.82);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;gap:18px;height:60px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:30px;height:30px;object-fit:contain}
+  .brand .wm{font-family:var(--strong);font-weight:400;font-size:23px;letter-spacing:.12em}
+  .parent{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;
+    color:var(--faint);letter-spacing:.08em;padding-right:14px;border-right:1px solid var(--line)}
+  .parent b{color:var(--dim)}
+  .navlinks{display:flex;gap:22px;margin-left:auto}
+  .navlinks a{font-size:13.5px;color:var(--dim);letter-spacing:.02em;transition:color .15s}
+  .navlinks a:hover,.navlinks a.on{color:var(--paper)}
+  .navtools{display:flex;align-items:center;gap:12px}
+  .btn{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.05em;padding:9px 16px;
+    border-radius:5px;cursor:pointer;border:1px solid transparent;transition:transform .12s,filter .15s;display:inline-block}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:linear-gradient(96deg,var(--ember),var(--gold));color:#120a04}
+  .btn-primary:hover{filter:brightness(1.08)}
+  .btn-ghost{border-color:var(--line-warm);color:var(--paper)}
+  .btn-ghost:hover{border-color:var(--gold);background:rgba(242,178,41,.06)}
+  @media(max-width:880px){.navlinks{display:none}}
+
+  .statusstrip{border-bottom:1px solid var(--line);background:var(--ink2)}
+  .statusstrip .wrap{display:flex;gap:18px;align-items:center;height:32px;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em}
+  .statusstrip .a{color:var(--gold)}
+  .statusstrip .h{color:var(--dim);margin-left:auto}
+  .statusstrip .ver{color:var(--faint)}
+
+  /* doc hero */
+  .dochero{padding:clamp(38px,6vw,64px) 0 30px;border-bottom:1px solid var(--line)}
+  .dochero h1{font-size:clamp(2rem,4.5vw,3.1rem);margin:10px 0 14px}
+  .dochero p{color:var(--dim);max-width:66ch;margin-bottom:20px}
+  .dochero .cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .dochero .pricebit{font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.03em}
+  .dochero .pricebit b{color:var(--gold2)}
+
+  /* doc layout */
+  .docwrap{max-width:var(--maxw);margin:0 auto;padding:36px 22px 90px;display:grid;
+    grid-template-columns:250px 1fr;gap:44px;align-items:start}
+  @media(max-width:900px){.docwrap{grid-template-columns:1fr}}
+  .docnav{position:sticky;top:70px;max-height:calc(100vh - 90px);overflow-y:auto;padding-right:6px}
+  @media(max-width:900px){.docnav{position:static;max-height:none;border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--ink2)}}
+  .docnav .grp{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--faint);margin:20px 0 6px}
+  .docnav .grp:first-child{margin-top:0}
+  .docnav a{display:block;font-size:13px;color:var(--dim);padding:5px 10px;border-radius:4px;
+    border-left:2px solid transparent;transition:color .12s,border-color .12s}
+  .docnav a:hover{color:var(--paper);border-left-color:var(--gold)}
+  .docnav a.stub{color:var(--faint);font-style:italic}
+  .docnav a.stub:hover{color:var(--dim);border-left-color:var(--line-warm)}
+
+  .doc-entry{padding:36px 0;border-bottom:1px solid var(--line)}
+  .doc-entry:first-child{padding-top:0}
+  .doc-entry h2{font-size:1.55rem;margin-bottom:6px;scroll-margin-top:76px}
+  .doc-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ember2);text-transform:uppercase}
+  .doc-entry p{color:var(--dim);margin:12px 0}
+  .doc-entry p b{color:var(--paper)}
+  .doc-entry ul{color:var(--dim);margin:10px 0 10px 20px}
+  .doc-entry li{margin:4px 0}
+  .doc-entry li b{color:var(--paper)}
+  .flow{background:var(--ink2);border:1px solid var(--line);border-radius:8px;padding:14px 16px;
+    font-family:var(--mono);font-size:11.5px;color:var(--paper);white-space:pre-wrap;margin:16px 0;overflow-x:auto}
+  .doc-tool{background:var(--ink3);border:1px solid var(--line-warm);border-radius:8px;padding:14px 16px;margin-top:16px}
+  .doc-tool .k{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:4px}
+  .doc-tool p{margin:0;color:var(--dim);font-size:.92rem}
+  .doc-tool code{font-family:var(--mono);color:var(--gold2);background:rgba(242,178,41,.08);padding:1px 5px;border-radius:3px}
+  .doc-quote{border-left:3px solid var(--gold);padding:10px 16px;margin:16px 0;font-family:var(--disp);
+    font-size:1.02rem;color:var(--paper)}
+  .doc-quote span{display:block;margin-top:4px;font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.04em}
+
+  .stub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:10px}
+  .stub-card{border:1px solid var(--line);border-radius:8px;padding:14px 16px;background:var(--ink2)}
+  .stub-card h3{font-size:.95rem;color:var(--paper);margin-bottom:6px}
+  .stub-card p{margin:0;font-size:.83rem;color:var(--faint)}
+  .stub-card .soon{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);display:block;margin-top:8px}
+
+  .checklist{list-style:none;margin:14px 0 0;padding:0}
+  .checklist li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line);color:var(--dim);font-size:.92rem}
+  .checklist li:before{content:"□";color:var(--gold);font-family:var(--mono);flex:0 0 auto}
+
+  .refs{margin-top:14px}
+  .refs a{display:block;font-family:var(--mono);font-size:12px;color:var(--ember2);padding:5px 0;word-break:break-all}
+  .refs a:hover{color:var(--gold2)}
+
+  .doc-cta{margin-top:44px;border:1px solid var(--line-warm);border-radius:12px;background:linear-gradient(180deg,var(--ink2),#14100c);
+    padding:clamp(24px,4vw,38px);text-align:center}
+  .doc-cta h3{font-size:clamp(1.3rem,3vw,1.7rem)}
+  .doc-cta p{color:var(--dim);max-width:56ch;margin:10px auto 18px}
+  .doc-cta .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+  footer{border-top:1px solid var(--line);padding-block:34px;margin-top:0}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;max-width:var(--maxw);margin:0 auto;padding-inline:22px}
+  .foot .l{display:flex;align-items:center;gap:11px}
+  .foot .l img{width:26px;height:26px;object-fit:contain}
+  .foot .l .x{font-family:var(--mono);font-size:11.5px;color:var(--dim);line-height:1.5}
+  .foot .l .x b{color:var(--paper);font-family:var(--disp);letter-spacing:.1em}
+  .foot .r{font-family:var(--mono);font-size:11px;color:var(--faint);text-align:right}
+</style>
+</head>
+<body>
+<span class="bgpat" aria-hidden="true"></span>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="parent" href="omni.html" title="Parent company">← <b>ALLSEER SOFTWARE</b></a>
+    <a class="brand" href="typhon.html">
+      <img src="assets/typhon-logo.png" alt="TYPHON">
+      <span class="wm gradtext">TYPHON</span>
+    </a>
+    <div class="navlinks">
+      <a href="typhon.html#overview">Overview</a>
+      <a href="typhon.html#modules">Modules</a>
+      <a href="typhon.html#dos">DoS Lab</a>
+      <a href="typhon-docs.html" class="on">Docs</a>
+    </div>
+    <div class="navtools">
+      <a href="typhon.html#download" class="btn btn-primary">Get TYPHON</a>
+    </div>
+  </div>
+</nav>
+
+<div class="statusstrip">
+  <div class="wrap">
+    <span class="a">TYPHON DOCS</span>
+    <span class="h">FIELD GUIDE · WORK IN PROGRESS</span>
+    <span class="ver">BUILD 0.9 · PRIVATE ACCESS</span>
+  </div>
+</div>
+
+<header class="dochero">
+  <div class="wrap">
+    <span class="eyebrow">The Denial-of-Service Field Guide</span>
+    <h1>What actually gets <span class="gradtext">exhausted</span>, and how.</h1>
+    <p>Denial of service is treated as one bucket — "flood the server" — when it's really a dozen distinct mechanisms, each exhausting a different resource through a different door. This is a working reference for what those mechanisms are, organized by <b style="color:var(--paper)">what breaks</b> rather than by attack name. It's free to read. TYPHON's DoS Lab is the tool that runs the safe, authorized version of this against a target you own.</p>
+    <div class="cta">
+      <a href="typhon.html#dos" class="btn btn-ghost">See the DoS Lab</a>
+      <span class="pricebit">TYPHON — <b>$200</b> one-time, early access</span>
+    </div>
+  </div>
+</header>
+
+<div class="docwrap">
+  <aside class="docnav">
+    <div class="grp">Resource &amp; Capacity</div>
+    <a href="#slow-dos">Slow / Low-Rate Exhaustion</a>
+    <a href="#state-exhaustion">Connection &amp; State Exhaustion</a>
+    <a href="#host-local">OS / Host-Local Exhaustion</a>
+
+    <div class="grp">Computation</div>
+    <a href="#algorithmic">Algorithmic Complexity</a>
+    <a href="#app-logic">Application-Logic DoS &amp; Denial of Wallet</a>
+
+    <div class="grp">Network &amp; Delivery</div>
+    <a href="#amplification">Reflection &amp; Amplification</a>
+    <a href="#protocol-abuse" class="stub">Protocol / Network-Stack Abuse</a>
+    <a href="#distribution" class="stub">Distribution — DDoS as a Delivery Method</a>
+
+    <div class="grp">Other Mechanisms</div>
+    <a href="#implementation" class="stub">Implementation &amp; Vulnerability-Based DoS</a>
+    <a href="#wireless" class="stub">Wireless &amp; Physical-Layer DoS</a>
+    <a href="#routing" class="stub">Routing &amp; Infrastructure DoS</a>
+    <a href="#storage" class="stub">Storage &amp; Queue Exhaustion</a>
+    <a href="#indirect" class="stub">Indirect / Third-Party DoS</a>
+
+    <div class="grp">Framework</div>
+    <a href="#timing">Timing: The Common Thread</a>
+    <a href="#methodology">Testing Methodology Checklist</a>
+    <a href="#sources">Sources &amp; Further Reading</a>
+  </aside>
+
+  <article>
+
+    <div class="doc-entry" id="slow-dos">
+      <span class="doc-tag">Resource exhaustion · low-rate</span>
+      <h2>Slow / Low-Rate Exhaustion</h2>
+      <p>These attacks don't need bandwidth — they need <b>patience</b>. The attacker opens a connection and feeds it data just fast enough that the server refuses to time it out, but never fast enough to let it finish. Every held-open connection ties up a thread, a worker, or a slot in the connection pool. Do that enough times and the pool empties — new, legitimate connections simply queue forever.</p>
+      <ul>
+        <li><b>Slowloris</b> — opens many HTTP connections and drips partial headers, one every few seconds, never completing the request.</li>
+        <li><b>Slow POST / Slow HTTP</b> — same idea, but drips the request <i>body</i> instead of the headers.</li>
+        <li><b>Slow Read</b> — sends a normal request, then advertises a tiny TCP receive window so the server's response trickles out over minutes instead of milliseconds.</li>
+        <li><b>R-U-Dead-Yet? (RUDY)</b> — targets form submissions specifically, declaring a huge Content-Length and sending the body one byte at a time.</li>
+      </ul>
+      <div class="flow">client opens connection
+  → sends partial data, just under the timeout
+  → server allocates a thread/worker and waits
+  → connection never completes, never times out
+  → repeat across the connection pool
+  → pool exhausted → new clients queue → service unavailable</div>
+      <div class="doc-tool">
+        <span class="k">In TYPHON</span>
+        <p>The DoS Lab drives <code>slowhttptest</code> against an authorized target and graphs the connection pool live, showing the exact request rate where it saturates.</p>
+      </div>
+    </div>
+
+    <div class="doc-entry" id="state-exhaustion">
+      <span class="doc-tag">Resource exhaustion · connection state</span>
+      <h2>Connection &amp; State Exhaustion</h2>
+      <p>Every TCP stack keeps a table of connections that are in progress or established. That table has a fixed size. Fill it with junk and real connections can't get a seat.</p>
+      <ul>
+        <li><b>SYN flood</b> — sends a wave of TCP SYN packets and never completes the handshake (no ACK). Each half-open connection sits in the backlog queue until it times out, and the queue is finite.</li>
+        <li><b>ACK / PUSH floods</b> — force the target to process and validate packets against connection state it's tracking, at cost, even when the packets go nowhere.</li>
+        <li><b>Session-table exhaustion</b> — the application-layer version: fill a load balancer's or firewall's session table rather than the OS's TCP table.</li>
+      </ul>
+      <div class="doc-tool">
+        <span class="k">In TYPHON</span>
+        <p>Calibrated packet-crafting via <code>hping3</code>, <code>t50</code>, and <code>nping</code> against a lab host you control — enough to observe saturation, gated so it never targets anything you haven't confirmed you own.</p>
+      </div>
+    </div>
+
+    <div class="doc-entry" id="host-local">
+      <span class="doc-tag">Resource exhaustion · host-local</span>
+      <h2>OS / Host-Local Exhaustion</h2>
+      <p>Not every DoS comes over the network. A single malicious or buggy process can take a whole machine down by exhausting something the kernel hands out: processes, threads, file descriptors, or memory.</p>
+      <ul>
+        <li><b>Fork bomb</b> — a process that spawns two children, each of which spawns two more, and so on, until the process table and CPU scheduler are both saturated.</li>
+        <li><b>File-descriptor / socket exhaustion</b> — open handles and never close them until the per-process or system-wide limit is hit.</li>
+        <li><b>Memory exhaustion</b> — allocate and never free until the OOM killer starts making decisions for you.</li>
+      </ul>
+      <div class="flow">1 process
+  → forks 2
+  → each forks 2 more (4)
+  → each forks 2 more (8) ...
+  → process table full, scheduler thrashing
+  → system unresponsive, often before you can even open a shell to kill it</div>
+      <p><i>Roadmap:</i> this class is about hardening your own host (ulimits, cgroups, process quotas) rather than testing a remote target — it isn't in the DoS Lab's v1 scope, which is network-facing.</p>
+    </div>
+
+    <div class="doc-entry" id="algorithmic">
+      <span class="doc-tag">Computation · algorithmic complexity</span>
+      <h2>Algorithmic Complexity Attacks</h2>
+      <p>This is the category most people miss, because it doesn't look like an attack at all. There's no flood, no volume — <b>one small, entirely legitimate-looking request</b> triggers a computation whose cost is wildly disproportionate to its size. The attacker doesn't need server access; they just need to find an input path where they control data that reaches a pathological code path.</p>
+      <ul>
+        <li><b>ReDoS</b> (Regular-expression Denial of Service) — a regex with catastrophic backtracking. A crafted string turns a sub-millisecond match into a computation that takes minutes or hours.</li>
+        <li><b>Billion Laughs / XML entity expansion</b> — a small XML document where each entity references several others, expanding exponentially when parsed. Kilobytes in, gigabytes in memory out.</li>
+        <li><b>Zip bombs / decompression bombs</b> — a small compressed file that decompresses to an enormous size.</li>
+        <li><b>Hash-collision DoS</b> — crafted keys that all hash to the same bucket, degrading a hash table from O(1) lookups to O(n).</li>
+      </ul>
+      <div class="flow">attacker-controlled input
+  → HTTP / API / form field
+  → server handler
+  → validation / parser
+  → vulnerable regex or parser
+  → pathological evaluation
+  → CPU pinned at 100% on one request
+  → request queue grows behind it
+  → denial of service</div>
+      <p>This is also why "just add a WAF / CDN" doesn't fully solve DoS: a reverse proxy stops volumetric floods, but it still forwards the one small request that trips the vulnerable code path underneath it.</p>
+    </div>
+
+    <div class="doc-entry" id="amplification">
+      <span class="doc-tag">Network &amp; delivery · reflection</span>
+      <h2>Reflection &amp; Amplification</h2>
+      <p>The attacker spoofs the victim's IP address as the source of a request sent to an open, misconfigured service — DNS resolver, NTP server, memcached, SSDP. The service replies to the (spoofed) victim, and the reply is far larger than the request. Small outbound request, huge inbound flood, and the attacker never touches the victim directly.</p>
+      <ul>
+        <li><b>DNS amplification</b> — a small query can return a response 20–50× larger.</li>
+        <li><b>NTP / CLDAP / SSDP / Memcached amplification</b> — same idea, different protocol, some with amplification factors in the thousands.</li>
+        <li><b>Smurf</b> — the classic version: spoofed ICMP echo to a broadcast address, so every host on the subnet replies to the victim at once.</li>
+      </ul>
+      <p><b>What's the modern equivalent of LOIC/HOIC?</b> Those tools are effectively dead — they rely on many willing clients flooding directly, which is trivially traced and rate-limited. What replaced them isn't a downloadable app; it's <b>booter/stresser-for-hire services</b> built on IoT botnets (the Mirai lineage) and reflection infrastructure, rented by the minute. The interesting research isn't "which client tool," it's which open reflectors and amplification ratios are still exploitable after a decade of BCP38 and open-resolver cleanup efforts.</p>
+      <p><i>Out of scope for the DoS Lab</i> by design: reflection/amplification requires bouncing traffic off a third party, which breaks the "your target, your infrastructure only" authorization model TYPHON is built around.</p>
+    </div>
+
+    <div class="doc-entry" id="app-logic">
+      <span class="doc-tag">Computation · application logic</span>
+      <h2>Application-Logic DoS &amp; Denial of Wallet</h2>
+      <p>Sometimes the resource being exhausted isn't CPU or a socket — it's money, or a security control turned against its own users.</p>
+      <ul>
+        <li><b>Expensive endpoints</b> — file exports, image/video generation, unbounded search or sort — cost that scales with attacker-controlled input.</li>
+        <li><b>Account-lockout abuse</b> — collect a list of usernames, deliberately fail login for each one, and the target's own brute-force protection locks out its real users.</li>
+        <li><b>Denial of wallet</b> — burn through metered resources (API tokens, cloud compute, SMS credits) until the bill, not the server, is what fails. Moving to local model hosting doesn't remove this — it just moves the ceiling from a token limit to an electricity bill.</li>
+      </ul>
+      <p>This category matters more every year because more infrastructure is metered rather than fixed-capacity — the failure mode shifts from "the server fell over" to "the invoice fell over."</p>
+    </div>
+
+    <div class="doc-entry" id="protocol-abuse">
+      <span class="doc-tag">Stub</span>
+      <h2>Protocol / Network-Stack Abuse</h2>
+      <p>Malformed or abusive traffic at the IP/ICMP/UDP/DNS layer — Ping of Death, LAND attacks, Martian packets, fragmentation abuse, DNS query floods. Full entry in progress.</p>
+    </div>
+
+    <div class="doc-entry" id="distribution">
+      <span class="doc-tag">Stub</span>
+      <h2>Distribution — DDoS as a Delivery Method</h2>
+      <p>DDoS isn't a separate mechanism — it's a distribution model layered on top of any of the above (botnets, IoT swarms, reflector networks). Treating "distributed" as a cross-cutting dimension rather than its own category. Full entry in progress.</p>
+    </div>
+
+    <div class="doc-entry" id="implementation">
+      <span class="doc-tag">Stub</span>
+      <h2>Implementation &amp; Vulnerability-Based DoS</h2>
+      <p>Crashes caused by malformed-packet handling, parser bugs, integer overflows, null-pointer dereferences, and state-machine bugs — a single unusual input that trips a bug rather than exhausts a resource. Full entry in progress.</p>
+    </div>
+
+    <div class="doc-entry" id="wireless">
+      <span class="doc-tag">Stub</span>
+      <h2>Wireless &amp; Physical-Layer DoS</h2>
+      <p>RF jamming, Wi-Fi deauthentication and management-frame abuse, Bluetooth/BLE attacks — denial of service below the network layer entirely. Full entry in progress.</p>
+    </div>
+
+    <div class="doc-entry" id="routing">
+      <span class="doc-tag">Stub</span>
+      <h2>Routing &amp; Infrastructure DoS</h2>
+      <p>Routing-table exhaustion, BGP-related attacks, ARP exhaustion, broadcast storms — denial of service against the network's control plane rather than an endpoint. Full entry in progress.</p>
+    </div>
+
+    <div class="doc-entry" id="storage">
+      <span class="doc-tag">Stub</span>
+      <h2>Storage &amp; Queue Exhaustion</h2>
+      <p>Email bombs, log exhaustion, queue exhaustion, disk-filling attacks — availability failures caused by filling something up rather than overloading something live. Full entry in progress.</p>
+    </div>
+
+    <div class="doc-entry" id="indirect">
+      <span class="doc-tag">Stub</span>
+      <h2>Indirect / Third-Party DoS</h2>
+      <p>Dependency exhaustion, abuse of shared infrastructure, and the "flash crowd" / Slashdot effect — availability failures that arrive through a dependency instead of a direct attack. Full entry in progress.</p>
+    </div>
+
+    <div class="doc-entry" id="timing">
+      <span class="doc-tag">Framework</span>
+      <h2>Timing: The Common Thread</h2>
+      <p>Nearly every category above reduces to the same core move: <b>stretch the time window between a request arriving and its resources being freed, as far as possible.</b> A slow attack does it by trickling data. An algorithmic-complexity attack does it by making one computation expensive. A flood does it by making the queue in front of every request longer. Framed this way, DoS stops being a grab-bag of named attacks and becomes one question applied everywhere: <i>what stretches this timing window, and what breaks when it stretches too far?</i></p>
+      <div class="doc-quote">"A denial of service is just a really easy timing attack."<span>— James Kettle</span></div>
+      <p>The sharpest version of this idea is <b>timeless timing attacks</b>: HTTP/2 lets a client bundle multiple requests into a single packet, so the server starts them all simultaneously — eliminating the network jitter that normally drowns out microsecond-level timing differences. It turns a technique built for password recovery into a lens for finding race conditions and DoS chains that single-request testing would never surface (e.g. chaining a naive TOCTOU discount-check with a ReDoS-vulnerable field to stretch a half-second race window arbitrarily wide).</p>
+    </div>
+
+    <div class="doc-entry" id="methodology">
+      <span class="doc-tag">Framework</span>
+      <h2>Testing Methodology Checklist</h2>
+      <p>Before reaching for a tool, these are the questions worth asking about any target you're authorized to test:</p>
+      <ul class="checklist">
+        <li>Is the server single-threaded or synchronous? That lowers the bar for everything above.</li>
+        <li>Any endpoint whose response scales with attacker-controlled input size (sort, search, export, render)?</li>
+        <li>Does a synchronous operation (file write, lock, external call) block a request thread?</li>
+        <li>Can an async job queue or worker pool be exhausted by repeated job creation?</li>
+        <li>Any parser accepting deeply nested or recursive input (JSON/XML/zip) without limits?</li>
+        <li>Is rate limiting IP-based, account-based, or session-based — and how easy is it to rotate past?</li>
+        <li>Do account lockouts trigger fast enough, and last long enough, to be weaponized against real users?</li>
+        <li>Any endpoint that amplifies input (signup emails, 2FA SMS) that could be redirected at a third party?</li>
+        <li>Is token/session validation itself expensive (signature checks on a flood of invalid JWTs)?</li>
+      </ul>
+    </div>
+
+    <div class="doc-entry" id="sources" style="border-bottom:none">
+      <span class="doc-tag">Reference</span>
+      <h2>Sources &amp; Further Reading</h2>
+      <p>This guide draws on established public research rather than original disclosure. Worth reading directly:</p>
+      <div class="refs">
+        <a href="https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP — Denial of Service Cheat Sheet</a>
+        <a href="https://community.owasp.org/attacks/Regular_expression_Denial_of_Service_-_ReDoS" target="_blank" rel="noopener">OWASP — Regular Expression Denial of Service (ReDoS)</a>
+        <a href="https://cwe.mitre.org/data/definitions/400.html" target="_blank" rel="noopener">MITRE CWE-400 — Uncontrolled Resource Consumption</a>
+        <a href="https://cwe.mitre.org/data/definitions/1333.html" target="_blank" rel="noopener">MITRE CWE-1333 — Inefficient Regular Expression Complexity</a>
+        <a href="https://attack.mitre.org/techniques/T1499/" target="_blank" rel="noopener">MITRE ATT&amp;CK T1499 — Endpoint Denial of Service</a>
+        <a href="https://en.wikipedia.org/wiki/Slow_DoS_attack" target="_blank" rel="noopener">Wikipedia — Slow DoS Attack</a>
+        <a href="https://en.wikipedia.org/wiki/Algorithmic_complexity_attack" target="_blank" rel="noopener">Wikipedia — Algorithmic Complexity Attack</a>
+      </div>
+    </div>
+
+    <div class="doc-cta">
+      <h3>Read the theory. Then measure your own service.</h3>
+      <p>TYPHON's DoS Lab runs the low-rate and connection-state categories above against a target you confirm you own, and shows you exactly which resource saturates first.</p>
+      <div class="cta">
+        <a href="typhon.html#dos" class="btn btn-ghost">See the DoS Lab</a>
+        <a href="typhon.html#download" class="btn btn-primary">Get TYPHON — $200</a>
+      </div>
+    </div>
+
+  </article>
+</div>
+
+<footer>
+  <div class="foot">
+    <div class="l">
+      <img src="assets/typhon-logo.png" alt="">
+      <div class="x"><b>TYPHON</b><br><span>Offensive-security workspace · authorized testing only.</span></div>
+    </div>
+    <div class="r">
+      <span style="font-family:var(--disp);font-weight:800;letter-spacing:.06em;color:var(--dim)">PRIMAL<sup style="font-size:.62em">APE</sup></span> · under ALLSEER SOFTWARE<br>
+      <span style="opacity:.8">Labs, CTFs &amp; systems you own — nothing else.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
