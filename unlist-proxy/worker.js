@@ -1,26 +1,31 @@
 // unlist-proxy — Cloudflare Worker
 //
-// Holds the YouTube Data API key and Google Custom Search key server-side so
+// Holds the YouTube Data API key and Brave Search API key server-side so
 // the UNLIST page's visitors never see them and never need their own.
-// Everything the browser needs goes through here instead of straight to Google.
+// Everything the browser needs goes through here instead of straight to
+// YouTube/Brave.
 //
 // One-time setup (Cloudflare dashboard, no CLI needed):
 //   1. dash.cloudflare.com -> Workers & Pages -> Create -> "Create Worker"
 //   2. Edit code -> paste this whole file in -> Deploy
 //   3. Settings -> Variables and Secrets -> add as SECRETS (not plain text):
-//        YT_KEY   = your YouTube Data API v3 key
-//        CSE_KEY  = your Google Custom Search JSON API key
-//        CSE_ID   = your Custom Search Engine ID (cx)
+//        YT_KEY     = your YouTube Data API v3 key (console.cloud.google.com)
+//        BRAVE_KEY  = your Brave Search API key (api-dashboard.search.brave.com)
 //   4. Copy the workers.dev URL Cloudflare gives the worker, put it in
 //      unlist.html's PROXY_BASE constant.
 //
+// Web search runs through Brave Search API instead of Google Custom Search —
+// one key, no separate search-engine ID, no per-product "enable" step, no
+// billing-account gymnastics. YouTube lookups are unaffected and still go
+// straight to Google, since that side always worked fine.
+//
 // Optional: bind a KV namespace named QUOTA (wrangler.toml or dashboard ->
-// Settings -> Bindings) to cap Custom Search calls at ~90/day so one busy day
-// doesn't burn through Google's 100/day free tier. Works fine without it too
-// — Google will just return its own quota error once exhausted.
+// Settings -> Bindings) to cap Brave search calls at ~90/day so one busy day
+// doesn't burn through the free tier. Works fine without it too — Brave will
+// just return its own quota error once exhausted.
 
 const ALLOWED_YT_PATHS = new Set(['channels', 'playlists', 'playlistItems', 'videos', 'search']);
-const CSE_DAILY_LIMIT = 90;
+const SEARCH_DAILY_LIMIT = 90;
 
 function withCors(res) {
   res.headers.set('Access-Control-Allow-Origin', '*');
@@ -33,10 +38,10 @@ function json(body, status) {
 }
 
 async function withinQuota(env) {
-  if (!env.QUOTA) return true; // no KV bound — rely on Google's own quota errors
-  const key = 'cse_' + new Date().toISOString().slice(0, 10);
+  if (!env.QUOTA) return true; // no KV bound — rely on Brave's own quota errors
+  const key = 'search_' + new Date().toISOString().slice(0, 10);
   const current = parseInt((await env.QUOTA.get(key)) || '0', 10);
-  if (current >= CSE_DAILY_LIMIT) return false;
+  if (current >= SEARCH_DAILY_LIMIT) return false;
   await env.QUOTA.put(key, String(current + 1), { expirationTtl: 60 * 60 * 24 * 2 });
   return true;
 }
@@ -59,14 +64,28 @@ export default {
       }
 
       if (url.pathname === '/cse') {
-        if (!env.CSE_KEY || !env.CSE_ID) return json({ error: { message: 'Server is missing CSE_KEY/CSE_ID — set them in Worker Settings > Variables and Secrets.' } }, 500);
+        if (!env.BRAVE_KEY) return json({ error: { message: 'Server is missing BRAVE_KEY — set it in Worker Settings > Variables and Secrets.' } }, 500);
         if (!(await withinQuota(env))) return json({ error: { message: 'Daily search quota reached — try again tomorrow.' } }, 429);
-        const upstream = new URL('https://www.googleapis.com/customsearch/v1');
-        for (const [k, v] of url.searchParams) upstream.searchParams.set(k, v);
-        upstream.searchParams.set('key', env.CSE_KEY);
-        upstream.searchParams.set('cx', env.CSE_ID);
-        const r = await fetch(upstream.toString());
-        return withCors(new Response(r.body, { status: r.status, headers: { 'Content-Type': 'application/json' } }));
+        const q = url.searchParams.get('q') || '';
+        const count = url.searchParams.get('num') || '10';
+        const upstream = new URL('https://api.search.brave.com/res/v1/web/search');
+        upstream.searchParams.set('q', q);
+        upstream.searchParams.set('count', count);
+        const r = await fetch(upstream.toString(), {
+          headers: { 'Accept': 'application/json', 'X-Subscription-Token': env.BRAVE_KEY },
+        });
+        const data = await r.json().catch(() => null);
+        if (!r.ok || !data) {
+          return json({ error: { message: (data && (data.message || (data.error && data.error.message))) || ('Brave Search error ' + r.status) } }, r.status || 502);
+        }
+        // Reshape Brave's response into the {items:[{link,title,snippet}]} shape
+        // the frontend already expects (it used to talk to Google Custom Search).
+        const items = ((data.web && data.web.results) || []).map((item) => ({
+          link: item.url,
+          title: item.title,
+          snippet: item.description,
+        }));
+        return json({ items }, 200);
       }
 
       if (url.pathname === '/wayback/cdx') {
