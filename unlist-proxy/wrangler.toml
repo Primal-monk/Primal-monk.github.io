@@ -1,0 +1,11 @@
+name = "unlist-proxy"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Optional — only needed if you deploy via `wrangler` CLI and want the daily
+# Custom Search quota cap. Skip this entirely if you're using the Cloudflare
+# dashboard's "Create Worker" quick-start + paste-in-code flow; the worker
+# runs fine without it.
+# [[kv_namespaces]]
+# binding = "QUOTA"
+# id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
