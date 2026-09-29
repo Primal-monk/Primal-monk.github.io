@@ -425,11 +425,17 @@
   }
 
   async function fetchKnownPublicIds(playlistId,maxPages){
+    // A channel with zero PUBLIC videos (e.g. its only upload is unlisted) has no
+    // real "uploads" playlist to query — YouTube 404s with playlistNotFound. That's
+    // a normal state, not a failure: treat it as "zero known public videos" and
+    // keep going, since the whole point of the scan is to find non-public videos.
     const ids=new Set();
     let pageToken='';
     for(let i=0;i<maxPages;i++){
       const url=`${PROXY_BASE}/yt/playlistItems?part=contentDetails&maxResults=50&playlistId=${playlistId}${pageToken?'&pageToken='+pageToken:''}`;
-      const res=await apiGet(url);
+      let res;
+      try{ res=await apiGet(url); }
+      catch(e){ break; }
       (res.items||[]).forEach(it=>ids.add(it.contentDetails.videoId));
       if(!res.nextPageToken) break;
       pageToken=res.nextPageToken;
